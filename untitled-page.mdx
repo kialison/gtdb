@@ -1,0 +1,69 @@
+---
+title: "什么是 DexBuilder？"
+description: "面向去中心化交易产品的专业市场、账户、结算与 Builder 基础设施。"
+icon: "blocks"
+---
+
+DexBuilder 是面向去中心化交易产品的基础设施。平台将市场接入、订单执行、账户、资产流程、结算与 Builder 运营能力整合在统一体系中，使项目团队无需分别搭建每一层能力，即可推出具有独立品牌的交易产品。
+
+同一套平台基础既可支持完整的品牌化交易体验，也可支持专注于 API 的接入方式，项目团队可以根据自身产品选择适合的运营模式。
+
+<Frame caption="使用 DexBuilder 构建去中心化市场">
+  ![DexBuilder 去中心化交易基础设施](/images/dexbuilder-cover.svg)
+</Frame>
+
+## 一个平台，多种市场体验
+
+DexBuilder 支持三类产品：永续合约 DEX、预测市场与事件合约。项目方可以使用自有前端呈现产品，并通过公开文档中的 API 与接入流程连接平台能力。
+
+<Columns cols={3}>
+  <Card title="永续合约 DEX" icon="chart-candlestick" href="/zh/concepts/product-suite#永续合约-dex">
+    构建订单簿永续合约市场，覆盖订单、仓位、保证金、资金费率与结算流程。
+  </Card>
+
+  <Card title="预测市场" icon="chart-line" href="/zh/concepts/product-suite#预测市场">
+    围绕定义清晰的现实事件结果推出预测市场产品。
+  </Card>
+
+  <Card title="事件合约" icon="calendar-check" href="/zh/concepts/product-suite#事件合约">
+    提供条款、生命周期状态与结算结果明确的事件型合约。
+  </Card>
+</Columns>
+
+## 面向专业交易产品
+
+DexBuilder 将熟悉的订单簿交易体验，与生产级交易应用所需的账户、资产和运营能力结合起来。
+
+- **交易基础设施：** 行情、订单管理、仓位、保证金模式、资金费率、强平与成交历史；
+- **可核对的账户记录：** 余额、订单、成交、仓位和账户账本变动通过一致的账户接口提供；
+- **灵活的产品设计：** 项目团队掌控品牌、用户体验、市场呈现与接入方式；
+- **Builder 运营能力：** 用户注册、手续费配置、活动、推荐关系、用户数据与收入结算按照产品流程组织；
+- **开发者优先：** 中英文指南、OpenAPI、请求签名、代码示例、WebSocket 指南与生产检查清单集中维护。
+
+## 平台如何协同
+
+<Frame caption="DexBuilder 平台架构">
+  ![交易应用与钱包用户连接到 DexBuilder 的市场、账户、账本与结算服务](/images/platform-architecture-zh.svg)
+</Frame>
+
+用户通过交易应用发起操作，并对账户或资产动作进行授权。应用使用公开行情接口与已认证的账户接口；DexBuilder 协调交易执行、仓位记账、账本更新与结算。Builder 运营能力则提供项目运行所需的配置与管理入口。
+
+## 选择接入路径
+
+<Columns cols={2}>
+  <Card title="理解产品" icon="circle-info" href="/zh/concepts/product-suite">
+    了解产品体系、平台能力、架构、账户、交易生命周期、结算与手续费。
+  </Card>
+
+  <Card title="在 DexBuilder 上构建" icon="code" href="/zh/getting-started/choose-a-path">
+    从注册、认证、交易和资产接入开始，完成测试与生产上线。
+  </Card>
+
+  <Card title="接入交易 API" icon="brackets-curly" href="/zh/api-reference/query-all-perp-contracts">
+    使用完整的永续合约 API 接入行情、账户、仓位、订单与交易历史。
+  </Card>
+
+  <Card title="生产运营" icon="rocket" href="/zh/operations/go-live">
+    校验凭证、权限、资产流程、异常恢复、监控与上线准备。
+  </Card>
+</Columns>

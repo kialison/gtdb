@@ -20,7 +20,9 @@
             "groups": [
               {
                 "group": "入门",
-                "pages": []
+                "pages": [
+                  "untitled-page"
+                ]
               },
               {
                 "group": "PerpDEX",
