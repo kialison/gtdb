@@ -1,18 +1,85 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "DexBuilder Docs",
   "colors": {
-    "primary": "#2563EB"
+    "primary": "#00A833",
+    "light": "#16D96A",
+    "dark": "#007A29"
   },
   "navigation": {
-    "groups": [
+    "languages": [
       {
-        "group": "开始",
-        "pages": [
-          "index"
+        "language": "en"
+      },
+      {
+        "language": "zh",
+        "tabs": [
+          {
+            "tab": "介绍",
+            "groups": [
+              {
+                "group": "入门",
+                "pages": []
+              },
+              {
+                "group": "PerpDEX",
+                "pages": [
+                  {
+                    "group": "交易",
+                    "pages": []
+                  },
+                  {
+                    "group": "风险机制",
+                    "pages": []
+                  },
+                  {
+                    "group": "费率",
+                    "pages": []
+                  }
+                ]
+              },
+              {
+                "group": "预测市场",
+                "pages": []
+              },
+              {
+                "group": "事件合约",
+                "pages": []
+              }
+            ]
+          }
         ]
+      },
+      {
+        "language": "zh-TW"
       }
     ]
-  }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://www.dexbuilder.com/"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt"
+    ],
+    "display": "header"
+  },
+  "api": {
+    "playground": {
+      "display": "simple"
+    },
+    "examples": {
+      "languages": [
+        "curl",
+        "",
+        "python"
+      ]
+    }
+  },
+  "description": "Build perpetual trading applications and branded DEXs on DexBuilder."
 }
