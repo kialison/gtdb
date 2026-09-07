@@ -1,0 +1,30 @@
+---
+title: "账户"
+description: "了解钱包用户、账户、Builder 资料与管理员账户之间的关系。"
+---
+
+## 账户结构
+
+一个钱包用户可以为每个受支持的 Builder 注册一个独立账户。通过不同 Builder 注册的账户彼此独立。
+
+| 对象 | 所有者 | 包含或控制的内容 |
+| --- | --- | --- |
+| 钱包 | 用户 | 账户注册与资产操作的签名权限 |
+| 账户 | 用户 | 余额、订单、仓位、成交与 API 凭证 |
+| Builder 资料 | Builder | Builder 名称、上线方式、Broker ID 与手续费等级 |
+| 管理员账户 | Builder | Builder 设置、手续费配置与 Builder API 访问权限 |
+
+## Account ID
+
+每个账户使用 `account_id` 标识。账户标识由钱包地址与 Builder 的 `brokerId` 共同计算，因此同一个钱包可以在不同 Builder 下拥有不同账户。
+
+## Broker ID
+
+`broker_id` 是 Builder 在 API 中的唯一标识。签名消息使用对应结构规定的字段名，例如 EIP-712 Typed Data 中的 `brokerId`。每个请求都必须使用接口规定的准确大小写。
+
+## 隔离规则
+
+- 账户余额、订单、仓位与凭证属于对应钱包用户；
+- Builder API 只能访问通过该 Builder 注册的账户；
+- 管理员账户不能替代用户钱包完成资产操作签名；
+- Sandbox 与生产账户及凭证必须隔离。
