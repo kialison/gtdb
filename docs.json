@@ -10,9 +10,6 @@
   "navigation": {
     "languages": [
       {
-        "language": "en"
-      },
-      {
         "language": "zh",
         "tabs": [
           {
@@ -72,6 +69,9 @@
         ]
       },
       {
+        "language": "en"
+      },
+      {
         "language": "zh-TW"
       }
     ]
@@ -109,5 +109,12 @@
   "favicon": {
     "light": "/images/fav.svg",
     "dark": "/images/favdark.svg"
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/untitled-page",
+      "permanent": false
+    }
+  ]
 }
