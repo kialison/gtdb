@@ -1,0 +1,45 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">DexBuilder</title>
+  <desc id="desc">DexBuilder logo centered on a dark green infrastructure gradient.</desc>
+  <defs>
+    <linearGradient id="background" x1="160" y1="80" x2="1750" y2="1010" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06150C"/>
+      <stop offset="0.48" stop-color="#07100B"/>
+      <stop offset="1" stop-color="#020704"/>
+    </linearGradient>
+    <radialGradient id="glow-left" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 70) rotate(35) scale(980 760)">
+      <stop stop-color="#00C83C" stop-opacity="0.42"/>
+      <stop offset="0.52" stop-color="#009F30" stop-opacity="0.11"/>
+      <stop offset="1" stop-color="#009F30" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-right" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1840 1000) rotate(-145) scale(1000 760)">
+      <stop stop-color="#19D969" stop-opacity="0.30"/>
+      <stop offset="0.55" stop-color="#19D969" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#19D969" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M80 0H0V80" stroke="#A7F3BF" stroke-opacity="0.045"/>
+    </pattern>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.045"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#background)"/>
+  <rect width="1920" height="1080" fill="url(#glow-left)"/>
+  <rect width="1920" height="1080" fill="url(#glow-right)"/>
+  <rect x="80" y="80" width="1760" height="920" rx="40" fill="url(#grid)" stroke="#A7F3BF" stroke-opacity="0.08"/>
+  <path d="M80 810C410 708 615 786 880 688C1150 588 1326 356 1840 278" stroke="#38E576" stroke-opacity="0.10" stroke-width="2"/>
+  <path d="M80 846C426 742 646 816 904 718C1172 616 1354 388 1840 316" stroke="#38E576" stroke-opacity="0.055" stroke-width="2"/>
+  <rect width="1920" height="1080" filter="url(#grain)" opacity="0.8"/>
+
+  <g transform="translate(350 408) scale(4.25)">
+    <circle cx="32" cy="32" r="32" fill="#009F30"/>
+    <path d="M33.4995 39.311L27.2391 45.5135H20.3328L30.0327 35.8846L33.4995 39.311ZM32.8555 29.124L34.8692 31.0986L38.5206 27.4895C40.7629 24.9831 44.0955 23.4614 47.496 23.5276C51.6334 23.687 54.4964 25.5156 56.2459 27.8867C57.9035 30.1332 58.4992 32.7726 58.4354 34.7286C58.4059 44.5609 46.2373 48.8537 39.4915 42.5082L39.4696 42.4876L29.3873 32.552L24.7791 37.1068L24.7713 37.1142C21.4542 40.3353 16.6795 40.7091 12.8932 39.2574C9.06914 37.7913 5.81663 34.2936 5.7996 29.3646C5.73513 27.4082 6.33052 24.7673 7.98897 22.5196C9.98865 19.8095 13.4451 18.1587 16.8345 18.1587C19.1703 18.1587 22.5216 18.9757 25.6555 22.0646L29.3734 25.7099L36.9733 18.1587H43.9575L32.8555 29.124ZM47.356 28.3738C46.0412 28.3825 43.8839 28.7831 42.1555 30.7446L42.1001 30.8074L38.3444 34.5196L42.8882 39.0107C46.8115 42.6776 53.5312 39.8907 53.5312 34.6928V34.6453L53.5331 34.5977C53.572 33.6162 53.2437 32.0446 52.2833 30.743C51.4039 29.5511 49.9307 28.4861 47.356 28.3738ZM16.8778 23.0067C14.3038 23.1193 12.8308 24.1842 11.9515 25.3759C10.9911 26.6776 10.6628 28.2492 10.7018 29.2307L10.7037 29.2782V29.3257C10.7037 31.9074 12.3484 33.8488 14.6669 34.7377C17.0293 35.6435 19.6504 35.284 21.3258 33.6641L25.9052 29.1378L22.2015 25.5063L22.1989 25.5036L22.1962 25.5009C20.0932 23.4262 18.0513 23.0165 16.8778 23.0067Z" fill="white"/>
+    <text x="78" y="45" fill="white" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="650" letter-spacing="-1.6">DexBuilder</text>
+  </g>
+</svg>
