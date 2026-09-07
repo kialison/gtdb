@@ -81,5 +81,13 @@
       ]
     }
   },
-  "description": "Build perpetual trading applications and branded DEXs on DexBuilder."
+  "description": "Build perpetual trading applications and branded DEXs on DexBuilder.",
+  "logo": {
+    "light": "/images/light.svg",
+    "dark": "/images/drak.svg"
+  },
+  "favicon": {
+    "light": "/images/fav.svg",
+    "dark": "/images/favdark.svg"
+  }
 }
