@@ -1,0 +1,33 @@
+---
+title: "Event Markets Orders"
+sidebarTitle: "Orders"
+description: "Submit, read, and cancel Event Markets orders through authenticated gateway requests."
+---
+
+Order endpoints are private and require gateway authentication. Do not send internal account-identity headers.
+
+## Submit an order
+
+```http
+POST /api/v4/event_markets/orders
+```
+
+The public request contract includes `client_order_id`, `token_id`, `side`, `price`, `size`, `order_type`, `order_mode`, `expire_time`, `total_cost`, `sell_all`, and `post_only`.
+
+An accepted order is not necessarily filled. Keep the returned order ID and query the order state.
+
+## Read orders
+
+```http
+GET /api/v4/event_markets/orders
+GET /api/v4/event_markets/orders/{order_id}
+```
+
+## Cancel orders
+
+```http
+DELETE /api/v4/event_markets/orders/{order_id}
+DELETE /api/v4/event_markets/orders
+```
+
+The batch cancel request uses the public request contract documented by the API.

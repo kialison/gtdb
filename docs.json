@@ -175,6 +175,22 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Event Markets API",
+                "pages": [
+                  "event-markets-api/overview",
+                  "event-markets-api/discover-markets",
+                  "event-markets-api/market-details",
+                  "event-markets-api/market-data",
+                  "event-markets-api/orders",
+                  "event-markets-api/account-data",
+                  "event-markets-api/errors"
+                ]
+              },
+              {
+                "group": "Event Contracts API",
+                "pages": []
               }
             ]
           }

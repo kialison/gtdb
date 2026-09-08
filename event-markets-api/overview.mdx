@@ -1,0 +1,38 @@
+---
+title: "Event Markets API Overview"
+sidebarTitle: "Overview"
+description: "Base URL, authentication boundaries, pagination, and data visibility for the Event Markets API."
+---
+
+The Event Markets API provides HTTP JSON endpoints for events, markets, outcome tokens, prices, order books, trades, orders, and account data.
+
+## Base URL
+
+```text
+https://broker.dexbuilder.com
+```
+
+All paths in this section are relative to this base URL.
+
+## Authentication
+
+Public market-data endpoints do not require user authentication. Private endpoints, including orders, positions, assets, account books, and user trades, require gateway authentication.
+
+Authentication details are gateway-managed and may change. Do not construct or send internal account-identity headers from client integrations.
+
+## Pagination
+
+List endpoints use `limit`, `cursor`, and `next_cursor`.
+
+- `limit` defaults to 20 and accepts up to 100.
+- `cursor` is opaque; pass the returned `next_cursor` as the next request's `cursor`.
+- Offset pagination is not supported.
+- List responses use an `items` collection and may include `next_cursor`.
+
+## Data visibility
+
+Public Event Markets data is limited to records whose parent Event was created within the rolling 30-day window evaluated at request time.
+
+## Response format
+
+The API returns JSON. Errors contain a machine-readable `label` and a human-readable `message`.

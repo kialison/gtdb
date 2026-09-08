@@ -1,0 +1,35 @@
+---
+title: "Event Markets Market Data"
+sidebarTitle: "Prices and Order Books"
+description: "Read Event Markets token prices, tickers, order books, price history, and trades."
+---
+
+Market-data endpoints are public and do not require authentication.
+
+## Token data
+
+```http
+GET /api/v4/event_markets/tokens/{token_id}/market
+GET /api/v4/event_markets/tokens/{token_id}/price
+GET /api/v4/event_markets/tokens/{token_id}/ticker
+GET /api/v4/event_markets/tokens/{token_id}/order_book
+GET /api/v4/event_markets/tokens/{token_id}/price_history
+GET /api/v4/event_markets/tokens/prices
+GET /api/v4/event_markets/tokens/{currency}/candlesticks
+```
+
+Example:
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+```
+
+The order-book response contains bid and ask levels plus market-data metadata. Price history uses the API's supported interval and time-range parameters.
+
+## Market trades
+
+```http
+GET /api/v4/event_markets/markets/{market_id}/trades
+```
+
+Use `limit` and `cursor` for pagination.
