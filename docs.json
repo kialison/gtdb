@@ -59,8 +59,58 @@
               {
                 "group": "预测市场",
                 "pages": [
+                  {
+                    "group": "快速开始",
+                    "pages": []
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "市场数据",
+                    "pages": []
+                  },
+                  {
+                    "group": "交易",
+                    "pages": []
+                  },
                   "untitled-page-15"
                 ]
+              },
+              {
+                "group": "事件合约",
+                "pages": [
+                  {
+                    "group": "快速开始",
+                    "pages": []
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "市场数据",
+                    "pages": []
+                  },
+                  {
+                    "group": "交易",
+                    "pages": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "概览",
+                "pages": []
+              },
+              {
+                "group": "事件市场",
+                "pages": []
               },
               {
                 "group": "事件合约",
@@ -71,10 +121,144 @@
         ]
       },
       {
-        "language": "en"
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Introduction",
+            "groups": [
+              {
+                "group": "Event Markets",
+                "pages": [
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "en/introduction/event-markets/overview"
+                    ]
+                  },
+                  {
+                    "group": "Core Concepts",
+                    "pages": []
+                  },
+                  {
+                    "group": "Market Data",
+                    "pages": []
+                  },
+                  {
+                    "group": "Trading",
+                    "pages": []
+                  }
+                ]
+              },
+              {
+                "group": "Event Contracts",
+                "pages": [
+                  {
+                    "group": "Getting Started",
+                    "pages": []
+                  },
+                  {
+                    "group": "Core Concepts",
+                    "pages": []
+                  },
+                  {
+                    "group": "Market Data",
+                    "pages": []
+                  },
+                  {
+                    "group": "Trading",
+                    "pages": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": []
+              },
+              {
+                "group": "Event Markets",
+                "pages": []
+              },
+              {
+                "group": "Event Contracts",
+                "pages": []
+              }
+            ]
+          }
+        ]
       },
       {
-        "language": "zh-TW"
+        "language": "zh-TW",
+        "tabs": [
+          {
+            "tab": "介紹",
+            "groups": [
+              {
+                "group": "事件市場",
+                "pages": [
+                  {
+                    "group": "快速開始",
+                    "pages": []
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "市場資料",
+                    "pages": []
+                  },
+                  {
+                    "group": "交易",
+                    "pages": []
+                  }
+                ]
+              },
+              {
+                "group": "事件合約",
+                "pages": [
+                  {
+                    "group": "快速開始",
+                    "pages": []
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "市場資料",
+                    "pages": []
+                  },
+                  {
+                    "group": "交易",
+                    "pages": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "概覽",
+                "pages": []
+              },
+              {
+                "group": "事件市場",
+                "pages": []
+              },
+              {
+                "group": "事件合約",
+                "pages": []
+              }
+            ]
+          }
+        ]
       }
     ]
   },
