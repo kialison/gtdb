@@ -1,0 +1,12 @@
+---
+title: "Market Data Updates"
+sidebarTitle: "Market Data Updates"
+description: "Keep Event Contract market data current with HTTP endpoints."
+---
+
+Prediction API does not currently publish a WebSocket endpoint. Poll the public Event Contract endpoints for updates:
+
+- GET https://broker.dexbuilder.com/api/v4/event_contract/markets/{market_id}
+- GET https://broker.dexbuilder.com/api/v4/event_contract/tokens/{token_id}/price
+- GET https://broker.dexbuilder.com/api/v4/event_contract/tokens/{token_id}/ticker
+- GET https://broker.dexbuilder.com/api/v4/event_contract/tokens/{token_id}/order_book

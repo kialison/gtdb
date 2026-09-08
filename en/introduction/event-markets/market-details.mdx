@@ -1,0 +1,29 @@
+---
+title: "Market Details"
+sidebarTitle: "Market Details"
+description: "Understand market identifiers, outcomes, lifecycle state, and price summary fields."
+---
+
+Fetch a market with `GET /api/v4/event_markets/markets/{market_id}` or by slug. A market summary can contain `market_id`, `event_id`, `condition_id`, `slug`, `question`, `outcomes`, `active`, `closed`, `status`, `best_bid`, `best_ask`, `last_trade_price`, `volume`, and `volume_24hr`.
+
+## Identifiers
+
+| Identifier | Use |
+| --- | --- |
+| `market_id` | Gate composite market identifier |
+| `event_id` | Parent event identifier |
+| `condition_id` | Conditional-token market identifier |
+| `token_id` | Outcome token used by price and order-book routes |
+| `slug` | Human-readable lookup identifier |
+
+## Outcomes
+
+Each outcome includes a label and token reference. Keep the `token_id` for the outcome whose price or order book you need.
+
+## Lifecycle
+
+Use `active`, `closed`, and `status` to decide whether to display a market or accept trading actions. A market can remain discoverable after it is closed.
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+```

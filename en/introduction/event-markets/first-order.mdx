@@ -1,0 +1,25 @@
+---
+title: "Place Your First Order on an Event Market"
+sidebarTitle: "Place Your First Order"
+description: "Learn how to authenticate through the gateway and submit your first order on an Event Market."
+---
+
+This guide shows you how to place your first order using an existing Event Market account. Authentication details are gateway-managed; do not send internal identity headers.
+
+<Steps>
+  <Step title="Authenticate through the gateway">
+    Complete the gateway authentication flow for the account that owns the order.
+  </Step>
+  <Step title="Choose an Outcome">
+    Then, fetch the market and select the outcome you want to buy. Orders identify each outcome by its token ID. See [Market Data](/prices-and-orderbooks) to find a different market.
+  </Step>
+  <Step title="Place an Order">
+    Submit a small order through `POST /api/v4/event_markets/orders` and keep the returned order ID.
+  </Step>
+  <Step title="Check the order">
+    Read the order and user-trade endpoints to determine whether the order is open, filled, cancelled, or expired.
+  </Step>
+  <Step title="Check Your Position">
+    Finally, list your positions for the selected market and find the outcome you bought.
+  </Step>
+</Steps>

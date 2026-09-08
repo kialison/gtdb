@@ -1,0 +1,38 @@
+---
+title: "Order Lifecycle"
+sidebarTitle: "Order Lifecycle"
+description: "Understand the order states exposed by the Event Markets API."
+---
+
+An order moves through validation, matching, cancellation or expiration, and settlement. The API is the source of truth for the current order and trade state.
+
+<Frame>
+  ```mermaid
+  flowchart LR
+    A[Submit] --> B[Accepted or Rejected]
+    B --> C[Open]
+    C --> D[Fills]
+    C --> E[Cancelled or Expired]
+    D --> F[Position and Trade Updated]
+  ```
+</Frame>
+
+## Order operations
+
+- Submit with `POST /api/v4/event_markets/orders`.
+- Read an order with `GET /api/v4/event_markets/orders/{id}`.
+- Cancel an order with `DELETE /api/v4/event_markets/orders/{id}`.
+- List account orders with `GET /api/v4/event_markets/orders`.
+
+These operations are private and require gateway authentication. Do not send internal identity headers; the gateway supplies account context.
+
+## Reading state
+
+An accepted order is not necessarily filled. Use the order response and user-trade endpoint to distinguish an open order from a filled, cancelled, or expired order. After a fill, refresh positions and account activity.
+
+## Related pages
+
+- [Manage Orders](/manage-orders)
+- [Realtime Order Updates](/realtime-order-updates)
+- [Positions](/positions)
+- [Resolution](/resolution)

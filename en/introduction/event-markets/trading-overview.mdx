@@ -1,0 +1,40 @@
+---
+title: "Trading Overview"
+sidebarTitle: "Overview"
+description: "Understand the authenticated order workflow for Event Markets."
+---
+
+Trading requests are account-scoped. Authenticate through the gateway, select an outcome token, submit an order, and read the resulting order and position state from the API.
+
+## Trading workflow
+
+<Steps>
+  <Step title="Discover a market">
+    Use the public market-data endpoints to find an event, market, and outcome token. Public行情接口不需要用户认证。
+  </Step>
+  <Step title="Check the quote">
+    Read the token price or order book before deciding the price and size to submit.
+  </Step>
+  <Step title="Submit the order">
+    Authenticate through the gateway and call the private order endpoint. Do not construct or send internal identity headers.
+  </Step>
+  <Step title="Monitor the result">
+    Query the order and user-trade endpoints for the authoritative account state. Refresh positions after fills or cancellations.
+  </Step>
+</Steps>
+
+## Supported API operations
+
+| Operation | Endpoint |
+| --- | --- |
+| Submit an order | `POST /api/v4/event_markets/orders` |
+| List orders | `GET /api/v4/event_markets/orders` |
+| Read or cancel an order | `GET` or `DELETE /api/v4/event_markets/orders/{id}` |
+| Read user trades | `GET /api/v4/event_markets/usertrades` |
+| Read positions | `GET /api/v4/event_markets/positions` |
+
+See [Place Orders](/place-orders), [Manage Orders](/manage-orders), and [Positions](/positions) for request fields and response handling.
+
+<Note>
+  Authentication details are gateway-managed and may change. Integrations should rely on the published gateway contract and must not expose internal account headers in client documentation or code examples.
+</Note>

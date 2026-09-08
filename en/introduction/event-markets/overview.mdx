@@ -1,0 +1,33 @@
+---
+title: "Quickstart"
+sidebarTitle: "Quickstart"
+description: "Make your first public market-data request."
+---
+
+Prediction API provides public event and market data through HTTPS JSON endpoints.
+
+The public data window covers the rolling 30 days of parent Events. Older Events, Markets, Tokens, and Trades may not be visible through these endpoints.
+
+## Base URL
+
+```text
+https://broker.dexbuilder.com
+```
+
+## List events
+
+Market-data endpoints do not require user authentication.
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true"
+```
+
+The response contains `items` and `next_cursor`. Pass the cursor unchanged to request the next page.
+
+## Resolve a market
+
+1. List events with `GET /api/v4/event_markets/events`.
+2. List an event's markets with `GET /api/v4/event_markets/markets?event_id={event_id}`.
+3. Read an outcome token's price or order book with its `token_id`.
+
+See [Discover Markets](/discover-markets) for filters and pagination.

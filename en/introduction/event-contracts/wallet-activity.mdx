@@ -1,0 +1,16 @@
+---
+title: "Wallet Activity"
+sidebarTitle: "Wallet Activity"
+description: "Query private Event Contract positions, orders, trades, balance, and fund flows."
+---
+
+These endpoints are private and require gateway authentication. Do not send internal identity headers.
+
+- GET https://broker.dexbuilder.com/api/v4/event_contract/orders
+- GET https://broker.dexbuilder.com/api/v4/event_contract/usertrades
+- GET https://broker.dexbuilder.com/api/v4/event_contract/positions
+- GET https://broker.dexbuilder.com/api/v4/event_contract/positions/settled
+- GET https://broker.dexbuilder.com/api/v4/event_contract/balance
+- GET https://broker.dexbuilder.com/api/v4/event_contract/fund_flows
+
+Private list endpoints use limit and opaque cursor pagination.

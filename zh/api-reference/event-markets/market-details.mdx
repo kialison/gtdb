@@ -1,0 +1,11 @@
+---
+title: "市场详情"
+description: "通过 ID 或 slug 查询市场详情。"
+---
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets/123"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets/slug/example-market"
+```
+
+重点读取市场 ID、所属 Event、状态、结果标签、Token ID、价格精度和交易限制。提交订单前应重新读取市场状态和当前报价。

@@ -1,0 +1,30 @@
+---
+title: "Manage Orders"
+sidebarTitle: "Manage Orders"
+description: "Query and cancel private orders through the Prediction API."
+---
+
+Order-management endpoints are private and require gateway authentication.
+
+## Event Markets
+
+Query orders:
+
+- GET https://broker.dexbuilder.com/api/v4/event_markets/orders
+- GET https://broker.dexbuilder.com/api/v4/event_markets/orders/{order_id}
+
+Cancel one order:
+
+- DELETE https://broker.dexbuilder.com/api/v4/event_markets/orders/{order_id}
+
+Cancel a batch:
+
+- DELETE https://broker.dexbuilder.com/api/v4/event_markets/orders
+
+The batch request body uses the public order_ids field. The list endpoint supports status, condition_id, event_id, order_id, client_order_id, from, to, sort_type, limit, and cursor.
+
+The response is an acceptance result. Query the order or order list after a timeout before retrying a state-changing request.
+
+## Event Contracts
+
+Replace event_markets with event_contract for the corresponding Event Contracts order endpoints.

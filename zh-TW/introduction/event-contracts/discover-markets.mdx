@@ -1,0 +1,10 @@
+---
+title: "探索 Event Contracts 市場"
+description: "查詢 Event Contracts 的 Event、Market 與 Token。"
+---
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_contract/events?limit=20"
+```
+
+列表使用 `items` 與 `next_cursor`，結果受父級 Event 最近 30 天窗口限制。取得 Market 後讀取 outcome token ID，再查詢價格與訂單簿。

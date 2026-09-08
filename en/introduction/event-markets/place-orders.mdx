@@ -1,0 +1,37 @@
+---
+title: "Place Orders"
+sidebarTitle: "Place Orders"
+description: "Submit an order through the authenticated Prediction API trading endpoint."
+---
+
+Order endpoints are private. Authenticate through the gateway before submitting an order. Do not send internal identity headers or unsupported external exchange signatures.
+
+## Event Markets
+
+POST https://broker.dexbuilder.com/api/v4/event_markets/orders
+
+The request body accepts:
+
+| Field | Description |
+| --- | --- |
+| client_order_id | Client-generated correlation identifier |
+| token_id | Outcome token to trade |
+| side | Buy or sell side |
+| price | Limit price |
+| size | Order size |
+| order_type | Order type accepted by the trading service |
+| order_mode | Trading mode accepted by the trading service |
+| expire_time | Optional expiration timestamp |
+| total_cost | Optional total-cost mode value |
+| sell_all | Optional flag to sell the full position |
+| post_only | Optional post-only flag |
+
+The response is an acceptance result containing order_id, client_order_id, status, and created_at. An accepted order is not necessarily filled. Query the order to obtain its current state.
+
+## Event Contracts
+
+Use POST https://broker.dexbuilder.com/api/v4/event_contract/orders with the same public order fields listed above.
+
+<Note>
+  Validate order_type and order_mode values with the trading-service contract before publishing client-side enums.
+</Note>
