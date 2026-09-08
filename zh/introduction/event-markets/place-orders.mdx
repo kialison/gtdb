@@ -1,0 +1,12 @@
+---
+title: "提交訂單"
+description: "透過閘道認證後提交 Event Markets 訂單。"
+---
+
+訂單介面為私有介面，必須先完成閘道認證。不要傳送內部身分 Header。
+
+```text
+POST https://broker.dexbuilder.com/api/v4/event_markets/orders
+```
+
+請求體主要欄位包括 `client_order_id`、`token_id`、`side`、`price`、`size`、`order_type`、`order_mode`、`expire_time`、`total_cost`、`sell_all` 與 `post_only`。介面回傳受理結果；訂單被受理不代表已成交。

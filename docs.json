@@ -90,7 +90,14 @@
                   },
                   {
                     "group": "交易",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-markets/trading-overview",
+                      "zh/introduction/event-markets/manage-orders",
+                      "zh/introduction/event-markets/place-orders",
+                      "zh/introduction/event-markets/wallet-activity",
+                      "zh/introduction/event-markets/errors",
+                      "zh/introduction/event-markets/positions"
+                    ]
                   },
                   "untitled-page-15"
                 ]

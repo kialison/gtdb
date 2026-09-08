@@ -1,0 +1,8 @@
+---
+title: "管理訂單"
+description: "查詢與取消 Event Markets 訂單。"
+---
+
+訂單查詢與取消均為私有操作，需要閘道認證：`GET /api/v4/event_markets/orders`、`GET /api/v4/event_markets/orders/{order_id}`、`DELETE /api/v4/event_markets/orders/{order_id}` 與批量取消 `DELETE /api/v4/event_markets/orders`。
+
+閘道負責帳戶上下文，不要傳送內部身分 Header。
