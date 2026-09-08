@@ -1,0 +1,120 @@
+---
+title: "市场与事件"
+sidebarTitle: "市场与事件"
+description: "了解事件市场的基本构建单元：市场与事件的关系、如何通过 slug 进行标识，以及如何从 API 获取它们。"
+---
+
+理解事件市场的基本构建单元。
+
+每个合约都围绕两个核心概念构建：**市场**和**事件**。理解它们之间的关系对于在该平台之上进行开发至关重要。
+
+<Frame>
+  ```mermaid
+  flowchart LR
+D([Deposit]) -.-> E[Event]
+U1([👤]) -.-> E
+U2([👤]) -.-> E
+E --> MA[Market A]
+E --> MB[Market B]
+MA --> YA[Y]
+MA --> NA[N]
+MB --> YB[Y]
+MB --> NB[N]
+MA --> OB[Orderbook]
+  ```
+</Frame>
+
+## 市场
+
+市场是事件市场上最基本的交易单元。每个市场代表一个具有 Yes/No 结果的二元问题。
+
+<Frame>
+  ```mermaid
+  flowchart LR
+BQ([Binary Question]) -.-> M[Market]
+M --> T[Trade]
+M --> OB[Order Book]
+M --> Y[Y]
+M --> N[N]
+T --> S[Settlement]
+OB --> R[Resolution]
+  ```
+</Frame>
+
+每个市场包含：
+
+| 标识符 | 说明 |
+| --- | --- |
+| Condition ID | 市场在 CTF 合约中条件的唯一标识符 |
+| Question ID | 用于结算的市场问题的哈希值 |
+| Token IDs | 在 CLOB 上交易使用的 ERC1155 代币 ID，一个是 Yes，一个是 No |
+
+### 市场示例
+
+一个简单的市场可能是：
+
+> _"Bitcoin 是否会在 2026 年 12 月前达到 \$100,000？"_
+
+这会创建两个结果代币：
+
+- **Yes 代币** — 如果 Bitcoin 达到 $$100k，可兑换 $$1
+- **No 代币** — 如果 Bitcoin 未达到 $$100k，可兑换 $$1
+
+## 事件
+
+事件是一个容器，将一个或多个相关市场归为一组。事件提供了组织结构，并支持多结果的事件市场。
+
+### 单市场事件
+
+当事件仅包含一个市场时，它创建了一个简单的市场对。事件与市场本质上是等价的。
+
+```text
+Event: Will Bitcoin reach $100,000 by December 2024?
+   └── Market: Will Bitcoin reach $100,000 by December 2024? (Yes/No)
+```
+
+### 多市场事件
+
+当事件包含两个或更多市场时，它将相关的二元问题归在一个事件下。某些多市场事件代表互斥的结果。
+
+事件市场将这些互斥的市场关联为一个**负风险组（negative-risk group）**。组中恰好有一个市场结算为 Yes，其余所有市场结算为 No。
+
+```text
+Event: Who will win the 2024 Presidential Election?
+   ├── Market: Donald Trump? (Yes/No)
+   ├── Market: Joe Biden? (Yes/No)
+   ├── Market: Kamala Harris? (Yes/No)
+   └── Market: Other? (Yes/No)
+```
+
+## 市场标识
+
+每个市场和事件都有一个唯一的 slug，出现在事件市场的 URL 中：
+
+```text
+https://polymarket.com/event/fed-decision-in-october
+                            └── slug: fed-decision-in-october
+```
+
+你可以使用 slug 从 API 获取特定的市场或事件：
+
+```bash
+# 通过 slug 获取事件
+curl "https://gamma-api.polymarket.com/events?slug=fed-decision-in-october"
+```
+
+## 体育市场
+
+对于体育市场，未成交的限价订单会在比赛正式开始时自动取消，从而在官方开始时间清空订单簿。但比赛开始时间可能会变动。如果比赛比预定时间提前开始，订单可能无法及时被清除。请始终在比赛开始时间前后密切关注你的订单。
+
+## 下一步
+
+<CardGroup cols={2}>
+  <Card title="价格与订单簿" icon="chart-line">
+    了解价格如何确定以及订单簿的工作原理。
+  </Card>
+
+  <Card title="获取市场数据" icon="database">
+    开始通过 API 查询市场和事件。
+  </Card>
+</CardGroup>

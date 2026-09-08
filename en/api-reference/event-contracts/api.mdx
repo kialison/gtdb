@@ -1,0 +1,37 @@
+---
+title: "API overview"
+sidebarTitle: "API overview"
+description: "Event Contract endpoints, authentication boundaries, pagination, and response conventions."
+---
+
+Event Contract endpoints use the /api/v4/event_contract namespace.
+
+Market-data endpoints are public and do not require user authentication. Orders, user trades, positions, balances, fund flows, and fees are private and require gateway authentication. Clients must not construct or send internal service identity headers.
+
+Public Event Contract data is limited to records whose parent Event was created within the last 30 days.
+
+## Public market data
+
+- GET /api/v4/event_contract/time
+- GET /api/v4/event_contract/tags
+- GET /api/v4/event_contract/events
+- GET /api/v4/event_contract/markets
+- GET /api/v4/event_contract/tokens/{token_id}/market
+- GET /api/v4/event_contract/tokens/{token_id}/price
+- GET /api/v4/event_contract/tokens/{token_id}/ticker
+- GET /api/v4/event_contract/tokens/{token_id}/order_book
+- GET /api/v4/event_contract/tokens/{token_id}/price_history
+- GET /api/v4/event_contract/tokens/prices
+- GET /api/v4/event_contract/tokens/{currency}/candlesticks
+
+## Private APIs
+
+- Orders: /api/v4/event_contract/orders
+- User trades: /api/v4/event_contract/usertrades
+- Positions: /api/v4/event_contract/positions
+- Settled positions: /api/v4/event_contract/positions/settled
+- Balance: /api/v4/event_contract/balance
+- Fund flows: /api/v4/event_contract/fund_flows
+- Fees: /api/v4/event_contract/fee/current
+
+List responses use items and next_cursor. Pass next_cursor unchanged as cursor. The default page size is 20 and the maximum is 100.

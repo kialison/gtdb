@@ -1,0 +1,15 @@
+---
+title: "Reference Prices"
+sidebarTitle: "Reference Prices"
+description: "Understand the boundary between Prediction API market data and external reference-price services."
+---
+
+Prediction API does not expose a Chainlink TWAP or WebSocket reference-price endpoint.
+
+For supported HTTP market data, use:
+
+- GET /api/v4/event_markets/tokens/{token_id}/price
+- GET /api/v4/event_markets/tokens/{token_id}/ticker
+- GET /api/v4/event_markets/tokens/{token_id}/price_history
+
+If your integration needs an oracle or reference-price feed, use the separately published service documentation. Do not treat an external provider URL as a Prediction API endpoint.

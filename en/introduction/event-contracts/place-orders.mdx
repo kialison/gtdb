@@ -1,0 +1,13 @@
+---
+title: "Place Orders"
+sidebarTitle: "Place Orders"
+description: "Submit an Event Contract order through the authenticated Prediction API."
+---
+
+Order endpoints are private and require gateway authentication. Do not send internal identity headers or unsupported external exchange signatures.
+
+POST https://broker.dexbuilder.com/api/v4/event_contract/orders
+
+The public request supports client_order_id, token_id, side, price, size, order_type, order_mode, expire_time, total_cost, sell_all, and post_only.
+
+The response is an acceptance result. Query the order after submission to obtain its current state.

@@ -1,0 +1,18 @@
+---
+title: "Error Codes"
+sidebarTitle: "Error Codes"
+description: "HTTP statuses and error response conventions for Event Contracts."
+---
+
+Event Contract errors use the same response format as the Prediction API:
+
+```json
+{
+  "label": "INVALID_ARGUMENT",
+  "message": "invalid request"
+}
+```
+
+Private endpoints return 401 when gateway authentication is missing or invalid. Public market-data endpoints do not require user authentication. Do not expose or construct internal service identity headers.
+
+For the common status table, see [Error Codes](/errors).

@@ -1,0 +1,23 @@
+---
+title: "Fees"
+sidebarTitle: "Fees"
+description: "Query the fee configuration applicable to an authenticated account."
+---
+
+Fee endpoints are private. Authenticate through the gateway before requesting the effective fee configuration.
+
+## Event Markets
+
+```http
+GET /api/v4/event_markets/fee
+```
+
+The optional `fee_type` query parameter accepts `fixed` or `dynamic`.
+
+## Event Contracts
+
+```http
+GET /api/v4/event_contract/fee/current
+```
+
+Use the returned fee values and precision as the source of truth. Do not hard-code rates in a client.

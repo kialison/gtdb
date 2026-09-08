@@ -1,0 +1,18 @@
+---
+title: "API 概覽"
+description: "Prediction API 的基礎網址、認證範圍、分頁與錯誤格式。"
+---
+
+## 基礎網址
+
+```text
+https://broker.dexbuilder.com
+```
+
+行情介面公開可用，不需要使用者認證。訂單、持倉、帳戶資產與使用者交易等私有介面必須透過閘道認證。認證方案由閘道統一管理，文件不約定具體 Header；請勿傳送內部身分 Header。
+
+列表介面使用 `limit`、`cursor` 與 `next_cursor`。`limit` 預設為 20，最大為 100；cursor 是不透明值，不支援 offset 分頁。
+
+公開行情資料只涵蓋請求時間往前滾動 30 天內建立的父級 Event。
+
+錯誤回應格式為 `label` 與 `message`，並搭配標準 HTTP 狀態碼。

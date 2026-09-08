@@ -1,0 +1,67 @@
+---
+title: "API overview"
+sidebarTitle: "API overview"
+description: "Prediction API endpoints, authentication boundaries, pagination, and response conventions."
+---
+
+Prediction API provides HTTPS JSON endpoints for event discovery, market data, account queries, and trading operations.
+
+## Base URL
+
+```text
+https://broker.dexbuilder.com
+```
+
+All paths in this documentation are relative to this base URL.
+
+## API namespaces
+
+| Namespace | Description |
+| --- | --- |
+| `/api/v4/event_markets` | Event Markets discovery, market data, account, and trading endpoints |
+| `/api/v4/event_contract` | Event Contracts discovery, market data, account, and trading endpoints |
+| `/api/v4/prediction` | Legacy API v4 compatibility endpoints |
+
+## Authentication boundary
+
+Market-data endpoints are public and do not require user authentication.
+
+The public data window is rolling: Event, Market, Token, and Trade results are limited to records whose parent Event was created within the last 30 days.
+
+Private endpoints, including orders, user trades, positions, assets, account books, fees, claims, balances, and fund flows, require gateway authentication. The gateway forwards the authenticated account context to the API service.
+
+Clients must follow the gateway's public authentication flow. Do not construct or send internal service identity headers.
+
+## Common response conventions
+
+List endpoints return this envelope:
+
+```json
+{
+  "items": [],
+  "next_cursor": null
+}
+```
+
+The cursor is opaque. Pass `next_cursor` unchanged as the next request's `cursor` value. The default page size is 20 and the maximum is 100. `offset` pagination is not supported by the new Broker API.
+
+Errors use `label` and `message`:
+
+```json
+{
+  "label": "INVALID_ARGUMENT",
+  "message": "invalid request"
+}
+```
+
+## Start here
+
+- [Discover Markets](/discover-markets)
+- [Market Details](/market-details)
+- [Prices and Order Books](/prices-and-orderbooks)
+- [Wallet Activity](/wallet-activity)
+- [Error Codes](/errors)
+
+<Note>
+  This documentation covers the HTTP routes implemented by `prediction-api`. WebSocket feeds, wallet signing, and chain settlement are separate contracts.
+</Note>

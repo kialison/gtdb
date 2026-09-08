@@ -1,0 +1,133 @@
+---
+title: "概述"
+sidebarTitle: "概述"
+description: "了解事件市场如何组织市场数据，以及如何开始发现事件、市场和结果。"
+---
+
+了解事件市场如何组织市场数据，以及从哪里开始。
+
+市场数据始于确定您的应用所关注的事件、市场或结果。本节将引导您从这一选择出发，获取应用所需的数据。
+
+## 理解数据模型
+
+在事件市场中，一个事件包含一个或多个市场。每个市场是一个可交易的问题，包含 YES 和 NO 两种结果，每种结果都有自己的代币 ID。使用您想要查看价格或订单簿的结果对应的代币 ID。
+
+<Frame>
+  ```mermaid
+  flowchart LR
+BQ[二元问题] --> M[市场<br/>Y / N]
+M --> T[交易]
+M --> OB[订单簿]
+T --> S[清算]
+OB --> R[结算]
+  ```
+</Frame>
+
+<Steps>
+  <Step title="发现事件">
+    浏览活跃事件，按主题搜索，或直接从事件市场 URL 获取事件。
+  </Step>
+  <Step title="选择市场">
+    查看事件中的各个市场，选择您的应用关注的具体问题。
+  </Step>
+  <Step title="选择结果">
+    选择 YES 或 NO，并记录其代币 ID。您将使用它来读取价格、访问订单簿以及下单。
+  </Step>
+  <Step title="读取或流式传输数据">
+    使用您收集的标识符，检索或流式传输应用所需的市场数据。
+  </Step>
+</Steps>
+
+## 选择工作流
+
+如果您是事件市场数据的新用户，请从[发现市场](/untitled-page-11)开始。
+
+<CardGroup cols={2}>
+  <Card title="发现市场" icon="compass" href="/untitled-page-11">
+    找到您的应用关注的事件和市场。
+  </Card>
+
+  <Card title="获取市场详情" icon="circle-info" href="/untitled-page-12">
+    了解市场的结果、状态、交易限制、手续费和其他属性。
+  </Card>
+
+  <Card title="价格与订单簿" icon="chart-line" href="/untitled-page-13">
+    了解当前价格和流动性，或查看价格的变化情况。
+  </Card>
+
+  <Card title="数据分析" icon="chart-bar" href="/untitled-page-14">
+    分析市场活动，比较交易者和构建者的表现。
+  </Card>
+
+  <Card title="实时数据" icon="bolt" href="/untitled-page-15">
+    在市场和相关数据发生变化时，保持应用的最新状态。
+  </Card>
+
+  <Card title="Chainlink TWAP 价格" icon="link" href="/untitled-page-16">
+    流式传输 30 秒和 60 秒的时间加权加密货币价格。
+  </Card>
+</CardGroup>
+
+了解事件市场如何组织市场数据，以及从哪里开始。
+
+市场数据始于确定您的应用所关注的事件、市场或结果。本节将引导您从这一选择出发，获取应用所需的数据。
+
+## 理解数据模型
+
+在事件市场中，一个事件包含一个或多个市场。每个市场是一个可交易的问题，包含 YES 和 NO 两种结果，每种结果都有自己的代币 ID。使用您想要查看价格或订单簿的结果对应的代币 ID。
+
+<Frame>
+  ```mermaid
+  flowchart LR
+BQ[二元问题] --> M[市场<br/>Y / N]
+M --> T[交易]
+M --> OB[订单簿]
+T --> S[清算]
+OB --> R[结算]
+  ```
+</Frame>
+
+<Steps>
+  <Step title="发现事件">
+    浏览活跃事件，按主题搜索，或直接从事件市场 URL 获取事件。
+  </Step>
+  <Step title="选择市场">
+    查看事件中的各个市场，选择您的应用关注的具体问题。
+  </Step>
+  <Step title="选择结果">
+    选择 YES 或 NO，并记录其代币 ID。您将使用它来读取价格、访问订单簿以及下单。
+  </Step>
+  <Step title="读取或流式传输数据">
+    使用您收集的标识符，检索或流式传输应用所需的市场数据。
+  </Step>
+</Steps>
+
+## 选择工作流
+
+如果您是事件市场数据的新用户，请从[发现市场](/untitled-page-11)开始。
+
+<CardGroup cols={2}>
+  <Card title="发现市场" icon="compass" href="/untitled-page-11">
+    找到您的应用关注的事件和市场。
+  </Card>
+
+  <Card title="获取市场详情" icon="circle-info" href="/untitled-page-12">
+    了解市场的结果、状态、交易限制、手续费和其他属性。
+  </Card>
+
+  <Card title="价格与订单簿" icon="chart-line" href="/untitled-page-13">
+    了解当前价格和流动性，或查看价格的变化情况。
+  </Card>
+
+  <Card title="数据分析" icon="chart-bar" href="/untitled-page-14">
+    分析市场活动，比较交易者和构建者的表现。
+  </Card>
+
+  <Card title="实时数据" icon="bolt" href="/untitled-page-15">
+    在市场和相关数据发生变化时，保持应用的最新状态。
+  </Card>
+
+  <Card title="Chainlink TWAP 价格" icon="link" href="/untitled-page-16">
+    流式传输 30 秒和 60 秒的时间加权加密货币价格。
+  </Card>
+</CardGroup>

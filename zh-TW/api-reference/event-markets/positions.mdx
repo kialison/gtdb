@@ -1,0 +1,8 @@
+---
+title: "持倉"
+description: "查詢與關閉 Event Markets 持倉。"
+---
+
+持倉介面需要閘道認證：`GET /api/v4/event_markets/positions`、`GET /api/v4/event_markets/positions/{position_id}` 與 `POST /api/v4/event_markets/positions/{position_id}/close`。
+
+查詢結果以閘道認證帳戶為範圍。關閉持倉前請確認市場狀態與可用報價。

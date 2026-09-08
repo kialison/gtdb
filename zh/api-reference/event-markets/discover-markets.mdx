@@ -1,0 +1,20 @@
+---
+title: "发现市场"
+description: "查询 Event、Market 和 Token。"
+---
+
+### 查询 Event
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=20"
+```
+
+支持按 ID、slug、标签和状态查询。列表结果使用 `items` 和 `next_cursor`；当 `next_cursor` 为空时表示没有下一页。结果仅包含父级 Event 创建时间在最近 30 天内的数据。
+
+### 查询 Market
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets?limit=20"
+```
+
+拿到 Market 后读取其中的 outcome token ID，再调用价格或订单簿接口。

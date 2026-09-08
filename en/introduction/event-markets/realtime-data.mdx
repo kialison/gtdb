@@ -1,0 +1,16 @@
+---
+title: "Market Data Updates"
+sidebarTitle: "Market Data Updates"
+description: "Keep public market data current with supported HTTP endpoints."
+---
+
+Prediction API currently documents HTTP JSON market-data endpoints. It does not publish a Prediction API WebSocket endpoint.
+
+For periodic updates, poll:
+
+- GET /api/v4/event_markets/markets/{market_id}
+- GET /api/v4/event_markets/tokens/{token_id}/price
+- GET /api/v4/event_markets/tokens/{token_id}/ticker
+- GET /api/v4/event_markets/tokens/{token_id}/order_book
+
+Use a reasonable polling interval, back off on 503 responses, and do not treat a missing price as zero.

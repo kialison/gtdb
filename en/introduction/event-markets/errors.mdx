@@ -1,0 +1,25 @@
+---
+title: "Error Codes"
+sidebarTitle: "Error Codes"
+description: "HTTP statuses and error response conventions for Prediction API."
+---
+
+Prediction API returns JSON errors with a machine-readable `label` and a human-readable `message`.
+
+```json
+{
+  "label": "INVALID_ARGUMENT",
+  "message": "limit must be between 1 and 100"
+}
+```
+
+| Status | Meaning | Action |
+| --- | --- | --- |
+| `400` | Invalid path, query, or request body | Fix the request and validate the documented fields |
+| `401` | Gateway authentication is missing or invalid for a private endpoint | Complete the gateway authentication flow |
+| `404` | Event, market, token, order, position, or claim was not found | Verify the identifier and visibility |
+| `429` | Request rate exceeded the service or gateway limit | Back off and retry reads |
+| `500` | Internal service error | Retry idempotent reads with backoff |
+| `503` | Upstream market-data dependency is unavailable | Retry with backoff and observe the response |
+
+Do not blindly retry state-changing order, position-close, or claim requests after a timeout. Query the resulting resource first when possible.

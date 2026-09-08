@@ -1,0 +1,8 @@
+---
+title: "账户与钱包数据"
+description: "查询账户订单、交易、持仓和资产。"
+---
+
+以下接口为私有接口，必须通过网关认证：`GET /api/v4/event_markets/orders`、`GET /api/v4/event_markets/usertrades`、`GET /api/v4/event_markets/positions`、`GET /api/v4/event_markets/assets` 和 `GET /api/v4/event_markets/account_book`。
+
+网关负责提供账户上下文，客户端不要构造或发送内部身份 Header。

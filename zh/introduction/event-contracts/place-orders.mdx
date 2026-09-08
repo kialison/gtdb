@@ -1,0 +1,6 @@
+---
+title: "提交 Event Contracts 訂單"
+description: "透過閘道認證提交 Event Contracts 訂單。"
+---
+
+訂單為私有介面，需先完成閘道認證：`POST https://broker.dexbuilder.com/api/v4/event_contract/orders`。請求欄位使用公開訂單契約；不要傳送內部身分 Header。受理不代表成交，請查詢訂單與使用者交易狀態。

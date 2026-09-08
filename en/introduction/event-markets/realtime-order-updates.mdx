@@ -1,0 +1,13 @@
+---
+title: "Order Status Updates"
+sidebarTitle: "Order Status Updates"
+description: "Track private order state with authoritative HTTP reads."
+---
+
+Prediction API does not currently publish a WebSocket order-update endpoint. Use authenticated HTTP reads as the source of truth.
+
+- GET https://broker.dexbuilder.com/api/v4/event_markets/orders
+- GET https://broker.dexbuilder.com/api/v4/event_markets/orders/{order_id}
+- GET https://broker.dexbuilder.com/api/v4/event_markets/usertrades
+
+After placing or cancelling an order, poll the order resource with backoff until the service reports the next state. Do not assume an accepted request is immediately filled.

@@ -1,0 +1,16 @@
+---
+title: "Discover Markets"
+sidebarTitle: "Discover Markets"
+description: "Find Event Contract events and markets with filters and cursor pagination."
+---
+
+Discovery is public and does not require authentication.
+
+Discovery only returns records whose parent Event was created within the last 30 days. The window is evaluated relative to the request time.
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_contract/events?limit=20&active=true"
+curl "https://broker.dexbuilder.com/api/v4/event_contract/markets?limit=20&event_id=<event_id>"
+```
+
+Use `/events/{event_id}`, `/events/slug/{slug}`, `/markets/{market_id}`, and `/markets/slug/{slug}` for detail lookups. List endpoints accept `limit` (1–100) and `cursor`, and return `next_cursor`.

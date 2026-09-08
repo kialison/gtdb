@@ -1,0 +1,13 @@
+---
+title: "Markets and Events"
+sidebarTitle: "Markets and Events"
+description: "Understand Event Contract events, markets, outcomes, and tokens."
+---
+
+Use the Event Contract namespace for the same event → market → token lookup flow:
+
+- GET /api/v4/event_contract/events
+- GET /api/v4/event_contract/markets?event_id={event_id}
+- GET /api/v4/event_contract/tokens/{token_id}/market
+
+Market-data requests are public and do not require user authentication.

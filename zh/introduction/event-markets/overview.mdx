@@ -1,0 +1,12 @@
+---
+title: "快速开始"
+description: "使用 Prediction API 查询公开行情数据。"
+---
+
+所有请求使用 `https://broker.dexbuilder.com` 作为基础地址。先查询 Event，再根据 Event 中的 Market 和 Token 查询详情、价格或订单簿。
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=20"
+```
+
+行情接口不需要认证；订单、持仓和账户接口必须通过网关认证。公共数据窗口为父级 Event 创建时间往前滚动 30 天。
