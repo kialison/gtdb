@@ -1,0 +1,45 @@
+---
+title: Tags, Candlesticks, and Server Time
+sidebarTitle: Tags, Candlesticks, and Server Time
+description: Public helper endpoints for Event Markets integrations.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+## Tags
+
+`GET /api/v4/event_markets/tags`
+
+Returns visible tags with cursor pagination.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `limit` | integer | Page size, 1–100 |
+| `cursor` | string | Previous `next_cursor` |
+
+Response:
+
+```json
+{"items":[{"tag_id":"1","slug":"sports","label":{"en":"Sports"}}],"next_cursor":""}
+```
+
+## Cryptocurrency candlesticks
+
+`GET /api/v4/event_markets/tokens/{currency}/candlesticks`
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `currency` | string | Yes | Base asset, for example `BTC` or `ETH` |
+| `interval` | string | Yes | Candle interval validated by the service |
+| `from`, `to` | integer | No | Unix milliseconds |
+| `limit` | integer | No | Maximum number of points |
+
+Each candle contains `t`, `o`, `h`, `l`, `c`, and `v`, all represented as strings except timestamp `t`.
+
+## Server time
+
+`GET /api/v4/event_markets/time`
+
+Returns `{"server_time":1760000000000}`. Use it to estimate clock skew before sending time-sensitive requests.
