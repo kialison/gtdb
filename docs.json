@@ -134,7 +134,27 @@
                       "event-markets/api/orders",
                       "event-markets/api/positions",
                       "event-markets/api/public-utilities",
-                      "event-markets/api/account"
+                      "event-markets/api/account",
+                      {
+                        "group": "Events",
+                        "pages": []
+                      },
+                      {
+                        "group": "Markets",
+                        "pages": []
+                      },
+                      {
+                        "group": "Orderbook & Pricing",
+                        "pages": []
+                      },
+                      {
+                        "group": "Orders",
+                        "pages": []
+                      },
+                      {
+                        "group": "Account & Positions",
+                        "pages": []
+                      }
                     ]
                   }
                 ]
@@ -197,7 +217,27 @@
                       "event-contracts/api/orders",
                       "event-contracts/api/positions",
                       "event-contracts/api/public-utilities",
-                      "event-contracts/api/account"
+                      "event-contracts/api/account",
+                      {
+                        "group": "Events",
+                        "pages": []
+                      },
+                      {
+                        "group": "Markets",
+                        "pages": []
+                      },
+                      {
+                        "group": "Orderbook & Pricing",
+                        "pages": []
+                      },
+                      {
+                        "group": "Orders",
+                        "pages": []
+                      },
+                      {
+                        "group": "Account & Positions",
+                        "pages": []
+                      }
                     ]
                   }
                 ]
