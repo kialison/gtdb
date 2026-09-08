@@ -190,7 +190,10 @@
               },
               {
                 "group": "Event Contracts API",
-                "pages": []
+                "pages": [
+                  "event-contracts-api/overview",
+                  "event-contracts-api/discover-markets"
+                ]
               }
             ]
           }
