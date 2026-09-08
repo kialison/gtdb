@@ -1,0 +1,19 @@
+---
+title: "Event Markets Account Data"
+sidebarTitle: "Account Data"
+description: "Authenticated Event Markets trades, positions, assets, account books, and claims."
+---
+
+These endpoints are private and require gateway authentication.
+
+```http
+GET /api/v4/event_markets/usertrades
+GET /api/v4/event_markets/positions
+GET /api/v4/event_markets/positions/{position_id}
+POST /api/v4/event_markets/positions/{position_id}/close
+GET /api/v4/event_markets/assets
+GET /api/v4/event_markets/account_book
+GET /api/v4/event_markets/claims
+```
+
+Responses are scoped to the authenticated account supplied by the gateway. Do not construct or expose internal account headers.

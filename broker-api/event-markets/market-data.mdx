@@ -1,0 +1,22 @@
+---
+title: "Event Markets Market Data"
+sidebarTitle: "Prices and Order Books"
+description: "Public Event Markets token prices, tickers, order books, history, and trades."
+---
+
+Market-data endpoints are public.
+
+```http
+GET /api/v4/event_markets/tokens/{token_id}/market
+GET /api/v4/event_markets/tokens/{token_id}/price
+GET /api/v4/event_markets/tokens/{token_id}/ticker
+GET /api/v4/event_markets/tokens/{token_id}/order_book
+GET /api/v4/event_markets/tokens/{token_id}/price_history
+GET /api/v4/event_markets/tokens/prices
+GET /api/v4/event_markets/tokens/{currency}/candlesticks
+GET /api/v4/event_markets/markets/{market_id}/trades
+```
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+```
