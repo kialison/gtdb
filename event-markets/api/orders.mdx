@@ -1,0 +1,39 @@
+---
+title: Orders
+sidebarTitle: Orders
+description: Create, list, inspect, and cancel private Event Markets orders.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## Create an order
+
+`POST /api/v4/event_markets/orders`
+
+```json
+{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0,"biz_type":"event_markets"}
+```
+
+The request contract contains `biz_type`, `client_order_id`, `expire_time`, `order_mode`, `order_type`, `post_only`, `price`, `sell_all`, `side`, `size`, `token_id`, and `total_cost`. The accepted response contains `order_id`, `client_order_id`, `status`, and `created_at`.
+
+## List orders
+
+`GET /api/v4/event_markets/orders`
+
+Filters are `status`, `condition_id`, `event_id`, `order_id`, `client_order_id`, `from`, `to`, `sort_type` (`created_at` or `updated_at`), `limit`, and `cursor`. The response contains `items` and `next_cursor`. Each item includes order identity, token, side, price, size, `size_matched`, `size_left`, status, error code, expiry, and timestamps.
+
+## Get and cancel
+
+- `GET /api/v4/event_markets/orders/{order_id}`
+- `DELETE /api/v4/event_markets/orders/{order_id}`
+- `DELETE /api/v4/event_markets/orders?condition_id={condition_id}`
+
+Single cancellation returns `order_id`, `cancel_status`, and `status`; batch cancellation returns `batch_id`, `status`, and `total_orders`. All order endpoints are private.

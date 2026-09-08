@@ -129,7 +129,10 @@
                     "pages": [
                       "event-markets/api/overview",
                       "event-markets/api/events",
-                      "event-markets/api/markets"
+                      "event-markets/api/markets",
+                      "event-markets/api/market-data",
+                      "event-markets/api/orders",
+                      "event-markets/api/positions"
                     ]
                   }
                 ]

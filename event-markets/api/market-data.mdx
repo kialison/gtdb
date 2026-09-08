@@ -1,0 +1,53 @@
+---
+title: Prices, Tickers, Order Books, and History
+sidebarTitle: Prices, Tickers, Order Books, and History
+description: Read public Event Markets token pricing and order-book data.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## Endpoints
+
+| Operation | Path |
+| --- | --- |
+| Token market | `GET /api/v4/event_markets/tokens/{token_id}/market` |
+| Latest price | `GET /api/v4/event_markets/tokens/{token_id}/price` |
+| Ticker | `GET /api/v4/event_markets/tokens/{token_id}/ticker` |
+| Order book | `GET /api/v4/event_markets/tokens/{token_id}/order_book` |
+| Price history | `GET /api/v4/event_markets/tokens/{token_id}/price_history` |
+| Batch prices | `GET /api/v4/event_markets/tokens/prices` |
+
+## Order book
+
+`depth` defaults to 20 and accepts 1–100. The response contains `bids`, `asks`, `condition_id`, `hash`, `last_trade_price`, `min_order_size`, `neg_risk`, `tick_size`, `timestamp`, and `token_id`.
+
+```json
+{"token_id":"token-yes","condition_id":"0xcondition","bids":[{"price":"0.4200","size":"120.00"}],"asks":[{"price":"0.4300","size":"80.00"}],"timestamp":1760000000000,"last_trade_price":"0.4250","min_order_size":"1","tick_size":"0.001","neg_risk":false}
+```
+
+## Price and ticker
+
+Price returns `token_id`, `price`, `side`, and `timestamp`. Ticker returns `token_id`, `last_price`, `best_bid`, `best_ask`, and `timestamp`. A token without a trade can return an empty price; unavailable ticker fields can be null.
+
+## Price history
+
+`interval` must be `5m`, `15m`, `1h`, `4h`, or `1d`. `from` and `to` are required Unix milliseconds and the range is at most 14 days.
+
+```bash
+curl --get 'https://broker.dexbuilder.com/api/v4/event_markets/tokens/token-yes/price_history' \
+  --data-urlencode 'interval=1h' --data-urlencode 'from=1760000000000' --data-urlencode 'to=1760086400000'
+```
+
+Response: `{"history":[{"p":"0.4250","t":1760000000000}]}`.
+
+## Batch prices
+
+`token_ids` is a comma-separated list of at most 100 IDs. Invisible or unknown tokens are omitted and visible results keep request order.
