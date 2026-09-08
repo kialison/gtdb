@@ -1,0 +1,40 @@
+---
+title: List and Retrieve Markets
+sidebarTitle: List and Retrieve Markets
+description: List visible Event Markets markets, retrieve details, and query public trades.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Event and market discovery plus token market data are public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## List markets
+
+`GET /api/v4/event_markets/markets`
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `limit` | integer | No | Page size, 1–100 |
+| `cursor` | string | No | Previous `next_cursor` |
+| `market_id` | string | No | Gate composite market ID |
+| `event_id`, `slug`, `condition_id`, `tag_slug` | string | No | Market, event, condition, or tag filters |
+| `active`, `closed` | boolean | No | State filters |
+
+Response items include `market_id`, `event_id`, `slug`, multilingual `question`, `condition_id`, `status`, `outcomes`, `best_bid`, `best_ask`, `last_trade_price`, `volume`, and `volume_24hr`.
+
+## Market detail
+
+- `GET /api/v4/event_markets/markets/{market_id}`
+- `GET /api/v4/event_markets/markets/slug/{slug}`
+
+Detail adds `accepting_orders`, `enable_order_book`, `min_order_size`, `tick_size`, `neg_risk`, `resolution_source`, `resolved_at`, `winning_outcome`, and `winning_token_id`.
+
+## Market trades
+
+`GET /api/v4/event_markets/markets/{market_id}/trades` accepts `limit` and `cursor`. Each trade contains `trade_id`, `market_id`, `condition_id`, `token_id`, `price`, `size`, `side`, and `timestamp`; the response is `items` plus `next_cursor`.

@@ -1,0 +1,27 @@
+---
+title: API Reference Overview
+sidebarTitle: API Reference Overview
+description: Event Markets API conventions, visibility, pagination, and access boundaries.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Event and market discovery plus token market data are public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## Public data boundary
+
+Public event, market, trade, and token-price endpoints expose only visible records in the configured scope. The current implementation also applies a recent parent-event visibility window. A valid identifier can therefore return `404` when the resource is not visible.
+
+## Cursor pagination
+
+List responses use `items` and `next_cursor`. For the next request, pass the returned value as `cursor`; stop when it is empty. Public list endpoints accept at most 100 items per page. Offset pagination is not supported.
+
+## Time units
+
+Request filters `from`, `to`, `start_date_min`, `start_date_max`, `end_date_min`, and `end_date_max` use Unix milliseconds. Event and market date fields use Unix seconds. Price-history and candlestick timestamps use Unix milliseconds.

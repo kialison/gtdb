@@ -123,6 +123,14 @@
                       "event-markets/untitled-page-24",
                       "event-markets/untitled-page-25"
                     ]
+                  },
+                  {
+                    "group": "API Reference",
+                    "pages": [
+                      "event-markets/api/overview",
+                      "event-markets/api/events",
+                      "event-markets/api/markets"
+                    ]
                   }
                 ]
               },
@@ -173,6 +181,10 @@
                       "event-contracts/untitled-page-24",
                       "event-contracts/untitled-page-25"
                     ]
+                  },
+                  {
+                    "group": "API Reference",
+                    "pages": []
                   }
                 ]
               }

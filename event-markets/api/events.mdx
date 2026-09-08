@@ -1,0 +1,52 @@
+---
+title: List and Retrieve Events
+sidebarTitle: List and Retrieve Events
+description: List visible Event Markets events or retrieve one by ID or slug.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Event and market discovery plus token market data are public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## List events
+
+`GET /api/v4/event_markets/events`
+
+```bash
+curl --get 'https://broker.dexbuilder.com/api/v4/event_markets/events' \
+  --data-urlencode 'limit=20' \
+  --data-urlencode 'sort=start_date' \
+  --data-urlencode 'ascending=false' \
+  --data-urlencode 'active=true'
+```
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| `limit` | integer | No | Page size, 1–100 |
+| `cursor` | string | No | Cursor from the previous response |
+| `sort` | string | No | `start_date`, `start_time`, `end_date`, or `closed_time` |
+| `ascending` | boolean | No | Sort direction |
+| `event_id`, `slug`, `tag_slug` | string | No | Exact event or tag filters |
+| `active`, `closed` | boolean | No | State filters |
+| `start_date_min/max`, `end_date_min/max` | integer | No | Unix-millisecond date bounds |
+
+Response:
+
+```json
+{"items":[{"event_id":"event-123","slug":"example-event","title":{"en":"Example event"},"active":true,"closed":false,"start_date":1760000000,"end_date":1761000000,"volume":"125000.00","tags":[]}],"next_cursor":"opaque-cursor"}
+```
+
+Use `next_cursor` as the next request's `cursor` exactly as returned.
+
+## Get an event
+
+- `GET /api/v4/event_markets/events/{event_id}`
+- `GET /api/v4/event_markets/events/slug/{slug}`
+
+The detail response adds `description`, `resolution_source`, and embedded `markets` plus `markets_has_more`. Unknown or invisible events return `404`.
