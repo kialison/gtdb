@@ -1,0 +1,37 @@
+---
+title: "Fees: Structure, Rates, and Precision for Brokers"
+sidebarTitle: "Fees"
+description: "Fee formula, category rates, USDT symmetry around 50%, and precision rules for Event Contracts trading."
+---
+
+Fees on Event Contracts are calculated per trade using a symmetric formula that depends on share price and market category. We welcome brokers to negotiate and customize their fee structures with us and recommend the dynamic rate model. The default rates are listed below. We do not charge any other fees.
+
+## Fee Structure
+
+Fees are calculated using the following formula:
+
+```text
+fee = C × feeRate × p × (1 - p)
+```
+
+Where `C` is the number of shares traded and `p` is the price of the shares. See [Market Details](/event-contracts/untitled-page-12) to read the fee parameters for a market.
+
+The fee parameters differ by market category:
+
+| Category | Maker/Taker Fee Rate |
+| --- | --- |
+| Crypto | 0.07 |
+| Finance | 0.04 |
+| Economics | 0.05 |
+
+Fees are calculated in USDT and vary based on the share price. The fee amount in USDT is symmetric around 50% probability: a trade at 30¢ incurs the same dollar fee as a trade at 70¢.
+
+<Info>
+  Because the fee curve follows `p × (1 - p)`, fees peak at `p = 0.5` and approach zero as prices approach 0 or 1.
+</Info>
+
+## Fee Precision
+
+Fees are rounded to 5 decimal places. The smallest fee charged is `0.00001` USDT. Anything smaller rounds to zero, so very small trades near the extremes may incur no fee at all.
+
+Fees on Event Contracts are calculated per trade using a symmetric formula that depends on share price and market category. We welcome brokers to negotiate and customize their fee structures with us and recommend the dynamic rate model. The default rates are listed below. We do not charge any other fees.

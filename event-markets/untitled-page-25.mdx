@@ -1,0 +1,27 @@
+---
+title: "Error Codes"
+sidebarTitle: "Error Codes"
+description: "Reference for global HTTP error codes returned by authenticated Event Markets endpoints, including causes and how to resolve each response."
+---
+
+Event Markets APIs return standard HTTP status codes on every request. This page documents the global errors that can occur on any authenticated endpoint, along with the meaning of each response and how to recover.
+
+## Global Errors
+
+These errors can occur on **any authenticated endpoint**.
+
+### 401 Unauthorized
+
+`Unauthorized/Invalid api key` — Your API key is missing, expired, or invalid. Ensure you're sending all required [authentication headers](/event-markets/untitled-page-2).
+
+### 401 Unauthorized
+
+`Invalid L1 Request headers` — Your L1 authentication headers (HMAC signature) are malformed or the signature doesn't match. See [Authentication](/event-markets/untitled-page-2).
+
+### 503 Service Unavailable
+
+`Trading is currently disabled. Check polymarket.com for updates` — The exchange is temporarily paused. No orders (including cancels) are accepted.
+
+### 429 Too Many Requests
+
+`Too Many Requests` — You've exceeded the rate limit. Back off and retry with exponential backoff.

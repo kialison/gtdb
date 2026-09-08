@@ -1,0 +1,77 @@
+---
+title: "Event Markets"
+sidebarTitle: "Event Markets"
+description: "Learn how event markets work: peer-to-peer trading on real-world outcomes, with prices that reflect probabilities."
+---
+
+Event Markets is a platform where users trade on the outcomes of real-world events. Instead of betting against a house, you trade shares with other users in an open, peer-to-peer market. Prices reflect the market's collective belief in the probability of an event occurring.
+
+## Event Markets
+
+<Frame>
+  ```mermaid
+  flowchart LR
+Deposit([Deposit]) --> TC[Token<br/>Creation]
+TC --> Trade[Trade]
+TC --> OB[Order<br/>Book]
+Trade --> Settlement[Settlement]
+OB --> Buy([Buy])
+OB --> Sell([Sell])
+Settlement --> Resolution[Resolution]
+  ```
+</Frame>
+
+## Prices Are Probabilities
+
+Every share on event markets is priced between 0.00 and 1.00. The price represents the market's belief in the probability of that outcome occurring.
+
+For example, if "Yes" shares for an event are trading at \$0.65, the market believes there's approximately a 65% chance the event will happen.
+
+## Collateral and Tokens
+
+Event markets uses USD as collateral. Every Yes/No pair is fully backed:
+
+- \$1 USDT creates one Yes share and one No share
+- Winning shares are redeemable for \$1.00
+- Losing shares are worth \$0.00
+
+Shares are represented as tokens using the [Gnosis Conditional Token Framework](https://docs.gnosis.io/conditionaltokens/) (ERC1155 standard), enabling seamless onchain trading and settlement.
+
+## Trading
+
+Event Markets uses a peer-to-peer order book (CLOB) for trading. You trade directly with other users, not against the house.
+
+- Buy shares when you think the market underestimates the probability
+- Sell shares when you think the market overestimates the probability
+- Exit anytime, sell your position before resolution to lock in profits or cut losses
+
+| Action | When to Use | Profit Scenario |
+| --- | --- | --- |
+| Buy Yes | You think the probability is too low | Event occurs |
+| Buy No | You think the probability is too high | Event does not occur |
+| Sell | Lock in gains or limit losses | Price moves in your favor |
+
+## Resolution
+
+When an event concludes, markets are resolved through the UMA Optimistic Oracle:
+
+1. A proposer submits the outcome with a bond
+2. There's a challenge period where anyone can dispute
+3. If disputed, UMA token holders vote on the correct resolution
+4. Winning tokens become redeemable for \$1 USDT
+
+This community-driven process ensures fair and accurate market resolution.
+
+## Getting Started
+
+Ready to start trading?
+
+<CardGroup cols={2}>
+  <Card title="Trading Quickstart" icon="copyright" href="/quickstart">
+    Set up your account and make your first trade.
+  </Card>
+
+  <Card title="Explore Markets" icon="copyright" href="/api-reference/introduction">
+    Browse active event markets on Dexbuilder.
+  </Card>
+</CardGroup>

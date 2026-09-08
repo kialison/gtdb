@@ -1,0 +1,1069 @@
+---
+title: "Manage Orders"
+sidebarTitle: "Manage Orders"
+description: "Learn how to track and manage orders after submitting them by reading state, canceling resting liquidity, and protecting orders with heartbeats."
+---
+
+After submitting an order, use authenticated account reads to check its current state, reconcile open orders and resulting trades, and cancel liquidity you no longer want resting on the book.
+
+## Place a Limit Order
+
+Look up a single order by its ID. Use this to check the current status of an order you already know about, rather than scanning the full list of open orders.
+
+```bash API
+Fetch the order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/order/$ORDER_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/order/$ORDER_ID"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the order in its wire response shape:
+
+<Accordion title="Order response">
+  <Tabs>
+    <Tab title="Order Type">
+      ```typescript
+      type Order = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        side: string;
+        price: string;
+        original_size: string;
+        size_matched: string;
+        outcome: string;
+        order_type: string;
+        status: string;
+        associate_trades?: string[];
+        created_at: number;
+        expiration: string;
+      };
+      ```
+    </Tab>
+    <Tab title="Order Example">
+      ```json
+      {
+        "id": "0x...",
+        "market": "0x...",
+        "asset_id": "1075...",
+        "owner": "<api_key_owner>",
+        "maker_address": "<signer_address>",
+        "side": "BUY",
+        "price": "0.52",
+        "original_size": "10",
+        "size_matched": "5.2",
+        "outcome": "Yes",
+        "order_type": "GTC",
+        "status": "LIVE",
+        "created_at": 1748779205,
+        "expiration": "0"
+      }
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+An `expiration` of `"0"` means the order is GTC and never expires on a timer.
+
+See [Order Statuses](/event-contracts/untitled-page-9) to interpret the returned `status`.
+
+## List Open Orders
+
+Retrieve every resting order on the account, optionally narrowed to one token, one market, or a specific order ID. Use this to reconcile local state with what's actually live on the book.
+
+```bash API
+List open orders with an authenticated CLOB request, optionally filtering by id, market, or asset_id. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/orders?asset_id=$YES_TOKEN_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/orders"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the matching orders in its wire response shape:
+
+<Accordion title="Orders response">
+  <Tabs>
+    <Tab title="Order Type">
+      ```typescript
+      type Order = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        side: string;
+        price: string;
+        original_size: string;
+        size_matched: string;
+        outcome: string;
+        order_type: string;
+        status: string;
+        associate_trades?: string[];
+        created_at: number;
+        expiration: string;
+      }[];
+      ```
+    </Tab>
+    <Tab title="Order Example">
+      ```json
+      [
+        {
+          "id": "0x...",
+          "market": "0x...",
+          "asset_id": "1075...",
+          "owner": "<api_key_owner>",
+          "maker_address": "<signer_address>",
+          "side": "BUY",
+          "price": "0.52",
+          "original_size": "10",
+          "size_matched": "0",
+          "outcome": "Yes",
+          "order_type": "GTC",
+          "status": "LIVE",
+          "created_at": 1748779205,
+          "expiration": "0"
+        }
+      ]
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+See [Order Statuses](/event-contracts/untitled-page-9) to interpret each order's `status`.
+
+## List Account Trades
+
+Retrieve executed fills for the account, as opposed to orders that are still resting on the book. Use this to reconstruct fill history, compute realized position size, or audit what actually matched.
+
+```bash API
+List account trades with an authenticated CLOB request, optionally filtering by id, market, asset_id, maker_address, after, or before. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/trades?market=$CONDITION_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/trades"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the matching trades in its wire response shape:
+
+<Accordion title="Trades response">
+  <Tabs>
+    <Tab title="Trade Type">
+      ```typescript
+      type MakerOrder = {
+        order_id: string;
+        asset_id: string;
+        maker_address: string;
+        owner: string;
+        side: string;
+        price: string;
+        matched_amount: string;
+        outcome: string;
+        fee_rate_bps: string;
+      };
+      
+      type Trade = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        taker_order_id: string;
+        side: string;
+        trader_side: string;
+        price: string;
+        size: string;
+        outcome: string;
+        status: string;
+        fee_rate_bps?: string;
+        bucket_index: number;
+        transaction_hash?: string;
+        maker_orders: MakerOrder[];
+        match_time: string;
+        last_update: string;
+      };
+      ```
+    </Tab>
+    <Tab title="Trade Example">
+      ```json
+      [
+        {
+          "id": "TRADE_ID",
+          "market": "0x...",
+          "asset_id": "1075...",
+          "owner": "<api_key_owner>",
+          "maker_address": "<signer_address>",
+          "taker_order_id": "0x...",
+          "side": "BUY",
+          "trader_side": "TAKER",
+          "price": "0.52",
+          "size": "10",
+          "outcome": "Yes",
+          "status": "TRADE_STATUS_MATCHED",
+          "bucket_index": 0,
+          "maker_orders": [],
+          "match_time": "1748779205",
+          "last_update": "1748779205"
+        }
+      ]
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+See [Trade Statuses](/event-contracts/untitled-page-9) to follow each trade's `status` through settlement.
+
+## List Builder Trades
+
+Retrieve matched trades attributed to a builder code across the accounts your application serves. Use this instead of an account trade read when you need to reconcile fills or measure activity for the builder integration as a whole. Orders do not appear here until they match.
+
+```bash API
+List trades attributed to a builder code with a public CLOB request. Filter the results with id, market, asset_id, after, or before when needed:
+
+curl "https://clob.polymarket.com/builder/trades?builder_code=$POLYMARKET_BUILDER_CODE"
+```
+
+The response contains the matching trades and a cursor for the next page:
+
+<Accordion title="Builder trades response">
+  ```json
+  {
+    "limit": 300,
+    "next_cursor": "LTE=",
+    "count": 1,
+    "data": [
+      {
+        "id": "TRADE_ID",
+        "tradeType": "TAKER",
+        "takerOrderHash": "0xff354cd7ca7539dfa9c28d90943ab5779a4eac34b9b37a757d7b32bdfb1...",
+        "builder": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f75",
+        "assetId": "1075058827677314893583499125139453995603934829696567008248959705004...",
+        "side": "BUY",
+        "size": "10",
+        "sizeUsdc": "5.2",
+        "price": "0.52",
+        "status": "TRADE_STATUS_MATCHED",
+        "outcome": "Yes",
+        "outcomeIndex": 0,
+        "owner": "9180014b-33c8-9240-a14b-bdca11c0a465",
+        "maker": "0x1234567890123456789012345678901234567890",
+        "transactionHash": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+        "matchTime": "1748779205",
+        "bucketIndex": 0,
+        "fee": "0",
+        "feeUsdc": "0",
+        "err_msg": null,
+        "createdAt": "2026-06-01T12:00:05Z",
+        "updatedAt": "2026-06-01T12:00:05Z"
+      }
+    ]
+  }
+  ```
+</Accordion>
+
+Pass `next_cursor` back as the `next_cursor` query parameter to request the next page. The terminal cursor is `LTE=`.
+
+See [Builder Programs](/event-contracts/untitled-page-3) to learn how attribution works.
+
+## Cancel Orders
+
+Cancel only as broadly as needed. Start with known order IDs, use a market or token filter when withdrawing a set of quotes, and reserve account-wide cancellation for exceptional situations. Cancellation remains available while the exchange is in cancel-only mode, when new orders are rejected. For a partially filled order, cancellation removes only its unfilled remainder.
+
+### Cancel Orders by ID
+
+Cancel one order when you know its ID. To cancel a known set of orders in one request, submit a batch of up to 3,000 IDs. Duplicate IDs in the batch are ignored.
+
+```bash API
+Cancel one order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/order" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"orderID":"'"$ORDER_ID"'"}'
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated from the exact serialized body:
+
+```text
+body = '{"orderID":"' + order_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/order" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+To cancel multiple orders, send an array containing 1 to 3,000 order IDs:
+
+```bash API
+curl -X DELETE "https://clob.polymarket.com/orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '["'"$ORDER_ID_1"'","'"$ORDER_ID_2"'"]'
+```
+
+Sign the batch request using its path and exact serialized array:
+
+```text
+body = '["' + order_id_1 + '","' + order_id_2 + '"]'
+message = <clob_request_timestamp> + "DELETE" + "/orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+Both requests return `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+### Cancel Market Orders
+
+Cancel by token to withdraw orders for one outcome, or by market to withdraw orders for every outcome in the condition. At least one filter is required.
+
+```bash API
+Cancel every open order for one outcome with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/cancel-market-orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"asset_id":"'"$TOKEN_ID"'"}'
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated from the exact serialized body:
+
+```text
+body = '{"asset_id":"' + token_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/cancel-market-orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+To cancel every open order for a condition, send its condition ID as `market` and sign that exact body instead:
+
+```bash API
+curl -X DELETE "https://clob.polymarket.com/cancel-market-orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"market":"'"$CONDITION_ID"'"}'
+```
+
+Sign the condition-scoped request using the same path and its exact serialized body:
+
+```text
+body = '{"market":"' + condition_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/cancel-market-orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+Both requests return `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+### Cancel All Orders
+
+Use account-wide cancellation when you need to remove every resting order, such as during an emergency shutdown.
+
+This action cancels every open order associated with the authenticated CLOB API credentials.
+
+```bash API
+Cancel every open order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/cancel-all" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated without a request body:
+
+```text
+message = <clob_request_timestamp> + "DELETE" + "/cancel-all"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The request returns `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+## Cancellation Results
+
+A cancellation can succeed for only some of the requested orders. Reconcile the result before retrying: it identifies the orders that were canceled and gives a reason for each order that could not be canceled.
+
+```bash API
+The API returns the cancellation result as JSON. This response shows one canceled order and one order that had already matched:
+```
+
+<Accordion title="Cancellation result">
+  ```json Response
+  {
+    "canceled": ["ORDER_ID_1"],
+    "not_canceled": {
+      "ORDER_ID_2": "order already matched"
+    }
+  }
+  ```
+</Accordion>
+
+## Order Heartbeats
+
+Use order heartbeats to cancel resting orders automatically if your trading process stops responding. Once the first heartbeat is accepted, the CLOB expects the account to keep sending them; if a valid heartbeat is not received within 10 seconds, all open orders owned by those CLOB API credentials are canceled. The cancellation check runs every five seconds, so cancellation may occur up to five seconds after the timeout.
+
+<Note>
+  Send a heartbeat every **5 seconds**.
+</Note>
+
+<Steps>
+  <Step title="Start the Heartbeat">
+    Send an empty `heartbeat_id` to `POST /v1/heartbeats`. Authenticate the request with the same CLOB API credentials that own the orders you want to protect:
+
+    ```bash API
+    curl -X POST "https://clob.polymarket.com/v1/heartbeats" \
+      -H "Content-Type: application/json" \
+      -H "POLY_ADDRESS: <signer_address>" \
+      -H "POLY_API_KEY: <clob_api_key>" \
+      -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+      -H "POLY_SIGNATURE: <clob_l2_signature>" \
+      -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+      --data '{"heartbeat_id":""}'
+    ```
+
+    Using the signer address and CLOB API credentials from API Authentication, create a fresh `<clob_request_timestamp>` and generate `<clob_l2_signature>` from the exact serialized body sent over the wire:
+
+    ```text
+    body = '{"heartbeat_id":""}'
+    message = <clob_request_timestamp> + "POST" + "/v1/heartbeats" + body
+    
+    clob_l2_signature = urlsafeBase64WithPadding(
+        HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+    )
+    ```
+
+    Save the ID returned in the response:
+
+    ```json
+    {
+      "heartbeat_id": "<heartbeat_id>"
+    }
+    ```
+  </Step>
+  <Step title="Continue the Heartbeat">
+    After five seconds, send the latest `heartbeat_id` back to the same route. Each successful response returns a new ID to use for the following heartbeat:
+
+    ```bash API
+    curl -X POST "https://clob.polymarket.com/v1/heartbeats" \
+      -H "Content-Type: application/json" \
+      -H "POLY_ADDRESS: <signer_address>" \
+      -H "POLY_API_KEY: <clob_api_key>" \
+      -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+      -H "POLY_SIGNATURE: <clob_l2_signature>" \
+      -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+      --data '{"heartbeat_id":"<heartbeat_id>"}'
+    ```
+
+    Create a fresh `<clob_request_timestamp>` and `<clob_l2_signature>` for this request, replacing `body` in the signing calculation above with the exact serialized body containing the latest ID.
+
+    If the ID is invalid or expired, the CLOB responds with `400 Bad Request` and supplies the expected ID. Sign a new request with that ID and retry:
+
+    ```json
+    {
+      "error_msg": "Invalid Heartbeat ID",
+      "heartbeat_id": "<expected_heartbeat_id>"
+    }
+    ```
+  </Step>
+</Steps>
+
+After submitting an order, use authenticated account reads to check its current state, reconcile open orders and resulting trades, and cancel liquidity you no longer want resting on the book.
+
+## Place a Limit Order
+
+Look up a single order by its ID. Use this to check the current status of an order you already know about, rather than scanning the full list of open orders.
+
+```bash API
+Fetch the order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/order/$ORDER_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/order/$ORDER_ID"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the order in its wire response shape:
+
+<Accordion title="Order response">
+  <Tabs>
+    <Tab title="Order Type">
+      ```typescript
+      type Order = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        side: string;
+        price: string;
+        original_size: string;
+        size_matched: string;
+        outcome: string;
+        order_type: string;
+        status: string;
+        associate_trades?: string[];
+        created_at: number;
+        expiration: string;
+      };
+      ```
+    </Tab>
+    <Tab title="Order Example">
+      ```json
+      {
+        "id": "0x...",
+        "market": "0x...",
+        "asset_id": "1075...",
+        "owner": "<api_key_owner>",
+        "maker_address": "<signer_address>",
+        "side": "BUY",
+        "price": "0.52",
+        "original_size": "10",
+        "size_matched": "5.2",
+        "outcome": "Yes",
+        "order_type": "GTC",
+        "status": "LIVE",
+        "created_at": 1748779205,
+        "expiration": "0"
+      }
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+An `expiration` of `"0"` means the order is GTC and never expires on a timer.
+
+See [Order Statuses](/event-contracts/untitled-page-9) to interpret the returned `status`.
+
+## List Open Orders
+
+Retrieve every resting order on the account, optionally narrowed to one token, one market, or a specific order ID. Use this to reconcile local state with what's actually live on the book.
+
+```bash API
+List open orders with an authenticated CLOB request, optionally filtering by id, market, or asset_id. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/orders?asset_id=$YES_TOKEN_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/orders"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the matching orders in its wire response shape:
+
+<Accordion title="Orders response">
+  <Tabs>
+    <Tab title="Order Type">
+      ```typescript
+      type Order = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        side: string;
+        price: string;
+        original_size: string;
+        size_matched: string;
+        outcome: string;
+        order_type: string;
+        status: string;
+        associate_trades?: string[];
+        created_at: number;
+        expiration: string;
+      }[];
+      ```
+    </Tab>
+    <Tab title="Order Example">
+      ```json
+      [
+        {
+          "id": "0x...",
+          "market": "0x...",
+          "asset_id": "1075...",
+          "owner": "<api_key_owner>",
+          "maker_address": "<signer_address>",
+          "side": "BUY",
+          "price": "0.52",
+          "original_size": "10",
+          "size_matched": "0",
+          "outcome": "Yes",
+          "order_type": "GTC",
+          "status": "LIVE",
+          "created_at": 1748779205,
+          "expiration": "0"
+        }
+      ]
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+See [Order Statuses](/event-contracts/untitled-page-9) to interpret each order's `status`.
+
+## List Account Trades
+
+Retrieve executed fills for the account, as opposed to orders that are still resting on the book. Use this to reconstruct fill history, compute realized position size, or audit what actually matched.
+
+```bash API
+List account trades with an authenticated CLOB request, optionally filtering by id, market, asset_id, maker_address, after, or before. See API Authentication for the complete signing flow.
+
+curl "https://clob.polymarket.com/data/trades?market=$CONDITION_ID" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated as follows:
+
+```text
+message = <clob_request_timestamp> + "GET" + "/data/trades"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The CLOB returns the matching trades in its wire response shape:
+
+<Accordion title="Trades response">
+  <Tabs>
+    <Tab title="Trade Type">
+      ```typescript
+      type MakerOrder = {
+        order_id: string;
+        asset_id: string;
+        maker_address: string;
+        owner: string;
+        side: string;
+        price: string;
+        matched_amount: string;
+        outcome: string;
+        fee_rate_bps: string;
+      };
+      
+      type Trade = {
+        id: string;
+        market: string;
+        asset_id: string;
+        owner: string;
+        maker_address: string;
+        taker_order_id: string;
+        side: string;
+        trader_side: string;
+        price: string;
+        size: string;
+        outcome: string;
+        status: string;
+        fee_rate_bps?: string;
+        bucket_index: number;
+        transaction_hash?: string;
+        maker_orders: MakerOrder[];
+        match_time: string;
+        last_update: string;
+      };
+      ```
+    </Tab>
+    <Tab title="Trade Example">
+      ```json
+      [
+        {
+          "id": "TRADE_ID",
+          "market": "0x...",
+          "asset_id": "1075...",
+          "owner": "<api_key_owner>",
+          "maker_address": "<signer_address>",
+          "taker_order_id": "0x...",
+          "side": "BUY",
+          "trader_side": "TAKER",
+          "price": "0.52",
+          "size": "10",
+          "outcome": "Yes",
+          "status": "TRADE_STATUS_MATCHED",
+          "bucket_index": 0,
+          "maker_orders": [],
+          "match_time": "1748779205",
+          "last_update": "1748779205"
+        }
+      ]
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+See [Trade Statuses](/event-contracts/untitled-page-9) to follow each trade's `status` through settlement.
+
+## List Builder Trades
+
+Retrieve matched trades attributed to a builder code across the accounts your application serves. Use this instead of an account trade read when you need to reconcile fills or measure activity for the builder integration as a whole. Orders do not appear here until they match.
+
+```bash API
+List trades attributed to a builder code with a public CLOB request. Filter the results with id, market, asset_id, after, or before when needed:
+
+curl "https://clob.polymarket.com/builder/trades?builder_code=$POLYMARKET_BUILDER_CODE"
+```
+
+The response contains the matching trades and a cursor for the next page:
+
+<Accordion title="Builder trades response">
+  ```json
+  {
+    "limit": 300,
+    "next_cursor": "LTE=",
+    "count": 1,
+    "data": [
+      {
+        "id": "TRADE_ID",
+        "tradeType": "TAKER",
+        "takerOrderHash": "0xff354cd7ca7539dfa9c28d90943ab5779a4eac34b9b37a757d7b32bdfb1...",
+        "builder": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f75",
+        "assetId": "1075058827677314893583499125139453995603934829696567008248959705004...",
+        "side": "BUY",
+        "size": "10",
+        "sizeUsdc": "5.2",
+        "price": "0.52",
+        "status": "TRADE_STATUS_MATCHED",
+        "outcome": "Yes",
+        "outcomeIndex": 0,
+        "owner": "9180014b-33c8-9240-a14b-bdca11c0a465",
+        "maker": "0x1234567890123456789012345678901234567890",
+        "transactionHash": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+        "matchTime": "1748779205",
+        "bucketIndex": 0,
+        "fee": "0",
+        "feeUsdc": "0",
+        "err_msg": null,
+        "createdAt": "2026-06-01T12:00:05Z",
+        "updatedAt": "2026-06-01T12:00:05Z"
+      }
+    ]
+  }
+  ```
+</Accordion>
+
+Pass `next_cursor` back as the `next_cursor` query parameter to request the next page. The terminal cursor is `LTE=`.
+
+See [Builder Programs](/event-contracts/untitled-page-3) to learn how attribution works.
+
+## Cancel Orders
+
+Cancel only as broadly as needed. Start with known order IDs, use a market or token filter when withdrawing a set of quotes, and reserve account-wide cancellation for exceptional situations. Cancellation remains available while the exchange is in cancel-only mode, when new orders are rejected. For a partially filled order, cancellation removes only its unfilled remainder.
+
+### Cancel Orders by ID
+
+Cancel one order when you know its ID. To cancel a known set of orders in one request, submit a batch of up to 3,000 IDs. Duplicate IDs in the batch are ignored.
+
+```bash API
+Cancel one order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/order" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"orderID":"'"$ORDER_ID"'"}'
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated from the exact serialized body:
+
+```text
+body = '{"orderID":"' + order_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/order" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+To cancel multiple orders, send an array containing 1 to 3,000 order IDs:
+
+```bash API
+curl -X DELETE "https://clob.polymarket.com/orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '["'"$ORDER_ID_1"'","'"$ORDER_ID_2"'"]'
+```
+
+Sign the batch request using its path and exact serialized array:
+
+```text
+body = '["' + order_id_1 + '","' + order_id_2 + '"]'
+message = <clob_request_timestamp> + "DELETE" + "/orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+Both requests return `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+### Cancel Market Orders
+
+Cancel by token to withdraw orders for one outcome, or by market to withdraw orders for every outcome in the condition. At least one filter is required.
+
+```bash API
+Cancel every open order for one outcome with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/cancel-market-orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"asset_id":"'"$TOKEN_ID"'"}'
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated from the exact serialized body:
+
+```text
+body = '{"asset_id":"' + token_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/cancel-market-orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+To cancel every open order for a condition, send its condition ID as `market` and sign that exact body instead:
+
+```bash API
+curl -X DELETE "https://clob.polymarket.com/cancel-market-orders" \
+  -H "Content-Type: application/json" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  --data '{"market":"'"$CONDITION_ID"'"}'
+```
+
+Sign the condition-scoped request using the same path and its exact serialized body:
+
+```text
+body = '{"market":"' + condition_id + '"}'
+message = <clob_request_timestamp> + "DELETE" + "/cancel-market-orders" + body
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+Both requests return `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+### Cancel All Orders
+
+Use account-wide cancellation when you need to remove every resting order, such as during an emergency shutdown.
+
+This action cancels every open order associated with the authenticated CLOB API credentials.
+
+```bash API
+Cancel every open order with an authenticated CLOB request. See API Authentication for the complete signing flow.
+
+curl -X DELETE "https://clob.polymarket.com/cancel-all" \
+  -H "POLY_ADDRESS: <signer_address>" \
+  -H "POLY_API_KEY: <clob_api_key>" \
+  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+  -H "POLY_SIGNATURE: <clob_l2_signature>" \
+  -H "POLY_TIMESTAMP: <clob_request_timestamp>"
+```
+
+Where `<clob_request_timestamp>` is a Unix timestamp and `<clob_l2_signature>` is generated without a request body:
+
+```text
+message = <clob_request_timestamp> + "DELETE" + "/cancel-all"
+
+clob_l2_signature = urlsafeBase64WithPadding(
+    HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+)
+```
+
+The request returns `200 OK` with a [cancellation result](#cancellation-results) containing `canceled` and `not_canceled`.
+
+## Cancellation Results
+
+A cancellation can succeed for only some of the requested orders. Reconcile the result before retrying: it identifies the orders that were canceled and gives a reason for each order that could not be canceled.
+
+```bash API
+The API returns the cancellation result as JSON. This response shows one canceled order and one order that had already matched:
+```
+
+<Accordion title="Cancellation result">
+  ```json Response
+  {
+    "canceled": ["ORDER_ID_1"],
+    "not_canceled": {
+      "ORDER_ID_2": "order already matched"
+    }
+  }
+  ```
+</Accordion>
+
+## Order Heartbeats
+
+Use order heartbeats to cancel resting orders automatically if your trading process stops responding. Once the first heartbeat is accepted, the CLOB expects the account to keep sending them; if a valid heartbeat is not received within 10 seconds, all open orders owned by those CLOB API credentials are canceled. The cancellation check runs every five seconds, so cancellation may occur up to five seconds after the timeout.
+
+<Note>
+  Send a heartbeat every **5 seconds**.
+</Note>
+
+<Steps>
+  <Step title="Start the Heartbeat">
+    Send an empty `heartbeat_id` to `POST /v1/heartbeats`. Authenticate the request with the same CLOB API credentials that own the orders you want to protect:
+
+    ```bash API
+    curl -X POST "https://clob.polymarket.com/v1/heartbeats" \
+      -H "Content-Type: application/json" \
+      -H "POLY_ADDRESS: <signer_address>" \
+      -H "POLY_API_KEY: <clob_api_key>" \
+      -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+      -H "POLY_SIGNATURE: <clob_l2_signature>" \
+      -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+      --data '{"heartbeat_id":""}'
+    ```
+
+    Using the signer address and CLOB API credentials from API Authentication, create a fresh `<clob_request_timestamp>` and generate `<clob_l2_signature>` from the exact serialized body sent over the wire:
+
+    ```text
+    body = '{"heartbeat_id":""}'
+    message = <clob_request_timestamp> + "POST" + "/v1/heartbeats" + body
+    
+    clob_l2_signature = urlsafeBase64WithPadding(
+        HMAC-SHA256(base64Decode(<clob_api_secret>), message)
+    )
+    ```
+
+    Save the ID returned in the response:
+
+    ```json
+    {
+      "heartbeat_id": "<heartbeat_id>"
+    }
+    ```
+  </Step>
+  <Step title="Continue the Heartbeat">
+    After five seconds, send the latest `heartbeat_id` back to the same route. Each successful response returns a new ID to use for the following heartbeat:
+
+    ```bash API
+    curl -X POST "https://clob.polymarket.com/v1/heartbeats" \
+      -H "Content-Type: application/json" \
+      -H "POLY_ADDRESS: <signer_address>" \
+      -H "POLY_API_KEY: <clob_api_key>" \
+      -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
+      -H "POLY_SIGNATURE: <clob_l2_signature>" \
+      -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+      --data '{"heartbeat_id":"<heartbeat_id>"}'
+    ```
+
+    Create a fresh `<clob_request_timestamp>` and `<clob_l2_signature>` for this request, replacing `body` in the signing calculation above with the exact serialized body containing the latest ID.
+
+    If the ID is invalid or expired, the CLOB responds with `400 Bad Request` and supplies the expected ID. Sign a new request with that ID and retry:
+
+    ```json
+    {
+      "error_msg": "Invalid Heartbeat ID",
+      "heartbeat_id": "<expected_heartbeat_id>"
+    }
+    ```
+  </Step>
+</Steps>

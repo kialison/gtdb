@@ -1,0 +1,179 @@
+---
+title: "Real-Time Order Updates"
+sidebarTitle: "Real-Time Order Updates"
+description: "React to authenticated order and trade activity as it happens with the CLOB user WebSocket stream."
+---
+
+React to authenticated order and trade activity as it happens.
+
+Use real-time order updates to keep your view of a trading account current without polling. The user stream reports changes to the account's orders and the trades created when those orders match. For public order-book and market updates, see [Real-Time Data](/event-contracts/untitled-page-8).
+
+## User Stream
+
+The user stream delivers order changes and trade updates for the authenticated account. Subscribe without a market filter to follow the entire account, or provide condition IDs to follow selected markets.
+
+Connect to the authenticated user WebSocket:
+
+```text API
+wss://ws-subscriptions-clob.polymarket.com/ws/user
+```
+
+<Note>
+  The user WebSocket uses an application-level heartbeat. Send the text frame `PING` every 10 seconds; the server replies with `PONG`.
+</Note>
+
+Once connected, send a `user` subscription frame with the CLOB API credentials created through [API Authentication](/event-contracts/untitled-page-18):
+
+```json
+{
+  "auth": {
+    "apiKey": "<clob_api_key>",
+    "secret": "<clob_api_secret>",
+    "passphrase": "<clob_api_passphrase>"
+  },
+  "type": "user"
+}
+```
+
+<Warning>
+  Send the subscription frame immediately after connecting. The server may close a connection that remains unsubscribed.
+</Warning>
+
+<Warning>
+  Keep CLOB API credentials in a server environment. Never expose them in client-side code.
+</Warning>
+
+On the wire, `event_type` distinguishes order and trade events. For an order event, `type` identifies whether the order was placed, updated, or canceled.
+
+<Accordion title="User Events">
+  <Tabs>
+    <Tab title="Order Update">
+      ```json
+      {
+        "event_type": "order",
+        "id": "<order_id>",
+        "owner": "<clob_api_key>",
+        "market": "<condition_id>",
+        "asset_id": "<token_id>",
+        "side": "BUY",
+        "order_owner": "<clob_api_key>",
+        "original_size": "10",
+        "size_matched": "0",
+        "price": "0.52",
+        "associate_trades": null,
+        "outcome": "Yes",
+        "type": "PLACEMENT",
+        "created_at": "1782753357",
+        "expiration": "0",
+        "order_type": "GTC",
+        "status": "LIVE",
+        "maker_address": "<maker_address>",
+        "timestamp": "1782753357257"
+      }
+      ```
+    </Tab>
+    <Tab title="Trade Update">
+      ```json
+      {
+        "event_type": "trade",
+        "type": "TRADE",
+        "id": "<trade_id>",
+        "taker_order_id": "<order_id>",
+        "market": "<condition_id>",
+        "asset_id": "<token_id>",
+        "side": "BUY",
+        "size": "10",
+        "fee_rate_bps": "0",
+        "price": "0.52",
+        "status": "MATCHED",
+        "match_time": "1782753357",
+        "last_update": "1782753357",
+        "outcome": "Yes",
+        "owner": "<clob_api_key>",
+        "trade_owner": "<clob_api_key>",
+        "maker_address": "<maker_address>",
+        "transaction_hash": null,
+        "bucket_index": 0,
+        "maker_orders": [
+          {
+            "order_id": "<maker_order_id>",
+            "owner": "<maker_clob_api_key>",
+            "maker_address": "<maker_address>",
+            "matched_amount": "10",
+            "price": "0.52",
+            "fee_rate_bps": "0",
+            "asset_id": "<token_id>",
+            "outcome": "Yes",
+            "outcome_index": 0,
+            "side": "SELL"
+          }
+        ],
+        "trader_side": "TAKER",
+        "timestamp": "1782753357257"
+      }
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+To receive updates only for selected markets, include their condition IDs in the initial subscription frame:
+
+```json
+{
+  "auth": {
+    "apiKey": "<clob_api_key>",
+    "secret": "<clob_api_secret>",
+    "passphrase": "<clob_api_passphrase>"
+  },
+  "markets": ["<condition_id>"],
+  "type": "user"
+}
+```
+
+You can add or remove market filters without reconnecting:
+
+<Tabs>
+  <Tab title="Subscribe">
+    ```json
+    {
+      "operation": "subscribe",
+      "markets": ["<condition_id>"]
+    }
+    ```
+  </Tab>
+  <Tab title="Unsubscribe">
+    ```json
+    {
+      "operation": "unsubscribe",
+      "markets": ["<condition_id>"]
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Understand Order Updates
+
+Order updates tell you why the account's open-order state changed:
+
+| Update | Meaning |
+| --- | --- |
+| Placement | A new order was accepted. |
+| Update | Some or all of the order matched. |
+| Cancellation | The remaining open amount was canceled. |
+
+## Understand Trade Updates
+
+Trade updates follow a match through onchain settlement. Confirmation and permanent failure are terminal; a trade being retried may later be mined and confirmed.
+
+| State | Terminal | Meaning |
+| --- | --- | --- |
+| Matched, not broadcast | No | The orders matched before an onchain transaction was broadcast. |
+| Matched | No | The orders matched and the transaction was submitted for execution. |
+| Mined | No | The transaction was observed onchain but has not reached finality. |
+| Confirmed | Yes | The trade reached finality successfully. |
+| Retrying | No | Settlement failed temporarily and is being retried. |
+| Failed | Yes | Settlement failed permanently. |
+
+## Recover After Reconnecting
+
+Real-time updates do not replace authoritative account reads or replay every change missed during a disconnection. After reconnecting, fetch the account's open orders and recent trades from [Manage Orders](/event-contracts/untitled-page-20), then resume applying new stream events from that refreshed state.

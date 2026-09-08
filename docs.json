@@ -71,7 +71,114 @@
         ]
       },
       {
-        "language": "en"
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Introduce",
+            "groups": [
+              {
+                "group": "Event Markets",
+                "pages": [
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "event-markets/untitled-page",
+                      "event-markets/untitled-page-2",
+                      "event-markets/untitled-page-3"
+                    ]
+                  },
+                  {
+                    "group": "Core Concepts",
+                    "pages": [
+                      "event-markets/untitled-page-4",
+                      "event-markets/untitled-page-5",
+                      "event-markets/untitled-page-6",
+                      "event-markets/untitled-page-7",
+                      "event-markets/untitled-page-8",
+                      "event-markets/untitled-page-9"
+                    ]
+                  },
+                  {
+                    "group": "Market Order",
+                    "pages": [
+                      "event-markets/untitled-page-10",
+                      "event-markets/untitled-page-11",
+                      "event-markets/untitled-page-12",
+                      "event-markets/untitled-page-13",
+                      "event-markets/untitled-page-14",
+                      "event-markets/untitled-page-15",
+                      "event-markets/untitled-page-16"
+                    ]
+                  },
+                  {
+                    "group": "Trading",
+                    "pages": [
+                      "event-markets/untitled-page-18",
+                      "event-markets/untitled-page-17",
+                      "event-markets/untitled-page-19",
+                      "event-markets/untitled-page-20",
+                      "event-markets/untitled-page-21",
+                      "event-markets/untitled-page-22",
+                      "event-markets/untitled-page-23",
+                      "event-markets/untitled-page-24",
+                      "event-markets/untitled-page-25"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Event Contracts",
+                "pages": [
+                  {
+                    "group": "Getting Started",
+                    "pages": [
+                      "event-contracts/untitled-page",
+                      "event-contracts/untitled-page-6",
+                      "event-contracts/untitled-page-3"
+                    ]
+                  },
+                  {
+                    "group": "Core Concepts",
+                    "pages": [
+                      "event-contracts/untitled-page-4",
+                      "event-contracts/untitled-page-5",
+                      "event-contracts/untitled-page-2",
+                      "event-contracts/untitled-page-7",
+                      "event-contracts/untitled-page-8",
+                      "event-contracts/untitled-page-9"
+                    ]
+                  },
+                  {
+                    "group": "Market Order",
+                    "pages": [
+                      "event-contracts/untitled-page-10",
+                      "event-contracts/untitled-page-11",
+                      "event-contracts/untitled-page-12",
+                      "event-contracts/untitled-page-13",
+                      "event-contracts/untitled-page-14",
+                      "event-contracts/untitled-page-16",
+                      "event-contracts/untitled-page-15"
+                    ]
+                  },
+                  {
+                    "group": "Trading",
+                    "pages": [
+                      "event-contracts/untitled-page-18",
+                      "event-contracts/untitled-page-17",
+                      "event-contracts/untitled-page-19",
+                      "event-contracts/untitled-page-20",
+                      "event-contracts/untitled-page-21",
+                      "event-contracts/untitled-page-22",
+                      "event-contracts/untitled-page-23",
+                      "event-contracts/untitled-page-24",
+                      "event-contracts/untitled-page-25"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
         "language": "zh-TW"

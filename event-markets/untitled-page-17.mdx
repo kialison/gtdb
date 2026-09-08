@@ -1,0 +1,42 @@
+---
+title: "Trading Overview"
+sidebarTitle: "Overview"
+description: "Understand how orders, settlement, and positions fit together when trading on Event Markets event markets."
+---
+
+Trading connects signed orders on the CLOB with settlement on UMA. You choose an outcome token, authorize an order with your signer, and submit it to the order book. When the order matches, settlement transfers USDT and outcome tokens between trading accounts.
+
+## Trading Workflow
+
+Set up your account once, then repeat the remaining steps for each order.
+
+<Steps>
+  <Step title="Set Up Your Account">
+    Connect a signer to your account wallet, fund it, and grant the required trading approvals.
+  </Step>
+  <Step title="Choose an Outcome">
+    Select the outcome token you want to buy or sell and check its current market constraints.
+  </Step>
+  <Step title="Place an Order">
+    Choose a price and size, sign the order, and submit it to the CLOB.
+  </Step>
+  <Step title="Manage the Order">
+    Monitor fills and cancel any remaining open amount. Matched trades settle on UMA and update your balances and positions.
+  </Step>
+</Steps>
+
+## Start Trading
+
+<CardGroup cols={3}>
+  <Card title="Place Your First Order" icon="circle-play" href="/event-markets/untitled-page-18">
+    Complete the first authenticated trading workflow.
+  </Card>
+
+  <Card title="Wallets and Authentication" icon="wallet" href="/event-markets/untitled-page-19">
+    Connect a signer to the account wallet that holds funds and positions.
+  </Card>
+
+  <Card title="Order Lifecycle" icon="arrows-rotate" href="/event-markets/untitled-page-8">
+    Understand how orders move from submission through fills, cancellation, or expiration.
+  </Card>
+</CardGroup>

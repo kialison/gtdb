@@ -1,0 +1,117 @@
+---
+title: "Order Lifecycle"
+sidebarTitle: "Order Lifecycle"
+description: "Understand how orders flow from creation through matching to onchain settlement on the CLOB, and the statuses they move through."
+---
+
+Orders on the CLOB follow a hybrid model: matching happens offchain for speed, while settlement is executed onchain for trustless finality. This page walks through the full lifecycle of an order, the statuses it can take, and the requirements it must satisfy at each step.
+
+<Frame>
+  ```mermaid
+  flowchart TD
+  A[Create & Sign Order] --> B[Submit to CLOB]
+  B --> C{Marketable?}
+  C -->|Yes| D[Match with Resting Order]
+  C -->|No| E[Rest on Order Book]
+  D --> F[Onchain Settlement]
+  F --> G[✅ Settled]
+  E --> H{Filled, Cancelled,<br/>or Expired?}
+  H -->|Matched| D
+  H -->|Cancelled / Expired| I[❌ Closed]
+  ```
+</Frame>
+
+## How orders work
+
+Every order on the CLOB is a **limit order**. What people call a "market order" is just an aggressive limit order priced to cross the book immediately. The engine matches by price-time priority: better prices fill first, and at the same price the earliest order wins.
+
+## Order types
+
+| Type | Behavior | Use case |
+| --- | --- | --- |
+| `GTC` | Good-Til-Cancelled. Rests on the book until filled or cancelled. | Passive market making. |
+| `GTD` | Good-Til-Date. Rests until an explicit expiration timestamp. | Time-bounded quotes. |
+| `FOK` | Fill-Or-Kill. Must fill entirely and immediately, or be cancelled. | All-or-nothing takes. |
+| `FAK` | Fill-And-Kill. Fills as much as possible immediately; remainder is cancelled. | Sweeping liquidity. |
+
+### Post-only orders
+
+Post-only orders are guaranteed to be **makers**. If a post-only order would cross the book on submission, it is rejected instead of taking liquidity.
+
+## The order lifecycle
+
+<Steps>
+  <Step title="Create and sign">
+    Build the order payload with Token ID, side (`BUY`/`SELL`), price, size, expiration, and timestamp. Sign it with an EIP-712 signature from your trading wallet.
+  </Step>
+  <Step title="Submit to the CLOB">
+    The CLOB validates the signature, checks balances and allowances, and enforces tick size and min-size rules. Invalid orders are rejected before they touch the book.
+  </Step>
+  <Step title="Match or rest">
+    Marketable orders match against resting liquidity. Crypto and finance up/down markets apply a **250ms taker delay** to protect makers; sports and game markets use a longer delay. Non-marketable orders rest until matched, cancelled, or expired.
+  </Step>
+  <Step title="Settlement">
+    The Exchange contract verifies both signatures, transfers outcome tokens seller→buyer and USDT buyer→seller in a single atomic onchain transaction.
+  </Step>
+  <Step title="Confirmation">
+    Once mined and confirmed, balances update, the trade appears in history, and the fill is final.
+  </Step>
+</Steps>
+
+## Order statuses
+
+| Status | Meaning |
+| --- | --- |
+| `live` | Order is resting on the book and eligible to match. |
+| `matched` | Order has matched against a counterparty and is settling. |
+| `delayed` | Order is in the taker-delay window before matching. |
+| `unmatched` | Order left the book without filling (cancelled or expired). |
+
+## Trade statuses
+
+| Status | Meaning | Terminal |
+| --- | --- | --- |
+| `MATCHED` | Match confirmed offchain; onchain settlement queued. | No |
+| `MINED` | Settlement transaction mined onchain. | No |
+| `CONFIRMED` | Settlement finalized. Balances updated. | Yes |
+| `RETRYING` | Onchain submission failed; the operator is retrying. | No |
+| `FAILED` | Settlement permanently failed. | Yes |
+
+## Maker vs. taker
+
+| Role | Description |
+| --- | --- |
+| Maker | Provides liquidity by resting on the book. |
+| Taker | Removes liquidity by crossing the book. |
+
+**Price improvement:** takers pay the resting price, not their own limit. A buy at $$0.55 that matches a $$0.52 ask fills at **\$0.52**.
+
+## Cancellation
+
+You can cancel any resting order at any time, except during the taker-delay window. Partial fills cannot be cancelled: once part of an order has matched, that fill settles regardless.
+
+## Requirements
+
+| Requirement | Detail |
+| --- | --- |
+| Balance | Sufficient USDT (buys) or outcome tokens (sells) at submission. |
+| Allowance | Exchange contract must be approved to move the relevant assets. |
+| API credentials | Valid API key, secret, and passphrase for authenticated endpoints. |
+
+The maximum size you can place on a single new order is:
+
+```text
+maxOrderSize = balance − ∑(openOrderSize − filledAmount)
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Resolution" icon="flag-checkered" href="/event-markets/untitled-page-9">
+    See how markets resolve and how winning tokens redeem.
+  </Card>
+
+  <Card title="Trading Guide" icon="chart-line" href="/event-markets/untitled-page-2">
+    Place your first order and manage positions.
+  </Card>
+</CardGroup>

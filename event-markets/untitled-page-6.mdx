@@ -1,0 +1,139 @@
+---
+title: "Prices & Orderbook"
+sidebarTitle: "Prices & Orderbook"
+description: "How prices work and how the order book enables peer-to-peer trading via a hybrid-decentralized Central Limit Order Book."
+---
+
+How prices work and how the order book enables peer-to-peer trading
+
+Event markets use a Central Limit Order Book (CLOB) for trading. Prices aren't set by the platform, they emerge from supply and demand as users trade with each other.
+
+<Frame>
+  ```mermaid
+  flowchart LR
+subgraph Bids["👥👥👥 Bids"]
+B1["$0.34 — 5,000"]
+B2["$0.33 — 12,000"]
+B3["$0.32 — 8,000"]
+end
+subgraph Spread["Spread<br/>$0.06"]
+end
+subgraph Asks["👥👥👥 Asks"]
+A1["$0.40 — 4,200"]
+A2["$0.43 — 7,500"]
+B1["$0.34 — 5,000"]
+B2["$0.33 — 12,000"]
+B3["$0.32 — 8,000"]
+end
+subgraph Spread["Spread<br/>$0.06"]
+end
+subgraph Asks["👥👥👥 Asks"]
+A1["$0.40 — 4,200"]
+A2["$0.43 — 7,500"]
+A3["$0.45 — 3,000"]
+end
+Bids ~~~ Spread ~~~ Asks
+  ```
+</Frame>
+
+## Prices Are Probabilities
+
+Every share on Event Markets is priced between \$0.00 and \$1.00. The price directly represents the market'Event Markets is priced between \$0.00 and \$1.00. The price directly represents the market's belief in the probability of that outcome.
+
+The displayed price is the midpoint of the bid-ask spread. If the spread is wider than \$0.10, the last traded price is shown instead.
+
+| Price | Implied Probability |
+| --- | --- |
+| \$0.25 | 25% chance |
+| \$0.50 | 50% chance |
+| \$0.75 | 75% chance |
+
+### Example
+
+If the best bid for "Yes" is \$0.34 and the best ask is "Yes" is \$0.34 and the best ask is \$0.40:
+
+```text
+Displayed price = ($0.34 + $0.40) / 2 = $0.37 (37% probability)
+```
+
+The displayed price is the midpoint  midpoint of the bid-ask spread. If the spread is wider than \$0.10, the last traded price is shown instead.
+
+## The Order Book
+
+The order book is a list of all open buy and sell orders for a market. It has two sides:
+
+| Side | Description |
+| --- | --- |
+| Bids | Buy orders, the highest prices traders are willing to pay |
+| Asks | Sell orders, the lowest prices traders are willing to accept |
+
+The spread is the gap between the highest bid and lowest ask. Tighter spreads mean more liquid markets.
+
+## Order Types
+
+### Market Orders
+
+Execute immediately at the best available price. Use when you want instant execution and are willing to pay the spread.
+
+- **Buying:** You pay the lowest ask price
+- **Selling:** You receive the highest bid price
+
+### Limit Orders
+
+Execute only at your specified price or better. Use when you want price control and are willing to wait.
+
+- Your order sits in the book until someone trades against it
+- Orders can partially fill as different traders match portions of your order
+- You can cancel unfilled orders at any time
+
+## How Trades Work
+
+Event market's CLOB is hybrid-decentralized:
+
+1. **Offchain matching** — An operator matches compatible orders
+2. **Onchain settlement** — Matched trades settle via smart contracts
+
+<Frame>
+  ```mermaid
+  flowchart LR
+subgraph Offchain
+Buyer(("👤 Buyer"))
+Seller(("👤 Seller"))
+OB["Orderbook"]
+Match["Match"]
+end
+subgraph Onchain
+Settle["Settle"]
+TB["Token to Buyer"]
+US["USDTBuyer(("👤 Buyer"))
+Seller(("👤 Seller"))
+OB["Orderbook"]
+Match["Match"]
+end
+subgraph Onchain
+Settle["Settle"]
+TB["Token to Buyer"]
+US["USDT to Seller"]
+end
+Buyer --> OB
+Seller --> OB
+OB --> Match
+Match --> Settle
+Settle --> TB
+Settle --> US
+  ```
+</Frame>
+
+This design gives you the speed of centralized matching with the security of onchain settlement. You always maintain custody of your funds.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Order Lifecycle" icon="arrows-rotate" href="/event-markets/untitled-page-7">
+    Follow an order from submission through matching and settlement.
+  </Card>
+
+  <Card title="Positions & Tokens" icon="coins" href="/event-markets/untitled-page-8">
+    Learn how outcome tokens represent your positions in a market.
+  </Card>
+</CardGroup>
