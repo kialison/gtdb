@@ -3,3 +3,147 @@ title: "事件市场"
 sidebarTitle: "事件市场"
 description: "了解事件市场如何运作：在真实世界结果上进行点对点交易，价格反映概率。"
 ---
+
+Event Markets 是一个用户就真实世界事件结果进行交易的平台。你与另一名用户直接在开放的对等市场中交易股份，而不是与庄家对赌。价格反映了市场对某一事件发生概率的集体判断。
+
+## 事件市场
+
+<Frame>
+  ```mermaid
+  flowchart LR
+Deposit([Deposit]) --> TC[Token<br/>Creation]
+TC --> Trade[Trade]
+TC --> OB[Order<br/>Book]
+Trade --> Settlement[Settlement]
+OB --> Buy([Buy])
+OB --> Sell([Sell])
+Settlement --> Resolution[Resolution]
+  ```
+</Frame>
+
+## 价格即概率
+
+Polymarket 上的每份股份价格在 0.00 美元到 1.00 美元之间。价格代表市场对该结果发生概率的判断。
+
+例如，如果某事件的 "Yes" 股份交易价格为 0.65 美元，市场认为该事件发生的概率约为 65%。
+
+## 抵押品与代币
+
+事件市场使用 USD 作为抵押品。每对 Yes / No 股份都有完全支撑：
+
+- 1 美元 USDC 可铸造一份 Yes 股份和一份 No 股份
+- 获胜股份可按 1.00 美元赎回
+- 失败股份价值为 0.00 美元
+
+股份以代币形式表示，采用 [Gnosis Conditional Token Framework](https://docs.gnosis.io/conditionaltokens/)（ERC1155 标准），实现在链上的无缝交易与结算。
+
+## 交易
+
+Polymarket 使用点对点订单簿（CLOB）进行交易。你直接与其他用户交易，而非与庄家对赌。
+
+- 当你认为市场低估了概率时，买入股份
+- 当你认为市场高估了概率时，卖出股份
+- 随时退出，在结算前卖出持仓以锁定利润或减少损失
+
+| 操作 | 适用场景 | 获利场景 |
+| --- | --- | --- |
+| 买入 Yes | 你认为概率偏低 | 事件发生 |
+| 买入 No | 你认为概率偏高 | 事件未发生 |
+| 卖出 | 锁定收益或限制损失 | 价格朝有利方向变动 |
+
+## 结算
+
+当事件结束时，市场通过 UMA Optimistic Oracle 进行结算：
+
+1. 提议者提交结果并抵押保证金
+2. 设有挑战期，任何人都可以提出异议
+3. 如有争议，UMA 代币持有者投票决定正确结果
+4. 获胜代币可按 1 美元 USDC 赎回
+
+这一社区驱动的流程确保了市场结算的公平与准确。
+
+## 开始使用
+
+准备好开始交易了吗？
+
+<CardGroup cols={2}>
+  <Card title="交易快速开始" icon="copyright" href="/quickstart">
+    设置账户并进行你的第一笔交易。
+  </Card>
+
+  <Card title="浏览市场" icon="copyright" href="/api-reference/introduction">
+    在 Dexbuilder 上浏览活跃的事件市场。
+  </Card>
+</CardGroup>
+
+Event Markets 是一个用户就真实世界事件结果进行交易的平台。你与另一名用户直接在开放的对等市场中交易股份，而不是与庄家对赌。价格反映了市场对某一事件发生概率的集体判断。
+
+## 事件市场
+
+<Frame>
+  ```mermaid
+  flowchart LR
+Deposit([Deposit]) --> TC[Token<br/>Creation]
+TC --> Trade[Trade]
+TC --> OB[Order<br/>Book]
+Trade --> Settlement[Settlement]
+OB --> Buy([Buy])
+OB --> Sell([Sell])
+Settlement --> Resolution[Resolution]
+  ```
+</Frame>
+
+## 价格即概率
+
+Polymarket 上的每份股份价格在 0.00 美元到 1.00 美元之间。价格代表市场对该结果发生概率的判断。
+
+例如，如果某事件的 "Yes" 股份交易价格为 0.65 美元，市场认为该事件发生的概率约为 65%。
+
+## 抵押品与代币
+
+事件市场使用 USD 作为抵押品。每对 Yes / No 股份都有完全支撑：
+
+- 1 美元 USDC 可铸造一份 Yes 股份和一份 No 股份
+- 获胜股份可按 1.00 美元赎回
+- 失败股份价值为 0.00 美元
+
+股份以代币形式表示，采用 [Gnosis Conditional Token Framework](https://docs.gnosis.io/conditionaltokens/)（ERC1155 标准），实现在链上的无缝交易与结算。
+
+## 交易
+
+Polymarket 使用点对点订单簿（CLOB）进行交易。你直接与其他用户交易，而非与庄家对赌。
+
+- 当你认为市场低估了概率时，买入股份
+- 当你认为市场高估了概率时，卖出股份
+- 随时退出，在结算前卖出持仓以锁定利润或减少损失
+
+| 操作 | 适用场景 | 获利场景 |
+| --- | --- | --- |
+| 买入 Yes | 你认为概率偏低 | 事件发生 |
+| 买入 No | 你认为概率偏高 | 事件未发生 |
+| 卖出 | 锁定收益或限制损失 | 价格朝有利方向变动 |
+
+## 结算
+
+当事件结束时，市场通过 UMA Optimistic Oracle 进行结算：
+
+1. 提议者提交结果并抵押保证金
+2. 设有挑战期，任何人都可以提出异议
+3. 如有争议，UMA 代币持有者投票决定正确结果
+4. 获胜代币可按 1 美元 USDC 赎回
+
+这一社区驱动的流程确保了市场结算的公平与准确。
+
+## 开始使用
+
+准备好开始交易了吗？
+
+<CardGroup cols={2}>
+  <Card title="交易快速开始" icon="copyright" href="/quickstart">
+    设置账户并进行你的第一笔交易。
+  </Card>
+
+  <Card title="浏览市场" icon="copyright" href="/api-reference/introduction">
+    在 Dexbuilder 上浏览活跃的事件市场。
+  </Card>
+</CardGroup>

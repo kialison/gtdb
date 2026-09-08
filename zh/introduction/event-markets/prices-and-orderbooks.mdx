@@ -1,0 +1,11 @@
+---
+title: "价格与订单簿"
+description: "查询 Token 价格、订单簿和历史价格。"
+---
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/token/price?token_id=$TOKEN_ID"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/token/order_book?token_id=$TOKEN_ID"
+```
+
+价格、订单簿、历史价格、ticker 和批量价格接口属于公开行情接口，不需要用户认证。订单簿查询使用 Token ID；请勿把内部账户标识放入请求。

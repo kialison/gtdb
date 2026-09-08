@@ -71,12 +71,22 @@
                     "group": "核心概念",
                     "pages": [
                       "zh/introduction/event-markets/markets-events",
-                      "zh/introduction/event-markets/negative-risk"
+                      "zh/introduction/event-markets/negative-risk",
+                      "zh/introduction/event-markets/prices-orderbook",
+                      "zh/introduction/event-markets/order-lifecycle",
+                      "zh/introduction/event-markets/resolution"
                     ]
                   },
                   {
                     "group": "市场数据",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-markets/data-overview",
+                      "zh/introduction/event-markets/discover-markets",
+                      "zh/introduction/event-markets/market-details",
+                      "zh/introduction/event-markets/prices-and-orderbooks",
+                      "zh/introduction/event-markets/chainlink-twap",
+                      "zh/introduction/event-markets/analytics"
+                    ]
                   },
                   {
                     "group": "交易",
