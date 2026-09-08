@@ -268,8 +268,8 @@
                       "en/introduction/event-contracts/realtime-order-updates",
                       "en/introduction/event-contracts/positions",
                       "en/introduction/event-contracts/wallet-activity",
-                      "en/introduction/event-contracts/errors",
-                      "en/introduction/event-contracts/fees"
+                      "en/introduction/event-contracts/fees",
+                      "en/introduction/event-contracts/errors"
                     ]
                   }
                 ]
