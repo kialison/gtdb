@@ -1,0 +1,341 @@
+---
+title: "Prices and Order Books"
+sidebarTitle: "Prices and Order Books"
+description: "Learn how prices and order books represent trading activity on event contracts, including order books, best prices, midpoints, spreads, last trades, and price history."
+---
+
+Each event contract outcome is represented by a token traded on the CLOB. Its price reflects what traders are willing to pay for that outcome, while its order book shows the resting bids and asks.
+
+The examples below assume you already have a market object from which to read the outcome token IDs. To find or fetch one, see [Discover Markets](/event-contracts/untitled-page-11).
+
+```json API
+{
+  "clobTokenIds": "[\"<yes_token_id>\", \"<no_token_id>\"]"
+}
+```
+
+Parse the array, then select the outcome you want to read:
+
+```bash
+TOKEN_ID="<yes_token_id>"
+```
+
+## Order Book
+
+Retrieve the resting bids and asks for one outcome token. Bids are ordered by ascending price and asks by descending price, so the best bid and ask are the last entries in their respective arrays. Each response also includes a hash for the order-book state. Compare it with the previous response's hash to determine whether the book changed between reads.
+
+### Fetch an Order Book
+
+```bash API
+curl "https://clob.polymarket.com/book?token_id=$TOKEN_ID"
+```
+
+Alongside its price levels, the response includes the trading constraints needed to validate an order:
+
+<Accordion title="Response">
+  ```json
+  {
+    "market": "0x747dc809fb79e1b05be09c42d6179a59a58de2ef3e40f02484a4e1260f741f75",
+    "asset_id": "107505882767731489358349912513945399560393482969656700824895970500493757150417",
+    "timestamp": "1782753357257",
+    "hash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+    "bids": [
+      { "price": "0.01", "size": "2151131.59" },
+      { "price": "0.02", "size": "139963.89" },
+      { "price": "0.03", "size": "208169.44" },
+      "..."
+    ],
+    "asks": [
+      { "price": "0.99", "size": "218442.27" },
+      { "price": "0.98", "size": "13229.55" },
+      { "price": "0.97", "size": "4338.7" },
+      "..."
+    ],
+    "min_order_size": "5",
+    "tick_size": "0.01",
+    "neg_risk": false,
+    "last_trade_price": "0.090"
+  }
+  ```
+</Accordion>
+
+### Fetch Multiple Order Books
+
+Batch order-book reads return the resting bids and asks for several outcomes in one request.
+
+```bash API
+curl -X POST "https://clob.polymarket.com/books" \
+  -H "Content-Type: application/json" \
+  --data '[{"token_id":"<yes_token_id>"},{"token_id":"<no_token_id>"}]'
+```
+
+The response contains one order book for each requested token ID:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "market": "0x747dc809fb79e1b05be09c42d6179a59a58de2ef3e40f02484a4e1260f741f75",
+      "asset_id": "107505882767731489358349912513945399560393482969656700824895970500493757150417",
+      "timestamp": "1782753357257",
+      "hash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "bids": [
+        { "price": "0.01", "size": "2151131.59" },
+        { "price": "0.02", "size": "139963.89" },
+        { "price": "0.03", "size": "208169.44" },
+        "..."
+      ],
+      "asks": [
+        { "price": "0.99", "size": "218442.27" },
+        { "price": "0.98", "size": "13229.55" },
+        { "price": "0.97", "size": "4338.7" },
+        "..."
+      ],
+      "min_order_size": "5",
+      "tick_size": "0.01",
+      "neg_risk": false,
+      "last_trade_price": "0.090"
+    },
+    {
+      "market": "0x747dc809fb79e1b05be09c42d6179a59a58de2ef3e40f02484a4e1260f741f75",
+      "asset_id": "73056302498040856354963998699057693722943027161590344473262285090686949523925",
+      "timestamp": "1782753357257",
+      "hash": "f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5d4c3b2a1f6e5",
+      "bids": [
+        { "price": "0.01", "size": "218442.27" },
+        { "price": "0.02", "size": "13229.55" },
+        { "price": "0.03", "size": "4338.7" },
+        "..."
+      ],
+      "asks": [
+        { "price": "0.99", "size": "2151131.59" },
+        { "price": "0.98", "size": "139963.89" },
+        { "price": "0.97", "size": "208169.44" },
+        "..."
+      ],
+      "min_order_size": "5",
+      "tick_size": "0.01",
+      "neg_risk": true,
+      "last_trade_price": "0.910"
+    }
+  ]
+  ```
+</Accordion>
+
+## Best Market Price
+
+Read the best available execution price for an outcome and side. BUY returns the lowest ask, which is the price you would pay to buy. SELL returns the highest bid, which is the price you would receive when selling.
+
+### Fetch a Price
+
+```bash API
+curl "https://clob.polymarket.com/price?token_id=$TOKEN_ID&side=BUY"
+```
+
+The response contains the price as a decimal string:
+
+<Accordion title="Response">
+  ```json
+  { "price": "0.08" }
+  ```
+</Accordion>
+
+### Fetch Multiple Prices
+
+```bash API
+curl -X POST "https://clob.polymarket.com/prices" \
+  -H "Content-Type: application/json" \
+  --data '[{"token_id":"<yes_token_id>","side":"BUY"},{"token_id":"<no_token_id>","side":"BUY"}]'
+```
+
+The response maps each token ID to the requested side and price:
+
+<Accordion title="Response">
+  ```json
+  {
+    "107505882767731489358349912513945399560393482969656700824895970500493757150417": {
+      "BUY": "0.08"
+    },
+    "73056302498040856354963998699057693722943027161590344473262285090686949523925": {
+      "BUY": "0.91"
+    }
+  }
+  ```
+</Accordion>
+
+## Midpoint Price
+
+The midpoint is the average of the best bid and best ask. It provides a reference price between the two sides of the order book.
+
+### Fetch a Midpoint
+
+```bash API
+curl "https://clob.polymarket.com/midpoint?token_id=$TOKEN_ID"
+```
+
+The response contains the midpoint as a decimal string:
+
+<Accordion title="Response">
+  ```json
+  { "mid": "0.085" }
+  ```
+</Accordion>
+
+### Fetch Multiple Midpoints
+
+Fetch midpoint prices for several outcomes in one request.
+
+```bash API
+curl -X POST "https://clob.polymarket.com/midpoints" \
+  -H "Content-Type: application/json" \
+  --data '[{"token_id":"<yes_token_id>"},{"token_id":"<no_token_id>"}]'
+```
+
+The response maps each token ID to its midpoint:
+
+<Accordion title="Response">
+  ```json
+  {
+    "107505882767731489358349912513945399560393482969656700824895970500493757150417": "0.085",
+    "73056302498040856354963998699057693722943027161590344473262285090686949523925": "0.915"
+  }
+  ```
+</Accordion>
+
+## Spread
+
+The spread is the difference between the best ask and best bid. A narrower spread indicates that the two sides of the order book are close together.
+
+### Fetch a Spread
+
+```bash API
+curl "https://clob.polymarket.com/spread?token_id=$TOKEN_ID"
+```
+
+The response contains the spread as a decimal string:
+
+<Accordion title="Response">
+  ```json
+  { "spread": "0.01" }
+  ```
+</Accordion>
+
+### Fetch Multiple Spreads
+
+Batch spread reads return the bid-ask spread for several outcomes in one request.
+
+```bash API
+curl -X POST "https://clob.polymarket.com/spreads" \
+  -H "Content-Type: application/json" \
+  --data '[{"token_id":"<yes_token_id>"},{"token_id":"<no_token_id>"}]'
+```
+
+The response maps each token ID to its spread:
+
+<Accordion title="Response">
+  ```json
+  {
+    "107505882767731489358349912513945399560393482969656700824895970500493757150417": "0.01",
+    "73056302498040856354963998699057693722943027161590344473262285090686949523925": "0.01"
+  }
+  ```
+</Accordion>
+
+## Last Trade Price
+
+The last trade price records the most recent matched trade for an outcome. It includes the trade price and side.
+
+### Fetch a Last Trade Price
+
+```bash API
+curl "https://clob.polymarket.com/last-trade-price?token_id=$TOKEN_ID"
+```
+
+The response contains the traded price and side:
+
+<Accordion title="Response">
+  ```json
+  {
+    "price": "0.08",
+    "side": "SELL"
+  }
+  ```
+
+  When a token has never traded and its order book is empty, the API returns the `"0.5"` placeholder and an empty `side` string:
+
+  ```json
+  {
+    "price": "0.5",
+    "side": ""
+  }
+  ```
+</Accordion>
+
+### Fetch Multiple Last Trade Prices
+
+Fetch the most recent matched trade for several outcomes in one request.
+
+```bash API
+curl -X POST "https://clob.polymarket.com/last-trades-prices" \
+  -H "Content-Type: application/json" \
+  --data '[{"token_id":"<yes_token_id>"},{"token_id":"<no_token_id>"}]'
+```
+
+The response identifies each outcome alongside its traded price and side:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "token_id": "107505882767731489358349912513945399560393482969656700824895970500493757150417",
+      "price": "0.08",
+      "side": "SELL"
+    },
+    {
+      "token_id": "73056302498040856354963998699057693722943027161590344473262285090686949523925",
+      "price": "0.91",
+      "side": "BUY"
+    }
+  ]
+  ```
+</Accordion>
+
+## Price History
+
+Price history is a time series of observed prices for an outcome. Fetch either a relative window or an absolute time range, but do not combine the two forms. You can also control the interval between returned observations; longer time ranges require a sampling interval.
+
+| Range setting | Behavior |
+| --- | --- |
+| Relative window | Fetch the last `1h`, `6h`, `1d`, `1w`, or all available data with `max`. |
+| Absolute range | Fetch observations between a start and end time expressed as Unix seconds. |
+| Sampling interval | Set the interval between observations in minutes. |
+
+Set `interval` for a relative window, or set `startTs` and `endTs` for an absolute range. Use `fidelity` to set the sampling interval in minutes.
+
+<Tabs>
+  <Tab title="Relative Window">
+    ```bash API
+    curl "https://clob.polymarket.com/prices-history?market=$TOKEN_ID&interval=1d&fidelity=60"
+    ```
+  </Tab>
+  <Tab title="Absolute Range">
+    ```bash API
+    curl "https://clob.polymarket.com/prices-history?market=$TOKEN_ID&startTs=1782000000&endTs=1782700000&fidelity=60"
+    ```
+  </Tab>
+</Tabs>
+
+The response contains the price points under `history`:
+
+<Accordion title="Response">
+  ```json
+  {
+    "history": [
+      { "t": 1782666007, "p": 0.085 },
+      { "t": 1782669606, "p": 0.085 },
+      { "t": 1782673206, "p": 0.085 },
+      "..."
+    ]
+  }
+  ```
+</Accordion>

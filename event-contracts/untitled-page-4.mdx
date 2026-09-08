@@ -1,0 +1,102 @@
+---
+title: "Markets & Events"
+sidebarTitle: "Markets & Events"
+description: "Understand the fundamental building blocks of event contracts: how markets and events relate, identify them by slug, and fetch them from the API."
+---
+
+Understanding the fundamental building blocks of Event Contracts.
+
+Every contract is structured around two core concepts: **markets** and **events**. Understanding how they relate is essential for building on the platform.
+
+<Frame>
+  ```mermaid
+  flowchart LR
+D([Deposit]) -.-> E[Event]
+U1([👤]) -.-> E
+U2([👤]) -.-> E
+E --> MA[Market A]
+E --> MB[Market B]
+MA --> YA[Y]
+MA --> NA[N]
+MB --> YB[Y]
+MB --> NB[N]
+MA --> OB[Orderbook]
+  ```
+</Frame>
+
+## Markets
+
+A market is the fundamental tradable unit on event contracts. Each market represents a single binary question with Yes/No outcomes.
+
+<Frame>
+  ```mermaid
+  flowchart LR
+BQ([Binary Question]) -.-> M[Market]
+M --> T[Trade]
+M --> OB[Order Book]
+M --> Y[Y]
+M --> N[N]
+T --> S[Settlement]
+OB --> R[Resolution]
+  ```
+</Frame>
+
+Every market has:
+
+| Identifier | Description |
+| --- | --- |
+| Condition ID | Unique identifier for the market's condition in the CTF contracts |
+| Question ID | Hash of the market question used for resolution |
+| Token IDs | ERC1155 token IDs used for trading on the CLOB, one for Yes, one for No |
+
+### Market Example
+
+A simple market might be:
+
+> _"BTC Up or Down 5m?"_
+
+This creates two outcome tokens:
+
+- **Yes token** — Redeemable for 1 if Bitcoin is up
+- **No token** — Redeemable for 1 if Bitcoin isn't up
+
+## Events
+
+An event is a container that groups one or more related markets together. Events provide organizational structure and enable multi-outcome event contracts.
+
+### Single-Market Events
+
+When an event contains just one market, it creates a simple market pair. The event and market are essentially equivalent.
+
+```text
+Event: BTC Up or Down 5m?
+   └── Market: BTC Up or Down 5m? (Up/Down)
+```
+
+## Identifying Markets
+
+Every market and event has a unique slug that appears in the event market URL:
+
+```text
+https://polymarket.com/event/fed-decision-in-october
+                            └── slug: fed-decision-in-october
+```
+
+You can use slugs to fetch specific markets or events from the API:
+
+```bash
+# Fetch event by slug
+curl "https://gamma-api.polymarket.com/events?slug=fed-decision-in-october"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Prices & Orderbook" icon="chart-line">
+    Learn how prices are determined and how the order book works.
+  </Card>
+
+  <Card title="Fetching Market Data" icon="database">
+    Start querying markets and events from the API.
+  </Card>
+</CardGroup>

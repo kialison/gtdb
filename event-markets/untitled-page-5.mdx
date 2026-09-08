@@ -1,0 +1,97 @@
+---
+title: "Negative Risk Markets"
+sidebarTitle: "Negative Risk Markets"
+description: "Capital-efficient trading for multi-outcome events where only one outcome can win via a conversion operation."
+---
+
+Negative risk is a mechanism for multi-outcome events where only one outcome can win. It enables capital-efficient trading by allowing positions across all outcomes within an event to be related through a conversion operation.
+
+## How It Works
+
+In a standard multi-outcome event, each market is independent. If you want to bet against one outcome, you must buy that outcome's No tokens, but those No tokens have no relationship to the other outcomes.
+
+Negative risk changes this. In a neg risk event:
+
+- A No share in any market can be converted into 1 Yes share in every other market
+- This conversion happens through the Neg Risk Adapter contract
+
+### Example
+
+Consider an event: "Who will win the 2024 Presidential Election?" with three outcomes:
+
+| Outcome | Your Position |
+| --- | --- |
+| Trump | — |
+| Harris | — |
+| Other | 1 No |
+
+With negative risk, that 1 No on "Other" can be converted into:
+
+| Outcome | After Conversion |
+| --- | --- |
+| Trump | 1 Yes |
+| Harris | 1 Yes |
+| Other | — |
+
+This is capital-efficient because betting against one outcome is economically equivalent to betting for all other outcomes.
+
+## Augmented Negative Risk
+
+Standard negative risk requires the complete set of outcomes to be known at market creation. But sometimes new outcomes emerge after trading begins (e.g., a new candidate enters a race).
+
+Augmented negative risk solves this with:
+
+| Outcome Type | Description |
+| --- | --- |
+| Named outcomes | Known outcomes (e.g., "Trump", "Harris") |
+| Placeholder outcomes | Reserved slots that can be clarified later (e.g., "Person A") |
+| Explicit Other | Catches any outcome not explicitly named |
+
+### How Placeholders Work
+
+<Steps>
+  <Step title="Event launches">
+    Event launches with named outcomes + placeholders + "Other".
+  </Step>
+  <Step title="Placeholder is clarified">
+    When a new outcome emerges, a placeholder is clarified via the bulletin board.
+  </Step>
+  <Step title="Other narrows">
+    The "Other" definition narrows as placeholders are assigned.
+  </Step>
+</Steps>
+
+### Trading Rules for Augmented Neg Risk
+
+- If the correct outcome at resolution is not named, the market resolves to "Other"
+- The "Other" outcome's definition changes as placeholders are clarified, avoid trading it directly
+
+## Technical Details
+
+### Conversion Mechanics
+
+The conversion operation is atomic and happens through the Neg Risk Adapter:
+
+<Steps>
+  <Step title="Hold No token">
+    You hold 1 No token for Outcome A.
+  </Step>
+  <Step title="Call convert">
+    Call the `convert` function on the adapter.
+  </Step>
+  <Step title="Receive Yes tokens">
+    You receive 1 Yes token for every other outcome in the event.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Markets & Events" icon="c" href="/event-markets/untitled-page-4">
+    Understand how multi-market events are structured.
+  </Card>
+
+  <Card title="Positions & Tokens" icon="c" href="/positions-and-tokens">
+    Learn about token operations.
+  </Card>
+</CardGroup>

@@ -1,0 +1,463 @@
+---
+title: "Discover Markets"
+sidebarTitle: "Discover Markets"
+description: "Find events, markets, and series through the Gamma API. Fetch by ID or slug, list with filters, and paginate results without authentication."
+---
+
+Learn how to find and filter events and markets and explore related metadata.
+
+Find the events and markets your integration needs, from a specific event market link to a broader view of what is active. This data is public and does not require authentication.
+
+## Events
+
+An event groups one or more markets under a shared question set. A single-market event asks one yes/no question; a multi-market event splits a broader question into individual outcomes, such as one market per candidate in an election.
+
+### Fetch an Event
+
+Fetch an event when you already know its identifier.
+
+[API](https://gamma-api.polymarket.com/events)
+
+Fetch an event by ID:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/events/90177"
+```
+
+You can also fetch an event by slug:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/events/slug/will-the-us-confirm-that-aliens-exist-before-2027"
+```
+
+<Accordion title="Output: Event">
+  <Tabs>
+    <Tab title="Event Type">
+      ```typescript
+      type Market = {
+        id: string;
+        slug: string;
+        question: string | null;
+        conditionId: string | null;
+        clobTokenIds: string | null;
+      };
+      
+      type Event = {
+        id: string;
+        slug: string | null;
+        title: string | null;
+        markets: Market[];
+      };
+      ```
+    </Tab>
+    <Tab title="Example">
+      ```json
+      {
+        "id": "16183",
+        "slug": "kraken-ipo-in-2025",
+        "title": "Kraken IPO by ___ ?"
+      }
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+### List Events
+
+List events when you need a browsable or filterable feed.
+
+[API](https://gamma-api.polymarket.com/events/keyset)
+
+List active events:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/events/keyset?closed=false&limit=20"
+```
+
+<Accordion title="Output: Events Page">
+  ```json Example
+  {
+    "events": [
+      {
+        "id": "16183",
+        "slug": "kraken-ipo-in-2025",
+        "title": "Kraken IPO by ___ ?"
+      },
+      "..."
+    ],
+    "next_cursor": "9YTY9qyfU9571U9_LeL7L%3NUI6Xd7zpAqdh-EbFr17InY1OjEsIms1O1Jld"
+  }
+  ```
+</Accordion>
+
+Pass `next_cursor` as `after_cursor` to fetch the next page:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/events/keyset?closed=false&limit=20&after_cursor=<cursor>"
+```
+
+Filter by tag with `tag_id`:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/events/keyset?tag_id=745&closed=false&limit=20"
+```
+
+## Markets
+
+A market is a single yes/no question with two outcome token IDs: one for YES and one for NO.
+
+### Fetch a Market
+
+Fetch a market when you already know its identifier.
+
+[API](https://gamma-api.polymarket.com/markets)
+
+Fetch a market by ID:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/markets/90177"
+```
+
+You can also fetch a market by slug:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/markets/slug/will-the-us-confirm-that-aliens-exist-before-2027"
+```
+
+<Accordion title="Output: Market">
+  ```json Example
+  {
+    "id": "703257",
+    "slug": "will-the-us-confirm-that-aliens-exist-before-2027-789-924-249",
+    "question": "Will the US confirm that aliens exist before 2027?",
+    "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f7...",
+    "clobTokenIds": "[\"107505882767731489358349912513945399560394829696567008240..."
+  }
+  ```
+</Accordion>
+
+### List Markets
+
+List markets when you need a filterable feed, such as browsing by tag, sport, or liquidity.
+
+[API](https://gamma-api.polymarket.com/markets/keyset)
+
+List active markets by tag:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/markets/keyset?tag_id=745&closed=false&limit=20"
+```
+
+<Accordion title="Output: Markets Page">
+  ```json Example
+  {
+    "markets": [
+      {
+        "id": "540817",
+        "slug": "new-rhianna-album-before-gta-vi-926",
+        "question": "New Rihanna Album before GTA VI?",
+        "conditionId": "0x1fad72fae204143ff1c3035e99e7c0f65ea8d5cd9bd1070987bd1a3..."
+      },
+      "..."
+    ],
+    "next_cursor": "8ejWEAtEdA8g005m-tRMeLt8O11Wbw1fUbXVfmGeYSZ7InY1OjEsIms1O1JtY"
+  }
+  ```
+</Accordion>
+
+Pass `next_cursor` as `after_cursor` to fetch the next page:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/markets/keyset?closed=false&limit=20&after_cursor=<cursor>"
+```
+
+After you choose a market, continue to [Market Details](/event-markets/untitled-page-12) to extract token IDs and trading fields.
+
+## Series
+
+A series groups a recurring set of events under one theme. For example, a weekly Fed rate-decision series has one event per meeting, and a season-long league series has one event per matchup.
+
+### Fetch a Series
+
+Fetch a series by ID.
+
+[API](https://gamma-api.polymarket.com/series)
+
+Fetch a series by ID:
+
+```bash cURL
+curl "https://gamma-api.polymarket.com/series/1"
+```
+
+<Accordion title="Output: Series">
+  ```json Example
+  {
+    "id": "1",
+    "slug": "nfl",
+    "title": "NFL",
+    "recurrence": "weekly",
+    "closed": false
+  }
+  ```
+</Accordion>
+
+### List Series
+
+List active weekly series:
+
+```bash API
+curl "https://gamma-api.polymarket.com/series?recurrence=weekly&closed=false&limit=20"
+```
+
+<Accordion title="Output: Series[]">
+  ```json
+  [
+    { "id": "1", "slug": "nfl", "title": "NFL" },
+    { "id": "2", "slug": "nba", "title": "NBA" },
+    { "id": "3", "slug": "mlb", "title": "MLB" },
+    "..."
+  ]
+  ```
+</Accordion>
+
+## Sports
+
+Sports metadata maps a sport to its event market tags and market types. Use it to browse sports markets by league, look up the valid market types for a league, and translate a sport code into the tag IDs you pass to `/events` and `/markets`.
+
+### Fetch a Sport
+
+Fetch a sport by ID:
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports/3"
+```
+
+Or by sport code:
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports/code/lal"
+```
+
+<Accordion title="Output: Sport">
+  <Tabs>
+    <Tab title="Type">
+      ```ts
+      type Sport = {
+        id: number;
+        sport: string;         // short code, e.g. "lal", "nba", "f1"
+        name: string;          // display name
+        image: string;         // league icon URL
+        resolution: string;    // authoritative source URL
+        ordering: "home" | "away";
+        tags: string;          // comma-separated tag IDs
+        primaryTagId: number;  // main tag used for filtering markets
+        series: string;        // associated series ID
+        createdAt: string;
+      };
+      ```
+    </Tab>
+    <Tab title="Example">
+      ```json
+      {
+        "id": 3,
+        "sport": "lal",
+        "name": "LaLiga",
+        "image": "https://polymarket-upload.s3.us-east-2.amazonaws.com/league-icons/lal-33aa3578.png",
+        "resolution": "https://www.laliga.com/en-GB",
+        "ordering": "home",
+        "tags": "1,780,100639,100350",
+        "primaryTagId": 780,
+        "series": "10193",
+        "createdAt": "2025-11-05T19:27:45.399303Z"
+      }
+      ```
+    </Tab>
+  </Tabs>
+</Accordion>
+
+Pass `primaryTagId` as `tag_id` to `/events` or `/markets` to list the corresponding sports markets.
+
+### List Sports
+
+List every configured sport:
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+### Sports Market Types
+
+Every sports market carries a market type that tells you which line it prices: a moneyline (which team wins), a spread (win by how much), or a total (over/under a combined score). Fetch the valid values, then pass one or more of them when listing markets to filter.
+
+List supported sports market types. When present, a market reports its type in sportsMarketType:
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports/code/nba/market-types"
+```
+
+<Accordion title="Output: MarketType[]">
+  ```json
+  [
+    { "code": "moneyline", "name": "Moneyline" },
+    { "code": "spread",    "name": "Point Spread" },
+    { "code": "total",     "name": "Total Points" },
+    { "code": "prop",      "name": "Player Props" }
+  ]
+  ```
+</Accordion>
+
+Filter markets by type:
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports/code/nba/market-types"
+```
+
+### List Events for a Game
+
+A sports game’s markets can be split across a main event and companion events. Depending on the game, companion events may cover player props, half-time and second-half results, exact score, or additional lines grouped under a more-markets event. Their slugs extend the main event’s slug with a suffix such as -player-props, -halftime-result, or -more-markets.<br /><br />Append a known suffix when you need one companion event. To discover current companion events, use the listing workflow instead of guessing each suffix.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+If the response includes next_cursor, pass it as after_cursor in the next request. When present, market.sportsMarketType identifies lines in the more-markets event such as first_half_totals, both_teams_to_score, and soccer_team_totals.
+
+### List Teams
+
+A sports game’s markets can be split across a main event and companion events. Depending on the game, companion events may cover player props, half-time and second-half results, exact score, or additional lines grouped under a more-markets event. Their slugs extend the main event’s slug with a suffix such as -player-props, -halftime-result, or -more-markets.<br /><br />Append a known suffix when you need one companion event. To discover current companion events, use the listing workflow instead of guessing each suffix.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+## Search
+
+Search returns matching events, tags, and profiles for a free-text query in one call. Use it for a search bar or a “jump to market” input.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+## Tags
+
+Tags group events and markets by categories, leagues, people, and themes. Each tag can link to multiple ranked related tags, forming a directed graph rather than a strict tree. Use these relationships to expand discovery from one topic to adjacent topics.
+
+### List Tags
+
+Browse the available tags, for example to build a category filter.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+### Fetch a Tag
+
+Fetch a tag by slug to resolve its numeric ID. You’ll need that ID for the tagId/tagIds filters used earlier in Events and Markets.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>
+
+### Fetch Tag Relationships
+
+Get the relationship records that link a tag to related tags, useful for building “you might also like” surfaces. Each record is a lightweight pointer (a rank and the two numeric tag IDs), not a full tag object.
+
+```bash API
+curl "https://gamma-api.polymarket.com/sports"
+```
+
+<Accordion title="Output: Sport[]">
+  ```json
+  [
+    { "id": 3, "sport": "lal", "name": "LaLiga", "primaryTagId": 780 },
+    { "id": 7, "sport": "bun", "name": "Bundesliga", "primaryTagId": 1494 },
+    { "id": 11, "sport": "fl1", "name": "Ligue 1", "primaryTagId": 102070 },
+    { "id": 185, "sport": "f1", "name": "Formula 1", "primaryTagId": 435 },
+    "..."
+  ]
+  ```
+</Accordion>

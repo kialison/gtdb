@@ -1,0 +1,273 @@
+---
+title: "How Positions Work: CTF Tokens and Redemption"
+sidebarTitle: "Position"
+description: "Understand the onchain token mechanics that power event market positions, from computing position IDs to redeeming resolved outcomes for USDT."
+---
+
+Understand the onchain token mechanics that power event market positions.
+
+Event market tokenizes market outcomes using the [Conditional Token Framework (CTF)](https://docs.gnosis.io/conditionaltokens/), an open standard developed by Gnosis. Understanding CTF explains how positions are created, combined, and redeemed onchain.
+
+## What Is CTF?
+
+CTF creates ERC-1155 tokens that represent event market outcomes. Each binary market has two outcome tokens: YES\\NO.
+
+These tokens are fully collateralized. Every YES and NO pair is backed by exactly \$1 of collateral locked through the CTF contracts.
+
+### Token Identifiers
+
+Each outcome token has a unique position ID, which is used as its ERC-1155 token ID. CTF computes it onchain in three steps.
+
+<Steps>
+  <Step title="Compute the Condition ID">
+    ```solidity
+    getConditionId(oracle, questionId, outcomeSlotCount)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `oracle` | address | [UMA CTF Adapter](https://docs.polymarket.com/developers/CTF/overview) |
+    | `questionId` | bytes32 | Hash of the UMA ancillary data |
+    | `outcomeSlotCount` | uint | `2` for binary markets |
+  </Step>
+  <Step title="Compute the Collection IDs">
+    ```solidity
+    getCollectionId(parentCollectionId, conditionId, indexSet)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `parentCollectionId` | bytes32 | `bytes32(0)` for top-level positions |
+    | `conditionId` | bytes32 | Condition ID from the previous step |
+    | `indexSet` | uint | `1` (`0b01`) for the first outcome or `2` (`0b10`) for the second |
+
+    The `indexSet` is a bitmask identifying which outcome slots belong to a collection. It must be a nonempty proper subset of the condition's outcome slots. A binary market has one collection for each outcome.
+  </Step>
+  <Step title="Compute the Position IDs">
+    ```solidity
+    getPositionId(collateralToken, collectionId)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `collateralToken` | IERC20 | USDT contract address on Polygon |
+    | `collectionId` | bytes32 | Collection ID for one market outcome |
+  </Step>
+</Steps>
+
+The resulting position IDs are the ERC-1155 token IDs for the market's YES and NO outcomes. Most integrations should read these token IDs from market data. Computing them manually is only necessary for direct contract integrations.
+
+## Redeem Resolved Positions
+
+Redeeming converts outcome tokens into USDT after a market resolves. Each winning token returns 1 USDT, while losing tokens return 0.
+
+There is no redemption deadline. Winning tokens remain redeemable at any time after resolution.
+
+Before redeeming, ensure you have:
+
+1. A resolved market.
+2. Outcome tokens for the market.
+3. Approved the collateral adapter for the market type to transfer the wallet's outcome tokens.
+
+### API
+
+Build the `redeemPositions` call for a resolved market, then execute it as a gasless wallet transaction.
+
+<Steps>
+  <Step title="Build the Redemption Call">
+    Use `CtfCollateralAdapter` at `0xAdA100Db00Ca00073811820692005400218FcE1f` when `negRisk` is `false`, or `NegRiskCtfCollateralAdapter` at `0xadA2005600Dec949baf300f4C6120000bDB6eAab` when it is `true`.
+
+    ABI-encode this function call:
+
+    ```solidity
+    function redeemPositions(
+        address collateralToken,
+        bytes32 parentCollectionId,
+        bytes32 conditionId,
+        uint256[] indexSets
+    );
+    ```
+
+    | Argument | Value |
+    | --- | --- |
+    | `collateralToken` | `0xC011a7E12a19f781f670d46F03803f3342E82DF8` |
+    | `parentCollectionId` | 32 zero bytes |
+    | `conditionId` | `<market_condition_id>` |
+    | `indexSets` | `[1, 2]` |
+
+    Place the encoded calldata in the wallet call:
+
+    ```json
+    {
+      "target": "<collateral_adapter_address>",
+      "value": "0",
+      "data": "<encoded_redeem_positions_calldata>"
+    }
+    ```
+  </Step>
+  <Step title="Execute the Redemption">
+    For a Deposit Wallet, include the redemption call in the signed wallet batch and submit it with the Relayer API key:
+
+    ```bash API
+    curl -X POST "https://relayer-v2.polymarket.com/submit" \
+      -H "Content-Type: application/json" \
+      -H "RELAYER_API_KEY: $RELAYER_API_KEY" \
+      -H "RELAYER_API_KEY_ADDRESS: $RELAYER_API_KEY_ADDRESS" \
+      --data '{
+        "type": "WALLET",
+        "from": "<signer_address>",
+        "to": "0x0000000000Fb5C9ADea0298D729A0CB3823Cc07",
+        "nonce": "<wallet_nonce>",
+        "signature": "<wallet_batch_signature>",
+        "metadata": "Redeem positions",
+        "depositWalletParams": {
+          "depositWallet": "<deposit_wallet_address>",
+          "deadline": "<unix_seconds>",
+          "calls": [
+            {
+              "target": "<collateral_adapter_address>",
+              "value": "0",
+              "data": "<encoded_redeem_positions_calldata>"
+            }
+          ]
+        }
+      }'
+    ```
+
+    See [Execute Gasless Transactions](/event-contracts/untitled-page-18) for nonce creation, wallet-batch signing, and confirmation. Wait for `STATE_CONFIRMED` before using the payout.
+  </Step>
+</Steps>
+
+Understand the onchain token mechanics that power event market positions.
+
+Event market tokenizes market outcomes using the [Conditional Token Framework (CTF)](https://docs.gnosis.io/conditionaltokens/), an open standard developed by Gnosis. Understanding CTF explains how positions are created, combined, and redeemed onchain.
+
+## What Is CTF?
+
+CTF creates ERC-1155 tokens that represent event market outcomes. Each binary market has two outcome tokens: YES\\NO.
+
+These tokens are fully collateralized. Every YES and NO pair is backed by exactly \$1 of collateral locked through the CTF contracts.
+
+### Token Identifiers
+
+Each outcome token has a unique position ID, which is used as its ERC-1155 token ID. CTF computes it onchain in three steps.
+
+<Steps>
+  <Step title="Compute the Condition ID">
+    ```solidity
+    getConditionId(oracle, questionId, outcomeSlotCount)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `oracle` | address | [UMA CTF Adapter](https://docs.polymarket.com/developers/CTF/overview) |
+    | `questionId` | bytes32 | Hash of the UMA ancillary data |
+    | `outcomeSlotCount` | uint | `2` for binary markets |
+  </Step>
+  <Step title="Compute the Collection IDs">
+    ```solidity
+    getCollectionId(parentCollectionId, conditionId, indexSet)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `parentCollectionId` | bytes32 | `bytes32(0)` for top-level positions |
+    | `conditionId` | bytes32 | Condition ID from the previous step |
+    | `indexSet` | uint | `1` (`0b01`) for the first outcome or `2` (`0b10`) for the second |
+
+    The `indexSet` is a bitmask identifying which outcome slots belong to a collection. It must be a nonempty proper subset of the condition's outcome slots. A binary market has one collection for each outcome.
+  </Step>
+  <Step title="Compute the Position IDs">
+    ```solidity
+    getPositionId(collateralToken, collectionId)
+    ```
+
+    | Parameter | Type | Value |
+    | --- | --- | --- |
+    | `collateralToken` | IERC20 | USDT contract address on Polygon |
+    | `collectionId` | bytes32 | Collection ID for one market outcome |
+  </Step>
+</Steps>
+
+The resulting position IDs are the ERC-1155 token IDs for the market's YES and NO outcomes. Most integrations should read these token IDs from market data. Computing them manually is only necessary for direct contract integrations.
+
+## Redeem Resolved Positions
+
+Redeeming converts outcome tokens into USDT after a market resolves. Each winning token returns 1 USDT, while losing tokens return 0.
+
+There is no redemption deadline. Winning tokens remain redeemable at any time after resolution.
+
+Before redeeming, ensure you have:
+
+1. A resolved market.
+2. Outcome tokens for the market.
+3. Approved the collateral adapter for the market type to transfer the wallet's outcome tokens.
+
+### API
+
+Build the `redeemPositions` call for a resolved market, then execute it as a gasless wallet transaction.
+
+<Steps>
+  <Step title="Build the Redemption Call">
+    Use `CtfCollateralAdapter` at `0xAdA100Db00Ca00073811820692005400218FcE1f` when `negRisk` is `false`, or `NegRiskCtfCollateralAdapter` at `0xadA2005600Dec949baf300f4C6120000bDB6eAab` when it is `true`.
+
+    ABI-encode this function call:
+
+    ```solidity
+    function redeemPositions(
+        address collateralToken,
+        bytes32 parentCollectionId,
+        bytes32 conditionId,
+        uint256[] indexSets
+    );
+    ```
+
+    | Argument | Value |
+    | --- | --- |
+    | `collateralToken` | `0xC011a7E12a19f781f670d46F03803f3342E82DF8` |
+    | `parentCollectionId` | 32 zero bytes |
+    | `conditionId` | `<market_condition_id>` |
+    | `indexSets` | `[1, 2]` |
+
+    Place the encoded calldata in the wallet call:
+
+    ```json
+    {
+      "target": "<collateral_adapter_address>",
+      "value": "0",
+      "data": "<encoded_redeem_positions_calldata>"
+    }
+    ```
+  </Step>
+  <Step title="Execute the Redemption">
+    For a Deposit Wallet, include the redemption call in the signed wallet batch and submit it with the Relayer API key:
+
+    ```bash API
+    curl -X POST "https://relayer-v2.polymarket.com/submit" \
+      -H "Content-Type: application/json" \
+      -H "RELAYER_API_KEY: $RELAYER_API_KEY" \
+      -H "RELAYER_API_KEY_ADDRESS: $RELAYER_API_KEY_ADDRESS" \
+      --data '{
+        "type": "WALLET",
+        "from": "<signer_address>",
+        "to": "0x0000000000Fb5C9ADea0298D729A0CB3823Cc07",
+        "nonce": "<wallet_nonce>",
+        "signature": "<wallet_batch_signature>",
+        "metadata": "Redeem positions",
+        "depositWalletParams": {
+          "depositWallet": "<deposit_wallet_address>",
+          "deadline": "<unix_seconds>",
+          "calls": [
+            {
+              "target": "<collateral_adapter_address>",
+              "value": "0",
+              "data": "<encoded_redeem_positions_calldata>"
+            }
+          ]
+        }
+      }'
+    ```
+
+    See [Execute Gasless Transactions](/event-contracts/untitled-page-18) for nonce creation, wallet-batch signing, and confirmation. Wait for `STATE_CONFIRMED` before using the payout.
+  </Step>
+</Steps>

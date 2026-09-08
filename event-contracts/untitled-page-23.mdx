@@ -1,0 +1,142 @@
+---
+title: "Wallet Activity: Positions, History, and Portfolio Value"
+sidebarTitle: "Wallet Activity"
+description: "Query a wallet's open and closed positions, activity timeline, and portfolio value with the Event Contracts Data API."
+---
+
+Track the positions and activity associated with a wallet. Use a wallet address to understand an account's current exposure and trace how its activity has changed over time.
+
+## Open Positions
+
+Inspect a wallet's current outcome exposure and unrealized performance.
+
+### API
+
+List the open positions for a wallet:
+
+```bash API
+ADDRESS="0x8ba1f109551bD432803012645Ac136ddd64DBA72"
+
+curl "https://data-api.polymarket.com/positions?user=$ADDRESS&limit=1"
+```
+
+The response contains the wallet's open positions:
+
+```json Response
+[
+  {
+    "proxyWallet": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "asset": "10750588276773148935834991251394539956039348296965670082489597050…",
+    "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f…",
+    "size": 125.5,
+    "avgPrice": 0.42,
+    "initialValue": 52.71,
+    "currentValue": 61.5,
+    "cashPnl": 8.79,
+    "percentPnl": 16.68,
+    "curPrice": 0.49,
+    "title": "Will the US confirm that aliens exist before 2027?",
+    "slug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "eventSlug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "outcome": "Yes",
+    "outcomeIndex": 0
+  }
+]
+```
+
+## Closed Positions
+
+Review the positions a wallet has exited or that have resolved, including their realized performance.
+
+### API
+
+List the closed positions for a wallet:
+
+```bash API
+curl "https://data-api.polymarket.com/closed-positions?user=$ADDRESS&limit=1"
+```
+
+The response contains the wallet's closed positions:
+
+```json Response
+[
+  {
+    "proxyWallet": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "asset": "73056302498040856354963998699057693722943027161590344473262285090…",
+    "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f…",
+    "avgPrice": 0.58,
+    "totalBought": 250,
+    "realizedPnl": 34.25,
+    "curPrice": 0,
+    "timestamp": 1782752879,
+    "title": "Will the US confirm that aliens exist before 2027?",
+    "slug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "eventSlug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "outcome": "No",
+    "outcomeIndex": 1
+  }
+]
+```
+
+## Activity History
+
+Follow the timeline for a wallet across trades and other activity.
+
+### API
+
+List the activity for a wallet:
+
+```bash API
+curl "https://data-api.polymarket.com/activity?user=$ADDRESS&limit=1"
+```
+
+<Note>
+  The endpoint excludes deposit and withdrawal records by default, even when `type` requests them. To get them, pass `excludeDepositsWithdrawals=false`.
+</Note>
+
+The response contains the wallet's activity:
+
+```json Response
+[
+  {
+    "proxyWallet": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "timestamp": 1782752879,
+    "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f…",
+    "type": "TRADE",
+    "size": 25,
+    "usdcSize": 12.25,
+    "transactionHash": "0x4f3d2c1b0a9876543210fedcba9876543210fedcba9876543210fe…",
+    "price": 0.49,
+    "asset": "10750588276773148935834991251394539956039348296965670082489597050…",
+    "side": "BUY",
+    "title": "Will the US confirm that aliens exist before 2027?",
+    "slug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "eventSlug": "will-the-us-confirm-that-aliens-exist-before-2027",
+    "outcome": "Yes",
+    "outcomeIndex": 0
+  }
+]
+```
+
+## Portfolio Value
+
+Read the current portfolio value for a wallet.
+
+### API
+
+Fetch the portfolio value for a wallet:
+
+```bash API
+curl "https://data-api.polymarket.com/value?user=$ADDRESS"
+```
+
+The response contains the wallet's current portfolio value:
+
+```json Response
+[
+  {
+    "user": "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
+    "value": 1842.37
+  }
+]
+```
