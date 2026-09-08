@@ -61,11 +61,18 @@
                 "pages": [
                   {
                     "group": "快速开始",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-markets/overview",
+                      "zh/introduction/event-markets/event-markets",
+                      "zh/introduction/event-markets/api"
+                    ]
                   },
                   {
                     "group": "核心概念",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-markets/markets-events",
+                      "zh/introduction/event-markets/negative-risk"
+                    ]
                   },
                   {
                     "group": "市场数据",
