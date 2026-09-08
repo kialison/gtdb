@@ -1,0 +1,30 @@
+---
+title: "Prices and Order Books"
+sidebarTitle: "Prices and Order Books"
+description: "Read token prices, tickers, order books, trades, and price history."
+---
+
+Use an outcome `token_id` from the market response.
+
+## Endpoints
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/price"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/ticker"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/price_history?interval=5m&from=<from_ms>&to=<to_ms>"
+```
+
+`depth` defaults to 20 and accepts 1–100 levels per side. The order-book response includes `bids`, `asks`, `tick_size`, `min_order_size`, `last_trade_price`, `timestamp`, and identifiers.
+
+## Price history
+
+`interval` accepts `5m`, `15m`, `1h`, `4h`, and `1d`. `from` and `to` are Unix milliseconds. The requested range may not exceed 14 days.
+
+## Trades
+
+```http
+GET /api/v4/event_markets/markets/{market_id}/trades?limit=20&cursor=<cursor>
+```
+
+Trade objects expose `trade_id`, `market_id`, `condition_id`, `token_id`, `side`, `price`, `size`, and a Unix timestamp.

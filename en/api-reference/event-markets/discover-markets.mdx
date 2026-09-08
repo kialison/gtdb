@@ -1,0 +1,49 @@
+---
+title: "Discover Markets"
+sidebarTitle: "Discover Markets"
+description: "Find events and markets with filters, slugs, and cursor pagination."
+---
+
+Discovery is public and does not require authentication.
+
+Discovery only returns records whose parent Event was created within the last 30 days. The window is evaluated relative to the request time.
+
+## Events
+
+```http
+GET /api/v4/event_markets/events
+GET /api/v4/event_markets/events/{event_id}
+GET /api/v4/event_markets/events/slug/{slug}
+```
+
+List events:
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true&tag_slug=sports"
+```
+
+Supported filters include `event_id`, `slug`, `tag_slug`, `active`, `closed`, `sort`, `ascending`, `start_date_min`, `start_date_max`, `end_date_min`, and `end_date_max`. Date filters are Unix milliseconds.
+
+## Markets
+
+```http
+GET /api/v4/event_markets/markets
+GET /api/v4/event_markets/markets/{market_id}
+GET /api/v4/event_markets/markets/slug/{slug}
+```
+
+List markets for an event:
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets?limit=20&event_id=<event_id>&active=true"
+```
+
+Market filters include `market_id`, `event_id`, `slug`, `condition_id`, `tag_slug`, `active`, and `closed`.
+
+## Pagination
+
+`limit` accepts 1–100. Use the returned `next_cursor` as the next request's `cursor`:
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=100&cursor=<next_cursor>"
+```

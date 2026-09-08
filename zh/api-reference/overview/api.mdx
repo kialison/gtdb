@@ -1,0 +1,18 @@
+---
+title: "API 概览"
+description: "Prediction API 的基础地址、认证范围、分页和错误格式。"
+---
+
+## 基础地址
+
+```text
+https://broker.dexbuilder.com
+```
+
+行情接口公开可用，不需要用户认证。订单、持仓、账户资产和用户交易等私有接口必须通过网关认证。认证方案仍由网关统一管理，文档不约定具体 Header；请勿发送内部身份 Header。
+
+列表接口使用 `limit`、`cursor` 和 `next_cursor`。`limit` 默认为 20，最大为 100；cursor 是不透明值，不支持 offset 分页。
+
+公共行情数据只覆盖请求时间往前滚动 30 天内创建的父级 Event。
+
+错误响应格式为 `label` 和 `message`，并配合标准 HTTP 状态码。

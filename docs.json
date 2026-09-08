@@ -134,15 +134,33 @@
             "groups": [
               {
                 "group": "概览",
-                "pages": []
+                "pages": [
+                  "zh/api-reference/overview/api",
+                  "zh/api-reference/overview/errors",
+                  "zh/api-reference/overview/overview"
+                ]
               },
               {
                 "group": "事件市场",
-                "pages": []
+                "pages": [
+                  "zh/api-reference/event-markets/discover-markets",
+                  "zh/api-reference/event-markets/market-details",
+                  "zh/api-reference/event-markets/prices-and-orderbooks",
+                  "zh/api-reference/event-markets/wallet-activity",
+                  "zh/api-reference/event-markets/place-orders",
+                  "zh/api-reference/event-markets/fees",
+                  "zh/api-reference/event-markets/positions",
+                  "zh/api-reference/event-markets/manage-orders"
+                ]
               },
               {
                 "group": "事件合约",
-                "pages": []
+                "pages": [
+                  "zh/api-reference/event-contracts/api",
+                  "zh/api-reference/event-contracts/discover-markets",
+                  "zh/api-reference/event-contracts/place-orders",
+                  "zh/api-reference/event-contracts/errors"
+                ]
               }
             ]
           }
@@ -260,15 +278,25 @@
             "groups": [
               {
                 "group": "Overview",
-                "pages": []
+                "pages": [
+                  "en/api-reference/overview/api",
+                  "en/api-reference/overview/errors"
+                ]
               },
               {
                 "group": "Event Markets",
-                "pages": []
+                "pages": [
+                  "en/api-reference/event-markets/discover-markets",
+                  "en/api-reference/event-markets/market-details",
+                  "en/api-reference/event-markets/prices-and-orderbooks",
+                  "en/api-reference/event-markets/wallet-activity"
+                ]
               },
               {
                 "group": "Event Contracts",
-                "pages": []
+                "pages": [
+                  "en/api-reference/event-contracts/api"
+                ]
               }
             ]
           }
@@ -350,15 +378,33 @@
             "groups": [
               {
                 "group": "概覽",
-                "pages": []
+                "pages": [
+                  "zh-TW/api-reference/overview/api",
+                  "zh-TW/api-reference/overview/overview",
+                  "zh-TW/api-reference/overview/errors"
+                ]
               },
               {
                 "group": "事件市場",
-                "pages": []
+                "pages": [
+                  "zh-TW/api-reference/event-markets/discover-markets",
+                  "zh-TW/api-reference/event-markets/market-details",
+                  "zh-TW/api-reference/event-markets/place-orders",
+                  "zh-TW/api-reference/event-markets/wallet-activity",
+                  "zh-TW/api-reference/event-markets/prices-and-orderbooks",
+                  "zh-TW/api-reference/event-markets/manage-orders",
+                  "zh-TW/api-reference/event-markets/positions",
+                  "zh-TW/api-reference/event-markets/fees"
+                ]
               },
               {
                 "group": "事件合約",
-                "pages": []
+                "pages": [
+                  "zh-TW/api-reference/event-contracts/api",
+                  "zh-TW/api-reference/event-contracts/discover-markets",
+                  "zh-TW/api-reference/event-contracts/place-orders",
+                  "zh-TW/api-reference/event-contracts/errors"
+                ]
               }
             ]
           }
