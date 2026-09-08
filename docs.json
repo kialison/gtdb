@@ -187,7 +187,14 @@
                   },
                   {
                     "group": "API Reference",
-                    "pages": []
+                    "pages": [
+                      "event-contracts/api/overview",
+                      "event-contracts/api/events",
+                      "event-contracts/api/markets",
+                      "event-contracts/api/market-data",
+                      "event-contracts/api/orders",
+                      "event-contracts/api/positions"
+                    ]
                   }
                 ]
               }

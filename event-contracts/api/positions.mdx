@@ -1,0 +1,45 @@
+---
+title: Positions, Account, and User Trades
+sidebarTitle: Positions, Account, and User Trades
+description: Read private Event Contracts positions and account-related data.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_contract`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## Positions
+
+`GET /api/v4/event_contract/positions` accepts `event_id`, `condition_id`, `settlement_status`, `limit`, and `cursor`, and returns `items` plus `next_cursor`. Position items include `position_id`, `event_id`, `token_id`, `outcome`, `size`, `available_size`, `locked_size`, `avg_open_price`, `mark_price`, `position_value`, `claimable_amount`, `settlement_status`, `won`, and `updated_at`.
+
+## Account and execution data
+
+Private endpoints include:
+
+- `GET /api/v4/event_contract/assets`
+- `GET /api/v4/event_contract/balance`
+- `GET /api/v4/event_contract/account_book`
+- `GET /api/v4/event_contract/fund_flows`
+- `GET /api/v4/event_contract/usertrades`
+- `POST /api/v4/event_contract/transfer`
+
+User trades support market, token, order, and time filters plus cursor pagination. A successful order acceptance is not a fill; use order state or user trades to confirm execution.
+
+## Fees and errors
+
+`GET /api/v4/event_contract/fee` is private; `fee_type` is `fixed` or `dynamic`. `GET /api/v4/event_contract/time` is public and returns Unix-millisecond `server_time`.
+
+| Status | Meaning |
+| --- | --- |
+| 400 | Invalid query, path, or body |
+| 401 | Missing or invalid authentication |
+| 404 | Unknown or invisible resource |
+| 503 | Upstream market-data service unavailable |
+
+Retry read-only `503` responses with backoff. Check order state before retrying a write.

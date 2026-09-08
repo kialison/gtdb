@@ -1,0 +1,39 @@
+---
+title: List and Retrieve Events
+sidebarTitle: List and Retrieve Events
+description: List visible Event Contracts events or retrieve one by ID or slug.
+---
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+All endpoints use `/api/v4/event_contract`. Decimal values such as prices, sizes, and volumes are returned as strings.
+
+## Authentication
+
+Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+
+## List events
+
+`GET /api/v4/event_contract/events`
+
+Query parameters are `limit` (1–100), `cursor`, `sort` (`start_date`, `start_time`, `end_date`, or `closed_time`), `ascending`, `event_id`, `slug`, `tag_slug`, `active`, `closed`, `start_date_min`, `start_date_max`, `end_date_min`, and `end_date_max`. Date filters use Unix milliseconds.
+
+```bash
+curl --get 'https://broker.dexbuilder.com/api/v4/event_contract/events' \
+  --data-urlencode 'limit=20' --data-urlencode 'sort=start_date' --data-urlencode 'active=true'
+```
+
+Response:
+
+```json
+{"items":[{"event_id":"event-123","slug":"example-event","title":{"en":"Example event"},"active":true,"closed":false,"start_date":1760000000,"end_date":1761000000,"volume":"125000.00","tags":[]}],"next_cursor":"opaque-cursor"}
+```
+
+## Get an event
+
+- `GET /api/v4/event_contract/events/{event_id}`
+- `GET /api/v4/event_contract/events/slug/{slug}`
+
+The detail object contains multilingual title and description, tags, resolution source, and embedded market summaries. Unknown or invisible events return `404`.
