@@ -1,0 +1,14 @@
+---
+title: "Manage Orders"
+sidebarTitle: "Manage Orders"
+description: "Query and cancel private Event Contract orders."
+---
+
+Order-management endpoints are private and require gateway authentication.
+
+- GET https://broker.dexbuilder.com/api/v4/event_contract/orders
+- GET https://broker.dexbuilder.com/api/v4/event_contract/orders/{order_id}
+- DELETE https://broker.dexbuilder.com/api/v4/event_contract/orders/{order_id}
+- DELETE https://broker.dexbuilder.com/api/v4/event_contract/orders
+
+The batch cancel request uses the public order_ids field. Query the order after a timeout before retrying a state-changing request.

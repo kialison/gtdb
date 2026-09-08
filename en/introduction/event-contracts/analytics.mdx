@@ -1,0 +1,13 @@
+---
+title: "Analytics"
+sidebarTitle: "Analytics"
+description: "Analyze Event Contract trades and market summaries."
+---
+
+Prediction API exposes Event Contract market trades and summary fields.
+
+GET https://broker.dexbuilder.com/api/v4/event_contract/markets/{market_id}/trades?limit=20
+
+Use cursor for subsequent pages. Market summaries from GET /api/v4/event_contract/markets include volume, best_bid, best_ask, and last_trade_price when available.
+
+Open interest, holders, and live-volume endpoints are not registered in prediction-api.

@@ -1,0 +1,22 @@
+---
+title: "Positions"
+sidebarTitle: "Positions"
+description: "Query and close private Event Markets positions."
+---
+
+Position endpoints are private and require gateway authentication.
+
+## Query positions
+
+- GET https://broker.dexbuilder.com/api/v4/event_markets/positions
+- GET https://broker.dexbuilder.com/api/v4/event_markets/positions/{position_id}
+
+The list endpoint supports event_id, condition_id, settlement_status, limit, and cursor.
+
+## Close a position
+
+POST https://broker.dexbuilder.com/api/v4/event_markets/positions/{position_id}/close
+
+The endpoint returns an acceptance response. Query the position and related account data after processing completes.
+
+Prediction API does not document a Relayer or wallet-settlement endpoint. Use the separately published settlement contract if your integration requires on-chain operations.

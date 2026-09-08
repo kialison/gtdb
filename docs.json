@@ -139,15 +139,40 @@
                   },
                   {
                     "group": "Core Concepts",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-markets/markets-events",
+                      "en/introduction/event-markets/negative-risk",
+                      "en/introduction/event-markets/prices-orderbook",
+                      "en/introduction/event-markets/positions-tokens",
+                      "en/introduction/event-markets/order-lifecycle",
+                      "en/introduction/event-markets/resolution"
+                    ]
                   },
                   {
                     "group": "Market Data",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-markets/data-overview",
+                      "en/introduction/event-markets/discover-markets",
+                      "en/introduction/event-markets/market-details",
+                      "en/introduction/event-markets/prices-and-orderbooks",
+                      "en/introduction/event-markets/analytics",
+                      "en/introduction/event-markets/chainlink-twap",
+                      "en/introduction/event-markets/realtime-data"
+                    ]
                   },
                   {
                     "group": "Trading",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-markets/first-order",
+                      "en/introduction/event-markets/trading-overview",
+                      "en/introduction/event-markets/place-orders",
+                      "en/introduction/event-markets/manage-orders",
+                      "en/introduction/event-markets/realtime-order-updates",
+                      "en/introduction/event-markets/positions",
+                      "en/introduction/event-markets/wallet-activity",
+                      "en/introduction/event-markets/fees",
+                      "en/introduction/event-markets/errors"
+                    ]
                   }
                 ]
               },
@@ -157,20 +182,46 @@
                   {
                     "group": "Getting Started",
                     "pages": [
-                      "en/introduction/event-contracts/api"
+                      "en/introduction/event-contracts/api",
+                      "en/introduction/event-contracts/event-contracts"
                     ]
                   },
                   {
                     "group": "Core Concepts",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-contracts/markets-events",
+                      "en/introduction/event-contracts/negative-risk",
+                      "en/introduction/event-contracts/prices-orderbook",
+                      "en/introduction/event-contracts/positions-tokens",
+                      "en/introduction/event-contracts/order-lifecycle",
+                      "en/introduction/event-contracts/resolution"
+                    ]
                   },
                   {
                     "group": "Market Data",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-contracts/data-overview",
+                      "en/introduction/event-contracts/discover-markets",
+                      "en/introduction/event-contracts/prices-and-orderbooks",
+                      "en/introduction/event-contracts/market-details",
+                      "en/introduction/event-contracts/analytics",
+                      "en/introduction/event-contracts/chainlink-twap",
+                      "en/introduction/event-contracts/realtime-data"
+                    ]
                   },
                   {
                     "group": "Trading",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-contracts/first-order",
+                      "en/introduction/event-contracts/trading-overview",
+                      "en/introduction/event-contracts/place-orders",
+                      "en/introduction/event-contracts/manage-orders",
+                      "en/introduction/event-contracts/realtime-order-updates",
+                      "en/introduction/event-contracts/positions",
+                      "en/introduction/event-contracts/wallet-activity",
+                      "en/introduction/event-contracts/errors",
+                      "en/introduction/event-contracts/fees"
+                    ]
                   }
                 ]
               }

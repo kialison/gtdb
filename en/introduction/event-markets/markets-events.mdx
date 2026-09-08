@@ -1,0 +1,19 @@
+---
+title: "Markets and Events"
+sidebarTitle: "Markets and Events"
+description: "Understand events, markets, outcomes, and tokens."
+---
+
+An event groups related prediction markets. A market represents a question that can resolve to one or more outcomes. Each outcome has a token_id used by token-level market-data endpoints.
+
+## Lookup flow
+
+event_id → market_id → token_id → price or order book
+
+Use these endpoints:
+
+- GET /api/v4/event_markets/events
+- GET /api/v4/event_markets/markets?event_id={event_id}
+- GET /api/v4/event_markets/tokens/{token_id}/market
+
+Market-data endpoints are public and do not require user authentication. Use market_id for market details and trade queries. Use token_id for prices, tickers, order books, and price history.

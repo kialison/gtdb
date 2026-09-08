@@ -1,0 +1,11 @@
+---
+title: "Market Details"
+sidebarTitle: "Market Details"
+description: "Read Event Contract identifiers, outcomes, lifecycle state, and market summaries."
+---
+
+Fetch a market with GET /api/v4/event_contract/markets/{market_id} or GET /api/v4/event_contract/markets/slug/{slug}.
+
+The response includes identifiers such as market_id, event_id, condition_id, slug, outcomes, and token_id references. It may also include active, closed, status, best_bid, best_ask, last_trade_price, volume, and volume_24hr.
+
+Use token_id with the price and order-book endpoints. A market can remain discoverable after it closes.

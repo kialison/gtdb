@@ -1,0 +1,11 @@
+---
+title: "Order Status Updates"
+sidebarTitle: "Order Status Updates"
+description: "Track Event Contract order state with authoritative HTTP reads."
+---
+
+Prediction API does not currently publish a WebSocket order-update endpoint. Use authenticated HTTP reads:
+
+- GET https://broker.dexbuilder.com/api/v4/event_contract/orders
+- GET https://broker.dexbuilder.com/api/v4/event_contract/orders/{order_id}
+- GET https://broker.dexbuilder.com/api/v4/event_contract/usertrades

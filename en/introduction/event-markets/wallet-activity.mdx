@@ -1,0 +1,25 @@
+---
+title: "Wallet Activity"
+sidebarTitle: "Wallet Activity"
+description: "Query private account positions, orders, trades, assets, and account-book entries."
+---
+
+Wallet activity is private data. Authenticate through the gateway before calling these endpoints. The public documentation does not expose internal identity headers.
+
+## Endpoints
+
+| Resource | Method and path |
+| --- | --- |
+| Orders | `GET /api/v4/event_markets/orders` |
+| Order details | `GET /api/v4/event_markets/orders/{order_id}` |
+| User trades | `GET /api/v4/event_markets/usertrades` |
+| Positions | `GET /api/v4/event_markets/positions` |
+| Position details | `GET /api/v4/event_markets/positions/{position_id}` |
+| Assets | `GET /api/v4/event_markets/assets` |
+| Account book | `GET /api/v4/event_markets/account_book` |
+
+Private list endpoints use `limit` and opaque `cursor` pagination. Orders and user trades support filters for market, token, time range, order ID, and sort order. Positions support event, market, and settlement-status filters.
+
+## Event Contracts
+
+The Event Contracts namespace provides private endpoints for orders, user trades, positions, settled positions, balance, and fund flows under `/api/v4/event_contract`.

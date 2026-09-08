@@ -1,0 +1,14 @@
+---
+title: "Prices and Order Books"
+sidebarTitle: "Prices and Order Books"
+description: "Read Event Contract token prices, tickers, order books, and price history."
+---
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_contract/tokens/<token_id>/price"
+curl "https://broker.dexbuilder.com/api/v4/event_contract/tokens/<token_id>/ticker"
+curl "https://broker.dexbuilder.com/api/v4/event_contract/tokens/<token_id>/order_book?depth=20"
+curl "https://broker.dexbuilder.com/api/v4/event_contract/tokens/<token_id>/price_history?interval=5m&from=<from_ms>&to=<to_ms>"
+```
+
+`depth` defaults to 20 and accepts 1–100. Price history accepts `5m`, `15m`, `1h`, `4h`, and `1d`; the time range may not exceed 14 days.

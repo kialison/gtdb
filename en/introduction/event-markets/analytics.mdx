@@ -1,0 +1,19 @@
+---
+title: "Analytics"
+sidebarTitle: "Analytics"
+description: "Use market trades and market summaries to analyze activity."
+---
+
+Prediction API currently exposes market trades and market summary fields. Open interest, holders, and live-volume routes are not registered in `prediction-api` and are not included here.
+
+## Recent trades
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/markets/<market_id>/trades?limit=20"
+```
+
+The paginated response contains trade identifiers, outcome token, side, price, size, and timestamp. Use `cursor` to read subsequent pages.
+
+## Market summaries
+
+Use `GET /api/v4/event_markets/markets` to compare `volume`, `volume_24hr`, `best_bid`, `best_ask`, and `last_trade_price` across markets.
