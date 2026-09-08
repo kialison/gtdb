@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">DexBuilder 接入生命周期</title><desc id="desc">Builder 接入依次完成注册、入金、交易、PnL 结算、提现和收入对账。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#19D969"/></marker><style>.t{font-family:Inter,"PingFang SC","Microsoft YaHei",Arial,sans-serif;fill:#F3F7F4}.m{font-family:ui-monospace,"PingFang SC",monospace;fill:#9AA79E}.h{font-size:28px;font-weight:700}.k{font-size:13px;font-weight:700;letter-spacing:2px;fill:#19D969}.n{font-size:18px;font-weight:650}.s{font-size:13px}.i{font-size:14px;font-weight:800;fill:#07100B}</style></defs>
+  <rect width="1200" height="520" rx="28" fill="#07100B"/>
+  <text x="64" y="62" class="t k">BUILDER 端到端流程</text><text x="64" y="102" class="t h">从首次签名到收入完成对账</text><text x="64" y="132" class="m s">每个用户操作都有稳定标识、状态与对应账本证据。</text>
+  <path d="M190 256H320M410 256H540M630 256H760M850 256H980" fill="none" stroke="#19D969" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(70 202)"><rect width="120" height="108" rx="18" fill="#0E1912" stroke="#2C3A31"/><circle cx="24" cy="24" r="14" fill="#19D969"/><text x="20" y="29" class="i">1</text><text x="20" y="68" class="t n">注册</text><text x="20" y="91" class="m s">钱包 → 账户</text></g>
+  <g transform="translate(320 202)"><rect width="120" height="108" rx="18" fill="#0E1912" stroke="#2C3A31"/><circle cx="24" cy="24" r="14" fill="#19D969"/><text x="20" y="29" class="i">2</text><text x="20" y="68" class="t n">入金</text><text x="20" y="91" class="m s">链上 → 账本</text></g>
+  <g transform="translate(540 202)"><rect width="120" height="108" rx="18" fill="#0D1D13" stroke="#19D969" stroke-width="2"/><circle cx="24" cy="24" r="14" fill="#19D969"/><text x="20" y="29" class="i">3</text><text x="20" y="68" class="t n">交易</text><text x="20" y="91" class="m s">订单 → 成交</text></g>
+  <g transform="translate(760 202)"><rect width="120" height="108" rx="18" fill="#0E1912" stroke="#2C3A31"/><circle cx="24" cy="24" r="14" fill="#19D969"/><text x="20" y="29" class="i">4</text><text x="20" y="68" class="t n">结算</text><text x="20" y="91" class="m s">PnL → 余额</text></g>
+  <g transform="translate(980 202)"><rect width="150" height="108" rx="18" fill="#0E1912" stroke="#2C3A31"/><circle cx="24" cy="24" r="14" fill="#19D969"/><text x="20" y="29" class="i">5</text><text x="20" y="68" class="t n">提现</text><text x="20" y="91" class="m s">账本 → 钱包</text></g>
+  <path d="M600 310V375H750" fill="none" stroke="#19D969" stroke-width="2" marker-end="url(#a)"/>
+  <g transform="translate(750 350)"><rect width="380" height="100" rx="18" fill="#0C1510" stroke="#2C3A31"/><text x="24" y="38" class="t n">Builder 收入对账</text><text x="24" y="66" class="m s">成交 → 用户手续费 → 协议费 → Builder 收入 → 打款</text></g>
+</svg>

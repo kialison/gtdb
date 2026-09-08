@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">钱包授权操作流程</title><desc id="desc">后端请求未签名载荷，钱包检查并签名，DexBuilder 验证、提交并追踪操作。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#19D969"/></marker><style>.t{font-family:Inter,"PingFang SC","Microsoft YaHei",Arial,sans-serif;fill:#F3F7F4}.m{font-family:ui-monospace,"PingFang SC",monospace;fill:#99A69D}.h{font-size:28px;font-weight:700}.k{font-size:13px;font-weight:700;letter-spacing:2px;fill:#19D969}.n{font-size:17px;font-weight:650}.s{font-size:13px}.lane{font-size:14px;font-weight:700;fill:#AEB9B1}</style></defs>
+  <rect width="1200" height="540" rx="28" fill="#07100B"/>
+  <text x="64" y="62" class="t k">钱包授权操作</text><text x="64" y="102" class="t h">安全构造，本地签名，精确验证</text><text x="64" y="132" class="m s">DexBuilder 返回待签名载荷，永远不接收用户私钥。</text>
+  <line x1="170" y1="170" x2="170" y2="475" stroke="#29382E"/><text x="72" y="225" class="t lane">后端</text><text x="72" y="320" class="t lane">钱包</text><text x="47" y="415" class="t lane">DexBuilder</text>
+  <line x1="170" y1="270" x2="1140" y2="270" stroke="#17231B"/><line x1="170" y1="365" x2="1140" y2="365" stroke="#17231B"/>
+  <g transform="translate(220 188)"><rect width="185" height="68" rx="16" fill="#0E1912" stroke="#2A3930"/><text x="20" y="30" class="t n">1. 请求构造</text><text x="20" y="52" class="m s">操作 + 账户</text></g><path d="M405 222H505" stroke="#19D969" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(505 378)"><rect width="190" height="68" rx="16" fill="#0D1D13" stroke="#19D969"/><text x="20" y="30" class="t n">2. 返回载荷</text><text x="20" y="52" class="m s">哈希 + 有效期 + 费用</text></g><path d="M600 378V336" stroke="#19D969" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(505 282)"><rect width="190" height="68" rx="16" fill="#0E1912" stroke="#2A3930"/><text x="20" y="30" class="t n">3. 检查并签名</text><text x="20" y="52" class="m s">私钥始终留在本地</text></g><path d="M695 316H790" stroke="#19D969" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(790 378)"><rect width="190" height="68" rx="16" fill="#0E1912" stroke="#2A3930"/><text x="20" y="30" class="t n">4. 验证并提交</text><text x="20" y="52" class="m s">哈希 + Nonce + 签名</text></g><path d="M885 378V256" stroke="#19D969" stroke-width="3" marker-end="url(#a)"/>
+  <g transform="translate(790 188)"><rect width="190" height="68" rx="16" fill="#0D1D13" stroke="#19D969"/><text x="20" y="30" class="t n">5. 追踪状态</text><text x="20" y="52" class="m s">请求 ID + 账本</text></g>
+</svg>
