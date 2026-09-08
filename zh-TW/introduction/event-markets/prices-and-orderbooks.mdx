@@ -1,0 +1,11 @@
+---
+title: "價格與訂單簿"
+description: "查詢 Token 價格、訂單簿與歷史價格。"
+---
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/token/price?token_id=$TOKEN_ID"
+curl "https://broker.dexbuilder.com/api/v4/event_markets/token/order_book?token_id=$TOKEN_ID"
+```
+
+價格、訂單簿、歷史價格、ticker 與批量價格介面屬於公開行情介面，不需要使用者認證。訂單簿查詢使用 Token ID；請勿將內部帳戶識別資訊放入請求。

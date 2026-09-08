@@ -1,0 +1,8 @@
+---
+title: "帳戶與錢包資料"
+description: "查詢帳戶訂單、交易、持倉與資產。"
+---
+
+以下介面為私有介面，必須透過閘道認證：`GET /api/v4/event_markets/orders`、`GET /api/v4/event_markets/usertrades`、`GET /api/v4/event_markets/positions`、`GET /api/v4/event_markets/assets` 與 `GET /api/v4/event_markets/account_book`。
+
+閘道負責提供帳戶上下文，客戶端不要建構或傳送內部身分 Header。

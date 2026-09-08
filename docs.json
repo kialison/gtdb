@@ -261,7 +261,10 @@
                 "pages": [
                   {
                     "group": "快速開始",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-markets/overview",
+                      "zh-TW/introduction/event-markets/api"
+                    ]
                   },
                   {
                     "group": "核心概念",
@@ -269,11 +272,22 @@
                   },
                   {
                     "group": "市場資料",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-markets/discover-markets",
+                      "zh-TW/introduction/event-markets/market-details",
+                      "zh-TW/introduction/event-markets/prices-and-orderbooks",
+                      "zh-TW/introduction/event-markets/wallet-activity"
+                    ]
                   },
                   {
                     "group": "交易",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-markets/place-orders",
+                      "zh-TW/introduction/event-markets/manage-orders",
+                      "zh-TW/introduction/event-markets/positions",
+                      "zh-TW/introduction/event-markets/fees",
+                      "zh-TW/introduction/event-markets/errors"
+                    ]
                   }
                 ]
               },
@@ -282,7 +296,9 @@
                 "pages": [
                   {
                     "group": "快速開始",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-contracts/api"
+                    ]
                   },
                   {
                     "group": "核心概念",
@@ -290,11 +306,16 @@
                   },
                   {
                     "group": "市場資料",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-contracts/discover-markets"
+                    ]
                   },
                   {
                     "group": "交易",
-                    "pages": []
+                    "pages": [
+                      "zh-TW/introduction/event-contracts/place-orders",
+                      "zh-TW/introduction/event-contracts/errors"
+                    ]
                   }
                 ]
               }
