@@ -132,7 +132,9 @@
                   {
                     "group": "Getting Started",
                     "pages": [
-                      "en/introduction/event-markets/overview"
+                      "en/introduction/event-markets/overview",
+                      "en/introduction/event-markets/event-markets",
+                      "en/introduction/event-markets/api"
                     ]
                   },
                   {
@@ -154,7 +156,9 @@
                 "pages": [
                   {
                     "group": "Getting Started",
-                    "pages": []
+                    "pages": [
+                      "en/introduction/event-contracts/api"
+                    ]
                   },
                   {
                     "group": "Core Concepts",
