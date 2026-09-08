@@ -1,0 +1,271 @@
+---
+title: "Analytics for Event Contracts"
+sidebarTitle: "Analytics"
+description: "Read recent trades, open interest, market holders, and event live volume to understand activity and performance across event contracts."
+---
+
+Understand activity and performance across event contracts. Use these reads to see where trading is concentrated and how traders and integrations perform over time.
+
+## Market Activity
+
+The examples below assume you already have a market object. To find or fetch one, see [Discover Markets](/event-contracts/untitled-page-11).
+
+Given a market object, its condition and event IDs are available in these fields:
+
+```json API
+{
+  "conditionId": "<condition_id>",
+  "events": [{ "id": "<event_id>" }]
+}
+```
+
+Assign the identifiers for the requests below:
+
+```bash
+CONDITION_ID="<condition_id>"
+EVENT_ID="<event_id>"
+```
+
+## Recent Trades
+
+Review the trades recently matched in a market, including their side, price, size, outcome, wallet, and timestamp.
+
+```bash API
+curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
+```
+
+The response contains the recent trades:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "proxyWallet": "0x50A0cebecFb81DbCbFA6d38F82040343F1E3D95F",
+      "side": "SELL",
+      "asset": "73056302498040856354963998699057693722943027161590344473262285090686949523925",
+      "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "size": 42.62,
+      "price": 0.91,
+      "timestamp": 1782752879,
+      "title": "Will the US confirm that aliens exist before 2027?",
+      "outcome": "No"
+    }
+  ]
+  ```
+</Accordion>
+
+## Open Interest
+
+Measure the value currently held in outstanding positions for one or more markets.
+
+```bash API
+curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
+```
+
+The response contains open interest by market:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "value": 7484304.679057
+    }
+  ]
+  ```
+</Accordion>
+
+## Market Holders
+
+Find the largest public holders for each outcome token in a market.
+
+```bash API
+curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
+```
+
+The response groups holders by outcome token:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "token": "107505882767731489358349912513945399560393482969656700824895970500",
+      "holders": [
+        {
+          "proxyWallet": "0xaf23273e03A924A257e0D6bEae7133CF9D32377f",
+          "amount": 894254.445452,
+          "outcomeIndex": 0,
+          "name": "5Cssss"
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
+
+## Event Live Volume
+
+Summarize activity across an event and break the volume down by market.
+
+```bash API
+curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
+```
+
+The response contains total event volume and its market breakdown:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "total": 60773073.437817,
+      "markets": [
+        {
+          "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f7",
+          "value": 34909514.911729
+        },
+        {
+          "market": "0xa7962b12241616d83dcb8c70fc33aa0f4Bb1ec46a3ad6a23db21d3885de",
+          "value": 11192047.412956
+        },
+        {
+          "market": "0xcddc048c672ee233890b99b18885dbd510e3db3d67c53afb408ddc93f9a",
+          "value": 8741732.803805
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
+
+Understand activity and performance across event contracts. Use these reads to see where trading is concentrated and how traders and integrations perform over time.
+
+## Market Activity
+
+The examples below assume you already have a market object. To find or fetch one, see [Discover Markets](/event-contracts/untitled-page-11).
+
+Given a market object, its condition and event IDs are available in these fields:
+
+```json API
+{
+  "conditionId": "<condition_id>",
+  "events": [{ "id": "<event_id>" }]
+}
+```
+
+Assign the identifiers for the requests below:
+
+```bash
+CONDITION_ID="<condition_id>"
+EVENT_ID="<event_id>"
+```
+
+## Recent Trades
+
+Review the trades recently matched in a market, including their side, price, size, outcome, wallet, and timestamp.
+
+```bash API
+curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
+```
+
+The response contains the recent trades:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "proxyWallet": "0x50A0cebecFb81DbCbFA6d38F82040343F1E3D95F",
+      "side": "SELL",
+      "asset": "73056302498040856354963998699057693722943027161590344473262285090686949523925",
+      "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "size": 42.62,
+      "price": 0.91,
+      "timestamp": 1782752879,
+      "title": "Will the US confirm that aliens exist before 2027?",
+      "outcome": "No"
+    }
+  ]
+  ```
+</Accordion>
+
+## Open Interest
+
+Measure the value currently held in outstanding positions for one or more markets.
+
+```bash API
+curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
+```
+
+The response contains open interest by market:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "value": 7484304.679057
+    }
+  ]
+  ```
+</Accordion>
+
+## Market Holders
+
+Find the largest public holders for each outcome token in a market.
+
+```bash API
+curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
+```
+
+The response groups holders by outcome token:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "token": "107505882767731489358349912513945399560393482969656700824895970500",
+      "holders": [
+        {
+          "proxyWallet": "0xaf23273e03A924A257e0D6bEae7133CF9D32377f",
+          "amount": 894254.445452,
+          "outcomeIndex": 0,
+          "name": "5Cssss"
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
+
+## Event Live Volume
+
+Summarize activity across an event and break the volume down by market.
+
+```bash API
+curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
+```
+
+The response contains total event volume and its market breakdown:
+
+<Accordion title="Response">
+  ```json
+  [
+    {
+      "total": 60773073.437817,
+      "markets": [
+        {
+          "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f7",
+          "value": 34909514.911729
+        },
+        {
+          "market": "0xa7962b12241616d83dcb8c70fc33aa0f4Bb1ec46a3ad6a23db21d3885de",
+          "value": 11192047.412956
+        },
+        {
+          "market": "0xcddc048c672ee233890b99b18885dbd510e3db3d67c53afb408ddc93f9a",
+          "value": 8741732.803805
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
