@@ -4,24 +4,51 @@ sidebarTitle: Tags, Candlesticks, and Server Time
 description: Public helper endpoints for Event Contracts integrations.
 ---
 
-## Base URL
-
-`https://broker.dexbuilder.com`
-
 ## Tags
 
 `GET /api/v4/event_contract/tags`
 
-Returns visible tags with cursor pagination. Query parameters are `limit` (1–100) and `cursor`; response is `items` plus `next_cursor`.
+Public endpoint. Query parameters:
 
-## Cryptocurrency candlesticks
+| Name | Type | Description |
+| --- | --- | --- |
+| `limit` | integer | Page size, 1–100. |
+| `cursor` | string | Previous `next_cursor`. |
+
+Response:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `items` | array | Tag summaries. |
+| `items[].tag_id` | string | Tag identifier. |
+| `items[].slug` | string | URL-friendly tag identifier. |
+| `items[].label` | object | Sparse multilingual label. |
+| `next_cursor` | string | Next-page cursor. |
+
+## Candlesticks
 
 `GET /api/v4/event_contract/tokens/{currency}/candlesticks`
 
-Required query parameters are `interval`; optional parameters are `from`, `to`, and `limit`. `currency` is a path parameter such as `BTC` or `ETH`. Each candle contains `t`, `o`, `h`, `l`, `c`, and `v`.
+| Parameter | In | Required | Description |
+| --- | --- | --- | --- |
+| `currency` | path | Yes | Base asset, such as `BTC` or `ETH`. |
+| `interval` | query | Yes | Candle interval validated by the service. |
+| `from` / `to` | query | No | Unix milliseconds. |
+| `limit` | query | No | Maximum number of candles. |
+
+Each item:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `t` | integer | Candle timestamp. |
+| `o` | string | Open value. |
+| `h` | string | High value. |
+| `l` | string | Low value. |
+| `c` | string | Close value. |
+| `v` | string | Volume. |
 
 ## Server time
 
 `GET /api/v4/event_contract/time`
 
-Returns `server_time` as a Unix-millisecond timestamp. A `503` from candlestick or other upstream market-data endpoints should be retried with backoff.
+Response field `server_time` is the current Unix timestamp in milliseconds.

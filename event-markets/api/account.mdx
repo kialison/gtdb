@@ -1,0 +1,42 @@
+---
+title: Account, Fees, and Claims
+sidebarTitle: Account, Fees, and Claims
+description: Complete Event Markets account, fee, ledger, and claim response reference
+---
+
+## Authentication
+
+All endpoints on this page are private. Authentication is supplied by the gateway; internal identity headers are not public request parameters.
+
+## Assets
+
+`GET /api/v4/event_markets/assets`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `fund_total` | string | Total account funds. |
+| `prediction_market_asset` | string | Asset held by prediction-market trading. |
+| `prediction_position_value` | string | Marked value of open prediction positions. |
+| `spot_usdt_balance` | string | Spot USDT balance. |
+| `unclaimed_amount` | string | Amount available for claiming. |
+
+## Account book
+
+`GET /api/v4/event_markets/account_book`
+
+Query parameters: `limit` and `cursor`. Response is `items` plus `next_cursor`. Each item contains `amount`, `condition_id`, `created_at`, `currency`, `direction`, and `related_order_id`.
+
+## Fees
+
+`GET /api/v4/event_markets/fee`
+
+Optional `fee_type` accepts `fixed` or `dynamic`. Each `items[]` element contains `category`, `fee_mode`, `maker_fee_rate`, and `taker_fee_rate`.
+
+## Claims
+
+- `GET /api/v4/event_markets/claims/available`: `event_count`, `events[]`, and `total_claimable_amount`.
+- `GET /api/v4/event_markets/claims/available/{token_id}`: `claimable_amount`, `event_id`, `market_id`, and `position_count`.
+- `POST /api/v4/event_markets/claims`: body `{"event_id":"event-123"}`; response `record_id`, `status`, `total_count`.
+- `GET /api/v4/event_markets/claims/{record_id}`: `record_id`, `status`, `total_count`, `success_count`, `failed_count`, `initiated_at`, and `completed_at`.
+
+Private endpoints return `401` for missing/invalid authentication, `400` for invalid input, and `404` for unknown records.

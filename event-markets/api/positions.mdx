@@ -4,39 +4,70 @@ sidebarTitle: Positions, User Trades, Fees, and Errors
 description: Read Event Markets account data and understand private endpoint behavior.
 ---
 
-## Base URL
-
-`https://broker.dexbuilder.com`
-
-All endpoints use `/api/v4/event_markets`. Decimal values such as prices, sizes, and volumes are returned as strings.
-
 ## Authentication
 
-Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+All account endpoints are private and require an authenticated gateway request. Internal identity headers are not part of the public API contract.
 
-## Positions
+## List positions
 
-`GET /api/v4/event_markets/positions` accepts `event_id`, `condition_id`, `settlement_status`, `limit`, and `cursor`, and returns `items` plus `next_cursor`. Position items include `position_id`, `event_id`, `token_id`, `outcome`, `size`, `available_size`, `locked_size`, `avg_open_price`, `mark_price`, `position_value`, `claimable_amount`, `settlement_status`, `won`, and `updated_at`.
+`GET /api/v4/event_markets/positions`
 
-- `GET /api/v4/event_markets/positions/{position_id}` returns one position.
-- `POST /api/v4/event_markets/positions/{position_id}/close` requests position closure.
+| Query parameter | Type | Description |
+| --- | --- | --- |
+| `event_id` | string | Event filter. |
+| `condition_id` | string | Market condition filter. |
+| `settlement_status` | string | Settlement-state filter. |
+| `limit` | integer | Page size. |
+| `cursor` | string | Previous `next_cursor`. |
+
+Response is `items` plus `next_cursor`.
+
+### Position fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `position_id` | string | Position identifier. |
+| `event_id` / `token_id` | string | Event and outcome-token identifiers. |
+| `outcome` | string | Outcome label. |
+| `size` | string | Total position size. |
+| `available_size` | string | Size available for a close or sell operation. |
+| `locked_size` | string | Size locked by open orders or settlement. |
+| `avg_open_price` | string | Average opening price. |
+| `mark_price` | string | Current mark price. |
+| `position_value` | string | Current marked value. |
+| `claimable_amount` | string | Amount available to claim after settlement. |
+| `settlement_status` | string | Settlement lifecycle state. |
+| `won` | boolean | Whether the position's outcome won after resolution. |
+| `updated_at` | integer | Last update timestamp. |
+
+## Position detail and close
+
+- `GET /api/v4/event_markets/positions/{position_id}`
+- `POST /api/v4/event_markets/positions/{position_id}/close`
+
+Close response:
+
+```json
+{"position_id":"position-123","status":"ACCEPTED"}
+```
 
 ## User trades
 
-`GET /api/v4/event_markets/usertrades` supports `condition_id`, `from`, `to`, `sort_type` (`created_at` or `updated_at`), `order_id`, `token_id`, `limit`, and `cursor`. It returns the authenticated user's executions.
+`GET /api/v4/event_markets/usertrades`
 
-## Fees and time
+Event Markets query parameters are `condition_id`, `from`, `to`, `sort_type`, `order_id`, `token_id`, `limit`, and `cursor`. Event Contracts supports the same market, token, order, time, and cursor filters.
 
-- `GET /api/v4/event_markets/fee` is private; `fee_type` is `fixed` or `dynamic`.
-- `GET /api/v4/event_markets/time` is public and returns `server_time` in Unix milliseconds.
+Event Markets trade fields include `trade_id`, `order_id`, `client_order_id`, `condition_id`, `token_id`, `price`, `size`, `side`, `role`, and `fee_rate`.
 
-## Errors
+## Account endpoints
+
+Event Markets also exposes `GET /api/v4/event_markets/assets`, `GET /api/v4/event_markets/account_book`, and claim-related endpoints in the Swagger contract; those endpoints remain private where they depend on account context.
+
+## Error responses
 
 | Status | Meaning |
 | --- | --- |
-| 400 | Invalid query, path, or body |
-| 401 | Missing or invalid authentication |
-| 404 | Unknown or invisible resource |
-| 503 | Upstream market-data service unavailable |
-
-Retry read-only `503` responses with backoff. Check order state before retrying a write.
+| 400 | Invalid path, query, or request body. |
+| 401 | Missing or invalid authentication. |
+| 404 | Resource does not exist or is not visible to the account. |
+| 503 | Upstream market-data dependency unavailable. |

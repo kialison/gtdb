@@ -8,22 +8,64 @@ description: Event Contracts API conventions, visibility, pagination, and access
 
 `https://broker.dexbuilder.com`
 
-All endpoints use `/api/v4/event_contract`. Decimal values such as prices, sizes, and volumes are returned as strings.
+The API prefix is `/api/v4`. Event Markets uses `/api/v4/event_markets`; Event Contracts uses `/api/v4/event_contract`.
 
-## Authentication
+## Access model
 
-Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
+| API area | Authentication | Typical endpoints |
+| --- | --- | --- |
+| Discovery | Public | Events, markets, tags |
+| Market data | Public | Prices, ticker, order book, history, candles |
+| Trading | Private | Create/list/get/cancel orders |
+| Account | Private | Positions, assets, balances, fees, user trades |
+| Settlement | Private | Close positions, claims, transfers |
 
-## Public data boundary
+Authentication details are controlled by the gateway and may change. The public API documentation intentionally does not expose internal gateway identity headers.
 
-Public event, market, trade, and token-price endpoints expose only visible records in the configured scope. A valid identifier can return `404` when the resource is not visible.
+## Pagination contract
 
-## Cursor pagination
+List responses use a stable opaque cursor:
 
-List responses use `items` and `next_cursor`. For the next request, pass the returned value as `cursor`; stop when it is empty. Public list endpoints accept at most 100 items per page. Offset pagination is not supported.
+```json
+{"items":[],"next_cursor":"opaque-cursor"}
+```
 
-## Time units
+Send the returned `next_cursor` as the next request's `cursor`. Stop when it is empty. Do not decode, modify, reuse across different filters, or replace it with an offset. Public event, market, tag, and trade list endpoints support a maximum `limit` of 100.
 
-Request filters `from`, `to`, `start_date_min`, `start_date_max`, `end_date_min`, and `end_date_max` use Unix milliseconds. Event and market date fields use Unix seconds. Price-history and candlestick timestamps use Unix milliseconds.
+## Time conventions
 
-Event Contracts uses the same response and market-data conventions as Event Markets, with the namespace prefix `event_contract`.
+| Location | Unit |
+| --- | --- |
+| Event and market date fields | Unix seconds |
+| Request range filters `from`, `to`, `*_min`, `*_max` | Unix milliseconds |
+| Price history and candle timestamps | Unix milliseconds |
+| Account/order lifecycle timestamps | Unix milliseconds |
+
+## Localized fields
+
+The API returns some text fields as sparse language objects. Consumers should read the requested language and fall back to English when absent.
+
+```json
+{"en":"Yes","cn":"是","tw":"是"}
+```
+
+## Decimal values
+
+Prices, sizes, volumes, balances, fees, and amounts are strings. Parse them with decimal arithmetic rather than binary floating point.
+
+## Standard errors
+
+```json
+{"label":"INVALID_ARGUMENT","message":"invalid request"}
+```
+
+| Status | Meaning | Client behavior |
+| --- | --- | --- |
+| 400 | Invalid path, query, or body | Fix request before retrying |
+| 401 | Missing or invalid private authentication | Refresh authentication context |
+| 404 | Unknown or invisible resource | Treat as unavailable in the current scope |
+| 503 | Upstream market-data dependency unavailable | Retry read-only requests with backoff |
+
+## Visibility
+
+Public event, market, trade, and token endpoints are constrained by the service's visible scope and recent parent-event data window. A resource may exist in upstream systems but still return `404` through this API.

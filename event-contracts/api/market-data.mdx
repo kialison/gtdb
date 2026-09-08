@@ -4,19 +4,11 @@ sidebarTitle: Prices, Tickers, Order Books, and History
 description: Read public Event Contracts token pricing and order-book data.
 ---
 
-## Base URL
+## Public endpoints
 
-`https://broker.dexbuilder.com`
+All endpoints on this page are public and do not require authentication.
 
-All endpoints use `/api/v4/event_contract`. Decimal values such as prices, sizes, and volumes are returned as strings.
-
-## Authentication
-
-Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
-
-## Endpoints
-
-| Operation | Path |
+| Operation | Method and path |
 | --- | --- |
 | Token market | `GET /api/v4/event_contract/tokens/{token_id}/market` |
 | Latest price | `GET /api/v4/event_contract/tokens/{token_id}/price` |
@@ -24,11 +16,87 @@ Market data is public. Orders, positions, account data, fees, and user trades ar
 | Order book | `GET /api/v4/event_contract/tokens/{token_id}/order_book` |
 | Price history | `GET /api/v4/event_contract/tokens/{token_id}/price_history` |
 | Batch prices | `GET /api/v4/event_contract/tokens/prices` |
+| Candlesticks | `GET /api/v4/event_contract/tokens/{currency}/candlesticks` |
 
-Order-book `depth` defaults to 20 and accepts 1–100. Price history requires `interval` (`5m`, `15m`, `1h`, `4h`, or `1d`), `from`, and `to`; the range is at most 14 days. Batch `token_ids` accepts at most 100 comma-separated IDs.
+## Order book
+
+`GET /api/v4/event_contract/tokens/{token_id}/order_book`
+
+Query parameter `depth` is optional, defaults to 20, and accepts 1–100.
+
+| Response field | Type | Description |
+| --- | --- | --- |
+| `token_id` | string | Outcome token identifier. |
+| `condition_id` | string | Market condition identifier. |
+| `bids` | array | Bid levels, each with `price` and `size`. |
+| `asks` | array | Ask levels, each with `price` and `size`. |
+| `hash` | string | Order-book snapshot hash. |
+| `timestamp` | integer | Snapshot timestamp. |
+| `last_trade_price` | string | Latest trade price. |
+| `min_order_size` | string | Minimum order size. |
+| `tick_size` | string | Minimum price increment. |
+| `neg_risk` | boolean | Negative-risk flag. |
 
 ```json
-{"token_id":"token-yes","bids":[{"price":"0.4200","size":"120.00"}],"asks":[{"price":"0.4300","size":"80.00"}],"timestamp":1760000000000,"last_trade_price":"0.4250","tick_size":"0.001"}
+{
+  "token_id": "token-yes",
+  "condition_id": "0xcondition",
+  "bids": [{"price": "0.4200", "size": "120.00"}],
+  "asks": [{"price": "0.4300", "size": "80.00"}],
+  "hash": "book-hash",
+  "timestamp": 1760000000000,
+  "last_trade_price": "0.4250",
+  "min_order_size": "1",
+  "tick_size": "0.001",
+  "neg_risk": false
+}
 ```
 
-Price history returns `{"history":[{"p":"0.4250","t":1760000000000}]}`. Unknown or invisible tokens return `404`.
+## Latest price
+
+`GET /api/v4/event_contract/tokens/{token_id}/price`
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `token_id` | string | Outcome token identifier. |
+| `price` | string | Latest execution price; empty when there is no trade. |
+| `side` | string | Trade direction associated with the latest price. |
+| `timestamp` | integer | Latest-price timestamp. |
+
+## Ticker
+
+`GET /api/v4/event_contract/tokens/{token_id}/ticker`
+
+Returns `token_id`, `last_price`, `best_bid`, `best_ask`, and `timestamp`. A field can be null when reliable data is unavailable.
+
+## Price history
+
+Required query parameters:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `interval` | string | One of `5m`, `15m`, `1h`, `4h`, `1d`. |
+| `from` | integer | Start Unix timestamp in milliseconds. |
+| `to` | integer | End Unix timestamp in milliseconds. |
+
+The requested range must not exceed 14 days. Response:
+
+```json
+{"history":[{"p":"0.4250","t":1760000000000}]}
+```
+
+`p` is the price string and `t` is the point timestamp.
+
+## Batch prices
+
+`GET /api/v4/event_contract/tokens/prices?token_ids=token-yes,token-no`
+
+`token_ids` is required and accepts at most 100 comma-separated IDs. Unknown or invisible tokens are omitted.
+
+Response fields: `items[].token_id`, `items[].price`, and `items[].timestamp`.
+
+## Candlesticks
+
+`GET /api/v4/event_contract/tokens/{currency}/candlesticks`
+
+Required path parameter: `currency`. Required query parameter: `interval`. Optional query parameters: `from`, `to`, and `limit`. Each candle contains `t` (timestamp) and OHLCV strings `o`, `h`, `l`, `c`, and `v`.

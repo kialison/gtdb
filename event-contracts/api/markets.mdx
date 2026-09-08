@@ -4,31 +4,110 @@ sidebarTitle: List and Retrieve Markets
 description: List visible Event Contracts markets, retrieve details, and query public trades.
 ---
 
-## Base URL
-
-`https://broker.dexbuilder.com`
-
-All endpoints use `/api/v4/event_contract`. Decimal values such as prices, sizes, and volumes are returned as strings.
-
-## Authentication
-
-Market data is public. Orders, positions, account data, fees, and user trades are private and require an authenticated gateway request. The gateway authentication scheme is not finalized; do not send or document internal gateway identity headers.
-
 ## List markets
 
-`GET /api/v4/event_contract/markets`
+`GET https://broker.dexbuilder.com/api/v4/event_contract/markets`
 
-Parameters: `limit` (1–100), `cursor`, `market_id`, `event_id`, `slug`, `condition_id`, `tag_slug`, `active`, and `closed`.
+Public endpoint. No authentication is required.
 
-Response is `items` plus `next_cursor`. Items include market identity, multilingual question, outcome token references, status, dates, best bid/ask, last trade price, and volumes.
+### Query parameters
 
-## Market detail
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `limit` | integer | No | Page size, minimum 1 and maximum 100. |
+| `cursor` | string | No | Opaque cursor from the previous `next_cursor`. |
+| `market_id` | string | No | Gate composite market ID. |
+| `event_id` | string | No | Parent event ID. |
+| `slug` | string | No | Market slug. |
+| `condition_id` | string | No | Condition ID. |
+| `tag_slug` | string | No | Parent-event tag slug. |
+| `active` | boolean | No | Active-state filter. |
+| `closed` | boolean | No | Closed-state filter. |
+
+### Response envelope
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `items` | array | Market summary objects. |
+| `next_cursor` | string | Cursor for the next page; empty at the end. |
+
+### Market summary fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `market_id` | string | Market identifier. |
+| `event_id` | string | Parent event identifier. |
+| `slug` | string | URL-friendly market identifier. |
+| `question` | object | Sparse multilingual market question. |
+| `condition_id` | string | Condition identifier used by trading and account APIs. |
+| `status` | string | Market lifecycle status. |
+| `closed` | boolean | Whether the market is closed. |
+| `start_date` / `end_date` | integer | Market dates in Unix seconds. |
+| `outcomes` | array | Outcome references with `token_id` and multilingual `outcome`. |
+| `best_bid` / `best_ask` | string | Current best bid and ask as decimal strings. |
+| `last_trade_price` | string | Latest trade price. |
+| `volume` / `volume_24hr` | string | Aggregate and 24-hour volume. |
+| `category` | string | Market category. |
+| `tags` | array | Market tag summaries. |
+
+```bash
+curl --get 'https://broker.dexbuilder.com/api/v4/event_contract/markets' \
+  --data-urlencode 'limit=20' \
+  --data-urlencode 'event_id=event-123' \
+  --data-urlencode 'active=true'
+```
+
+```json
+{
+  "items": [
+    {
+      "market_id": "market-123",
+      "event_id": "event-123",
+      "slug": "example-market",
+      "question": {"en": "Will the outcome occur?", "cn": "该结果会发生吗？"},
+      "condition_id": "0xcondition",
+      "status": "open",
+      "closed": false,
+      "start_date": 1760000000,
+      "end_date": 1761000000,
+      "outcomes": [
+        {"token_id": "token-yes", "outcome": {"en": "Yes"}},
+        {"token_id": "token-no", "outcome": {"en": "No"}}
+      ],
+      "best_bid": "0.4200",
+      "best_ask": "0.4300",
+      "last_trade_price": "0.4250",
+      "volume": "125000.00",
+      "volume_24hr": "3200.00",
+      "category": "sports",
+      "tags": []
+    }
+  ],
+  "next_cursor": ""
+}
+```
+
+## Get market details
 
 - `GET /api/v4/event_contract/markets/{market_id}`
 - `GET /api/v4/event_contract/markets/slug/{slug}`
 
-Detail adds `accepting_orders`, `enable_order_book`, `min_order_size`, `tick_size`, `neg_risk`, `resolution_source`, `resolved_at`, `winning_outcome`, and `winning_token_id`.
+The detail response includes all market-summary fields plus:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `accepting_orders` | boolean | Whether the matching engine currently accepts orders. |
+| `enable_order_book` | boolean | Whether order-book trading is enabled. |
+| `min_order_size` | string | Minimum order size. |
+| `tick_size` | string | Minimum price increment. |
+| `neg_risk` | boolean | Whether the market uses negative-risk settlement. |
+| `resolution_source` | string | Resolution source description or URL. |
+| `resolved_at` | integer | Resolution timestamp. |
+| `winning_outcome` | string | Winning outcome after resolution. |
+| `winning_token_id` | string | Winning outcome token after resolution. |
 
 ## Market trades
 
-`GET /api/v4/event_contract/markets/{market_id}/trades` accepts `limit` and `cursor`. Each trade contains `trade_id`, `market_id`, `condition_id`, `token_id`, `price`, `size`, `side`, and `timestamp`; the response is `items` plus `next_cursor`.
+`GET /api/v4/event_contract/markets/{market_id}/trades`
+
+Query parameters are `limit` and `cursor`. The response contains `items` and `next_cursor`. Each trade item has `trade_id`, `market_id`, `condition_id`, `token_id`, `price`, `size`, `side`, and `timestamp`.

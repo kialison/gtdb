@@ -133,7 +133,8 @@
                       "event-markets/api/market-data",
                       "event-markets/api/orders",
                       "event-markets/api/positions",
-                      "event-markets/api/public-utilities"
+                      "event-markets/api/public-utilities",
+                      "event-markets/api/account"
                     ]
                   }
                 ]
@@ -195,7 +196,8 @@
                       "event-contracts/api/market-data",
                       "event-contracts/api/orders",
                       "event-contracts/api/positions",
-                      "event-contracts/api/public-utilities"
+                      "event-contracts/api/public-utilities",
+                      "event-contracts/api/account"
                     ]
                   }
                 ]

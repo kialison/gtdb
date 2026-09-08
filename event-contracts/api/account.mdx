@@ -1,0 +1,34 @@
+---
+title: Account, Fees, Fund Flows, and Transfers
+sidebarTitle: Account, Fees, Fund Flows, and Transfers
+description: Complete Event Contracts account, fee, fund-flow, and transfer response reference
+---
+
+## Authentication
+
+All endpoints on this page are private. Authentication is supplied by the gateway; internal identity headers are not public request parameters.
+
+## Assets and balance
+
+- `GET /api/v4/event_contract/assets` returns `fund_total`, `prediction_market_asset`, `prediction_position_value`, `spot_usdt_balance`, and `unclaimed_amount`.
+- `GET /api/v4/event_contract/balance` returns `currency`, `available`, `locked`, and `total`.
+
+## Fund flows
+
+`GET /api/v4/event_contract/fund_flows`
+
+Parameters: `type`, `time_period`, `from_time`, `to_time`, `limit`, and `cursor`. Time parameters use Unix milliseconds. Response is `items` plus `next_cursor`; each item contains `amount`, `created_at`, `currency`, `direction`, `record_type`, and `related_order_id`.
+
+## Fees
+
+`GET /api/v4/event_contract/fee/current`
+
+Each `items[]` element contains `fee_mode`, `maker_fee_rate`, and `taker_fee_rate`.
+
+## Transfers
+
+`POST /api/v4/event_contract/transfer`
+
+Request fields: `amount`, `client_oid`, `currency`, `from_account`, and `to_account`. Response fields: `transfer_id`, `amount`, `currency`, `from_account`, `to_account`, and `status`.
+
+Private endpoints return `401` for missing/invalid authentication, `400` for invalid input, and `503` when an upstream dependency is unavailable.
