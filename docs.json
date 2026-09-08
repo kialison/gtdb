@@ -192,7 +192,11 @@
                 "group": "Event Contracts API",
                 "pages": [
                   "event-contracts-api/overview",
-                  "event-contracts-api/discover-markets"
+                  "event-contracts-api/discover-markets",
+                  "event-contracts-api/market-details",
+                  "event-contracts-api/market-data",
+                  "event-contracts-api/orders",
+                  "event-contracts-api/account-data"
                 ]
               }
             ]

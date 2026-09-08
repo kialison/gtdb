@@ -3,3 +3,24 @@ title: "Discover Event Contracts Markets"
 sidebarTitle: "Discover Markets"
 description: "Find Event Contracts events, markets, and tags with public cursor-paginated endpoints."
 ---
+
+Discovery endpoints are public and return data from the rolling 30-day parent Event window.
+
+```http
+GET /api/v4/event_contract/events
+GET /api/v4/event_contract/events/{event_id}
+GET /api/v4/event_contract/events/slug/{slug}
+GET /api/v4/event_contract/markets
+GET /api/v4/event_contract/markets/{market_id}
+GET /api/v4/event_contract/markets/slug/{slug}
+GET /api/v4/event_contract/tags
+```
+
+Example:
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_contract/events?limit=20&active=true"
+curl "https://broker.dexbuilder.com/api/v4/event_contract/markets?limit=20&event_id=<event_id>"
+```
+
+List endpoints return `items` and may return `next_cursor`. Use the next cursor as the following request's `cursor`.

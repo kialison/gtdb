@@ -1,0 +1,19 @@
+---
+title: "Event Contracts Orders"
+sidebarTitle: "Orders"
+description: "Submit, read, and cancel Event Contracts orders through authenticated gateway requests."
+---
+
+Order endpoints are private and require gateway authentication. Do not send internal account-identity headers.
+
+```http
+POST /api/v4/event_contract/orders
+GET /api/v4/event_contract/orders
+GET /api/v4/event_contract/orders/{order_id}
+DELETE /api/v4/event_contract/orders/{order_id}
+DELETE /api/v4/event_contract/orders
+```
+
+The public request contract includes `client_order_id`, `token_id`, `side`, `price`, `size`, `order_type`, `order_mode`, `expire_time`, `total_cost`, `sell_all`, and `post_only`.
+
+An accepted order is not necessarily filled. Query the order and user-trade endpoints for the current account state.

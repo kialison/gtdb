@@ -1,0 +1,16 @@
+---
+title: "Event Contracts Market Details"
+sidebarTitle: "Market Details"
+description: "Read Event Contracts event, market, outcome, and trading metadata."
+---
+
+Use the Event and Market responses as the source for identifiers, outcome labels, token IDs, status, and trading constraints.
+
+```http
+GET /api/v4/event_contract/events/{event_id}
+GET /api/v4/event_contract/events/slug/{slug}
+GET /api/v4/event_contract/markets/{market_id}
+GET /api/v4/event_contract/markets/slug/{slug}
+```
+
+Read the outcome token ID from the market response before requesting prices or order-book data. Re-read market status and constraints before placing an order.
