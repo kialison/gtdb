@@ -93,7 +93,9 @@
                   },
                   {
                     "group": "市场数据",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-contracts/discover-markets"
+                    ]
                   },
                   {
                     "group": "交易",
