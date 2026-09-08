@@ -83,7 +83,9 @@
                 "pages": [
                   {
                     "group": "快速开始",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-contracts/api"
+                    ]
                   },
                   {
                     "group": "核心概念",
