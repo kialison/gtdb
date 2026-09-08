@@ -9,11 +9,11 @@ An order moves through validation, matching, cancellation or expiration, and set
 <Frame>
   ```mermaid
   flowchart LR
-    A[Submit] --> B[Accepted or Rejected]
-    B --> C[Open]
-    C --> D[Fills]
-    C --> E[Cancelled or Expired]
-    D --> F[Position and Trade Updated]
+A[Submit] --> B[Accepted or Rejected]
+B --> C[Open]
+C --> D[Fills]
+C --> E[Cancelled or Expired]
+D --> F[Position and Trade Updated]
   ```
 </Frame>
 
@@ -32,7 +32,7 @@ An accepted order is not necessarily filled. Use the order response and user-tra
 
 ## Related pages
 
-- [Manage Orders](/event-contracts/manage-orders)
-- [Realtime Order Updates](/event-contracts/realtime-order-updates)
-- [Positions](/event-contracts/positions)
-- [Resolution](/event-contracts/resolution)
+- [Manage Orders](/en/introduction/event-contracts/manage-orders)
+- [Realtime Order Updates](/en/introduction/event-contracts/realtime-order-updates)
+- [Positions](/en/introduction/event-contracts/positions)
+- [Resolution](/en/introduction/event-contracts/resolution)
