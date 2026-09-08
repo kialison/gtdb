@@ -1,0 +1,27 @@
+---
+title: Create Order
+sidebarTitle: Create Order
+description: Create an Event Markets order
+---
+
+## Access
+
+Market-data endpoints are public. Private endpoints require gateway authentication. Internal gateway identity headers are not part of this public contract.
+
+## Errors
+
+`400` invalid request; `401` missing or invalid authentication; `404` unknown or invisible resource; `503` upstream market-data unavailable.
+
+## POST `/api/v4/event_markets/orders`
+
+### Request fields
+
+`token_id`, `side`, `price`, `size`, `total_cost`, `order_type`, `order_mode`, `client_order_id`, `post_only`, `sell_all`, `expire_time`, and `biz_type`. Prices and sizes are decimal strings.
+
+### Response fields
+
+`order_id`, `client_order_id`, `status`, and `created_at`. An accepted order is not necessarily filled; query order state or user trades.
+
+```json
+{"order_id":"order-123","client_order_id":"client-123","status":"ACCEPTED","created_at":1760000000000}
+```

@@ -1,0 +1,25 @@
+---
+title: Get Order Book
+sidebarTitle: Get Order Book
+description: Get an Event Markets token order book
+---
+
+## Access
+
+Market-data endpoints are public. Private endpoints require gateway authentication. Internal gateway identity headers are not part of this public contract.
+
+## Errors
+
+`400` invalid request; `401` missing or invalid authentication; `404` unknown or invisible resource; `503` upstream market-data unavailable.
+
+## GET `/api/v4/event_markets/tokens/{token_id}/order_book`
+
+`token_id` is required. Optional `depth` defaults to 20 and accepts 1–100.
+
+### Response fields
+
+`token_id`, `condition_id`, `bids`, `asks`, `hash`, `timestamp`, `last_trade_price`, `min_order_size`, `tick_size`, and `neg_risk`. Each bid/ask level has `price` and `size`, both decimal strings.
+
+```json
+{"token_id":"token-yes","bids":[{"price":"0.42","size":"120"}],"asks":[{"price":"0.43","size":"80"}],"timestamp":1760000000000,"tick_size":"0.001"}
+```

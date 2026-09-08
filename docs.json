@@ -137,23 +137,33 @@
                       "event-markets/api/account",
                       {
                         "group": "Events",
-                        "pages": []
+                        "pages": [
+                          "event-markets/api/events/list"
+                        ]
                       },
                       {
                         "group": "Markets",
-                        "pages": []
+                        "pages": [
+                          "event-markets/api/markets/list"
+                        ]
                       },
                       {
                         "group": "Orderbook & Pricing",
-                        "pages": []
+                        "pages": [
+                          "event-markets/api/orderbook/get"
+                        ]
                       },
                       {
                         "group": "Orders",
-                        "pages": []
+                        "pages": [
+                          "event-markets/api/orders/create"
+                        ]
                       },
                       {
                         "group": "Account & Positions",
-                        "pages": []
+                        "pages": [
+                          "event-markets/api/account/assets"
+                        ]
                       }
                     ]
                   }
@@ -220,23 +230,33 @@
                       "event-contracts/api/account",
                       {
                         "group": "Events",
-                        "pages": []
+                        "pages": [
+                          "event-contracts/api/events/list"
+                        ]
                       },
                       {
                         "group": "Markets",
-                        "pages": []
+                        "pages": [
+                          "event-contracts/api/markets/list"
+                        ]
                       },
                       {
                         "group": "Orderbook & Pricing",
-                        "pages": []
+                        "pages": [
+                          "event-contracts/api/orderbook/get"
+                        ]
                       },
                       {
                         "group": "Orders",
-                        "pages": []
+                        "pages": [
+                          "event-contracts/api/orders/create"
+                        ]
                       },
                       {
                         "group": "Account & Positions",
-                        "pages": []
+                        "pages": [
+                          "event-contracts/api/account/balance"
+                        ]
                       }
                     ]
                   }

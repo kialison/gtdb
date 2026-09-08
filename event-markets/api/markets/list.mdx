@@ -1,0 +1,25 @@
+---
+title: List Markets
+sidebarTitle: List Markets
+description: List Event Markets markets with filters and cursor pagination
+---
+
+## Access
+
+Market-data endpoints are public. Private endpoints require gateway authentication. Internal gateway identity headers are not part of this public contract.
+
+## Errors
+
+`400` invalid request; `401` missing or invalid authentication; `404` unknown or invisible resource; `503` upstream market-data unavailable.
+
+## GET `/api/v4/event_markets/markets`
+
+Parameters: `limit` (1–100), `cursor`, `market_id`, `event_id`, `slug`, `condition_id`, `tag_slug`, `active`, and `closed`.
+
+### Response fields
+
+`items[]` contains `market_id`, `event_id`, `slug`, multilingual `question`, `condition_id`, `status`, `closed`, `start_date`, `end_date`, `outcomes`, `best_bid`, `best_ask`, `last_trade_price`, `volume`, `volume_24hr`, `category`, and `tags`. Each outcome contains `token_id` and multilingual `outcome`. `next_cursor` is the next cursor.
+
+```json
+{"items":[{"market_id":"market-123","event_id":"event-123","question":{"en":"Will it happen?"},"condition_id":"0xcondition","status":"open","outcomes":[{"token_id":"token-yes","outcome":{"en":"Yes"}}],"best_bid":"0.42","best_ask":"0.43"}],"next_cursor":""}
+```

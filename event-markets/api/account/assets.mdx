@@ -1,0 +1,21 @@
+---
+title: Get Assets
+sidebarTitle: Get Assets
+description: Get Event Markets account assets
+---
+
+## Access
+
+Market-data endpoints are public. Private endpoints require gateway authentication. Internal gateway identity headers are not part of this public contract.
+
+## Errors
+
+`400` invalid request; `401` missing or invalid authentication; `404` unknown or invisible resource; `503` upstream market-data unavailable.
+
+## GET `/api/v4/event_markets/assets`
+
+Private endpoint. Response fields are `fund_total`, `prediction_market_asset`, `prediction_position_value`, `spot_usdt_balance`, and `unclaimed_amount`; all monetary values are decimal strings.
+
+```json
+{"fund_total":"1000.00","prediction_market_asset":"800.00","prediction_position_value":"500.00","spot_usdt_balance":"200.00","unclaimed_amount":"0.00"}
+```

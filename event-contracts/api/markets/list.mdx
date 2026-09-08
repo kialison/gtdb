@@ -1,0 +1,17 @@
+---
+title: List Markets
+sidebarTitle: List Markets
+description: List Event Contracts markets with filters and cursor pagination
+---
+
+## Access
+
+Market-data endpoints are public. Private endpoints require gateway authentication. Internal gateway identity headers are not part of this public contract.
+
+## Errors
+
+`400` invalid request; `401` missing or invalid authentication; `404` unknown or invisible resource; `503` upstream market-data unavailable.
+
+## GET `/api/v4/event_contract/markets`
+
+Parameters: `limit` (1–100), `cursor`, `market_id`, `event_id`, `slug`, `condition_id`, `tag_slug`, `active`, and `closed`. `items[]` contains market identity, multilingual question, condition, outcomes, status, dates, best bid/ask, last trade price, volume, and tags. Each outcome contains `token_id` and multilingual `outcome`.
