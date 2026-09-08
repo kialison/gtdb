@@ -123,7 +123,10 @@
                   },
                   {
                     "group": "交易",
-                    "pages": []
+                    "pages": [
+                      "zh/introduction/event-contracts/place-orders",
+                      "zh/introduction/event-contracts/errors"
+                    ]
                   }
                 ]
               }
@@ -228,6 +231,7 @@
                   {
                     "group": "Getting Started",
                     "pages": [
+                      "en/introduction/event-contracts/overview",
                       "en/introduction/event-contracts/api",
                       "en/introduction/event-contracts/event-contracts"
                     ]
