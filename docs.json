@@ -57,14 +57,16 @@
                 ]
               },
               {
-                "group": "事件市场",
+                "group": "预测市场",
                 "pages": [
                   "untitled-page-15"
                 ]
               },
               {
                 "group": "事件合约",
-                "pages": []
+                "pages": [
+                  "untitled-page-21"
+                ]
               }
             ]
           },
