@@ -67,6 +67,17 @@
                 "pages": []
               }
             ]
+          },
+          {
+            "tab": "在 DexBuilder 上构建"
+          },
+          {
+            "tab": "API",
+            "dropdowns": [
+              {
+                "dropdown": "Untitled Dropdown"
+              }
+            ]
           }
         ]
       },
