@@ -111,6 +111,14 @@
                     ]
                   },
                   {
+                    "group": "WebSocket",
+                    "pages": [
+                      "event-markets/websocket/overview",
+                      "event-markets/websocket/protocol",
+                      "event-markets/websocket/public-channels"
+                    ]
+                  },
+                  {
                     "group": "Trading",
                     "pages": [
                       "event-markets/untitled-page-18",
@@ -172,6 +180,10 @@
                       "event-contracts/untitled-page-16",
                       "event-contracts/untitled-page-15"
                     ]
+                  },
+                  {
+                    "group": "WebSocket",
+                    "pages": []
                   },
                   {
                     "group": "Trading",
