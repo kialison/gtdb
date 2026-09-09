@@ -40,26 +40,33 @@ Response is `items` plus `next_cursor`.
 | `won` | boolean | Whether the position's outcome won after resolution. |
 | `updated_at` | integer | Last update timestamp. |
 
-## Position detail and close
+## Position detail
 
-- `GET /api/v4/event_contract/positions/{position_id}`
-- `POST /api/v4/event_contract/positions/{position_id}/close`
+`GET /api/v4/event_contract/positions/{position_id}` returns one position using the position fields described above.
 
-Close response:
+## Settled positions
 
-```json
-{"position_id":"position-123","status":"ACCEPTED"}
-```
+`GET /api/v4/event_contract/positions/settled` returns settled positions with the same `items` and `next_cursor` envelope. It accepts `limit` and `cursor`.
 
 ## User trades
 
 `GET /api/v4/event_contract/usertrades`
 
-Event Markets query parameters are `condition_id`, `from`, `to`, `sort_type`, `order_id`, `token_id`, `limit`, and `cursor`. Event Contracts supports the same market, token, order, time, and cursor filters.
+Query parameters are `condition_id`, `from`, `to`, `sort_type` (`created_at` or `updated_at`), `order_id`, `token_id`, `limit`, and `cursor`.
 
-Trade fields include `id`, `order_id`, `client_order_id`, `condition_id`, `token_id`, `price`, `size`, `side`, `role`, and `fee_rate`.
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | integer | User-trade record ID. |
+| `order_id` | string | Platform order ID. |
+| `client_order_id` | string | Client order ID. |
+| `condition_id` | string | Market condition ID. |
+| `token_id` | string | Outcome token ID. |
+| `price` / `size` | string | Execution price and size. |
+| `side` | string | Execution side. |
+| `role` | string | User role in the execution. |
+| `fee_rate` | string | Applied fee rate. |
 
-## Settled positions\\n\\n`GET /api/v4/event_contract/positions/settled` returns settled positions with the same `items` and `next_cursor` envelope. It accepts `limit` and `cursor`; each item uses the position fields described above.\\n\\n## Account endpoints
+## Account endpoints
 
 Event Contracts additionally exposes private account endpoints:
 
@@ -67,7 +74,6 @@ Event Contracts additionally exposes private account endpoints:
 | --- | --- |
 | `GET /api/v4/event_contract/assets` | Account asset summary. |
 | `GET /api/v4/event_contract/balance` | Currency balance with `available`, `locked`, and `total`. |
-| `GET /api/v4/event_contract/account_book` | Account ledger items. |
 | `GET /api/v4/event_contract/fund_flows` | Fund-flow records. |
 | `POST /api/v4/event_contract/transfer` | Transfer between supported accounts. |
 
