@@ -134,37 +134,7 @@
                       "event-markets/api/orders",
                       "event-markets/api/positions",
                       "event-markets/api/public-utilities",
-                      "event-markets/api/account",
-                      {
-                        "group": "Events",
-                        "pages": [
-                          "event-markets/api/events/list"
-                        ]
-                      },
-                      {
-                        "group": "Markets",
-                        "pages": [
-                          "event-markets/api/markets/list"
-                        ]
-                      },
-                      {
-                        "group": "Orderbook & Pricing",
-                        "pages": [
-                          "event-markets/api/orderbook/get"
-                        ]
-                      },
-                      {
-                        "group": "Orders",
-                        "pages": [
-                          "event-markets/api/orders/create"
-                        ]
-                      },
-                      {
-                        "group": "Account & Positions",
-                        "pages": [
-                          "event-markets/api/account/assets"
-                        ]
-                      }
+                      "event-markets/api/account"
                     ]
                   }
                 ]
@@ -228,12 +198,6 @@
                       "event-contracts/api/positions",
                       "event-contracts/api/public-utilities",
                       "event-contracts/api/account",
-                      {
-                        "group": "Events",
-                        "pages": [
-                          "event-contracts/api/events/list"
-                        ]
-                      },
                       {
                         "group": "Markets",
                         "pages": [
