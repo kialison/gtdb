@@ -73,12 +73,12 @@
           },
           {
             "tab": "API",
-            "products": [
+            "menu": [
               {
-                "product": "PerpDEX",
-                "pages": [
-                  "untitled-page-19"
-                ]
+                "item": "Untitled Item"
+              },
+              {
+                "item": "Untitled Item"
               }
             ]
           }
