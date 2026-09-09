@@ -116,8 +116,8 @@
                       "event-markets/websocket/overview",
                       "event-markets/websocket/protocol",
                       "event-markets/websocket/public-channels",
-                      "event-markets/websocket/authentication",
-                      "event-markets/websocket/private-channels"
+                      "event-markets/websocket/private-channels",
+                      "event-markets/websocket/authentication"
                     ]
                   },
                   {
@@ -187,10 +187,10 @@
                     "group": "WebSocket",
                     "pages": [
                       "event-contracts/websocket/overview",
-                      "event-contracts/websocket/authentication",
                       "event-contracts/websocket/protocol",
                       "event-contracts/websocket/public-channels",
-                      "event-contracts/websocket/private-channels"
+                      "event-contracts/websocket/private-channels",
+                      "event-contracts/websocket/authentication"
                     ]
                   },
                   {
