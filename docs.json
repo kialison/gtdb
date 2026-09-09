@@ -116,7 +116,8 @@
                       "event-markets/websocket/overview",
                       "event-markets/websocket/protocol",
                       "event-markets/websocket/public-channels",
-                      "event-markets/websocket/authentication"
+                      "event-markets/websocket/authentication",
+                      "event-markets/websocket/private-channels"
                     ]
                   },
                   {
