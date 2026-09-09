@@ -75,10 +75,13 @@
             "tab": "API",
             "menu": [
               {
-                "item": "Untitled Item"
+                "item": "PerpDEX"
               },
               {
-                "item": "Untitled Item"
+                "item": "预测市场"
+              },
+              {
+                "item": "事件合约"
               }
             ]
           }
