@@ -185,7 +185,9 @@
                   {
                     "group": "WebSocket",
                     "pages": [
+                      "event-contracts/websocket/overview",
                       "event-contracts/websocket/authentication",
+                      "event-contracts/websocket/protocol",
                       "event-contracts/websocket/public-channels",
                       "event-contracts/websocket/private-channels"
                     ]
