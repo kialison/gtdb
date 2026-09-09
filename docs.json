@@ -72,7 +72,7 @@
             "tab": "在 DexBuilder 上构建"
           },
           {
-            "tab": "API",
+            "tab": "API Reference",
             "menu": [
               {
                 "item": "PerpDEX"
