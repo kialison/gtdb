@@ -6,7 +6,7 @@ description: List visible Event Markets markets, retrieve details, and query pub
 
 ## List markets
 
-`GET https://broker.dexbuilder.com/api/v4/event_markets/markets`
+`GET https://api.dexbuilder.com/api/v4/event_markets/markets`
 
 Public endpoint. No authentication is required.
 
@@ -51,7 +51,7 @@ Public endpoint. No authentication is required.
 | `tags` | array | Market tag summaries. |
 
 ```bash
-curl --get 'https://broker.dexbuilder.com/api/v4/event_markets/markets' \
+curl --get 'https://api.dexbuilder.com/api/v4/event_markets/markets' \
   --data-urlencode 'limit=20' \
   --data-urlencode 'event_id=event-123' \
   --data-urlencode 'active=true'

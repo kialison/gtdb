@@ -30,7 +30,7 @@ All endpoints on this page are private. Authentication details are finalized by 
 | `biz_type` | string | Business namespace; use the value documented for this API. |
 
 ```bash
-curl -X POST 'https://broker.dexbuilder.com/api/v4/event_markets/orders' \
+curl -X POST 'https://api.dexbuilder.com/api/v4/event_markets/orders' \
   -H 'Content-Type: application/json' \
   -d '{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0,"biz_type":"event_markets"}'
 ```
