@@ -184,7 +184,11 @@
                   },
                   {
                     "group": "WebSocket",
-                    "pages": []
+                    "pages": [
+                      "event-contracts/websocket/authentication",
+                      "event-contracts/websocket/public-channels",
+                      "event-contracts/websocket/private-channels"
+                    ]
                   },
                   {
                     "group": "Trading",

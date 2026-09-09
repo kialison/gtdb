@@ -1,0 +1,169 @@
+---
+title: "Authentication and Reliability"
+sidebarTitle: "Authentication"
+description: "Authenticate private WebSocket operations and handle heartbeats, errors, and reconnects."
+---
+
+Public channels do not require authentication. Private channels require an authenticated connection.
+
+The public endpoint is:
+
+```text
+wss://api.dexbuilder.com/event_contracts/ws
+```
+
+Do not send internal gateway identity headers. Credentials and access tokens must not be written to logs or persisted in plaintext.
+
+## API Key authentication
+
+API Key authentication uses an API Key and a locally generated HMAC-SHA512 signature. The API Secret is never sent over WebSocket.
+
+Authenticate with the first private operation:
+
+```json
+{
+  "t": 1787026512123,
+  "id": 3001,
+  "op": "subscribe",
+  "ch": "ec.orders",
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "<api_key>",
+    "sign": "<signature>"
+  }
+}
+```
+
+For subscribe and unsubscribe, sign:
+
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
+
+Python example:
+
+```python
+import hashlib
+import hmac
+import time
+
+channel = "ec.orders"
+operation = "subscribe"
+timestamp_ms = int(time.time() * 1000)
+message = f"channel={channel}&event={operation}&time={timestamp_ms}"
+
+signature = hmac.new(
+    b"<api_secret>",
+    message.encode("utf-8"),
+    hashlib.sha512,
+).hexdigest()
+```
+
+## DEX Token authentication
+
+DEX clients can authenticate with an access token issued by the DEX integration:
+
+```json
+{
+  "op": "subscribe",
+  "ch": "ec.orders",
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "dex",
+    "info": {
+      "access_token": "<dex_access_token>",
+      "device_type": 0
+    }
+  }
+}
+```
+
+The access token is sensitive. Do not log it or send an API Secret with DEX authentication. After successful authentication, later private subscribe and unsubscribe requests on the same connection may omit `auth`.
+
+A connection cannot be rebound to another user. Authentication failure rejects the current request but does not close the connection.
+
+## Pre-authentication
+
+API Key clients may authenticate before subscribing to a private channel:
+
+```json
+{
+  "t": 1787026512123,
+  "id": 3002,
+  "op": "auth",
+  "ch": "server.sign",
+  "payload": {
+    "method": "api_key",
+    "key": "<api_key>",
+    "sign": "<signature>"
+  }
+}
+```
+
+For `server.sign`, sign the decimal string value of the outer `t` using HMAC-SHA512:
+
+```text
+HexEncode(HMAC-SHA512(api_secret, decimal(t)))
+```
+
+Pre-authentication is allowed once per connection. It is API-Key-only; DEX clients must authenticate inline on the first private operation.
+
+## Heartbeat
+
+The server sends WebSocket Ping control frames. Standard WebSocket clients should reply with Pong automatically.
+
+Clients can also send an application-level ping:
+
+```json
+{
+  "t": 1787026512123,
+  "id": 5001,
+  "op": "ping"
+}
+```
+
+Response:
+
+```json
+{
+  "t": 1787026512150,
+  "id": 5001,
+  "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
+  "op": "ping",
+  "err": null,
+  "result": {
+    "status": "success",
+    "message": "pong"
+  }
+}
+```
+
+Application-level ping does not include `ch`, `payload`, or `auth`.
+
+## Error codes
+
+| Code | Meaning | Typical cause |
+| --- | --- | --- |
+| `1` | Invalid request format | Invalid JSON, payload, or auth shape. |
+| `2` | Invalid argument | Invalid operation, channel, timestamp, item, depth, or subscription limit. |
+| `3` | Server error | Temporary service failure. |
+| `4` | Authentication failure | Missing credentials, invalid signature, or user rebinding attempt. |
+
+## Reconnection
+
+The server does not retain subscriptions, user identity, or missed messages after a disconnect.
+
+Recommended client sequence:
+
+1. Reconnect with exponential backoff.
+2. Re-authenticate private access.
+3. Restore public and private subscriptions.
+4. Query REST endpoints to recover missed events and current state.
+5. Deduplicate using business identifiers and timestamps where applicable.
+
+For public history and current snapshots, use the REST API pages under [API Reference](/event-contracts/api/overview).
