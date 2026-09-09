@@ -197,31 +197,7 @@
                       "event-contracts/api/orders",
                       "event-contracts/api/positions",
                       "event-contracts/api/public-utilities",
-                      "event-contracts/api/account",
-                      {
-                        "group": "Markets",
-                        "pages": [
-                          "event-contracts/api/markets/list"
-                        ]
-                      },
-                      {
-                        "group": "Orderbook & Pricing",
-                        "pages": [
-                          "event-contracts/api/orderbook/get"
-                        ]
-                      },
-                      {
-                        "group": "Orders",
-                        "pages": [
-                          "event-contracts/api/orders/create"
-                        ]
-                      },
-                      {
-                        "group": "Account & Positions",
-                        "pages": [
-                          "event-contracts/api/account/balance"
-                        ]
-                      }
+                      "event-contracts/api/account"
                     ]
                   }
                 ]
