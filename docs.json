@@ -73,11 +73,11 @@
           },
           {
             "tab": "API",
-            "dropdowns": [
+            "products": [
               {
-                "dropdown": "Untitled Dropdown",
+                "product": "PerpDEX",
                 "pages": [
-                  "untitled-page-18"
+                  "untitled-page-19"
                 ]
               }
             ]
