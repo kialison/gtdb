@@ -10,17 +10,23 @@ All endpoints on this page are public and do not require authentication.
 
 | Operation | Method and path |
 | --- | --- |
-| Token market | `GET /api/v4/event_contract/tokens/{token_id}/market` |
-| Latest price | `GET /api/v4/event_contract/tokens/{token_id}/price` |
-| Ticker | `GET /api/v4/event_contract/tokens/{token_id}/ticker` |
-| Order book | `GET /api/v4/event_contract/tokens/{token_id}/order_book` |
-| Price history | `GET /api/v4/event_contract/tokens/{token_id}/price_history` |
-| Batch prices | `GET /api/v4/event_contract/tokens/prices` |
-| Candlesticks | `GET /api/v4/event_contract/tokens/{currency}/candlesticks` |
+| Token market | `GET /api/v4/event_contracts/tokens/{token_id}/market` |
+| Latest price | `GET /api/v4/event_contracts/tokens/{token_id}/price` |
+| Ticker | `GET /api/v4/event_contracts/tokens/{token_id}/ticker` |
+| Order book | `GET /api/v4/event_contracts/tokens/{token_id}/order_book` |
+| Price history | `GET /api/v4/event_contracts/tokens/{token_id}/price_history` |
+| Batch prices | `GET /api/v4/event_contracts/tokens/prices` |
+| Candlesticks | `GET /api/v4/event_contracts/tokens/{currency}/candlesticks` |
+
+## Token market
+
+`GET /api/v4/event_contracts/tokens/{token_id}/market`
+
+Returns the visible market summary associated with the token. The response contains `market_id`, `event_id`, `slug`, `question`, `condition_id`, `status`, `closed`, `start_date`, `end_date`, `outcomes`, `best_bid`, `best_ask`, `last_trade_price`, `volume`, `volume_24hr`, `category`, and `tags`. Unknown or invisible tokens return `404`.
 
 ## Order book
 
-`GET /api/v4/event_contract/tokens/{token_id}/order_book`
+`GET /api/v4/event_contracts/tokens/{token_id}/order_book`
 
 Query parameter `depth` is optional, defaults to 20, and accepts 1–100.
 
@@ -54,7 +60,7 @@ Query parameter `depth` is optional, defaults to 20, and accepts 1–100.
 
 ## Latest price
 
-`GET /api/v4/event_contract/tokens/{token_id}/price`
+`GET /api/v4/event_contracts/tokens/{token_id}/price`
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -65,7 +71,7 @@ Query parameter `depth` is optional, defaults to 20, and accepts 1–100.
 
 ## Ticker
 
-`GET /api/v4/event_contract/tokens/{token_id}/ticker`
+`GET /api/v4/event_contracts/tokens/{token_id}/ticker`
 
 Returns `token_id`, `last_price`, `best_bid`, `best_ask`, and `timestamp`. A field can be null when reliable data is unavailable.
 
@@ -89,7 +95,7 @@ The requested range must not exceed 14 days. Response:
 
 ## Batch prices
 
-`GET /api/v4/event_contract/tokens/prices?token_ids=token-yes,token-no`
+`GET /api/v4/event_contracts/tokens/prices?token_ids=token-yes,token-no`
 
 `token_ids` is required and accepts at most 100 comma-separated IDs. Unknown or invisible tokens are omitted.
 
@@ -97,6 +103,6 @@ Response fields: `items[].token_id`, `items[].price`, and `items[].timestamp`.
 
 ## Candlesticks
 
-`GET /api/v4/event_contract/tokens/{currency}/candlesticks`
+`GET /api/v4/event_contracts/tokens/{currency}/candlesticks`
 
 Required path parameter: `currency`. Required query parameter: `interval`. Optional query parameters: `from`, `to`, and `limit`. Each candle contains `t` (timestamp) and OHLCV strings `o`, `h`, `l`, `c`, and `v`.

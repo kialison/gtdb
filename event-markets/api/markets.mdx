@@ -110,4 +110,14 @@ The detail response includes all market-summary fields plus:
 
 `GET /api/v4/event_markets/markets/{market_id}/trades`
 
-Query parameters are `limit` and `cursor`. The response contains `items` and `next_cursor`. Each trade item has `trade_id`, `market_id`, `condition_id`, `token_id`, `price`, `size`, `side`, and `timestamp`.
+Query parameters are `limit` and `cursor`. The response contains `items` and `next_cursor`.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `trade_id` | string | Trade identifier. |
+| `market_id` | string | Market identifier. |
+| `condition_id` | string | Market condition identifier. |
+| `token_id` | string | Outcome token identifier. |
+| `price` / `size` | string | Execution price and size. |
+| `side` | string | Trade direction. |
+| `timestamp` | integer | Trade timestamp. |

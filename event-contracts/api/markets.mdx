@@ -6,7 +6,7 @@ description: List visible Event Contracts markets, retrieve details, and query p
 
 ## List markets
 
-`GET https://broker.dexbuilder.com/api/v4/event_contract/markets`
+`GET https://broker.dexbuilder.com/api/v4/event_contracts/markets`
 
 Public endpoint. No authentication is required.
 
@@ -51,7 +51,7 @@ Public endpoint. No authentication is required.
 | `tags` | array | Market tag summaries. |
 
 ```bash
-curl --get 'https://broker.dexbuilder.com/api/v4/event_contract/markets' \
+curl --get 'https://broker.dexbuilder.com/api/v4/event_contracts/markets' \
   --data-urlencode 'limit=20' \
   --data-urlencode 'event_id=event-123' \
   --data-urlencode 'active=true'
@@ -89,8 +89,8 @@ curl --get 'https://broker.dexbuilder.com/api/v4/event_contract/markets' \
 
 ## Get market details
 
-- `GET /api/v4/event_contract/markets/{market_id}`
-- `GET /api/v4/event_contract/markets/slug/{slug}`
+- `GET /api/v4/event_contracts/markets/{market_id}`
+- `GET /api/v4/event_contracts/markets/slug/{slug}`
 
 The detail response includes all market-summary fields plus:
 
@@ -108,6 +108,16 @@ The detail response includes all market-summary fields plus:
 
 ## Market trades
 
-`GET /api/v4/event_contract/markets/{market_id}/trades`
+`GET /api/v4/event_contracts/markets/{market_id}/trades`
 
-Query parameters are `limit` and `cursor`. The response contains `items` and `next_cursor`. Each trade item has `trade_id`, `market_id`, `condition_id`, `token_id`, `price`, `size`, `side`, and `timestamp`.
+Query parameters are `limit` and `cursor`. The response contains `items` and `next_cursor`.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `trade_id` | string | Trade identifier. |
+| `market_id` | string | Market identifier. |
+| `condition_id` | string | Market condition identifier. |
+| `token_id` | string | Outcome token identifier. |
+| `price` / `size` | string | Execution price and size. |
+| `side` | string | Trade direction. |
+| `timestamp` | integer | Trade timestamp. |

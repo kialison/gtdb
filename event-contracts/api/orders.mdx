@@ -10,7 +10,7 @@ All endpoints on this page are private. Authentication details are finalized by 
 
 ## Create an order
 
-`POST /api/v4/event_contract/orders`
+`POST /api/v4/event_contracts/orders`
 
 ### Request body
 
@@ -30,7 +30,7 @@ All endpoints on this page are private. Authentication details are finalized by 
 | `biz_type` | string | Business namespace; use the value documented for this API. |
 
 ```bash
-curl -X POST 'https://broker.dexbuilder.com/api/v4/event_contract/orders' \
+curl -X POST 'https://broker.dexbuilder.com/api/v4/event_contracts/orders' \
   -H 'Content-Type: application/json' \
   -d '{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0,"biz_type":"event_contract"}'
 ```
@@ -46,7 +46,7 @@ curl -X POST 'https://broker.dexbuilder.com/api/v4/event_contract/orders' \
 
 ## List orders
 
-`GET /api/v4/event_contract/orders`
+`GET /api/v4/event_contracts/orders`
 
 | Query parameter | Type | Description |
 | --- | --- | --- |
@@ -77,14 +77,14 @@ Response is `items` plus `next_cursor`. Each order item has:
 
 ## Get one order
 
-`GET /api/v4/event_contract/orders/{order_id}`
+`GET /api/v4/event_contracts/orders/{order_id}`
 
 Returns the same order fields as the list item. A missing or inaccessible order returns `404`.
 
 ## Cancel orders
 
-- `DELETE /api/v4/event_contract/orders/{order_id}`: cancel one order.
-- `DELETE /api/v4/event_contract/orders?condition_id={condition_id}`: cancel matching orders for a market.
+- `DELETE /api/v4/event_contracts/orders/{order_id}`: cancel one order.
+- `DELETE /api/v4/event_contracts/orders?condition_id={condition_id}`: cancel matching orders for a market.
 
 Single cancellation response:
 

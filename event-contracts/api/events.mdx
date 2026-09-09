@@ -6,7 +6,7 @@ description: List visible Event Contracts events or retrieve one by ID or slug.
 
 ## Endpoint
 
-`GET https://broker.dexbuilder.com/api/v4/event_contract/events`
+`GET https://broker.dexbuilder.com/api/v4/event_contracts/events`
 
 Public endpoint. No authentication is required.
 
@@ -29,7 +29,7 @@ Public endpoint. No authentication is required.
 ## Request
 
 ```bash
-curl --get 'https://broker.dexbuilder.com/api/v4/event_contract/events' \
+curl --get 'https://broker.dexbuilder.com/api/v4/event_contracts/events' \
   --data-urlencode 'limit=20' \
   --data-urlencode 'sort=start_date' \
   --data-urlencode 'ascending=false' \
@@ -95,7 +95,7 @@ Pass `next_cursor` back as `cursor` without decoding or modifying it. Do not use
 
 ## Get one event
 
-- `GET /api/v4/event_contract/events/{event_id}`
-- `GET /api/v4/event_contract/events/slug/{slug}`
+- `GET /api/v4/event_contracts/events/{event_id}`
+- `GET /api/v4/event_contracts/events/slug/{slug}`
 
 The detail response contains all summary fields plus `description`, `resolution_source`, `markets`, and `markets_has_more`.

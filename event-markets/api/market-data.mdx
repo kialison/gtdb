@@ -18,6 +18,12 @@ All endpoints on this page are public and do not require authentication.
 | Batch prices | `GET /api/v4/event_markets/tokens/prices` |
 | Candlesticks | `GET /api/v4/event_markets/tokens/{currency}/candlesticks` |
 
+## Token market
+
+`GET /api/v4/event_markets/tokens/{token_id}/market`
+
+Returns the visible market summary associated with the token. The response contains `market_id`, `event_id`, `slug`, `question`, `condition_id`, `status`, `closed`, `start_date`, `end_date`, `outcomes`, `best_bid`, `best_ask`, `last_trade_price`, `volume`, `volume_24hr`, `category`, and `tags`. Unknown or invisible tokens return `404`.
+
 ## Order book
 
 `GET /api/v4/event_markets/tokens/{token_id}/order_book`

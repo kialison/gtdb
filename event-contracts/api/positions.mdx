@@ -10,7 +10,7 @@ All account endpoints are private and require an authenticated gateway request. 
 
 ## List positions
 
-`GET /api/v4/event_contract/positions`
+`GET /api/v4/event_contracts/positions`
 
 | Query parameter | Type | Description |
 | --- | --- | --- |
@@ -42,15 +42,15 @@ Response is `items` plus `next_cursor`.
 
 ## Position detail
 
-`GET /api/v4/event_contract/positions/{position_id}` returns one position using the position fields described above.
+`GET /api/v4/event_contracts/positions/{position_id}` returns one position using the position fields described above.
 
 ## Settled positions
 
-`GET /api/v4/event_contract/positions/settled` returns settled positions with the same `items` and `next_cursor` envelope. It accepts `limit` and `cursor`.
+`GET /api/v4/event_contracts/positions/settled` returns settled positions with the same `items` and `next_cursor` envelope. It accepts `limit` and `cursor`.
 
 ## User trades
 
-`GET /api/v4/event_contract/usertrades`
+`GET /api/v4/event_contracts/usertrades`
 
 Query parameters are `condition_id`, `from`, `to`, `sort_type` (`created_at` or `updated_at`), `order_id`, `token_id`, `limit`, and `cursor`.
 
@@ -72,10 +72,10 @@ Event Contracts additionally exposes private account endpoints:
 
 | Endpoint | Response purpose |
 | --- | --- |
-| `GET /api/v4/event_contract/assets` | Account asset summary. |
-| `GET /api/v4/event_contract/balance` | Currency balance with `available`, `locked`, and `total`. |
-| `GET /api/v4/event_contract/fund_flows` | Fund-flow records. |
-| `POST /api/v4/event_contract/transfer` | Transfer between supported accounts. |
+| `GET /api/v4/event_contracts/assets` | Account asset summary. |
+| `GET /api/v4/event_contracts/balance` | Currency balance with `available`, `locked`, and `total`. |
+| `GET /api/v4/event_contracts/fund_flows` | Fund-flow records. |
+| `POST /api/v4/event_contracts/transfer` | Transfer between supported accounts. |
 
 ## Error responses
 
