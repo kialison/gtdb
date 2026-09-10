@@ -1,26 +1,62 @@
 ---
 title: "REST API 概览"
-description: "DexBuilder PerpDEX REST API 的版本、访问地址与基础说明"
+description: "DexBuilder PerpDEX REST API 的版本、访问地址、能力范围与问题排查说明"
 ---
 
 # REST API 概览
 
-DexBuilder PerpDEX 提供永续合约 REST API 能力，包括公开行情查询、账户与持仓查询、订单交易、风险参数及交易历史等接口。
+DexBuilder PerpDEX REST API 提供完整的程序化交易能力，可用于行情查询、账户与持仓管理、订单交易、历史记录查询及风险参数获取。
 
-当前 API 版本为 `V1.0.0`。
+当前版本：`V1.0.0`
+
+主要能力包括：
+
+- **公开数据**：合约信息、订单簿、成交、K 线、资金费率、市场统计等。
+- **私有数据**：账户、持仓、订单、个人成交及历史记录等。
+- **交易操作**：下单、撤单、改单、批量订单及持仓管理。
+- **风险管理**：风险限额、强平记录、ADL 等相关数据与操作。
 
 ## Access URL
+
+REST API Base URL：
 
 ```text
 https://api.dexbuilder.com/api/v1
 ```
 
-## 使用说明
+接口页面中的 Path 需要拼接在 Base URL 后。例如：
 
-- 公开行情接口无需认证。
-- 账户、持仓、订单等私有接口需要 API Key 与请求签名。
-- 具体请求参数与返回结构以对应接口页面为准。
+```text
+GET /dex_futures/usdt/contracts
+```
+
+完整请求地址：
+
+```text
+https://api.dexbuilder.com/api/v1/dex_futures/usdt/contracts
+```
+
+## 接口类型
+
+### 公开接口
+
+公开行情接口无需 API Key，可直接请求。典型接口包括合约信息、市场深度、成交、K 线和市场统计等。
+
+### 私有接口
+
+账户、持仓、订单和个人交易记录等接口需要 API Key，并按照「认证与签名」中的规则生成请求签名。
+
+## 技术支持与问题排查
+
+遇到接口问题时，建议先整理以下信息：
+
+1. 问题现象与复现步骤
+2. Request Method 与 Request URI
+3. Query 参数或 Request Body
+4. HTTP 状态码
+5. API 返回内容
+6. `X-Trace-ID`（如响应中存在）
 
 <Warning>
-请妥善保管 API Key 和 API Secret。排查接口问题时不要向任何人提供 API Secret。
+提交问题时不要提供 API Secret、私钥或完整签名凭证。如 API Key 已泄露，应立即停用并重新创建。
 </Warning>
