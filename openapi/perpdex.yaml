@@ -1,3 +1,29 @@
+# 使用 OpenAPI 3.0.3 标准格式，用于生成 Mintlify API Reference。
+# openapi      OpenAPI 版本
+# info         API 基础信息
+# servers      API 服务地址
+# tags         接口分类
+# paths        所有接口定义
+# components   公共数据结构和认证方式
+#
+# 单个接口常用字段：
+# summary      接口名称
+# description  接口说明
+# parameters   Path / Query 参数
+# requestBody  POST / PUT 请求参数
+# responses    返回结果
+#
+# 新增接口：
+# 1. 在 paths: 下新增接口 Path 和 Method
+# 2. 填写 summary、parameters、requestBody、responses
+# 3. 在 Mintlify 新建对应 MDX 页面
+# 4. 页面通过下面格式绑定接口：
+#
+# openapi: "/openapi/perpdex.yaml GET /dex_futures/{settle}/contracts"
+# openapi: "/openapi/perpdex.yaml POST /dex_futures/{settle}/orders"
+#
+# ps ： MDX page 绑定时，Method 和 Path 必须与 YAML 完全一致
+
 openapi: 3.0.3
 info:
   title: PerpDEX API
