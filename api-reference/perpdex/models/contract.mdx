@@ -1,0 +1,26 @@
+---
+title: "Contract"
+description: "永续合约信息模型"
+---
+
+# Contract
+
+永续合约基础信息模型，对应 OpenAPI Schema：`Contract`。
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `name` | string | 合约名称 |
+| `type` | string | 合约类型：`inverse` / `direct` |
+| `quanto_multiplier` | string | 合约乘数 |
+| `leverage_min` | string | 最小杠杆 |
+| `leverage_max` | string | 最大杠杆 |
+| `maintenance_rate` | string | 维持保证金率 |
+| `order_price_round` | string | 价格精度 |
+| `order_size_min` | string | 最小下单张数 |
+| `order_size_max` | string | 最大下单张数 |
+| `status` | string | 合约状态 |
+| `mark_price` | string | 标记价格 |
+| `index_price` | string | 指数价格 |
+| `funding_rate` | string | 当前资金费率 |
+| `funding_next_apply` | integer(int64) | 下次资金费率结算时间 |
+| `market_order_slip_ratio` | string | 市价单最大滑点比例 |
