@@ -1,30 +1,22 @@
 ---
-title: "API 认证"
-description: "DexBuilder PerpDEX REST API 的请求地址与签名认证方式"
+title: "鉴权说明"
+description: "DexBuilder PerpDEX REST API 的公开接口与私有接口认证要求"
 ---
 
-## Base URL
+公开行情接口无需认证。账户、持仓、订单等私有接口需要使用 API Key 进行认证。
 
-```text
-https://api.dexbuilder.com/api/v1
-```
+## 私有请求 Header
 
-公开行情接口无需认证。账户、持仓、订单等私有接口需要在请求 Header 中携带：
+私有接口请求需要携带：
 
-- `KEY`：API Key
-- `Timestamp`：Unix 时间戳（秒）
-- `SIGN`：请求签名
+| Header | 说明 |
+| --- | --- |
+| `KEY` | API Key |
+| `Timestamp` | Unix 时间戳，单位为秒 |
+| `SIGN` | 根据当前请求内容生成的签名 |
 
-## 签名字符串
+`SIGN` 的具体生成方法请查看「签名机制」。
 
-签名字符串按以下顺序拼接：
-
-```text
-Request Method + "\n" + Request URL + "\n" + Query String + "\n" + HexEncode(SHA512(Request Payload)) + "\n" + Timestamp
-```
-
-使用 API Secret 对签名字符串执行 `HMAC-SHA512`，将十六进制结果作为 `SIGN`。
-
-<Note>
-Request Method 使用大写，例如 `GET`、`POST`。Request URL 不包含协议、域名和端口，例如 `/api/v1/dex_futures/usdt/orders`。
-</Note>
+<Warning>
+API Secret 仅用于本地生成签名，不应作为 Header 发送，也不要暴露在前端代码或公开环境中。
+</Warning>
