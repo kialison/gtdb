@@ -3,7 +3,7 @@ info:
   title: PerpDEX API
   version: 1.0.0
   description: |
-    PerpDEX REST API 示例规范。本次仅接入两个接口，用于验证 Mintlify API Reference 的维护方式。
+    PerpDEX  的维护方式。
 servers:
   - url: https://api.aden.io/api/v1
     description: PerpDEX REST API
