@@ -82,13 +82,72 @@
                   {
                     "group": "行情",
                     "pages": [
-                      "api-reference/perpdex/query-all-contracts"
+                      "api-reference/perpdex/query-all-contracts",
+                      "api-reference/perpdex/query-contract",
+                      "api-reference/perpdex/query-order-book",
+                      "api-reference/perpdex/query-market-trades",
+                      "api-reference/perpdex/query-candlesticks",
+                      "api-reference/perpdex/query-premium-index",
+                      "api-reference/perpdex/query-tickers",
+                      "api-reference/perpdex/query-funding-rate",
+                      "api-reference/perpdex/query-insurance",
+                      "api-reference/perpdex/query-contract-stats",
+                      "api-reference/perpdex/query-index-constituents"
+                    ]
+                  },
+                  {
+                    "group": "风控",
+                    "pages": [
+                      "api-reference/perpdex/query-market-liquidation-orders",
+                      "api-reference/perpdex/query-risk-limit-tiers",
+                      "api-reference/perpdex/query-risk-limit-table"
+                    ]
+                  },
+                  {
+                    "group": "账户",
+                    "pages": [
+                      "api-reference/perpdex/query-account",
+                      "api-reference/perpdex/query-account-book",
+                      "api-reference/perpdex/query-fee"
+                    ]
+                  },
+                  {
+                    "group": "持仓",
+                    "pages": [
+                      "api-reference/perpdex/query-positions",
+                      "api-reference/perpdex/query-position",
+                      "api-reference/perpdex/update-position-margin",
+                      "api-reference/perpdex/update-position-leverage",
+                      "api-reference/perpdex/switch-position-margin-mode",
+                      "api-reference/perpdex/switch-hedge-margin-mode",
+                      "api-reference/perpdex/update-position-risk-limit",
+                      "api-reference/perpdex/set-position-mode",
+                      "api-reference/perpdex/query-hedge-positions",
+                      "api-reference/perpdex/update-hedge-position-margin",
+                      "api-reference/perpdex/update-hedge-position-leverage",
+                      "api-reference/perpdex/update-hedge-position-risk-limit",
+                      "api-reference/perpdex/query-position-close-history",
+                      "api-reference/perpdex/query-liquidation-history",
+                      "api-reference/perpdex/query-adl-history"
                     ]
                   },
                   {
                     "group": "订单",
                     "pages": [
-                      "api-reference/perpdex/place-order"
+                      "api-reference/perpdex/query-orders",
+                      "api-reference/perpdex/place-order",
+                      "api-reference/perpdex/cancel-all-orders",
+                      "api-reference/perpdex/query-orders-by-time-range",
+                      "api-reference/perpdex/place-batch-orders",
+                      "api-reference/perpdex/query-order",
+                      "api-reference/perpdex/cancel-order",
+                      "api-reference/perpdex/amend-order",
+                      "api-reference/perpdex/query-my-trades",
+                      "api-reference/perpdex/query-my-trades-by-time-range",
+                      "api-reference/perpdex/countdown-cancel-orders",
+                      "api-reference/perpdex/cancel-batch-orders",
+                      "api-reference/perpdex/amend-batch-orders",
+                      "api-reference/perpdex/place-bbo-order"
                     ]
                   }
                 ]
