@@ -1,0 +1,25 @@
+---
+title: "DEXFuturesBBOOrder"
+description: "BBO 永续合约订单模型"
+---
+
+# DEXFuturesBBOOrder
+
+BBO 永续合约订单模型，对应 OpenAPI Schema：`DEXFuturesBBOOrder`。
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `contract` | string | 永续合约 |
+| `size` | integer(int64) | 交易数量；正数买入、负数卖出 |
+| `direction` | string | `sell` 获取买盘档位，`buy` 获取卖盘档位 |
+| `iceberg` | integer(int64) | 冰山单显示数量 |
+| `level` | integer(int64) | 盘口档位，范围 `1-20` |
+| `close` | boolean | 是否平仓 |
+| `reduce_only` | boolean | 是否只减仓 |
+| `tif` | string | 订单有效方式：`gtc` / `ioc` / `poc` / `fok` |
+| `text` | string | 自定义订单信息 |
+| `auto_size` | string | 双向持仓平仓方向 |
+| `stp_act` | string | 自成交防护策略 |
+| `default_leverage` | string | 默认杠杆 |
+| `limit_vip` | integer(int64) | 对手方 VIP 等级限制 |
+| `pid` | integer(int64) | Position ID |
