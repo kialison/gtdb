@@ -1,0 +1,50 @@
+---
+title: "DEXFuturesOrder"
+description: "永续合约订单模型"
+---
+
+# DEXFuturesOrder
+
+永续合约订单模型，对应 OpenAPI Schema：`DEXFuturesOrder`。
+
+## 下单字段
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `contract` | string | 永续合约 |
+| `size` | string | 合约张数；正数买入、负数卖出，平仓可为 `0` |
+| `iceberg` | string | 冰山单显示数量，`0` 表示非冰山单 |
+| `price` | string | 委托价格；`price=0` 且 `tif=ioc` 时为市价单 |
+| `close` | boolean | 是否平仓 |
+| `reduce_only` | boolean | 是否只减仓 |
+| `tif` | string | 订单有效方式：`gtc` / `ioc` / `poc` / `fok` |
+| `text` | string | 自定义订单信息 |
+| `auto_size` | string | 双向持仓平仓方向：`close_long` / `close_short` |
+| `stp_act` | string | 自成交防护策略 |
+| `bbo` | string | 对手价相关参数 |
+| `default_leverage` | string | 默认杠杆 |
+| `pid` | integer(int64) | Position ID |
+| `order_value` | string | 订单价值 |
+| `trade_value` | string | 成交价值 |
+| `market_order_slip_ratio` | string | 市价单自定义最大滑点比例 |
+
+## 返回字段
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `id` | integer(int64) | 订单 ID |
+| `user` | integer(int64) | 用户 ID |
+| `create_time` | number(double) | 创建时间 |
+| `update_time` | number(double) | 更新时间 |
+| `finish_time` | number(double) | 完成时间 |
+| `finish_as` | string | 订单完成原因 |
+| `status` | string | 订单状态：`open` / `finished` |
+| `left` | string | 未成交数量 |
+| `fill_price` | string | 平均成交价 |
+| `is_close` | boolean | 是否平仓单 |
+| `is_reduce_only` | boolean | 是否只减仓 |
+| `is_liq` | boolean | 是否强平单 |
+| `tkfr` | string | Taker 费率 |
+| `mkfr` | string | Maker 费率 |
+| `stp_id` | integer(int64) | STP 组字段 |
+| `amend_text` | string | 改单自定义信息 |
