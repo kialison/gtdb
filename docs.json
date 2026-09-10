@@ -82,12 +82,17 @@
                   {
                     "group": "接入说明",
                     "pages": [
-                      "api-reference/perpdex/authentication"
+                      "api-reference/perpdex/introduction",
+                      "api-reference/perpdex/getting-started",
+                      "api-reference/perpdex/authentication",
+                      "api-reference/perpdex/signature",
+                      "api-reference/perpdex/errors"
                     ]
                   },
                   {
                     "group": "行情",
                     "pages": [
+                      "api-reference/perpdex/market-overview",
                       "api-reference/perpdex/query-all-contracts",
                       "api-reference/perpdex/query-contract",
                       "api-reference/perpdex/query-order-book",
@@ -104,6 +109,7 @@
                   {
                     "group": "风控",
                     "pages": [
+                      "api-reference/perpdex/risk-overview",
                       "api-reference/perpdex/query-market-liquidation-orders",
                       "api-reference/perpdex/query-risk-limit-tiers",
                       "api-reference/perpdex/query-risk-limit-table"
@@ -112,6 +118,7 @@
                   {
                     "group": "账户",
                     "pages": [
+                      "api-reference/perpdex/account-overview",
                       "api-reference/perpdex/query-account",
                       "api-reference/perpdex/query-account-book",
                       "api-reference/perpdex/query-fee"
@@ -120,6 +127,7 @@
                   {
                     "group": "持仓",
                     "pages": [
+                      "api-reference/perpdex/position-overview",
                       "api-reference/perpdex/query-positions",
                       "api-reference/perpdex/query-position",
                       "api-reference/perpdex/update-position-margin",
@@ -140,6 +148,7 @@
                   {
                     "group": "订单",
                     "pages": [
+                      "api-reference/perpdex/order-overview",
                       "api-reference/perpdex/query-orders",
                       "api-reference/perpdex/place-order",
                       "api-reference/perpdex/cancel-all-orders",
