@@ -111,6 +111,173 @@ Subscribe by token ID:
 
 Unavailable optional prices are omitted.
 
+## CPI price updates
+
+Channel: `ec.cpi`
+
+CPI (Crypto Price Index) provides public price updates for a normalized symbol at a configured interval. It does not require authentication.
+
+Subscribe by symbol and interval:
+
+```json
+{
+  "t": 1787026512123,
+  "id": "cpi-1",
+  "op": "subscribe",
+  "ch": "ec.cpi",
+  "payload": {
+    "items": [
+      {
+        "symbol": "btcusdt",
+        "interval": "1m"
+      }
+    ]
+  }
+}
+```
+
+The broker normalizes symbols by lowercasing them and removing `/`, `-`, and `_`. For example, `BTC/USDT`, `BTC-USDT`, and `BTCUSDT` resolve to the same subscription key.
+
+Each update has the following result:
+
+```json
+{
+  "symbol": "btcusdt",
+  "interval": "1m",
+  "price": "100000.10",
+  "price_timestamp": "1787026512000",
+  "ts": 1787026512027
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `symbol` | string | Normalized symbol. |
+| `interval` | string | Configured CPI interval, such as `1m`, `5m`, `15m`, `1h`, or `1d`. |
+| `price` | string | CPI price as a decimal string. |
+| `price_timestamp` | string | Source price timestamp, when supplied by the source. |
+| `ts` | integer | Broker event timestamp in Unix milliseconds. |
+
+CPI is a public channel, so `payload.all=true` is not supported. Use `unsubscribe` with the same `symbol` and `interval` item to stop receiving updates.
+
+## Candlesticks
+
+Channel: `ec.candlestick`
+
+Candlestick updates are public and do not require authentication. Subscribe by normalized symbol and interval:
+
+```json
+{
+  "t": 1787026512123,
+  "id": "candle-1",
+  "op": "subscribe",
+  "ch": "ec.candlestick",
+  "payload": {
+    "items": [
+      {
+        "symbol": "btcusdt",
+        "interval": "1m"
+      }
+    ]
+  }
+}
+```
+
+The broker builds OHLC candles from the incoming price stream. Supported intervals are configured by the deployment and may include `1m`, `5m`, `15m`, `1h`, `4h`, `1d`, `1w`, and `1mon`.
+
+Live candle update:
+
+```json
+{
+  "symbol": "btcusdt",
+  "interval": "1m",
+  "t": 1787026500,
+  "o": "100000.10",
+  "h": "100050.00",
+  "l": "99980.00",
+  "c": "100020.20",
+  "v": "0",
+  "closed": false
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `symbol` | string | Normalized symbol. |
+| `interval` | string | Candle interval. |
+| `t` | integer | Candle open time in Unix seconds. |
+| `o` | string | Open price. |
+| `h` | string | High price. |
+| `l` | string | Low price. |
+| `c` | string | Close price. |
+| `v` | string | Volume field; currently `"0"`. |
+| `closed` | boolean | Whether the candle is closed; live updates are `false`. |
+
+When a cached history is available, a snapshot uses the following result shape:
+
+```json
+{
+  "symbol": "btcusdt",
+  "interval": "1m",
+  "history": [
+    {
+      "t": 1787026440,
+      "o": "99950.00",
+      "h": "100010.00",
+      "l": "99920.00",
+      "c": "100000.10",
+      "v": "0"
+    }
+  ]
+}
+```
+
+\\n## Open/close price
+
+Channel: `ec.oc_price`
+
+Open/close price updates are public and do not require authentication. Subscribe by market slug, market ID, or by symbol and interval:
+
+```json
+{
+  "t": 1787026512123,
+  "id": "oc-1",
+  "op": "subscribe",
+  "ch": "ec.oc_price",
+  "payload": {
+    "items": [
+      {
+        "slug": "btc-updown-5m-1782178800"
+      },
+      {
+        "symbol": "btcusdt",
+        "interval": "5m"
+      }
+    ]
+  }
+}
+```
+
+A `market_id` item is treated as an alias for `slug`. The broker also derives common symbol and interval keys from supported slug formats.
+
+Update result:
+
+```json
+{
+  "slug": "btc-updown-5m-1782178800",
+  "price_to_beat": "63995.66",
+  "final_price": "63984.86"
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `slug` | string | Market slug associated with the open/close price event. |
+| `price_to_beat` | string | Reference price at the start of the market window. |
+| `final_price` | string | Final reference price when available. |
+
+Use `unsubscribe` with the same item shape to stop receiving updates. If no matching source event has been observed, subscription activation returns no snapshot. \\
+
 ## Market status
 
 Channel: `ec.status`
