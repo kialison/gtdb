@@ -4,176 +4,358 @@ sidebarTitle: "Real-Time Order Updates"
 description: "React to authenticated order and trade activity as it happens with the CLOB user WebSocket stream."
 ---
 
-React to authenticated order and trade activity as it happens.
-
-Use real-time order updates to keep your view of a trading account current without polling. The user stream reports changes to the account's orders and the trades created when those orders match. For public order-book and market updates, see [Real-Time Data](/event-markets/untitled-page-8).
-
-## User Stream
-
-The user stream delivers order changes and trade updates for the authenticated account. Subscribe without a market filter to follow the entire account, or provide condition IDs to follow selected markets.
-
-Connect to the authenticated user WebSocket:
-
-```text API
-wss://ws-subscriptions-clob.polymarket.com/ws/user
-```
+Use the Event Markets WebSocket to receive account updates as orders change, trades are matched or confirmed, positions change, and settlements become available.
 
 <Note>
-  The user WebSocket uses an application-level heartbeat. Send the text frame `PING` every 10 seconds; the server replies with `PONG`.
+  Public market-data channels do not require authentication. The channels on this page are private and require API Key authentication.
 </Note>
 
-Once connected, send a `user` subscription frame with the CLOB API credentials created through [API Authentication](/event-markets/untitled-page-18):
+## Connect
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+This endpoint implements the broker WebSocket v2 JSON protocol. Client requests use the op field; server responses include op, ch, result, and err. Include a client-generated id when you need to correlate an ACK or error with a request.
+
+## Authenticate a private subscription
+
+Authenticate inline on the first private request:
 
 ```json
 {
-  "auth": {
-    "apiKey": "<clob_api_key>",
-    "secret": "<clob_api_secret>",
-    "passphrase": "<clob_api_passphrase>"
+  "t": 1787026512123,
+  "id": "orders-1",
+  "op": "subscribe",
+  "ch": "em.orders",
+  "payload": {
+    "all": true
   },
-  "type": "user"
+  "auth": {
+    "method": "api_key",
+    "key": "<api_key>",
+    "sign": "<signature>"
+  }
 }
 ```
 
-<Warning>
-  Send the subscription frame immediately after connecting. The server may close a connection that remains unsubscribed.
-</Warning>
+For subscribe and unsubscribe, sign this exact message with HMAC-SHA512 and hex-encode the result:
 
-<Warning>
-  Keep CLOB API credentials in a server environment. Never expose them in client-side code.
-</Warning>
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
 
-On the wire, `event_type` distinguishes order and trade events. For an order event, `type` identifies whether the order was placed, updated, or canceled.
+The time value is the outer request t. The API Secret is used locally to create the signature and is never sent over WebSocket.
 
-<Accordion title="User Events">
-  <Tabs>
-    <Tab title="Order Update">
-      ```json
-      {
-        "event_type": "order",
-        "id": "<order_id>",
-        "owner": "<clob_api_key>",
-        "market": "<condition_id>",
-        "asset_id": "<token_id>",
-        "side": "BUY",
-        "order_owner": "<clob_api_key>",
-        "original_size": "10",
-        "size_matched": "0",
-        "price": "0.52",
-        "associate_trades": null,
-        "outcome": "Yes",
-        "type": "PLACEMENT",
-        "created_at": "1782753357",
-        "expiration": "0",
-        "order_type": "GTC",
-        "status": "LIVE",
-        "maker_address": "<maker_address>",
-        "timestamp": "1782753357257"
-      }
-      ```
-    </Tab>
-    <Tab title="Trade Update">
-      ```json
-      {
-        "event_type": "trade",
-        "type": "TRADE",
-        "id": "<trade_id>",
-        "taker_order_id": "<order_id>",
-        "market": "<condition_id>",
-        "asset_id": "<token_id>",
-        "side": "BUY",
-        "size": "10",
-        "fee_rate_bps": "0",
-        "price": "0.52",
-        "status": "MATCHED",
-        "match_time": "1782753357",
-        "last_update": "1782753357",
-        "outcome": "Yes",
-        "owner": "<clob_api_key>",
-        "trade_owner": "<clob_api_key>",
-        "maker_address": "<maker_address>",
-        "transaction_hash": null,
-        "bucket_index": 0,
-        "maker_orders": [
-          {
-            "order_id": "<maker_order_id>",
-            "owner": "<maker_clob_api_key>",
-            "maker_address": "<maker_address>",
-            "matched_amount": "10",
-            "price": "0.52",
-            "fee_rate_bps": "0",
-            "asset_id": "<token_id>",
-            "outcome": "Yes",
-            "outcome_index": 0,
-            "side": "SELL"
-          }
-        ],
-        "trader_side": "TAKER",
-        "timestamp": "1782753357257"
-      }
-      ```
-    </Tab>
-  </Tabs>
-</Accordion>
+Python signing example:
 
-To receive updates only for selected markets, include their condition IDs in the initial subscription frame:
+```python
+import hashlib
+import hmac
+
+channel = "em.orders"
+operation = "subscribe"
+timestamp_ms = 1787026512123
+message = f"channel={channel}&event={operation}&time={timestamp_ms}"
+
+signature = hmac.new(
+    b"<api_secret>",
+    message.encode("utf-8"),
+    hashlib.sha512,
+).hexdigest()
+```
+
+You may pre-authenticate once per connection with server.sign:
 
 ```json
 {
-  "auth": {
-    "apiKey": "<clob_api_key>",
-    "secret": "<clob_api_secret>",
-    "passphrase": "<clob_api_passphrase>"
-  },
-  "markets": ["<condition_id>"],
-  "type": "user"
+  "t": 1787026512123,
+  "id": "auth-1",
+  "op": "auth",
+  "ch": "server.sign",
+  "payload": {
+    "method": "api_key",
+    "key": "<api_key>",
+    "sign": "<signature>"
+  }
 }
 ```
 
-You can add or remove market filters without reconnecting:
+For server.sign, sign the decimal string representation of the outer t:
 
-<Tabs>
-  <Tab title="Subscribe">
-    ```json
-    {
-      "operation": "subscribe",
-      "markets": ["<condition_id>"]
-    }
-    ```
-  </Tab>
-  <Tab title="Unsubscribe">
-    ```json
-    {
-      "operation": "unsubscribe",
-      "markets": ["<condition_id>"]
-    }
-    ```
-  </Tab>
-</Tabs>
+```text
+HexEncode(HMAC-SHA512(api_secret, decimal(t)))
+```
 
-## Understand Order Updates
+## Subscribe to account updates
 
-Order updates tell you why the account's open-order state changed:
+Private subscriptions accept either:
 
-| Update | Meaning |
-| --- | --- |
-| Placement | A new order was accepted. |
-| Update | Some or all of the order matched. |
-| Cancellation | The remaining open amount was canceled. |
+- payload.items: an array of filter objects. Each filter contains a condition_id.
+- payload.all: true: all account updates available to the authenticated user.
 
-## Understand Trade Updates
+The two forms are mutually exclusive. A request accepts up to 100 items, and a connection supports up to 10,000 active subscriptions.
 
-Trade updates follow a match through onchain settlement. Confirmation and permanent failure are terminal; a trade being retried may later be mined and confirmed.
+Example for one market:
 
-| State | Terminal | Meaning |
+```json
+{
+  "t": 1787026512123,
+  "id": "orders-2",
+  "op": "subscribe",
+  "ch": "em.orders",
+  "payload": {
+    "items": [
+      {
+        "condition_id": "gate_0xb610...901a"
+      }
+    ]
+  }
+}
+```
+
+Successful ACK:
+
+```json
+{
+  "t": 1787026512150,
+  "id": "orders-2",
+  "trace_id": "<trace_id>",
+  "op": "subscribe",
+  "ch": "em.orders",
+  "err": null,
+  "result": {
+    "status": "success",
+    "message": "subscribed"
+  }
+}
+```
+
+To remove filters, send the same request with op set to unsubscribe. The server does not send an initial private snapshot; use the REST endpoints below to establish the initial state and recover messages missed during reconnects.
+
+## Private channels
+
+| Channel | Purpose | Filter |
 | --- | --- | --- |
-| Matched, not broadcast | No | The orders matched before an onchain transaction was broadcast. |
-| Matched | No | The orders matched and the transaction was submitted for execution. |
-| Mined | No | The transaction was observed onchain but has not reached finality. |
-| Confirmed | Yes | The trade reached finality successfully. |
-| Retrying | No | Settlement failed temporarily and is being retried. |
-| Failed | Yes | Settlement failed permanently. |
+| em.orders | Order lifecycle updates | condition_id |
+| em.usertrades | Trades belonging to the authenticated user | condition_id |
+| em.positions | Position changes | condition_id |
+| em.settlements | Settlement and claimability updates | condition_id |
 
-## Recover After Reconnecting
+### Order updates
 
-Real-time updates do not replace authoritative account reads or replay every change missed during a disconnection. After reconnecting, fetch the account's open orders and recent trades from [Manage Orders](/event-markets/untitled-page-20), then resume applying new stream events from that refreshed state.
+Order results contain the public order state for the authenticated account:
+
+```json
+{
+  "order_id": "123456789",
+  "client_order_id": "client-order-1",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xb610...901a",
+  "token_id": "gate_572803...39200",
+  "outcome": "Yes",
+  "side": "BUY",
+  "order_mode": "LIMIT",
+  "order_type": "GTC",
+  "px": "0.45",
+  "qty": "100",
+  "filled_qty": "20",
+  "left_qty": "80",
+  "status": "OPEN",
+  "created_ts": 1787026500000,
+  "updated_ts": 1787026512027
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| order_id | string | Platform order identifier. |
+| client_order_id | string | Optional client-supplied identifier. |
+| event_id | string | Optional event identifier. |
+| condition_id | string | Market condition identifier. |
+| token_id | string | Optional outcome-token identifier. |
+| outcome | string | Optional outcome label. |
+| side | string | BUY or SELL. |
+| order_mode | string | Execution mode, such as LIMIT or MARKET. |
+| order_type | string | Time-in-force or order type, such as GTC, GTD, FOK, or FAK. |
+| px | string | Optional order price. |
+| qty | string | Original order quantity. |
+| filled_qty | string | Quantity filled so far. |
+| left_qty | string | Quantity remaining. |
+| status | string | PROCESSING, OPEN, CANCELLING, MATCHED, CANCELED, or FAILED. |
+| error_code | string | Optional failure or rejection code. |
+| created_ts | integer | Creation time in Unix milliseconds. |
+| updated_ts | integer | Last update time in Unix milliseconds. |
+
+A partially filled order normally remains OPEN; use filled_qty and left_qty to determine execution progress.
+
+### User trades
+
+The em.usertrades channel reports executions associated with the authenticated user. A MATCHED event may be enabled by service configuration; CONFIRMED events are always delivered.
+
+```json
+{
+  "trade_id": "trade-1",
+  "order_id": "123456789",
+  "client_order_id": "client-order-1",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xb610...901a",
+  "token_id": "gate_572803...39200",
+  "outcome": "Yes",
+  "side": "BUY",
+  "role": "MAKER",
+  "px": "0.45",
+  "qty": "20",
+  "fee_rate": "0.001",
+  "status": "CONFIRMED",
+  "created_ts": 1787026512027
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| trade_id | string | User trade identifier. |
+| order_id | string | Related platform order identifier, when available. |
+| client_order_id | string | Related client order identifier, when available. |
+| event_id | string | Related event identifier, when available. |
+| condition_id | string | Market condition identifier. |
+| token_id | string | Outcome-token identifier, when available. |
+| outcome | string | Outcome label, when available. |
+| side | string | BUY or SELL. |
+| role | string | User role, MAKER or TAKER. |
+| px | string | Execution price. |
+| qty | string | Executed quantity. |
+| fee_rate | string | Fee rate as a decimal ratio. |
+| status | string | MATCHED or CONFIRMED. |
+| created_ts | integer | Trade creation time in Unix milliseconds. |
+
+For authoritative history, query GET [https://api.dexbuilder.com/api/v4/event_markets/usertrades](https://api.dexbuilder.com/api/v4/event_markets/usertrades). The REST response uses price and size, while the WebSocket result uses px and qty.
+
+REST query parameters:
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| condition_id | string | Filter by market condition. |
+| from / to | integer | Inclusive time range in Unix milliseconds. |
+| sort_type | string | Sort field, such as created_at or updated_at. |
+| order_id | string | Filter by order. |
+| token_id | string | Filter by outcome token. |
+| limit | integer | Maximum number of records to return. |
+| cursor | string | Cursor returned by the previous response. |
+
+Response shape:
+
+```json
+{
+  "items": [
+    {
+      "trade_id": "trade-1",
+      "order_id": "123456789",
+      "client_order_id": "client-order-1",
+      "condition_id": "gate_0xb610...901a",
+      "token_id": "gate_572803...39200",
+      "side": "BUY",
+      "role": "MAKER",
+      "price": "0.45",
+      "size": "20",
+      "fee_rate": "0.001"
+    }
+  ],
+  "next_cursor": "<next_cursor>"
+}
+```
+
+### Positions
+
+The em.positions result contains position quantities and settlement state. The public WebSocket contract does not include a mark-price field.
+
+```json
+{
+  "position_id": "987654321",
+  "event_id": "gate_632804",
+  "token_id": "gate_572803...39200",
+  "outcome": "Yes",
+  "qty": "80",
+  "avg_px": "0.45",
+  "settle_status": "UNSETTLED",
+  "locked_qty": "10",
+  "available_qty": "70",
+  "claimable_amount": "0",
+  "updated_ts": 1787026512027
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| position_id | string | Position identifier. |
+| event_id | string | Related event identifier, when available. |
+| token_id | string | Outcome-token identifier, when available. |
+| outcome | string | Outcome label, when available. |
+| qty | string | Position quantity. |
+| avg_px | string | Average opening price, when available. |
+| settle_status | string | Settlement state, when available. |
+| locked_qty | string | Quantity locked by open orders or settlement. |
+| available_qty | string | Quantity available for trading or settlement. |
+| claimable_amount | string | Claimable settlement amount, when available. |
+| updated_ts | integer | Last update time in Unix milliseconds. |
+
+### Settlements
+
+```json
+{
+  "position_id": "987654321",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xb610...901a",
+  "winning_outcome": "Yes",
+  "is_winner": true,
+  "claimable_amount": "80",
+  "created_ts": 1787026512027
+}
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| position_id | string | Settled position identifier. |
+| event_id | string | Related event identifier, when available. |
+| condition_id | string | Market condition identifier. |
+| winning_outcome | string | Winning outcome, when available. |
+| is_winner | boolean | Whether the position won. |
+| claimable_amount | string | Amount available to claim, when available. |
+| created_ts | integer | Settlement creation time in Unix milliseconds. |
+
+## REST recovery
+
+After reconnecting, query the corresponding private REST endpoints to rebuild state and recover missed updates:
+
+- Orders: GET [https://api.dexbuilder.com/api/v4/event_markets/orders](https://api.dexbuilder.com/api/v4/event_markets/orders)
+- User trades: GET [https://api.dexbuilder.com/api/v4/event_markets/usertrades](https://api.dexbuilder.com/api/v4/event_markets/usertrades)
+- Positions: GET [https://api.dexbuilder.com/api/v4/event_markets/positions](https://api.dexbuilder.com/api/v4/event_markets/positions)
+
+## Heartbeat, errors, and reconnects
+
+The server sends WebSocket Ping control frames. Standard clients should reply with Pong automatically. Clients may also send:
+
+```json
+{"t":1787026512123,"id":"ping-1","op":"ping"}
+```
+
+The response contains result.status: "success" and result.message: "pong".
+
+Errors use this shape:
+
+```json
+{
+  "t": 1787026512200,
+  "id": "orders-2",
+  "trace_id": "<trace_id>",
+  "op": "subscribe",
+  "ch": "em.orders",
+  "err": {
+    "code": 2,
+    "message": "invalid subscription"
+  },
+  "result": null
+}
+```
+
+Common codes are 1 invalid request format, 2 invalid argument, 3 server error, and 4 authentication failure. Subscriptions and missed messages are not retained after disconnect. Reconnect with backoff, authenticate again, restore subscriptions, then use REST recovery before applying new events.

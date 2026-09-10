@@ -126,6 +126,9 @@ Rules:
 - Duplicate items in one request are deduplicated.
 - Invalid items fail the entire request; existing subscriptions are unchanged.
 - Public channels do not support `all=true`.
+- The `em.cpi` and `ec.cpi` channels require each item to contain `symbol` and `interval`.
+- The `em.candlestick` and `ec.candlestick` channels use the same `symbol` and `interval` item shape.
+- The `em.oc_price` and `ec.oc_price` channels accept `slug`, `market_id`, or a `symbol` and `interval` pair.
 
 ## Unsubscribe
 
