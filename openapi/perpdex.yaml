@@ -3,7 +3,7 @@ info:
   title: PerpDEX API
   version: 1.0.0
   description: |
-    PerpDEX  的维护方式。
+    PerpDEX  维护方式。
 servers:
   - url: https://api.aden.io/api/v1
     description: PerpDEX REST API
