@@ -1,0 +1,349 @@
+openapi: 3.0.3
+info:
+  title: PerpDEX API
+  version: 1.0.0
+  description: |
+    PerpDEX REST API 示例规范。本次仅接入两个接口，用于验证 Mintlify API Reference 的维护方式。
+servers:
+  - url: https://api.aden.io/api/v1
+    description: PerpDEX REST API
+tags:
+  - name: 行情
+    description: 永续合约公开行情与合约信息
+  - name: 订单
+    description: 永续合约订单相关接口
+paths:
+  /dex_futures/{settle}/contracts:
+    get:
+      tags:
+        - 行情
+      summary: 查询全部永续合约
+      description: 查询当前结算币种下的全部永续合约信息。该接口无需 API Key 认证。
+      operationId: listPerpContracts
+      parameters:
+        - name: settle
+          in: path
+          required: true
+          description: 结算币种
+          schema:
+            type: string
+            enum:
+              - usdt
+          example: usdt
+        - name: limit
+          in: query
+          required: false
+          description: 单次返回的最大记录数量
+          schema:
+            type: integer
+            minimum: 1
+        - name: offset
+          in: query
+          required: false
+          description: 列表偏移量，从 0 开始
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contract'
+              example:
+                - name: BTC_USDT
+                  type: direct
+                  quanto_multiplier: '0.0001'
+                  leverage_min: '1'
+                  leverage_max: '100'
+                  maintenance_rate: '0.005'
+                  status: trading
+                  market_order_slip_ratio: '0.05'
+  /dex_futures/{settle}/orders:
+    post:
+      tags:
+        - 订单
+      summary: 创建永续合约订单
+      description: |
+        创建一笔永续合约订单。`size` 表示合约张数，而不是币的数量；每张合约对应的标的数量可通过合约信息中的 `quanto_multiplier` 获取。
+
+        当 `price` 为 `0` 且 `tif` 为 `ioc` 时，可用于提交市价单。
+      operationId: placePerpOrder
+      security:
+        - AdenKey: []
+          AdenTimestamp: []
+          AdenSignature: []
+      parameters:
+        - name: settle
+          in: path
+          required: true
+          description: 结算币种
+          schema:
+            type: string
+            enum:
+              - usdt
+          example: usdt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEXFuturesOrderRequest'
+            example:
+              contract: BTC_USDT
+              size: '6024'
+              iceberg: '0'
+              price: '3765'
+              tif: gtc
+              text: t-my-custom-id
+              stp_act: '-'
+              order_value: '64112.2099000000005'
+              trade_value: '64112.2099000000005'
+              market_order_slip_ratio: '0.03'
+      responses:
+        '201':
+          description: 订单创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+              example:
+                id: 15675394
+                user: 100000
+                contract: BTC_USDT
+                create_time: 1546569968
+                size: '6024'
+                iceberg: '0'
+                left: '6024'
+                price: '3765'
+                fill_price: '0'
+                mkfr: '-0.00025'
+                tkfr: '0.00075'
+                tif: gtc
+                refu: 0
+                is_reduce_only: false
+                is_close: false
+                is_liq: false
+                text: t-my-custom-id
+                status: finished
+                finish_time: 1514764900
+                finish_as: cancelled
+                stp_id: 0
+                stp_act: '-'
+                amend_text: '-'
+                order_value: '64112.2099000000005'
+                trade_value: '64112.2099000000005'
+                market_order_slip_ratio: '0.03'
+        '400':
+          description: 请求参数错误
+components:
+  securitySchemes:
+    AdenKey:
+      type: apiKey
+      in: header
+      name: KEY
+      description: API Key
+    AdenTimestamp:
+      type: apiKey
+      in: header
+      name: Timestamp
+      description: Unix 时间戳（秒）
+    AdenSignature:
+      type: apiKey
+      in: header
+      name: SIGN
+      description: 使用 API Secret 生成的 HMAC-SHA512 请求签名
+  schemas:
+    Contract:
+      type: object
+      description: 永续合约信息
+      properties:
+        name:
+          type: string
+          description: 永续合约名称
+          example: BTC_USDT
+        type:
+          type: string
+          description: 合约类型，inverse 为反向合约，direct 为正向合约
+          enum:
+            - inverse
+            - direct
+        quanto_multiplier:
+          type: string
+          description: 合约乘数，表示一张合约对应的标的资产数量
+        leverage_min:
+          type: string
+          description: 最小杠杆倍数
+        leverage_max:
+          type: string
+          description: 最大杠杆倍数
+        maintenance_rate:
+          type: string
+          description: 第一档风险限额的维持保证金率
+        order_price_round:
+          type: string
+          description: 委托价格精度
+        order_size_min:
+          type: string
+          description: 最小下单张数
+        order_size_max:
+          type: string
+          description: 最大下单张数
+        status:
+          type: string
+          description: 合约状态
+          enum:
+            - prelaunch
+            - trading
+            - delisting
+            - delisted
+            - circuit_breaker
+        market_order_slip_ratio:
+          type: string
+          description: 市价单允许的最大滑点比例
+        market_order_size_max:
+          type: string
+          description: 市价单支持的最大合约张数
+        funding_rate_limit:
+          type: string
+          description: 资金费率上下限
+      additionalProperties: true
+    DEXFuturesOrderRequest:
+      type: object
+      required:
+        - contract
+        - size
+        - price
+      properties:
+        contract:
+          type: string
+          description: 永续合约名称
+          example: BTC_USDT
+        size:
+          type: string
+          description: 交易数量；正数为买入，负数为卖出；平仓单可设置为 0
+        iceberg:
+          type: string
+          description: 冰山单显示数量；0 表示非冰山单
+        price:
+          type: string
+          description: 委托价格；price=0 且 tif=ioc 时表示市价单
+        close:
+          type: boolean
+          description: 是否平仓；设置为 true 时 size 需要为 0
+        reduce_only:
+          type: boolean
+          description: 是否仅减仓
+        tif:
+          type: string
+          description: 订单有效方式
+          enum:
+            - gtc
+            - ioc
+            - poc
+            - fok
+        text:
+          type: string
+          description: 用户自定义订单信息
+        auto_size:
+          type: string
+          description: 双向持仓模式下指定平仓方向
+          enum:
+            - close_long
+            - close_short
+        stp_act:
+          type: string
+          description: 自成交防护策略
+          enum:
+            - co
+            - cn
+            - cb
+            - '-'
+        bbo:
+          type: string
+          description: 指定对手价档位相关参数
+        default_leverage:
+          type: string
+          description: 默认杠杆倍数
+        pid:
+          type: integer
+          format: int64
+          description: 持仓 ID
+        order_value:
+          type: string
+          description: 订单价值
+        trade_value:
+          type: string
+          description: 成交价值
+        market_order_slip_ratio:
+          type: string
+          description: 市价单自定义最大滑点比例；不传时使用合约默认配置
+    DEXFuturesOrder:
+      allOf:
+        - $ref: '#/components/schemas/DEXFuturesOrderRequest'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: 订单 ID
+            user:
+              type: integer
+              format: int64
+              description: 用户 ID
+            create_time:
+              type: integer
+              format: int64
+              description: 创建时间
+            update_time:
+              type: integer
+              format: int64
+              description: 更新时间
+            finish_time:
+              type: integer
+              format: int64
+              description: 完成时间
+            finish_as:
+              type: string
+              description: 订单完成原因
+            status:
+              type: string
+              enum:
+                - open
+                - finished
+              description: 订单状态
+            left:
+              type: string
+              description: 未成交数量
+            fill_price:
+              type: string
+              description: 成交价格
+            is_close:
+              type: boolean
+              description: 是否为平仓订单
+            is_reduce_only:
+              type: boolean
+              description: 是否为仅减仓订单
+            is_liq:
+              type: boolean
+              description: 是否为强平订单
+            tkfr:
+              type: string
+              description: Taker 费率
+            mkfr:
+              type: string
+              description: Maker 费率
+            refu:
+              type: integer
+              description: 推荐相关字段
+            stp_id:
+              type: integer
+              format: int64
+              description: STP 组相关字段
+            amend_text:
+              type: string
+              description: 修改订单时的自定义信息
+          additionalProperties: true
