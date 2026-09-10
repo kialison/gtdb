@@ -1,0 +1,34 @@
+---
+title: "签名机制"
+description: "DexBuilder PerpDEX REST API 私有请求的签名生成方式"
+---
+
+私有接口需要使用 API Secret 对请求内容生成签名，并将结果放入请求 Header 的 `SIGN` 字段。
+
+## 签名字符串
+
+按以下顺序拼接：
+
+```text
+Request Method + "\n" + Request URL + "\n" + Query String + "\n" + HexEncode(SHA512(Request Payload)) + "\n" + Timestamp
+```
+
+然后使用 API Secret 执行：
+
+```text
+HexEncode(HMAC_SHA512(API Secret, Signature String))
+```
+
+生成的十六进制结果即为 `SIGN`。
+
+## 字段说明
+
+- `Request Method`：必须使用大写，例如 `GET`、`POST`
+- `Request URL`：不包含协议、域名和端口，例如 `/api/v1/dex_futures/usdt/orders`
+- `Query String`：URL 中的查询参数字符串；没有参数时使用空字符串
+- `Request Payload`：请求 Body 原始内容；没有 Body 时对空字符串计算 SHA512
+- `Timestamp`：与请求 Header 中的 `Timestamp` 保持一致
+
+<Warning>
+签名计算时的 Query String、Request Payload 和实际发送内容必须保持一致，否则认证会失败。
+</Warning>
