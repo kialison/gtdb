@@ -84,7 +84,7 @@
                   "api-reference/perpdex/api",
                   "api-reference/perpdex/authentication",
                   {
-                    "group": "Perp",
+                    "group": "永续合约接口",
                     "pages": [
                       "api-reference/perpdex/query-all-contracts",
                       "api-reference/perpdex/query-contract",
