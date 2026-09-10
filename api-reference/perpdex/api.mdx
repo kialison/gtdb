@@ -1,80 +1,281 @@
 ---
 title: "通用说明"
-description: "PerpDEX REST API 的请求、时间、分页、限频及异常处理说明"
+description: "PerpDEX REST API 的 HTTP 约定、时间、分页、限频、返回格式、STP 与异常处理说明"
 ---
 
 # 通用说明
 
 ## HTTP 通用格式
 
-- 所有读操作使用 `GET` 方法，只接收请求参数，不读取请求体。
-- `DELETE` 用于删除指定资源；复杂删除操作可使用 `POST` 并通过请求体传参。
-- 更新操作使用 `POST`、`PUT` 或 `PATCH`，具体参数位置以接口页面为准。
-- 请求成功返回 `2xx`；`401` 表示认证失败；其他 `4xx` 表示请求无效；`5xx` 表示服务端处理异常。
+- 所有读操作使用 `GET` 方法，只接收 URL / Query 参数，不读取请求体。
+- `DELETE` 用于删除指定资源，例如撤销订单；由于 `DELETE` 不读取请求体，复杂删除操作会通过 `POST` 并在请求体中传参实现。
+- 更新操作根据接口使用 `POST`、`PUT` 或 `PATCH`，参数可能位于 Query 或 Request Body，具体以接口页面为准。
+- 请求成功返回 `2xx`；`401` 通常表示认证失败；其他 `4xx` 表示请求参数、格式或权限存在问题；`5xx` 表示服务端处理异常。
 
 ## 时间
 
-除接口另有说明外，时间字段统一使用 Unix 时间戳。签名请求中的 `Timestamp` 使用 Unix 秒级时间戳。
+除接口另有说明外，时间相关字段统一使用 Unix 时间戳，单位为秒。不同接口返回的数据类型可能不同，例如：
+
+```text
+1596531048
+"1596531048"
+1596531048.285
+"1596531048.285"
+```
+
+建议客户端将时间字段先按可带小数的数值处理；如果业务不需要毫秒级精度，再转换为整数。
+
+认证请求中的 `Timestamp` 使用 Unix 秒级时间戳，并需要满足服务端允许的时间偏差。
 
 ## 网关入出站时间
 
-如响应中提供网关处理相关时间字段，以实际返回值为准，可用于定位请求在网关和服务端的处理耗时。
+API 响应 Header 会返回网关接收请求和发出响应的时间，可用于分析请求在网关及服务端的耗时：
+
+| Header | 说明 |
+| --- | --- |
+| `X-In-Time` | API 网关收到请求的时间，Unix 时间戳，单位微秒 |
+| `X-Out-Time` | API 网关返回响应的时间，Unix 时间戳，单位微秒 |
+
+示例：
+
+```text
+X-In-Time: 1695715091540163
+X-Out-Time: 1695715091551905
+```
 
 ## 分页
 
-列表接口通常通过以下参数分页：
+列表接口根据接口类型使用以下一种或多种方式分页。
+
+### limit + offset
 
 | 参数 | 说明 |
 | --- | --- |
 | `limit` | 单次返回的最大记录数量 |
 | `offset` | 列表偏移量，从 `0` 开始 |
 
-部分时间范围接口同时支持 `from`、`to` 参数。
+### last_id
+
+部分历史接口支持使用上一页最后一条记录的 ID 作为下一页起点。具体字段名称和是否已废弃，以接口页面为准。
+
+### from + to
+
+时间范围接口通常使用：
+
+| 参数 | 说明 |
+| --- | --- |
+| `from` | 开始时间，Unix 秒 |
+| `to` | 结束时间，Unix 秒 |
+
+部分接口会同时配合 `limit`、`offset` 使用。
 
 ## 限频规则
 
-Perp DEX 的单笔/批量下单、改单、撤单等交易请求按服务端限频规则执行。超过限制时可能返回 `429`。客户端应避免短时间重复提交同一请求，并根据返回结果控制重试频率。
+当前 PerpDEX 交易类请求按以下规则控制频率：
+
+- 单笔下单、批量下单、改单、撤单、批量撤单等交易请求：合计最高 `100 req/s`。
+- 其他接口当前不设置相同的交易请求频率限制，但仍应避免无意义的高频轮询。
+- 单 IP 最大连接数：`300`。
+
+当请求超过限制时，服务端可能返回 `429`。客户端应根据状态码进行退避重试，避免立即连续重放请求。
 
 ## 返回格式
 
-接口默认使用 JSON 返回数据。具体字段结构、数组或对象类型以对应接口页面的 Response Schema 为准。
+接口默认使用 JSON 返回数据。
+
+请求成功时根据接口定义返回对象、数组或空结果；请求失败时通常返回非 `2xx` 状态码，并在 JSON 中提供错误类型和错误说明。
+
+成功示例：
+
+```json
+{
+  "contract": "BTC_USDT",
+  "status": "open"
+}
+```
+
+错误示例：
+
+```json
+{
+  "label": "INVALID_PARAM_VALUE",
+  "message": "Invalid parameter"
+}
+```
 
 ## 数据类型
 
-常见数据类型包括：
+常见数据类型：
 
-- `string`：字符串；价格、数量、金额等高精度数值通常使用字符串返回。
-- `integer`：整数，例如 ID、时间戳或档位。
-- `number`：数值，例如部分统计值或带小数时间字段。
-- `boolean`：布尔值。
-- `array`：数组。
-- `object`：对象。
-
-## Trace Id
-
-如 API 响应 Header 中返回 `X-Trace-ID`，可在问题排查时提供该值用于请求链路定位。
-
-## Self-Trade Prevention (STP)
-
-部分订单字段中保留 `stp_act`、`stp_id` 等 STP 相关参数。具体是否生效以当前 PerpDEX 交易系统实际支持情况为准。
-
-常见策略：
-
-| 值 | 含义 |
+| 类型 | 说明 |
 | --- | --- |
-| `cn` | Cancel new，取消新订单 |
-| `co` | Cancel old，取消旧订单 |
-| `cb` | Cancel both，同时取消新旧订单 |
-| `-` | 不启用 STP |
+| `string` | 字符串；价格、数量、金额等高精度数据通常以字符串返回 |
+| `integer` / `int64` | 整数，例如 ID、时间戳、档位 |
+| `number` / `double` | 数值，例如统计值或带小数的时间字段 |
+| `boolean` | 布尔值 |
+| `array` | 数组 |
+| `object` | 对象 |
+
+<Note>
+价格、数量、保证金等金融数值建议保持字符串或使用高精度 Decimal 处理，避免直接使用二进制浮点数造成精度损失。
+</Note>
+
+## Trace ID
+
+API 响应 Header 中会携带：
+
+```text
+X-Trace-ID
+```
+
+该字段用于定位单次请求链路。出现异常时，建议将 `X-Trace-ID` 与请求 URI、HTTP 状态码、请求时间一起保留。
+
+## Self-Trade Prevention（STP）
+
+STP 用于防止同一 STP Group 内的账户订单相互成交。
+
+### STP 策略
+
+| 参数值 | 策略 | 说明 |
+| --- | --- | --- |
+| `cn` | Cancel new | 取消新订单，保留旧订单 |
+| `co` | Cancel old | 取消旧订单，保留新订单 |
+| `cb` | Cancel both | 新旧订单同时取消 |
+| `-` | 未启用 | 当前订单未使用 STP |
+
+使用 STP 前，账户需要加入 STP Group。属于同一 Group 的订单发生潜在自成交时，系统会根据 Taker 订单的 `stp_act` 决定取消哪一侧订单。
+
+如果账户已加入 STP Group，但下单时没有指定 `stp_act`，默认按 `cn` 处理。账户未加入 STP Group 时传入 STP 参数，服务端可能拒绝该请求。
+
+### 下单相关字段
+
+以创建订单接口为例：
+
+```text
+POST /dex_futures/{settle}/orders
+```
+
+请求可包含：
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `stp_act` | string | 自成交防护策略：`cn`、`co`、`cb` |
+
+响应中可能包含：
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `stp_act` | string | 当前订单使用的 STP 策略 |
+| `stp_id` | integer | 当前账户所属 STP Group ID |
+| `finish_as` | string | 当值为 `stp` 时表示订单因自成交防护被取消 |
+
+<Warning>
+如果当前 DexBuilder PerpDEX 部署未启用 STP，应以实际交易系统能力为准，并避免依赖 `stp_act`、`stp_id` 或 `finish_as=stp` 进行核心业务判断。
+</Warning>
 
 ## 异常处理
 
-调用失败时建议保留以下信息用于排查：请求 Method、Request URI、Query 参数、Request Body、HTTP 状态码、返回内容及 `X-Trace-ID`（如有）。
+所有异常请求都会返回非 `2xx` HTTP 状态码，并通常使用 JSON 描述错误。
 
-<Warning>
-排查问题时不要提供 API Secret，也不要在公开环境中暴露完整认证信息。
-</Warning>
+标准错误结构示例：
+
+```json
+{
+  "label": "INVALID_PARAM_VALUE",
+  "message": "Invalid parameter"
+}
+```
+
+- `label`：稳定的错误类型标识，程序应优先使用该字段判断错误类型。
+- `message` 或 `detail`：用于说明具体错误原因，适合展示和排查，不建议依赖完整文本做程序判断。
+
+客户端建议按以下顺序处理异常：
+
+1. 先判断 HTTP 状态码。
+2. 再读取 `label` 识别业务错误类型。
+3. 使用 `message` / `detail` 辅助排查。
+4. 保存 `X-Trace-ID` 便于定位请求链路。
 
 ## 异常 Label 列表
 
-业务异常的具体 Label 和错误信息以 API 实际返回内容为准。客户端应优先根据 HTTP 状态码和返回的错误字段进行处理。
+### 请求参数与格式
+
+| Label | 说明 |
+| --- | --- |
+| `INVALID_PARAM_VALUE` | 参数值无效 |
+| `INVALID_PROTOCOL` | 请求协议或相关参数无效 |
+| `INVALID_ARGUMENT` | 参数错误 |
+| `INVALID_REQUEST_BODY` | Request Body 无效 |
+| `MISSING_REQUIRED_PARAM` | 缺少必填参数 |
+| `BAD_REQUEST` | 请求无效 |
+| `INVALID_CONTENT_TYPE` | `Content-Type` 无效 |
+| `NOT_ACCEPTABLE` | `Accept` Header 无效 |
+| `METHOD_NOT_ALLOWED` | 请求 Method 不允许 |
+| `NOT_FOUND` | 请求地址不存在 |
+
+### 认证与权限
+
+| Label | 说明 |
+| --- | --- |
+| `INVALID_CREDENTIALS` | 认证凭证无效 |
+| `INVALID_KEY` | API Key 无效 |
+| `IP_FORBIDDEN` | 请求 IP 不在白名单 |
+| `READ_ONLY` | API Key 为只读权限 |
+| `INVALID_SIGNATURE` | 请求签名无效 |
+| `MISSING_REQUIRED_HEADER` | 缺少认证 Header |
+| `REQUEST_EXPIRED` | `Timestamp` 与服务器时间偏差过大 |
+| `ACCOUNT_LOCKED` | 账户已锁定 |
+| `FORBIDDEN` | 当前账户或 API Key 无权限执行该操作 |
+
+### PerpDEX 业务错误
+
+| Label | 说明 |
+| --- | --- |
+| `USER_NOT_FOUND` | 用户不存在对应 PerpDEX 账户 |
+| `CONTRACT_NO_COUNTER` | 没有可成交的对手订单 |
+| `CONTRACT_NOT_FOUND` | 合约不存在 |
+| `RISK_LIMIT_EXCEEDED` | 超过风险限额 |
+| `INSUFFICIENT_AVAILABLE` | 可用余额不足 |
+| `LIQUIDATE_IMMEDIATELY` | 当前操作可能立即触发强平 |
+| `LEVERAGE_TOO_HIGH` | 杠杆过高 |
+| `LEVERAGE_TOO_LOW` | 杠杆过低 |
+| `ORDER_NOT_FOUND` | 订单不存在 |
+| `ORDER_NOT_OWNED` | 订单不属于当前用户 |
+| `ORDER_FINISHED` | 订单已结束 |
+| `TOO_MANY_ORDERS` | 当前挂单数量过多 |
+| `POSITION_CROSS_MARGIN` | 全仓模式下不允许执行该保证金操作 |
+| `POSITION_IN_LIQUIDATION` | 持仓正在强平 |
+| `POSITION_IN_CLOSE` | 持仓正在平仓 |
+| `POSITION_EMPTY` | 当前没有持仓 |
+| `REMOVE_TOO_MUCH` | 减少的保证金超过允许范围 |
+| `RISK_LIMIT_NOT_MULTIPLE` | 风险限额不是要求步长的整数倍 |
+| `RISK_LIMIT_TOO_HIGH` | 风险限额过高 |
+| `RISK_LIMIT_TOO_LOW` | 风险限额过低 |
+| `PRICE_TOO_DEVIATED` | 委托价格偏离标记价格过大 |
+| `SIZE_TOO_LARGE` | 下单数量超过最大值 |
+| `SIZE_TOO_SMALL` | 下单数量低于最小值 |
+| `PRICE_OVER_LIQUIDATION` | 加仓价格超过允许的强平价格范围 |
+| `PRICE_OVER_BANKRUPT` | 减仓价格超过允许的破产价格范围 |
+| `ORDER_POC_IMMEDIATE` | POC 订单会立即成交，无法作为 Post Only 挂单 |
+| `INCREASE_POSITION` | 当前操作会导致只减仓订单增加仓位 |
+| `CONTRACT_IN_DELISTING` | 合约正在下架，仅允许减仓或平仓 |
+| `POSITION_NOT_FOUND` | 持仓不存在 |
+| `POSITION_DUAL_MODE` | 双向持仓模式下不允许当前操作 |
+| `ORDER_PENDING` | 存在挂单时不允许当前操作 |
+| `POSITION_HOLDING` | 存在持仓时不允许当前操作 |
+| `REDUCE_EXCEEDED` | 双向模式下减仓量超过持仓量 |
+| `NO_CHANGE` | 本次请求没有产生任何变更 |
+| `AMEND_WITH_STOP` | 当前订单类型不允许改单 |
+| `ORDER_FOK` | FOK 订单未能全部成交并被取消 |
+
+### 服务端错误
+
+| Label | 说明 |
+| --- | --- |
+| `INTERNAL` | 服务端内部错误 |
+| `SERVER_ERROR` | 服务端内部错误 |
+| `TOO_BUSY` | 服务暂时繁忙 |
+
+<Warning>
+业务错误处理应优先依赖 `label`，不要依赖完整的 `message` 文本。排查问题时不要提供 API Secret、私钥或其他敏感认证信息。
+</Warning>
