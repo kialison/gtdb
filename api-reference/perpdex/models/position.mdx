@@ -1,0 +1,28 @@
+---
+title: "Position"
+description: "永续合约持仓模型"
+---
+
+# Position
+
+永续合约持仓信息模型，对应 OpenAPI Schema：`Position`。
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `user` | integer(int64) | 用户 ID |
+| `contract` | string | 合约 |
+| `size` | string | 持仓数量 |
+| `leverage` | string | 逐仓杠杆；`0` 表示全仓 |
+| `risk_limit` | string | 风险限额 |
+| `leverage_max` | string | 最大杠杆 |
+| `maintenance_rate` | string | 维持保证金率 |
+| `value` | string | 持仓价值 |
+| `margin` | string | 保证金 |
+| `entry_price` | string | 开仓均价 |
+| `liq_price` | string | 预估强平价 |
+| `mark_price` | string | 标记价格 |
+| `unrealised_pnl` | string | 未实现盈亏 |
+| `realised_pnl` | string | 已实现盈亏 |
+| `mode` | string | 持仓模式 |
+| `cross_leverage_limit` | string | 全仓杠杆 |
+| `pid` | integer(int64) | Position ID |
