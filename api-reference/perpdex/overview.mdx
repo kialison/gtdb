@@ -1,0 +1,24 @@
+---
+title: "PerpDEX API V1.0.0"
+description: "DexBuilder PerpDEX REST API V1.0.0 说明"
+---
+
+# PerpDEX API V1.0.0
+
+PerpDEX API V1.0.0 提供永续合约 REST API 能力，包括公开行情查询、账户与持仓查询、订单交易、风险参数及交易历史等接口。
+
+## Access URL
+
+```text
+https://api.dexbuilder.com/api/v1
+```
+
+## 使用说明
+
+- 公开行情接口无需认证。
+- 账户、持仓、订单等私有接口需要 API Key 与请求签名。
+- 具体请求参数与返回结构以对应接口页面为准。
+
+<Warning>
+请妥善保管 API Key 和 API Secret。排查接口问题时不要向任何人提供 API Secret。
+</Warning>
