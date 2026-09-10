@@ -6,20 +6,7 @@ description: "Understand how orders flow from creation through matching to oncha
 
 Orders on the CLOB follow a hybrid model: matching happens offchain for speed, while settlement is executed onchain for trustless finality. This page walks through the full lifecycle of an order, the statuses it can take, and the requirements it must satisfy at each step.
 
-<Frame>
-  ```mermaid
-  flowchart TD
-  A[Create & Sign Order] --> B[Submit to CLOB]
-  B --> C{Marketable?}
-  C -->|Yes| D[Match with Resting Order]
-  C -->|No| E[Rest on Order Book]
-  D --> F[Onchain Settlement]
-  F --> G[✅ Settled]
-  E --> H{Filled, Cancelled,<br/>or Expired?}
-  H -->|Matched| D
-  H -->|Cancelled / Expired| I[❌ Closed]
-  ```
-</Frame>
+![Image](/images/image-4.png "Image")
 
 ## How orders work
 

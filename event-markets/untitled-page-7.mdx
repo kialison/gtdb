@@ -6,19 +6,7 @@ description: "Understand outcome tokens, how positions work on event markets, po
 
 Every contract on event markets is represented by outcome tokens. When you trade, you're buying and selling these tokens. Your position is simply your balance of tokens for a given market.
 
-<Frame>
-  ```mermaid
-  flowchart LR
-USDT["1 USDT"] --> Yes["Yes"]
-USDT --> No["No"]
-Yes --> Pos["Your Position"]
-No --> Pos
-Pos --> Merge["Merge"]
-Pos --> Redeem["Redeem"]
-Merge --> USDTOut["$1 USDT"]
-Redeem --> Winner["$1 Winner"]
-  ```
-</Frame>
+![Image](/images/image-3.png "Image")
 
 ## Outcome Tokens
 

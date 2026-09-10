@@ -8,38 +8,11 @@ Understanding the fundamental building blocks of Event Markets.
 
 Every contract is structured around two core concepts: **markets** and **events**. Understanding how they relate is essential for building on the platform.
 
-<Frame>
-  ```mermaid
-  flowchart LR
-  D([Deposit]) -.-> E[Event]
-  U1([👤]) -.-> E
-  U2([👤]) -.-> E
-  E --> MA[Market A]
-  E --> MB[Market B]
-  MA --> YA[Y]
-  MA --> NA[N]
-  MB --> YB[Y]
-  MB --> NB[N]
-  MA --> OB[Orderbook]
-  ```
-</Frame>
+![Image](/images/image-1.png "Image")
 
 ## Markets
 
 A market is the fundamental tradable unit on event markets. Each market represents a single binary question with Yes/No outcomes.
-
-<Frame>
-  ```mermaid
-  flowchart LR
-  BQ([Binary Question]) -.-> M[Market]
-  M --> T[Trade]
-  M --> OB[Order Book]
-  M --> Y[Y]
-  M --> N[N]
-  T --> S[Settlement]
-  OB --> R[Resolution]
-  ```
-</Frame>
 
 Every market has:
 
@@ -92,7 +65,7 @@ Event: Who will win the 2024 Presidential Election?
 Every market and event has a unique slug that appears in the event market URL:
 
 ```text
-https://app.dexbuilder.com/event/fed-decision-in-october
+https://polymarket.com/event/fed-decision-in-october
                             └── slug: fed-decision-in-october
 ```
 
@@ -100,7 +73,7 @@ You can use slugs to fetch specific markets or events from the API:
 
 ```bash
 # Fetch event by slug
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/slug/fed-decision-in-october"
+curl "https://gamma-api.polymarket.com/events?slug=fed-decision-in-october"
 ```
 
 ## Sports Markets

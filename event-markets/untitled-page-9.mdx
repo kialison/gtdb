@@ -6,23 +6,9 @@ description: "How markets are resolved and winning positions redeemed using UMA'
 
 When the outcome of an event becomes known, the market is resolved. Resolution determines which outcome won, allowing holders of winning tokens to redeem them for \$1 each. Losing tokens become worthless.
 
-Event markets uses the UMA Optimistic Oracle for decentralized, permissionless resolution. Anyone can propose an outcome, and anyone can dispute it if they believe it's incorrect.
+Event markets uses the UMA Optimistic Oracle for decentralized, permissionless resolution. Anyone can propose an outcome, and anyone can dispute it if they believe it's incorrect
 
-<Frame>
-  ```mermaid
-  flowchart LR
-A[Propose Outcome] -.-> B[Challenge Period]
-B -.-> C{Disputed?}
-C -.-> D[Debate Period]
-C -.-> E[UMA Vote]
-D -.-> F[Market Resolved]
-E -.-> F
-B -.-> F
-
-style A fill:#e0f2fe,stroke:#0284c7
-style F fill:#dcfce7,stroke:#16a34a
-  ```
-</Frame>
+![Image](/images/image-5.png "Image")
 
 ## Resolution Rules
 

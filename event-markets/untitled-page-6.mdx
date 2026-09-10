@@ -8,33 +8,7 @@ How prices work and how the order book enables peer-to-peer trading
 
 Event markets use a Central Limit Order Book (CLOB) for trading. Prices aren't set by the platform, they emerge from supply and demand as users trade with each other.
 
-<Frame>
-  ```mermaid
-  flowchart LR
-subgraph Bids["👥👥👥 Bids"]
-B1["$0.34 — 5,000"]
-B2["$0.33 — 12,000"]
-B3["$0.32 — 8,000"]
-end
-subgraph Spread["Spread<br/>$0.06"]
-end
-subgraph Asks["👥👥👥 Asks"]
-A1["$0.40 — 4,200"]
-A2["$0.43 — 7,500"]
-B1["$0.34 — 5,000"]
-B2["$0.33 — 12,000"]
-B3["$0.32 — 8,000"]
-end
-subgraph Spread["Spread<br/>$0.06"]
-end
-subgraph Asks["👥👥👥 Asks"]
-A1["$0.40 — 4,200"]
-A2["$0.43 — 7,500"]
-A3["$0.45 — 3,000"]
-end
-Bids ~~~ Spread ~~~ Asks
-  ```
-</Frame>
+![Image](/images/image-2.png "Image")
 
 ## Prices Are Probabilities
 
@@ -92,37 +66,6 @@ Event market's CLOB is hybrid-decentralized:
 
 1. **Offchain matching** — An operator matches compatible orders
 2. **Onchain settlement** — Matched trades settle via smart contracts
-
-<Frame>
-  ```mermaid
-  flowchart LR
-subgraph Offchain
-Buyer(("👤 Buyer"))
-Seller(("👤 Seller"))
-OB["Orderbook"]
-Match["Match"]
-end
-subgraph Onchain
-Settle["Settle"]
-TB["Token to Buyer"]
-US["USDTBuyer(("👤 Buyer"))
-Seller(("👤 Seller"))
-OB["Orderbook"]
-Match["Match"]
-end
-subgraph Onchain
-Settle["Settle"]
-TB["Token to Buyer"]
-US["USDT to Seller"]
-end
-Buyer --> OB
-Seller --> OB
-OB --> Match
-Match --> Settle
-Settle --> TB
-Settle --> US
-  ```
-</Frame>
 
 This design gives you the speed of centralized matching with the security of onchain settlement. You always maintain custody of your funds.
 

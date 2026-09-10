@@ -12,16 +12,7 @@ Market data starts with identifying the event, market, or outcome your applicati
 
 On event markets, an event groups one or more markets. Each market is a tradable question with YES and NO outcomes, and each outcome has its own token ID. Use the token ID for the outcome whose price or order book you want to read.
 
-<Frame>
-  ```mermaid
-  flowchart LR
-  BQ[Binary Question] --> M[Market<br/>Y / N]
-  M --> T[Trade]
-  M --> OB[Order Book]
-  T --> S[Settlement]
-  OB --> R[Resolution]
-  ```
-</Frame>
+![Image](/images/image-6.png "Image")
 
 <Steps>
   <Step title="Discover an event">
