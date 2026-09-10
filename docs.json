@@ -77,7 +77,21 @@
             "tab": "API Reference",
             "menu": [
               {
-                "item": "PerpDEX"
+                "item": "PerpDEX",
+                "groups": [
+                  {
+                    "group": "行情",
+                    "pages": [
+                      "api-reference/perpdex/query-all-contracts"
+                    ]
+                  },
+                  {
+                    "group": "订单",
+                    "pages": [
+                      "api-reference/perpdex/place-order"
+                    ]
+                  }
+                ]
               },
               {
                 "item": "预测市场"
