@@ -1,0 +1,30 @@
+---
+title: "API 认证"
+description: "DexBuilder PerpDEX REST API 的请求地址与签名认证方式"
+---
+
+## Base URL
+
+```text
+https://api.dexbuilder.com/api/v1
+```
+
+公开行情接口无需认证。账户、持仓、订单等私有接口需要在请求 Header 中携带：
+
+- `KEY`：API Key
+- `Timestamp`：Unix 时间戳（秒）
+- `SIGN`：请求签名
+
+## 签名字符串
+
+签名字符串按以下顺序拼接：
+
+```text
+Request Method + "\n" + Request URL + "\n" + Query String + "\n" + HexEncode(SHA512(Request Payload)) + "\n" + Timestamp
+```
+
+使用 API Secret 对签名字符串执行 `HMAC-SHA512`，将十六进制结果作为 `SIGN`。
+
+<Note>
+Request Method 使用大写，例如 `GET`、`POST`。Request URL 不包含协议、域名和端口，例如 `/api/v1/dex_futures/usdt/orders`。
+</Note>
