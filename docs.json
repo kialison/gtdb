@@ -370,5 +370,8 @@
       "destination": "/untitled-page",
       "permanent": false
     }
-  ]
+  ],
+  "appearance": {
+    "default": "dark"
+  }
 }
