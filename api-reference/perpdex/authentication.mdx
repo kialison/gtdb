@@ -1,22 +1,55 @@
 ---
-title: "鉴权说明"
-description: "DexBuilder PerpDEX REST API 的公开接口与私有接口认证要求"
+title: "认证"
+description: "PerpDEX REST API 权限、签名请求要求与签名生成方式"
 ---
 
-公开行情接口无需认证。账户、持仓、订单等私有接口需要使用 API Key 进行认证。
+# 认证
 
-## 私有请求 Header
+## PerpDEX API 权限
 
-私有接口请求需要携带：
+创建 API Key 时，需要根据使用场景配置对应权限。
+
+| 权限 | 可执行操作 |
+| --- | --- |
+| 只读 | 查询行情、账户、持仓、订单及交易记录等 |
+| 读写 | 在只读权限基础上，可下单、撤单、改单及管理持仓 |
+
+所有 `GET` 请求均属于读操作；下单、撤单、改单及其他非 `GET` 操作属于写操作。
+
+## API 签名请求要求
+
+公开行情接口无需认证。账户、持仓、订单等私有接口需要在请求 Header 中携带：
 
 | Header | 说明 |
 | --- | --- |
 | `KEY` | API Key |
 | `Timestamp` | Unix 时间戳，单位为秒 |
-| `SIGN` | 根据当前请求内容生成的签名 |
+| `SIGN` | 当前请求对应的签名 |
 
-`SIGN` 的具体生成方法请查看「签名机制」。
+`Timestamp` 应与当前时间保持同步。API Secret 仅用于本地生成签名，不应作为请求参数发送。
+
+## API 签名字符串生成
+
+签名字符串按以下顺序拼接：
+
+```text
+Request Method + "\n" + Request URL + "\n" + Query String + "\n" + HexEncode(SHA512(Request Payload)) + "\n" + Timestamp
+```
+
+随后使用 API Secret 对签名字符串执行 `HMAC-SHA512`，并将十六进制结果作为 `SIGN`：
+
+```text
+SIGN = HexEncode(HMAC_SHA512(API Secret, Signature String))
+```
+
+### 字段说明
+
+- `Request Method`：必须使用大写，例如 `GET`、`POST`。
+- `Request URL`：包含 `/api/v1` 前缀，但不包含协议、域名和端口，例如 `/api/v1/dex_futures/usdt/orders`。
+- `Query String`：URL 查询参数字符串；没有查询参数时使用空字符串。
+- `Request Payload`：请求 Body 原始内容；没有 Body 时对空字符串计算 SHA512。
+- `Timestamp`：与 Header 中的 `Timestamp` 保持一致。
 
 <Warning>
-API Secret 仅用于本地生成签名，不应作为 Header 发送，也不要暴露在前端代码或公开环境中。
+Query String、Request Payload 和实际发送的请求内容必须完全一致，否则签名校验会失败。请勿泄露 API Secret。
 </Warning>
