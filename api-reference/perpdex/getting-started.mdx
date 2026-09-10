@@ -1,0 +1,32 @@
+---
+title: "开发准备"
+description: "调用 DexBuilder PerpDEX REST API 前需要确认的基础信息"
+---
+
+## Base URL
+
+```text
+https://api.dexbuilder.com/api/v1
+```
+
+接口页面展示的 Path 需要拼接在 Base URL 后调用。例如：
+
+```text
+GET /dex_futures/usdt/contracts
+```
+
+完整请求地址为：
+
+```text
+https://api.dexbuilder.com/api/v1/dex_futures/usdt/contracts
+```
+
+## 请求格式
+
+- REST API 使用 HTTPS
+- 请求和返回数据使用 JSON
+- `settle` 当前按接口定义传入结算币种，例如 `usdt`
+- 公开行情接口可直接请求
+- 私有接口需要 API Key、时间戳和签名
+
+下一步请先阅读「鉴权说明」和「签名机制」。
