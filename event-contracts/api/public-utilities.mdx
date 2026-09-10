@@ -1,0 +1,54 @@
+---
+title: Tags, Candlesticks, and Server Time
+sidebarTitle: Tags, Candlesticks, and Server Time
+description: Public helper endpoints for Event Contracts integrations.
+---
+
+## Tags
+
+`GET /api/v4/event_contracts/tags`
+
+Public endpoint. Query parameters:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `limit` | integer | Page size, 1–100. |
+| `cursor` | string | Previous `next_cursor`. |
+
+Response:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `items` | array | Tag summaries. |
+| `items[].tag_id` | string | Tag identifier. |
+| `items[].slug` | string | URL-friendly tag identifier. |
+| `items[].label` | object | Sparse multilingual label. |
+| `next_cursor` | string | Next-page cursor. |
+
+## Candlesticks
+
+`GET /api/v4/event_contracts/tokens/{currency}/candlesticks`
+
+| Parameter | In | Required | Description |
+| --- | --- | --- | --- |
+| `currency` | path | Yes | Base asset, such as `BTC` or `ETH`. |
+| `interval` | query | Yes | Candle interval validated by the service. |
+| `from` / `to` | query | No | Unix milliseconds. |
+| `limit` | query | No | Maximum number of candles. |
+
+Each item:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `t` | integer | Candle timestamp. |
+| `o` | string | Open value. |
+| `h` | string | High value. |
+| `l` | string | Low value. |
+| `c` | string | Close value. |
+| `v` | string | Volume. |
+
+## Server time
+
+`GET /api/v4/event_contracts/time`
+
+Response field `server_time` is the current Unix timestamp in milliseconds.

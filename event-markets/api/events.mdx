@@ -1,0 +1,101 @@
+---
+title: List and Retrieve Events
+sidebarTitle: List and Retrieve Events
+description: List visible Event Markets events or retrieve one by ID or slug.
+---
+
+## Endpoint
+
+`GET https://api.dexbuilder.com/api/v4/event_markets/events`
+
+Public endpoint. No authentication is required.
+
+## Query parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `limit` | integer | No | Number of events to return. Minimum 1, maximum 100. |
+| `cursor` | string | No | Opaque cursor returned as `next_cursor` by the previous page. |
+| `sort` | string | No | Sort field: `start_date`, `start_time`, `end_date`, or `closed_time`. |
+| `ascending` | boolean | No | Whether to sort ascending. |
+| `event_id` | string | No | Exact event ID filter. |
+| `slug` | string | No | Exact event slug filter. |
+| `tag_slug` | string | No | Tag slug filter. |
+| `active` | boolean | No | Filter by active state. |
+| `closed` | boolean | No | Filter by closed state. |
+| `start_date_min` / `start_date_max` | integer | No | Start-date bounds in Unix milliseconds. |
+| `end_date_min` / `end_date_max` | integer | No | End-date bounds in Unix milliseconds. |
+
+## Request
+
+```bash
+curl --get 'https://api.dexbuilder.com/api/v4/event_markets/events' \
+  --data-urlencode 'limit=20' \
+  --data-urlencode 'sort=start_date' \
+  --data-urlencode 'ascending=false' \
+  --data-urlencode 'active=true'
+```
+
+## Response
+
+The response is an `EventsPage` object:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `items` | array | Event summary objects. |
+| `next_cursor` | string | Cursor for the next page. Empty when there are no more results. |
+
+### Event summary
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `event_id` | string | Unique event identifier. |
+| `slug` | string | URL-friendly event identifier. |
+| `title` | object | Sparse multilingual title object, such as `{ "en": "..." }`. |
+| `category` | string | Event category. |
+| `active` | boolean | Whether the event is active. |
+| `closed` | boolean | Whether the event is closed. |
+| `start_date` | integer | Event start date, Unix seconds. |
+| `start_time` | integer | Event start time, Unix seconds. |
+| `end_date` | integer | Event end date, Unix seconds. |
+| `closed_time` | integer | Close time, Unix seconds; may be zero when not closed. |
+| `volume` | string | Aggregate volume as a decimal string. |
+| `image` / `icon` | string | Event image and icon URLs. |
+| `tags` | array | Tag objects containing `tag_id`, `slug`, and multilingual `label`. |
+
+```json
+{
+  "items": [
+    {
+      "event_id": "event-123",
+      "slug": "example-event",
+      "title": {"en": "Example event", "cn": "示例事件"},
+      "category": "sports",
+      "active": true,
+      "closed": false,
+      "start_date": 1760000000,
+      "start_time": 1760000000,
+      "end_date": 1761000000,
+      "closed_time": 0,
+      "volume": "125000.00",
+      "image": "https://cdn.example/event.png",
+      "icon": "https://cdn.example/event-icon.png",
+      "tags": [
+        {"tag_id": "1", "slug": "sports", "label": {"en": "Sports"}}
+      ]
+    }
+  ],
+  "next_cursor": "opaque-cursor"
+}
+```
+
+## Pagination
+
+Pass `next_cursor` back as `cursor` without decoding or modifying it. Do not use offset pagination. The API may return fewer than `limit` items when the end of the visible result set is reached.
+
+## Get one event
+
+- `GET /api/v4/event_markets/events/{event_id}`
+- `GET /api/v4/event_markets/events/slug/{slug}`
+
+The detail response contains all summary fields plus `description`, `resolution_source`, `markets`, and `markets_has_more`.

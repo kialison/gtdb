@@ -1,0 +1,150 @@
+---
+title: "Message Protocol"
+sidebarTitle: "Message Protocol"
+description: "Learn the WebSocket request, acknowledgement, push, payload, and pagination conventions."
+---
+
+The Event Contracts WebSocket API uses a version 2 JSON envelope. Client operations use `op`; server-initiated data uses `type`.
+
+## Client request
+
+```json
+{
+  "t": 1787026512123,
+  "id": 1001,
+  "op": "subscribe",
+  "ch": "ec.trades",
+  "payload": {
+    "items": [
+      { "condition_id": "gate_0xcondition" }
+    ]
+  }
+}
+```
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `t` | integer | Yes | Client timestamp in Unix milliseconds. The request must be within 60 seconds of server time. |
+| `id` | string or integer | Recommended | Client request ID. It is echoed in the acknowledgement. |
+| `op` | string | Yes | `subscribe`, `unsubscribe`, `auth`, or `ping`. |
+| `ch` | string | Subscribe, unsubscribe, and pre-auth only | Channel name. |
+| `payload` | object | Subscribe, unsubscribe, and pre-auth only | Operation-specific payload. |
+| `auth` | object | First private operation when not pre-authenticated | Authentication data. |
+
+## Successful acknowledgement
+
+```json
+{
+  "t": 1787026512150,
+  "id": 1001,
+  "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
+  "op": "subscribe",
+  "ch": "ec.trades",
+  "payload": {
+    "items": [
+      { "condition_id": "gate_0xcondition" }
+    ]
+  },
+  "err": null,
+  "result": {
+    "status": "success"
+  }
+}
+```
+
+An authentication acknowledgement does not echo credential-bearing `payload` or `auth`.
+
+## Error acknowledgement
+
+```json
+{
+  "t": 1787026512150,
+  "id": 1001,
+  "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
+  "op": "subscribe",
+  "ch": "ec.depth",
+  "err": {
+    "code": 2,
+    "msg": "invalid depth level"
+  },
+  "result": {
+    "status": "fail"
+  }
+}
+```
+
+Use `err.code` for programmatic handling. Do not depend on the complete text of `err.msg`.
+
+## Server push
+
+```json
+{
+  "t": 1787026512150,
+  "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
+  "type": "update",
+  "ch": "ec.trades",
+  "err": null,
+  "result": {
+    "condition_id": "gate_0xcondition",
+    "token_id": "gate_token_id",
+    "outcome": "Yes",
+    "side": "BUY",
+    "px": "0.45",
+    "qty": "10",
+    "ts": 1787026512027
+  }
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `type` | `snapshot` or `update`. |
+| `trace_id` | Connection-level diagnostic identifier. It changes after reconnect. |
+| `result` | Channel-specific data object. |
+| `err` | Always `null` for a valid push. |
+
+## Subscription payloads
+
+Use exactly one of these forms:
+
+```json
+{ "items": [ { "token_id": "gate_token_id" } ] }
+```
+
+or, for private channels only:
+
+```json
+{ "all": true }
+```
+
+Rules:
+
+- `items` and `all` are mutually exclusive.
+- `items` must be a non-empty array of objects.
+- A single request accepts at most 100 items.
+- A connection accepts at most 10,000 active subscriptions.
+- Duplicate items in one request are deduplicated.
+- Invalid items fail the entire request; existing subscriptions are unchanged.
+- Public channels do not support `all=true`.
+
+## Unsubscribe
+
+Use the same item shape as subscribe:
+
+```json
+{
+  "t": 1787026512123,
+  "id": 1002,
+  "op": "unsubscribe",
+  "ch": "ec.trades",
+  "payload": {
+    "items": [
+      { "condition_id": "gate_0xcondition" }
+    ]
+  }
+}
+```
+
+Unsubscribe is idempotent. Removing an item that is not currently subscribed still returns a successful acknowledgement.
+
+Continue with [Public Channels](/event-contracts/websocket/public-channels).

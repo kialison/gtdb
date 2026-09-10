@@ -1,0 +1,71 @@
+---
+title: API Reference Overview
+sidebarTitle: API Reference Overview
+description: Event Contracts API conventions, visibility, pagination, and access boundaries.
+---
+
+## Base URL
+
+`https://api.dexbuilder.com`
+
+The API prefix is `/api/v4`. Event Markets uses `/api/v4/event_markets`; Event Contracts uses `/api/v4/event_contracts`.
+
+## Access model
+
+| API area | Authentication | Typical endpoints |
+| --- | --- | --- |
+| Discovery | Public | Events, markets, tags |
+| Market data | Public | Prices, ticker, order book, history, candles |
+| Trading | Private | Create/list/get/cancel orders |
+| Account | Private | Positions, assets, balances, fees, user trades |
+| Settlement | Private | Close positions, claims, transfers |
+
+Authentication details are controlled by the gateway and may change. The public API documentation intentionally does not expose internal gateway identity headers.
+
+## Pagination contract
+
+List responses use a stable opaque cursor:
+
+```json
+{"items":[],"next_cursor":"opaque-cursor"}
+```
+
+Send the returned `next_cursor` as the next request's `cursor`. Stop when it is empty. Do not decode, modify, reuse across different filters, or replace it with an offset. Public event, market, tag, and trade list endpoints support a maximum `limit` of 100.
+
+## Time conventions
+
+| Location | Unit |
+| --- | --- |
+| Event and market date fields | Unix seconds |
+| Request range filters `from`, `to`, `*_min`, `*_max` | Unix milliseconds |
+| Price history and candle timestamps | Unix milliseconds |
+| Account/order lifecycle timestamps | Unix milliseconds |
+
+## Localized fields
+
+The API returns some text fields as sparse language objects. Consumers should read the requested language and fall back to English when absent.
+
+```json
+{"en":"Yes","cn":"是","tw":"是"}
+```
+
+## Decimal values
+
+Prices, sizes, volumes, balances, fees, and amounts are strings. Parse them with decimal arithmetic rather than binary floating point.
+
+## Standard errors
+
+```json
+{"label":"INVALID_ARGUMENT","message":"invalid request"}
+```
+
+| Status | Meaning | Client behavior |
+| --- | --- | --- |
+| 400 | Invalid path, query, or body | Fix request before retrying |
+| 401 | Missing or invalid private authentication | Refresh authentication context |
+| 404 | Unknown or invisible resource | Treat as unavailable in the current scope |
+| 503 | Upstream market-data dependency unavailable | Retry read-only requests with backoff |
+
+## Visibility
+
+Public event, market, trade, and token endpoints are constrained by the service's visible scope and recent parent-event data window. A resource may exist in upstream systems but still return `404` through this API.

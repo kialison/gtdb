@@ -1,0 +1,74 @@
+---
+title: "Event Contracts WebSocket"
+sidebarTitle: "Overview"
+description: "Connect to the Event Contracts WebSocket API for real-time public market data and authenticated account events."
+---
+
+The Event Contracts WebSocket API provides real-time market and account events. Use it together with the REST API:
+
+- Use public WebSocket channels for live market updates.
+- Use private WebSocket channels for authenticated order, trade, position, and settlement events.
+- Use the REST API for historical queries, pagination, order management, and state recovery after a disconnect.
+
+## Connection
+
+Production WebSocket endpoint:
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_contracts
+```
+
+The protocol uses JSON messages and the current public protocol version is **v2**.
+
+## Channels
+
+Public channels:
+
+| Channel | Purpose | Authentication |
+| --- | --- | --- |
+| `ec.trades` | Public market trades. | Not required |
+| `ec.depth` | Full order-book depth for a token. | Not required |
+| `ec.bbo` | Best bid, best ask, and last price. | Not required |
+| `ec.status` | Market lifecycle and tradability status. | Not required |
+
+Private channels:
+
+| Channel | Purpose | Authentication |
+| --- | --- | --- |
+| `ec.orders` | Order lifecycle updates. | Required |
+| `ec.usertrades` | Authenticated user's fills. | Required |
+| `ec.positions` | Position updates. | Required |
+| `ec.settlements` | Settlement updates. | Required |
+
+## First public subscription
+
+```json
+{
+  "t": 1787026512123,
+  "id": "depth-1",
+  "op": "subscribe",
+  "ch": "ec.depth",
+  "payload": {
+    "items": [
+      {
+        "token_id": "gate_token_id",
+        "level": 20
+      }
+    ]
+  }
+}
+```
+
+The server returns an acknowledgement with the same `id`. If cached data is available, a depth snapshot follows the acknowledgement.
+
+## Important conventions
+
+- `t` is a Unix timestamp in milliseconds.
+- IDs are JSON strings and must be treated as opaque values.
+- Prices, quantities, amounts, and rates are decimal strings.
+- Public channels do not require authentication.
+- Private subscriptions require authentication on the first private operation.
+- A reconnect creates a new connection identity; authenticate and resubscribe again.
+- WebSocket messages are real-time only. Query REST endpoints to recover missed data.
+
+Continue with [Message Protocol](/event-contracts/websocket/protocol).

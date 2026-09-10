@@ -1,0 +1,121 @@
+---
+title: "Private Channels"
+sidebarTitle: "Private Channels"
+description: "Subscribe to authenticated order, user trade, position, and settlement events."
+---
+
+Private channels are scoped to the authenticated user. Authenticate on the first private subscribe or unsubscribe, or pre-authenticate the connection with `server.sign`.
+
+Private channels support either a condition filter or `payload.all=true`:
+
+```json
+{
+  "op": "subscribe",
+  "ch": "em.orders",
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "<api_key>",
+    "sign": "<signature>"
+  }
+}
+```
+
+## Orders
+
+Channel: `em.orders`
+
+Order updates include the order lifecycle and execution quantities:
+
+```json
+{
+  "order_id": "123456789",
+  "client_order_id": "client-order-1",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xcondition",
+  "token_id": "gate_token_id",
+  "outcome": "Yes",
+  "side": "BUY",
+  "order_mode": "LIMIT",
+  "order_type": "GTC",
+  "px": "0.45",
+  "qty": "100",
+  "filled_qty": "20",
+  "left_qty": "80",
+  "status": "OPEN",
+  "created_ts": 1787026500000,
+  "updated_ts": 1787026512027
+}
+```
+
+Order statuses include `PROCESSING`, `OPEN`, `CANCELLING`, `MATCHED`, `CANCELED`, and `FAILED`. A partially filled order remains `OPEN`; use `filled_qty` and `left_qty` to calculate progress.
+
+## User trades
+
+Channel: `em.usertrades`
+
+```json
+{
+  "trade_id": "trade-1",
+  "order_id": "123456789",
+  "client_order_id": "client-order-1",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xcondition",
+  "token_id": "gate_token_id",
+  "outcome": "Yes",
+  "side": "BUY",
+  "role": "MAKER",
+  "px": "0.45",
+  "qty": "20",
+  "fee_rate": "0.001",
+  "status": "MATCHED",
+  "created_ts": 1787026512027
+}
+```
+
+`status` is `MATCHED` or `CONFIRMED`. Whether matched events are pushed is service-configurable; confirmed fills are always pushed.
+
+## Positions
+
+Channel: `em.positions`
+
+```json
+{
+  "position_id": "987654321",
+  "event_id": "gate_632804",
+  "token_id": "gate_token_id",
+  "outcome": "Yes",
+  "qty": "80",
+  "avg_px": "0.45",
+  "mark_px": "0.48",
+  "settle_status": "UNSETTLED",
+  "locked_qty": "10",
+  "available_qty": "70",
+  "claimable_amount": "0",
+  "updated_ts": 1787026512027
+}
+```
+
+The condition ID is used as a subscription filter but is not included in position updates.
+
+## Settlements
+
+Channel: `em.settlements`
+
+```json
+{
+  "position_id": "987654321",
+  "event_id": "gate_632804",
+  "condition_id": "gate_0xcondition",
+  "winning_outcome": "Yes",
+  "is_winner": true,
+  "claimable_amount": "80",
+  "created_ts": 1787026512027
+}
+```
+
+A draw may not have a single winning outcome. Use `is_winner` and `claimable_amount` instead of relying only on `winning_outcome`.
+
+Private channels do not provide an initial snapshot. Query the corresponding REST endpoint after connecting if the client needs the current complete account state.

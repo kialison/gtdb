@@ -1,0 +1,158 @@
+---
+title: "Public Channels"
+sidebarTitle: "Public Channels"
+description: "Subscribe to public trades, depth, best bid and offer, and market status updates."
+---
+
+All channels on this page are public and do not require authentication.
+
+## Trades
+
+Channel: `em.trades`
+
+Subscribe by condition ID:
+
+```json
+{
+  "op": "subscribe",
+  "ch": "em.trades",
+  "payload": {
+    "items": [
+      { "condition_id": "gate_0xcondition" }
+    ]
+  }
+}
+```
+
+Each update contains a newly observed public trade:
+
+```json
+{
+  "condition_id": "gate_0xcondition",
+  "token_id": "gate_token_id",
+  "outcome": "Yes",
+  "side": "BUY",
+  "px": "0.45",
+  "qty": "10",
+  "ts": 1787026512027
+}
+```
+
+`px` and `qty` are decimal strings. The public trade event does not include a trade ID.
+
+## Full order-book depth
+
+Channel: `em.depth`
+
+Subscribe by token ID and level. Supported levels are `5`, `10`, `20`, and `50`.
+
+```json
+{
+  "op": "subscribe",
+  "ch": "em.depth",
+  "payload": {
+    "items": [
+      { "token_id": "gate_token_id", "level": 20 }
+    ]
+  }
+}
+```
+
+The broker sends complete snapshots, not deltas:
+
+```json
+{
+  "token_id": "gate_token_id",
+  "level": 20,
+  "full": true,
+  "bids": [
+    ["0.45", "100"],
+    ["0.44", "80"]
+  ],
+  "asks": [
+    ["0.46", "90"],
+    ["0.47", "120"]
+  ],
+  "hash": "0xabc123",
+  "ts": 1787026512027
+}
+```
+
+Every depth message represents the complete subscribed depth. Clients do not need to apply sequence-based patches.
+
+## Best bid and offer
+
+Channel: `em.bbo`
+
+Subscribe by token ID:
+
+```json
+{
+  "op": "subscribe",
+  "ch": "em.bbo",
+  "payload": {
+    "items": [
+      { "token_id": "gate_token_id" }
+    ]
+  }
+}
+```
+
+```json
+{
+  "condition_id": "gate_0xcondition",
+  "token_id": "gate_token_id",
+  "bid_px": "0.45",
+  "ask_px": "0.46",
+  "last_px": "0.455",
+  "ts": 1787026512027
+}
+```
+
+Unavailable optional prices are omitted.
+
+## Market status
+
+Channel: `em.status`
+
+Subscribe by complete market ID:
+
+```json
+{
+  "op": "subscribe",
+  "ch": "em.status",
+  "payload": {
+    "items": [
+      { "market_id": "gate_632804_3653439" }
+    ]
+  }
+}
+```
+
+```json
+{
+  "market_id": "gate_632804_3653439",
+  "condition_id": "gate_0xcondition",
+  "slug": "gate_example-market",
+  "status": "ACTIVE",
+  "closed": false,
+  "accepting_orders": true,
+  "outcomes": [
+    {
+      "name": "Yes",
+      "token_id": "gate_token_yes",
+      "px": "0.45"
+    },
+    {
+      "name": "No",
+      "token_id": "gate_token_no",
+      "px": "0.55"
+    }
+  ],
+  "ts": 1787026512027
+}
+```
+
+Status values are `ACTIVE`, `CLOSED`, and `RESOLVED`. Resolution fields may be included when available.
+
+Continue with [Private Channels](/event-markets/websocket/private-channels).

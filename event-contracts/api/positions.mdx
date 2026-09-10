@@ -1,0 +1,87 @@
+---
+title: Positions, Account, and User Trades
+sidebarTitle: Positions, Account, and User Trades
+description: Read private Event Contracts positions and account-related data.
+---
+
+## Authentication
+
+All account endpoints are private and require an authenticated gateway request. Internal identity headers are not part of the public API contract.
+
+## List positions
+
+`GET /api/v4/event_contracts/positions`
+
+| Query parameter | Type | Description |
+| --- | --- | --- |
+| `event_id` | string | Event filter. |
+| `condition_id` | string | Market condition filter. |
+| `settlement_status` | string | Settlement-state filter. |
+| `limit` | integer | Page size. |
+| `cursor` | string | Previous `next_cursor`. |
+
+Response is `items` plus `next_cursor`.
+
+### Position fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `position_id` | string | Position identifier. |
+| `event_id` / `token_id` | string | Event and outcome-token identifiers. |
+| `outcome` | string | Outcome label. |
+| `size` | string | Total position size. |
+| `available_size` | string | Size available for a close or sell operation. |
+| `locked_size` | string | Size locked by open orders or settlement. |
+| `avg_open_price` | string | Average opening price. |
+| `mark_price` | string | Current mark price. |
+| `position_value` | string | Current marked value. |
+| `claimable_amount` | string | Amount available to claim after settlement. |
+| `settlement_status` | string | Settlement lifecycle state. |
+| `won` | boolean | Whether the position's outcome won after resolution. |
+| `updated_at` | integer | Last update timestamp. |
+
+## Position detail
+
+`GET /api/v4/event_contracts/positions/{position_id}` returns one position using the position fields described above.
+
+## Settled positions
+
+`GET /api/v4/event_contracts/positions/settled` returns settled positions with the same `items` and `next_cursor` envelope. It accepts `limit` and `cursor`.
+
+## User trades
+
+`GET /api/v4/event_contracts/usertrades`
+
+Query parameters are `condition_id`, `from`, `to`, `sort_type` (`created_at` or `updated_at`), `order_id`, `token_id`, `limit`, and `cursor`.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `id` | integer | User-trade record ID. |
+| `order_id` | string | Platform order ID. |
+| `client_order_id` | string | Client order ID. |
+| `condition_id` | string | Market condition ID. |
+| `token_id` | string | Outcome token ID. |
+| `price` / `size` | string | Execution price and size. |
+| `side` | string | Execution side. |
+| `role` | string | User role in the execution. |
+| `fee_rate` | string | Applied fee rate. |
+
+## Account endpoints
+
+Event Contracts additionally exposes private account endpoints:
+
+| Endpoint | Response purpose |
+| --- | --- |
+| `GET /api/v4/event_contracts/assets` | Account asset summary. |
+| `GET /api/v4/event_contracts/balance` | Currency balance with `available`, `locked`, and `total`. |
+| `GET /api/v4/event_contracts/fund_flows` | Fund-flow records. |
+| `POST /api/v4/event_contracts/transfer` | Transfer between supported accounts. |
+
+## Error responses
+
+| Status | Meaning |
+| --- | --- |
+| 400 | Invalid path, query, or request body. |
+| 401 | Missing or invalid authentication. |
+| 404 | Resource does not exist or is not visible to the account. |
+| 503 | Upstream market-data dependency unavailable. |

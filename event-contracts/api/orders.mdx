@@ -1,0 +1,99 @@
+---
+title: Orders
+sidebarTitle: Orders
+description: Create, list, inspect, and cancel private Event Contracts orders.
+---
+
+## Authentication
+
+All endpoints on this page are private. Authentication details are finalized by the gateway; clients must not send internal gateway identity headers.
+
+## Create an order
+
+`POST /api/v4/event_contracts/orders`
+
+### Request body
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `token_id` | string | Outcome token to trade. |
+| `side` | string | Order side, for example `BUY` or `SELL`. |
+| `price` | string | Limit price as a decimal string. |
+| `size` | string | Requested size as a decimal string. |
+| `total_cost` | string | Total-cost field when required by the selected order mode. |
+| `order_type` | string | Trading order type. |
+| `order_mode` | string | Time-in-force or execution mode. |
+| `client_order_id` | string | Client-provided idempotency/tracking identifier. |
+| `post_only` | boolean | Whether the order must only add liquidity. |
+| `sell_all` | boolean | Whether to sell the available position. |
+| `expire_time` | integer | Expiry timestamp used by the order mode. |
+| `biz_type` | string | Business namespace; use the value documented for this API. |
+
+```bash
+curl -X POST 'https://api.dexbuilder.com/api/v4/event_contracts/orders' \
+  -H 'Content-Type: application/json' \
+  -d '{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0,"biz_type":"event_contract"}'
+```
+
+### Accepted response
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `order_id` | string | Platform order ID. |
+| `client_order_id` | string | Client order ID echoed from the request. |
+| `status` | string | Acceptance status. Acceptance does not guarantee a fill. |
+| `created_at` | integer | Creation timestamp. |
+
+## List orders
+
+`GET /api/v4/event_contracts/orders`
+
+| Query parameter | Type | Description |
+| --- | --- | --- |
+| `status` | string | Order-status filter. |
+| `condition_id` | string | Market condition filter. |
+| `event_id` | string | Event filter. |
+| `order_id` | string | Platform order filter. |
+| `client_order_id` | string | Client order filter. |
+| `from` / `to` | integer | Unix-millisecond time range. |
+| `sort_type` | string | `created_at` or `updated_at`. |
+| `limit` | integer | Page size. |
+| `cursor` | string | Previous `next_cursor`. |
+
+Response is `items` plus `next_cursor`. Each order item has:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `order_id` / `client_order_id` | string | Platform and client identifiers. |
+| `event_id` / `condition_id` | string | Event and market identifiers. |
+| `token_id` / `outcome` | string | Outcome token and outcome label. |
+| `side` / `order_type` / `order_mode` | string | Execution attributes. |
+| `price` / `size` | string | Requested price and size. |
+| `size_matched` / `size_left` | string | Filled and remaining size. |
+| `status` | string | Current order status. |
+| `error_code` | string | Rejection or processing error code, when present. |
+| `expire_time` | integer | Expiration timestamp. |
+| `created_at` / `updated_at` | integer | Lifecycle timestamps. |
+
+## Get one order
+
+`GET /api/v4/event_contracts/orders/{order_id}`
+
+Returns the same order fields as the list item. A missing or inaccessible order returns `404`.
+
+## Cancel orders
+
+- `DELETE /api/v4/event_contracts/orders/{order_id}`: cancel one order.
+- `DELETE /api/v4/event_contracts/orders?condition_id={condition_id}`: cancel matching orders for a market.
+
+Single cancellation response:
+
+```json
+{"order_id":"order-123","cancel_status":"CANCELED","status":"SUCCESS"}
+```
+
+Batch cancellation response:
+
+```json
+{"batch_id":"batch-123","status":"ACCEPTED","total_orders":2}
+```

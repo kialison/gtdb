@@ -11,7 +11,8 @@ Make your first API request in minutes. Learn the basics of the event markets pl
 <CodeGroup>
 
 ```bash API
-curl -G "https://gamma-api.polymarket.com/markets" \
+curl -G "https://api.dexbuilder.com/api/v4/event_markets/markets" \
+  --data-urlencode "active=true" \
   --data-urlencode "closed=false" \
   --data-urlencode "limit=5"
 ```

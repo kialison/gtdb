@@ -78,7 +78,7 @@ Event: BTC Up or Down 5m?
 Every market and event has a unique slug that appears in the event market URL:
 
 ```text
-https://polymarket.com/event/fed-decision-in-october
+https://app.dexbuilder.com/event/fed-decision-in-october
                             └── slug: fed-decision-in-october
 ```
 
@@ -86,7 +86,7 @@ You can use slugs to fetch specific markets or events from the API:
 
 ```bash
 # Fetch event by slug
-curl "https://gamma-api.polymarket.com/events?slug=fed-decision-in-october"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/fed-decision-in-october"
 ```
 
 ## Next Steps

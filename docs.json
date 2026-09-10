@@ -130,6 +130,16 @@
                     ]
                   },
                   {
+                    "group": "WebSocket",
+                    "pages": [
+                      "event-markets/websocket/overview",
+                      "event-markets/websocket/protocol",
+                      "event-markets/websocket/public-channels",
+                      "event-markets/websocket/private-channels",
+                      "event-markets/websocket/authentication"
+                    ]
+                  },
+                  {
                     "group": "Trading",
                     "pages": [
                       "event-markets/untitled-page-18",
@@ -141,6 +151,19 @@
                       "event-markets/untitled-page-23",
                       "event-markets/untitled-page-24",
                       "event-markets/untitled-page-25"
+                    ]
+                  },
+                  {
+                    "group": "API Reference",
+                    "pages": [
+                      "event-markets/api/overview",
+                      "event-markets/api/events",
+                      "event-markets/api/markets",
+                      "event-markets/api/market-data",
+                      "event-markets/api/orders",
+                      "event-markets/api/positions",
+                      "event-markets/api/public-utilities",
+                      "event-markets/api/account"
                     ]
                   }
                 ]
@@ -180,6 +203,16 @@
                     ]
                   },
                   {
+                    "group": "WebSocket",
+                    "pages": [
+                      "event-contracts/websocket/overview",
+                      "event-contracts/websocket/protocol",
+                      "event-contracts/websocket/public-channels",
+                      "event-contracts/websocket/private-channels",
+                      "event-contracts/websocket/authentication"
+                    ]
+                  },
+                  {
                     "group": "Trading",
                     "pages": [
                       "event-contracts/untitled-page-18",
@@ -191,6 +224,19 @@
                       "event-contracts/untitled-page-23",
                       "event-contracts/untitled-page-24",
                       "event-contracts/untitled-page-25"
+                    ]
+                  },
+                  {
+                    "group": "API Reference",
+                    "pages": [
+                      "event-contracts/api/overview",
+                      "event-contracts/api/events",
+                      "event-contracts/api/markets",
+                      "event-contracts/api/market-data",
+                      "event-contracts/api/orders",
+                      "event-contracts/api/positions",
+                      "event-contracts/api/public-utilities",
+                      "event-contracts/api/account"
                     ]
                   }
                 ]

@@ -1,485 +1,94 @@
 ---
 title: "Place Orders on Event Contracts"
 sidebarTitle: "Place Orders"
-description: "Place limit and market orders on Event Contracts event contracts, sign EIP-712 typed data, and submit signed orders to the CLOB."
+description: "Create private Event Contracts orders through the Prediction API. Authentication details are pending finalization."
 ---
 
-Learn how to place orders and control how they execute.
+Place orders against an outcome token after confirming that the market is accepting orders. Market data is public; order placement is a private operation and requires authentication.
 
-Place a market order to trade against available liquidity immediately, or use a limit order to specify a price and wait for a match.
+The production API base URL is `https://api.dexbuilder.com`. The authentication mechanism is not finalized yet. Do not copy internal gateway identity headers into client requests.
 
-Before placing an order, choose an outcome token and confirm that the market is [accepting orders](/event-contracts/untitled-page-12). The examples below assume you already have a market object; to fetch one, see [Discover Markets](/event-contracts/untitled-page-11).
+## 1. Read market constraints
 
-```text API
-Given a market object, its outcome token IDs are stored as a JSON-encoded array:
+Fetch the market and choose a token from `outcomes[].token_id`:
 
-{
-  "clobTokenIds": "[\"<yes_token_id>\", \"<no_token_id>\"]"
-}
-
-Parse the array, then select the outcome you want to trade:
-
-TOKEN_ID="<yes_token_id>"
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
 ```
 
-## Limit Orders
+Then read the public order book:
 
-A limit order specifies the price at which you are willing to trade and can rest on the book until it fills, expires, or you cancel it. Use one when price control matters more than immediate execution.
-
-A limit order also defines how long any unfilled amount remains active:
-
-| Lifetime | Behavior | Use when |
-| --- | --- | --- |
-| Good Till Cancelled (GTC) | Remains active until it fills or you cancel it. | The order has no deadline. |
-| Good Till Date (GTD) | Remains active until the expiration time you specify. | The order should expire before a known event. |
-
-GTD orders expire one minute before their stated expiration as a security threshold. To set an effective lifetime of N seconds, use `now + 60 + N`. In addition, the expiration must be at least 3 minutes in the future, orders expiring sooner are rejected, so the minimum effective lifetime is about two minutes.
-
-### Place a Limit Order
-
-```text API
-Build the limit order from its price and size, then sign and submit it:
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/order_book?depth=20"
 ```
 
-<Steps>
-  <Step title="Read the Market Context">
-    First, fetch the current order book to read the market's trading constraints and exchange type:
+Use `min_order_size` and `tick_size` from the response to validate the order before submitting it.
 
-    ```bash
-    curl "https://clob.polymarket.com/book?token_id=$TOKEN_ID"
-    ```
+## 2. Submit an order
 
-    ```json
-    {
-      "asset_id": "<yes_token_id>",
-      "bids": [{ "price": "0.50", "size": "40" }],
-      "asks": [{ "price": "0.54", "size": "30" }],
-      "min_order_size": "5",
-      "tick_size": "0.01",
-      "neg_risk": false
-    }
-    ```
+Create an authenticated request:
 
-    Where:
-
-    - `min_order_size` is the minimum number of shares the CLOB accepts for an order.
-    - `neg_risk` indicates whether the market belongs to a [negative-risk group](/event-contracts/untitled-page-5) and therefore uses the Neg Risk Exchange contract when signing and submitting the order.
-  </Step>
-  <Step title="Calculate the Order Amounts">
-    Then, choose a price that conforms to `tick_size` and a share quantity that meets `min_order_size`. Use the tick size to select the required precision:
-
-    | Tick size | Price decimals | Size decimals | Amount decimals |
-    | --- | --- | --- | --- |
-    | 0.1 | 1 | 2 | 3 |
-    | 0.01 | 2 | 2 | 4 |
-    | 0.005 | 3 | 2 | 5 |
-    | 0.0025 | 4 | 2 | 6 |
-    | 0.001 | 3 | 2 | 5 |
-    | 0.0001 | 4 | 2 | 6 |
-
-    <Info>
-      If your integration stores `tick_size` for later orders, listen for the `tick_size_change` event on the [market stream](/event-contracts/untitled-page-15) and replace the stored value when it changes. The CLOB rejects an order whose price does not conform to the market's current tick size.
-    </Info>
-
-    The two sides map the price and size differently:
-
-    - For a BUY, `makerAmount` is `price × size` USD and `takerAmount` is the number of shares.
-    - For a SELL, `makerAmount` is the number of shares and `takerAmount` is `price × size` USD.
-
-    Apply the table's precision in this order:
-
-    1. Express the price using no more than **Price decimals**.
-    2. Round the share quantity down to **Size decimals**.
-    3. Calculate the USD amount. If it exceeds **Amount decimals**, round it up first to **Amount decimals + 4**, then down to **Amount decimals**.
-  </Step>
-  <Step title="Validate and Encode the Amounts">
-    Next, verify that the rounded share quantity still meets `min_order_size`, then convert both amounts to six-decimal integers.
-
-    For a BUY of `10` shares at `0.52`, the USD amount is `5.20` and the share quantity is above the minimum of `5`. The encoded values are:
-
-    ```json
-    {
-      "makerAmount": "5200000",
-      "takerAmount": "10000000"
-    }
-    ```
-  </Step>
-  <Step title="Select the Exchange and Signing Path">
-    Then, use the `neg_risk` value returned by the order book in the first step to select the Exchange contract used as the EIP-712 verifying contract:
-
-    | Market | exchange_address |
-    | --- | --- |
-    | Standard | 0x4bFb41d5B3570DeFd03C39a9A4D8dE6Bd8B8982E |
-    | Negative risk | 0xC5d563A36AE78145C45a50134d48A1215220f80a |
-
-    Then resolve the remaining placeholders for the account's wallet:
-
-    | Wallet | signature_type | maker_address | order_signer_address |
-    | --- | --- | --- | --- |
-    | Deposit Wallet | 3 | Deposit Wallet address | Deposit Wallet address |
-    | Proxy Wallet | 1 | Proxy Wallet address | Account signer address |
-    | Safe Wallet | 2 | Safe Wallet address | Account signer address |
-    | EOA | 0 | EOA address | EOA address |
-  </Step>
-  <Step title="Create the Order Typed Data">
-    Next, create the EIP-712 typed data for the selected wallet:
-
-    <Tabs>
-      <Tab title="Deposit Wallet Typed Data">
-        ```json
-        {
-          "domain": {
-            "name": "Event Contracts CTF Exchange",
-            "version": "2",
-            "chainId": 137,
-            "verifyingContract": "<exchange_address>"
-          },
-          "types": {
-            "Order": [
-              { "name": "salt", "type": "uint256" },
-              { "name": "maker", "type": "address" },
-              { "name": "signer", "type": "address" },
-              { "name": "tokenId", "type": "uint256" },
-              { "name": "makerAmount", "type": "uint256" },
-              { "name": "takerAmount", "type": "uint256" },
-              { "name": "side", "type": "uint8" },
-              { "name": "signatureType", "type": "uint8" },
-              { "name": "timestamp", "type": "uint256" },
-              { "name": "metadata", "type": "bytes32" },
-              { "name": "builder", "type": "bytes32" }
-            ],
-            "TypedDataSign": [
-              { "name": "contents", "type": "Order" },
-              { "name": "name", "type": "string" },
-              { "name": "version", "type": "string" },
-              { "name": "chainId", "type": "uint256" },
-              { "name": "verifyingContract", "type": "address" },
-              { "name": "salt", "type": "bytes32" }
-            ]
-          }
-        }
-        ```
-      </Tab>
-      <Tab title="Proxy, Safe, or EOA Typed Data">
-        ```json
-        {
-          "domain": {
-            "name": "Event Contracts CTF Exchange",
-            "version": "2",
-            "chainId": 137,
-            "verifyingContract": "<exchange_address>"
-          },
-          "types": {
-            "Order": [
-              { "name": "salt", "type": "uint256" },
-              { "name": "maker", "type": "address" },
-              { "name": "signer", "type": "address" },
-              { "name": "tokenId", "type": "uint256" },
-              { "name": "makerAmount", "type": "uint256" },
-              { "name": "takerAmount", "type": "uint256" },
-              { "name": "side", "type": "uint8" },
-              { "name": "signatureType", "type": "uint8" },
-              { "name": "timestamp", "type": "uint256" }
-            ]
-          }
-        }
-        ```
-      </Tab>
-    </Tabs>
-  </Step>
-</Steps>
-
-### Post-Only Orders
-
-A post-only order adds liquidity only: if it would match immediately against the book, it is rejected instead of taking. Use it to guarantee you quote as a maker.
-
-```text API
-Follow the API workflow in Place a Limit Order, then add postOnly: true to the final request alongside a GTC or GTD orderType. For example, submit a GTC post-only order:
-
-curl -X POST "https://clob.polymarket.com/order" \
+```bash cURL
+curl -X POST "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
   -H "Content-Type: application/json" \
-  -H "POLY_ADDRESS: <signer_address>" \
-  -H "POLY_API_KEY: <clob_api_key>" \
-  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
-  -H "POLY_SIGNATURE: <clob_l2_signature>" \
-  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
+  -H "<authentication-header>: <authentication-value>" \
   --data '{
-    "deferExec": false,
-    "order": {
-      "builder": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "expiration": "0",
-      "maker": "<maker_address>",
-      "makerAmount": "5200000",
-      "metadata": "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "salt": 479249096354,
-      "side": "BUY",
-      "signature": "<signature>",
-      "signatureType": 3,
-      "signer": "<order_signer_address>",
-      "takerAmount": "10000000",
-      "timestamp": "<unix_milliseconds>",
-      "tokenId": "<yes_token_id>"
-    },
-    "orderType": "GTC",
-    "owner": "<clob_api_key>",
-    "postOnly": true
+    "token_id": "<token_id>",
+    "side": "BUY",
+    "price": "0.52",
+    "size": "10",
+    "total_cost": "5.20",
+    "order_type": "LIMIT",
+    "order_mode": "GTC",
+    "client_order_id": "client-order-001",
+    "post_only": false,
+    "sell_all": false,
+    "expire_time": 0,
+    "biz_type": "event_market"
   }'
 ```
 
-## Market Orders
+The authentication placeholder above is intentionally non-operational until the public authentication scheme is finalized. Do not send internal gateway identity headers or other internal headers.
 
-A market order uses the same underlying order as a limit order but derives a marketable price from current order-book liquidity. This allows it to execute immediately instead of resting on the book. Use a market order when execution matters more than setting an exact price.
+## Request fields
 
-Read the market's [trading constraints](/event-contracts/untitled-page-13) before deciding how much to buy or sell.
-
-### Place a Market Order
-
-The examples below use Fill and Kill (FAK), which fills available liquidity immediately and cancels any remainder. See [Market Order Types](#market-order-types) for Fill or Kill (FOK).
-
-```text API
-Market orders reuse the construction and signing flow from Place a Limit Order. Start from the current order book, calculate market-order amounts, then build and sign the same Exchange order with those values. The steps below call out what changes when the order should execute against current liquidity:
-```
-
-<Steps>
-  <Step title="Estimate the Price">
-    First, fetch the current order book:
-
-    ```bash
-    curl "https://clob.polymarket.com/book?token_id=$TOKEN_ID"
-    ```
-
-    ```json
-    {
-      "asset_id": "<yes_token_id>",
-      "bids": [{ "price": "0.50", "size": "40" }],
-      "asks": [
-        { "price": "0.54", "size": "30" },
-        { "price": "0.52", "size": "25" }
-      ],
-      "min_order_size": "5",
-      "tick_size": "0.01",
-      "neg_risk": false
-    }
-    ```
-
-    Estimate the price according to the order side:
-
-    - For a BUY, walk the asks from the best price upward and accumulate `price × size` until the total reaches the USD amount you want to spend. Use the final price as the maximum price.
-    - For a SELL, walk the bids from the best price downward until their cumulative size reaches the number of shares you want to sell. Use the final price as the minimum price.
-
-    In this example, a 10 USD BUY can fill entirely at `0.52`, so its maximum price is `0.52`. Recalculate the estimate if the order book changes before submission.
-  </Step>
-  <Step title="Calculate the Order Amounts">
-    Use the precision table in the limit-order workflow above, but map the amounts according to the side:
-
-    - For a BUY, `makerAmount` is the USD amount to spend and `takerAmount` is `makerAmount ÷ maximum price` shares.
-    - For a SELL, `makerAmount` is the number of shares and `takerAmount` is `makerAmount × minimum price` USD.
-
-    Round the price and input amount down to the table's **Price decimals** and **Size decimals**. After calculating `takerAmount`, round it up first to **Amount decimals + 4**, then to **Amount decimals**. This preserves the maximum price for a BUY or the minimum price for a SELL.
-
-    A 10 USD BUY with a maximum price of `0.52` produces `19.2308` shares at a tick size of `0.01`. This exceeds the five-share minimum in the order book. Converted to six-decimal integers, the amounts are:
-
-    ```json
-    {
-      "makerAmount": "10000000",
-      "takerAmount": "19230800"
-    }
-    ```
-  </Step>
-  <Step title="Build and Sign the Order">
-    Use the order book's `neg_risk` value to select the Exchange contract, then resolve the maker, signer, and signature type for the wallet as shown in the limit-order workflow. Build the same EIP-712 order typed data, replacing `makerAmount` and `takerAmount` with the market-order amounts calculated above.
-
-    Sign with the account signer. Deposit Wallets use the `TypedDataSign` payload and wrap the resulting signature for ERC-7739 validation; Proxy Wallets, Safe Wallets, and EOAs sign the Exchange `Order` directly.
-  </Step>
-  <Step title="Submit the Market Order">
-    Set `orderType` to `"FAK"` and submit the order:
-
-    ```bash
-    curl -X POST "https://clob.polymarket.com/order" \
-      -H "Content-Type: application/json" \
-      -H "POLY_ADDRESS: <signer_address>" \
-      -H "POLY_API_KEY: <clob_api_key>" \
-      -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
-      -H "POLY_SIGNATURE: <clob_l2_signature>" \
-      -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
-      --data '{
-        "deferExec": false,
-        "order": {
-          "builder": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "expiration": "0",
-          "maker": "<maker_address>",
-          "makerAmount": "10000000",
-          "metadata": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "salt": 479249096354,
-          "side": "BUY",
-          "signature": "<signature>",
-          "signatureType": 3,
-          "signer": "<order_signer_address>",
-          "takerAmount": "19230800",
-          "timestamp": "<unix_milliseconds>",
-          "tokenId": "<yes_token_id>"
-        },
-        "orderType": "FAK",
-        "owner": "<clob_api_key>"
-      }'
-    ```
-
-    Using the signer address and CLOB API credentials from [API Authentication](/event-contracts/untitled-page-3), create a fresh `<clob_request_timestamp>` and generate `<clob_l2_signature>` from the exact serialized body sent over the wire:
-
-    ```text
-    body = <exact_serialized_request_body>
-    message = <clob_request_timestamp> + "POST" + "/order" + body
-    
-    clob_l2_signature = urlsafeBase64WithPadding(
-      HMAC-SHA256(base64Decode(<clob_api_secret>), message)
-    )
-    ```
-
-    Market orders must use an `expiration` of `"0"`.
-  </Step>
-  <Step title="Check the Response">
-    Finally, check `success`. A FAK order may fill fully or partially; any unfilled remainder is canceled. Successful fills are identified by `tradeIDs`; `transactionsHashes` contains any transaction hashes available when the response is returned. A rejected order explains the failure in `errorMsg`.
-
-    <Accordion title="Response">
-      <Tabs>
-        <Tab title="Success">
-          ```json
-          {
-            "success": true,
-            "errorMsg": "",
-            "orderID": "<order_id>",
-            "status": "matched",
-            "makingAmount": "<making_amount>",
-            "takingAmount": "<taking_amount>",
-            "transactionsHashes": ["<transaction_hash>"],
-            "tradeIDs": ["<trade_id>"]
-          }
-          ```
-        </Tab>
-        <Tab title="Failure">
-          ```json
-          {
-            "success": false,
-            "errorMsg": "not enough balance / allowance",
-            "orderID": "",
-            "status": "",
-            "makingAmount": "",
-            "takingAmount": "",
-            "transactionsHashes": [],
-            "tradeIDs": []
-          }
-          ```
-        </Tab>
-      </Tabs>
-    </Accordion>
-
-    When `status` is `"delayed"`, the order is accepted but matching has not happened yet. `makingAmount` and `takingAmount` may be empty, and `tradeIDs` and `transactionsHashes` are empty because no fills exist yet. Treat the order as pending and use [real-time order updates](/event-contracts/untitled-page-22) to follow its outcome. To identify markets with this behavior before submitting, read `secondsDelay`.
-  </Step>
-</Steps>
-
-### Cap Market Buy Spending
-
-A market BUY's amount is the pre-fee USD notional. Applicable broker fees are charged on top. Set an all-in spending limit when the complete cost must remain within a fixed budget.
-
-```text API
-Before signing, reduce makerAmount so the order notional plus applicable platform and builder taker fees does not exceed the intended limit. Then use the fee-adjusted value when calculating the market-order amounts above.
-```
-
-### Market Order Types
-
-A market order uses one of two execution types, depending on whether a partial fill is acceptable:
-
-| Type | Behavior |
+| Field | Description |
 | --- | --- |
-| Fill and Kill (FAK) | Fills against the available liquidity immediately and cancels any unfilled remainder. |
-| Fill or Kill (FOK) | Fills the entire order immediately or does not fill any of it. |
+| `token_id` | Outcome token to trade. |
+| `side` | Trade direction, such as `BUY` or `SELL`. |
+| `price` | Limit price as a decimal string. |
+| `size` | Order size as a decimal string. |
+| `total_cost` | Total order cost as a decimal string. |
+| `order_type` | Order type defined by the trading service. |
+| `order_mode` | Time-in-force or execution mode defined by the trading service. |
+| `client_order_id` | Optional client-generated idempotency/reference ID. |
+| `post_only` | Whether the order must add liquidity only. |
+| `sell_all` | Whether a sell order should use the available position. |
+| `expire_time` | Expiration time as Unix seconds when applicable. |
+| `biz_type` | Business type for the order. |
 
-```text API
-orderType is not part of the signed EIP-712 order typed data. Set it to FAK or FOK alongside the signed order in the top-level /order body:
+## Accepted response
 
+A successful request returns an accepted order reference:
+
+```json
 {
-  "deferExec": false,
-  "order": { "…": "…" },
-  "orderType": "FOK",
-  "owner": "<clob_api_key>"
+  "order_id": "order-123",
+  "client_order_id": "client-order-001",
+  "status": "ACCEPTED",
+  "created_at": 1782753357
 }
 ```
 
-## Create and Post Separately
+The accepted response does not guarantee that the order has fully matched. Use [Manage Orders](/event-contracts/untitled-page-20) to query the order status.
 
-Create and sign an order without submitting it when you need to inspect it, store it temporarily, or include it in a later batch.
+## Validation checklist
 
-```text API
-The API is inherently two-step: signing happens locally and submission is a separate HTTP request. Build and sign the order as described in Place a Limit Order, then keep the signed order until you are ready to submit it.
-```
+Before submitting:
 
-## Post a Batch of Orders
-
-Submit several signed orders in one request. This is useful for placing a ladder of quotes across multiple price levels when market making.
-
-```text API
-Send an array of 1 to 15 signed-order entries to /orders:
-
-curl -X POST "https://clob.polymarket.com/orders" \
-  -H "Content-Type: application/json" \
-  -H "POLY_ADDRESS: <signer_address>" \
-  -H "POLY_API_KEY: <clob_api_key>" \
-  -H "POLY_PASSPHRASE: <clob_api_passphrase>" \
-  -H "POLY_SIGNATURE: <clob_l2_signature>" \
-  -H "POLY_TIMESTAMP: <clob_request_timestamp>" \
-  --data '[
-    {
-      "deferExec": false,
-      "order": { "…": "…" },
-      "orderType": "GTC",
-      "owner": "<clob_api_key>"
-    },
-    {
-      "deferExec": false,
-      "order": { "…": "…" },
-      "orderType": "GTC",
-      "owner": "<clob_api_key>"
-    }
-  ]'
-```
-
-Using the signer address and CLOB API credentials from [API Authentication](/event-contracts/untitled-page-3), create a fresh `<clob_request_timestamp>` and generate `<clob_l2_signature>` from the exact serialized array sent over the wire:
-
-```text
-body = <exact_serialized_order_array>
-message = <clob_request_timestamp> + "POST" + "/orders" + body
-
-clob_l2_signature = urlsafeBase64WithPadding(
-  HMAC-SHA256(base64Decode(<clob_api_secret>), message)
-)
-```
-
-Each entry uses the same shape as a single `/order` request. The response contains one result for each submitted order. For example, one order can be accepted while another is rejected:
-
-<Accordion title="Response">
-  ```json
-  [
-    {
-      "success": true,
-      "errorMsg": "",
-      "orderID": "<order_id>",
-      "status": "live",
-      "makingAmount": "",
-      "takingAmount": "",
-      "transactionsHashes": [],
-      "tradeIDs": []
-    },
-    {
-      "success": false,
-      "errorMsg": "not enough balance / allowance",
-      "orderID": "",
-      "status": "",
-      "makingAmount": "",
-      "takingAmount": "",
-      "transactionsHashes": []
-    }
-  ]
-  ```
-</Accordion>
-
-Check every result rather than treating the batch as a single success or failure.
+- Confirm the market is `accepting_orders: true`.
+- Use a token ID from the market's `outcomes` array.
+- Confirm the order size meets `min_order_size`.
+- Quantize the price to the market's `tick_size`.
+- Keep decimal values as strings to avoid floating-point rounding errors.
+- Use an authenticated private request after the authentication scheme is available.
