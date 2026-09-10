@@ -80,6 +80,12 @@
                 "item": "PerpDEX",
                 "groups": [
                   {
+                    "group": "接入说明",
+                    "pages": [
+                      "api-reference/perpdex/authentication"
+                    ]
+                  },
+                  {
                     "group": "行情",
                     "pages": [
                       "api-reference/perpdex/query-all-contracts",
