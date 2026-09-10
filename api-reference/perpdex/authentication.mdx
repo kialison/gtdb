@@ -1,55 +1,176 @@
 ---
 title: "认证与签名"
-description: "PerpDEX REST API 的权限、认证要求与签名生成方式"
+description: "PerpDEX REST API 的权限、认证 Header、签名规则与签名示例"
 ---
 
 # 认证与签名
 
-## PerpDEX API 权限
+## API 权限
 
 创建 API Key 时，需要根据使用场景配置对应权限。
 
 | 权限 | 可执行操作 |
 | --- | --- |
-| 只读 | 查询行情、账户、持仓、订单及交易记录等 |
+| 只读 | 查询订单、持仓、账户信息、个人成交记录等 |
 | 读写 | 在只读权限基础上，可下单、撤单、改单及管理持仓 |
 
-所有 `GET` 请求均属于读操作；下单、撤单、改单及其他非 `GET` 操作属于写操作。
+所有 `GET` 操作属于读请求；下单、撤单、改单及其他非 `GET` 操作属于写请求。
+
+使用时需要注意：
+
+- PerpDEX API 使用独立的 API Key 进行服务端调用与认证。
+- 交易类接口需要 API Key 具备对应的读写权限。
+- 建议为 API Key 配置 IP 白名单，减少密钥泄露后的风险。
+- API Secret 仅用于本地生成签名，不应发送给服务端，也不应写入前端代码。
 
 ## API 签名请求要求
 
-公开行情接口无需认证。账户、持仓、订单等私有接口需要在请求 Header 中携带：
+调用需要认证的接口时，请按以下步骤构造请求：
 
-| Header | 说明 |
-| --- | --- |
-| `KEY` | API Key |
-| `Timestamp` | Unix 时间戳，单位为秒 |
-| `SIGN` | 当前请求对应的签名 |
+1. 创建 API Key，并确认已配置正确权限。
+2. Header `KEY` 设置为 API Key。
+3. Header `Timestamp` 设置为当前 Unix 秒级时间戳，与服务器时间差不得超过 `60` 秒。
+4. 根据当前请求生成签名，并将结果写入 Header `SIGN`。
+5. 如果 API Key 配置了 IP 白名单，请确保调用服务器 IP 已加入白名单。
 
-`Timestamp` 应与当前时间保持同步。API Secret 仅用于本地生成签名，不应作为请求参数发送。
+请求 Header：
+
+| Header | 必填 | 说明 |
+| --- | --- | --- |
+| `KEY` | 是 | API Key |
+| `Timestamp` | 是 | Unix 时间戳，单位秒 |
+| `SIGN` | 是 | `HMAC-SHA512` 生成的十六进制签名 |
+
+<Warning>
+服务器时间与客户端时间偏差过大时会返回认证错误。建议调用服务器保持 NTP 时间同步。
+</Warning>
 
 ## API 签名字符串生成
 
-签名字符串按以下顺序拼接：
+签名原文按以下顺序拼接，每个部分之间使用换行符 `\n`：
 
 ```text
-Request Method + "\n" + Request URL + "\n" + Query String + "\n" + HexEncode(SHA512(Request Payload)) + "\n" + Timestamp
+Request Method + "\n" +
+Request URL + "\n" +
+Query String + "\n" +
+HexEncode(SHA512(Request Payload)) + "\n" +
+Timestamp
 ```
 
-随后使用 API Secret 对签名字符串执行 `HMAC-SHA512`，并将十六进制结果作为 `SIGN`：
+最终签名：
 
 ```text
 SIGN = HexEncode(HMAC_SHA512(API Secret, Signature String))
 ```
 
-### 字段说明
+### Request Method
 
-- `Request Method`：必须使用大写，例如 `GET`、`POST`。
-- `Request URL`：包含 `/api/v1` 前缀，但不包含协议、域名和端口，例如 `/api/v1/dex_futures/usdt/orders`。
-- `Query String`：URL 查询参数字符串；没有查询参数时使用空字符串。
-- `Request Payload`：请求 Body 原始内容；没有 Body 时对空字符串计算 SHA512。
-- `Timestamp`：与 Header 中的 `Timestamp` 保持一致。
+请求方法必须使用大写，例如：
+
+```text
+GET
+POST
+PUT
+DELETE
+```
+
+### Request URL
+
+只包含请求 Path，不包含协议、域名和端口，并包含 `/api/v1` 前缀。
+
+例如：
+
+```text
+/api/v1/dex_futures/usdt/orders
+```
+
+### Query String
+
+使用请求 URL 中实际发送的 Query String，并保持参数顺序一致，不重新排序。
+
+例如：
+
+```text
+status=finished&limit=50
+```
+
+没有 Query 参数时使用空字符串：
+
+```text
+""
+```
+
+### Request Payload
+
+对实际发送的 Request Body 原文执行 `SHA512`，再取十六进制结果。
+
+没有 Request Body 时，对空字符串进行 SHA512，其结果为：
+
+```text
+cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
+```
+
+<RequestExample>
+如果请求 Body 为 JSON，请以最终实际发送的 JSON 字符串计算 Hash。字段顺序、空格或换行变化都会导致 Payload Hash 变化。
+</RequestExample>
+
+### Timestamp
+
+使用与 Header `Timestamp` 完全一致的值，例如：
+
+```text
+1541993715
+```
+
+## GET 请求签名示例
+
+假设请求：
+
+```text
+GET /api/v1/dex_futures/usdt/orders?status=finished&limit=50
+```
+
+则签名原文为：
+
+```text
+GET
+/api/v1/dex_futures/usdt/orders
+status=finished&limit=50
+cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
+1541993715
+```
+
+其中：
+
+- 第一行：Request Method
+- 第二行：Request URL
+- 第三行：Query String
+- 第四行：空 Request Body 的 SHA512
+- 第五行：Timestamp
+
+随后使用 API Secret 对整个签名原文执行 `HMAC-SHA512`，得到 `SIGN`。
+
+## POST 请求签名注意事项
+
+POST / PUT 等带 Request Body 的接口，需要确保：
+
+- 用于计算 SHA512 的 Body 与实际发送 Body 完全一致。
+- `Content-Type` 与接口要求一致，通常为 `application/json`。
+- Query String 即使为空，也必须在签名原文中保留对应的空行。
+- 不要对已经拼接好的签名字符串额外做 URL Encode。
+
+## 常见认证错误
+
+| Label | 常见原因 |
+| --- | --- |
+| `INVALID_KEY` | API Key 不存在、已失效或填写错误 |
+| `IP_FORBIDDEN` | 调用 IP 不在 API Key 白名单 |
+| `READ_ONLY` | 使用只读 Key 调用了写接口 |
+| `INVALID_SIGNATURE` | 签名原文或 API Secret 不正确 |
+| `MISSING_REQUIRED_HEADER` | 缺少 `KEY`、`Timestamp` 或 `SIGN` |
+| `REQUEST_EXPIRED` | Timestamp 与服务器时间偏差超过允许范围 |
+| `FORBIDDEN` | 当前账户或 Key 无对应操作权限 |
 
 <Warning>
-Query String、Request Payload 和实际发送的请求内容必须完全一致，否则签名校验会失败。请勿泄露 API Secret。
+不要在工单、聊天记录、截图或日志中公开 API Secret。若 API Secret 已泄露，应立即停用当前 API Key 并重新创建。
 </Warning>
