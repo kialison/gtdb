@@ -78,21 +78,14 @@
             "menu": [
               {
                 "item": "PerpDEX",
-                "groups": [
+                "pages": [
+                  "api-reference/perpdex/overview",
+                  "api-reference/perpdex/changelog",
+                  "api-reference/perpdex/api",
+                  "api-reference/perpdex/authentication",
                   {
-                    "group": "接入说明",
+                    "group": "Perp",
                     "pages": [
-                      "api-reference/perpdex/introduction",
-                      "api-reference/perpdex/getting-started",
-                      "api-reference/perpdex/authentication",
-                      "api-reference/perpdex/signature",
-                      "api-reference/perpdex/errors"
-                    ]
-                  },
-                  {
-                    "group": "行情",
-                    "pages": [
-                      "api-reference/perpdex/market-overview",
                       "api-reference/perpdex/query-all-contracts",
                       "api-reference/perpdex/query-contract",
                       "api-reference/perpdex/query-order-book",
@@ -103,31 +96,11 @@
                       "api-reference/perpdex/query-funding-rate",
                       "api-reference/perpdex/query-insurance",
                       "api-reference/perpdex/query-contract-stats",
-                      "api-reference/perpdex/query-index-constituents"
-                    ]
-                  },
-                  {
-                    "group": "风控",
-                    "pages": [
-                      "api-reference/perpdex/risk-overview",
+                      "api-reference/perpdex/query-index-constituents",
                       "api-reference/perpdex/query-market-liquidation-orders",
                       "api-reference/perpdex/query-risk-limit-tiers",
-                      "api-reference/perpdex/query-risk-limit-table"
-                    ]
-                  },
-                  {
-                    "group": "账户",
-                    "pages": [
-                      "api-reference/perpdex/account-overview",
                       "api-reference/perpdex/query-account",
                       "api-reference/perpdex/query-account-book",
-                      "api-reference/perpdex/query-fee"
-                    ]
-                  },
-                  {
-                    "group": "持仓",
-                    "pages": [
-                      "api-reference/perpdex/position-overview",
                       "api-reference/perpdex/query-positions",
                       "api-reference/perpdex/query-position",
                       "api-reference/perpdex/update-position-margin",
@@ -140,17 +113,8 @@
                       "api-reference/perpdex/update-hedge-position-margin",
                       "api-reference/perpdex/update-hedge-position-leverage",
                       "api-reference/perpdex/update-hedge-position-risk-limit",
-                      "api-reference/perpdex/query-position-close-history",
-                      "api-reference/perpdex/query-liquidation-history",
-                      "api-reference/perpdex/query-adl-history"
-                    ]
-                  },
-                  {
-                    "group": "订单",
-                    "pages": [
-                      "api-reference/perpdex/order-overview",
-                      "api-reference/perpdex/query-orders",
                       "api-reference/perpdex/place-order",
+                      "api-reference/perpdex/query-orders",
                       "api-reference/perpdex/cancel-all-orders",
                       "api-reference/perpdex/query-orders-by-time-range",
                       "api-reference/perpdex/place-batch-orders",
@@ -159,10 +123,25 @@
                       "api-reference/perpdex/amend-order",
                       "api-reference/perpdex/query-my-trades",
                       "api-reference/perpdex/query-my-trades-by-time-range",
+                      "api-reference/perpdex/query-position-close-history",
+                      "api-reference/perpdex/query-liquidation-history",
+                      "api-reference/perpdex/query-adl-history",
                       "api-reference/perpdex/countdown-cancel-orders",
+                      "api-reference/perpdex/query-fee",
                       "api-reference/perpdex/cancel-batch-orders",
                       "api-reference/perpdex/amend-batch-orders",
+                      "api-reference/perpdex/query-risk-limit-table",
                       "api-reference/perpdex/place-bbo-order"
+                    ]
+                  },
+                  {
+                    "group": "模型",
+                    "pages": [
+                      "api-reference/perpdex/models/contract",
+                      "api-reference/perpdex/models/position",
+                      "api-reference/perpdex/models/dexfuturesorder",
+                      "api-reference/perpdex/models/dexfuturesbboorder",
+                      "api-reference/perpdex/models/batchamendorderreq"
                     ]
                   }
                 ]
