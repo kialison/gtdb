@@ -1,48 +1,63 @@
 ---
-title: "接入方式"
-description: "根据项目开发能力和定制需求选择适合的 DexBuilder 接入方式。"
+title: "接入概览"
+description: "了解 Builder 接入 DexBuilder 时，用户侧交易能力、项目方运营后台与 Builder API 的职责边界。"
 ---
 
-DexBuilder 支持不同深度的产品接入方式。项目方可根据上线速度、开发资源和定制需求选择适合自己的方案。
+Builder 接入 DexBuilder 后，主要会使用两类能力：**用户侧交易能力**和**项目方运营能力**。
 
-## 接入方式对比
+```text
+Builder 产品
+   │
+   ├─ 用户侧前端
+   │    └─ DexBuilder OpenAPI
+   │         ├─ 行情与合约信息
+   │         ├─ 账户与资产
+   │         ├─ 下单 / 撤单 / 改单
+   │         ├─ 仓位与保证金
+   │         └─ 风险与交易数据
+   │
+   └─ 项目方运营
+        └─ Builder 运营后台
+             ├─ 运营数据
+             ├─ 用户与交易量
+             ├─ 手续费与收益
+             ├─ 邀请返佣
+             ├─ 公告管理
+             ├─ 充提与资金管理
+             └─ 权限与操作日志
+```
 
-| | 标准化接入 | OpenAPI 自定义接入 |
-| --- | --- | --- |
-| 开发成本 | 较低 | 较高 |
-| 上线速度 | 较快 | 取决于开发周期 |
-| UI 自定义 | 中 | 高 |
-| 交易流程定制 | 有限 | 高 |
-| API 开发量 | 少量或无需 | 需要 |
-| 适合项目 | 希望快速上线的项目 | 钱包、交易平台及专业开发团队 |
+## 用户侧：通过 OpenAPI 完成交易接入
 
-## 标准化接入
+当前公开 OpenAPI 主要面向交易用户侧，Builder 可以使用现有 PerpDEX API 完成行情、账户、订单、仓位及风险等交易能力接入。
 
-标准化接入适合希望快速构建交易产品的 Builder。相关配置能力将逐步开放，包括：
+<CardGroup cols={2}>
+  <Card title="账户与认证" href="/builder/account-authentication" icon="key">
+    了解账户、鉴权及用户请求如何接入现有 OpenAPI。
+  </Card>
+  <Card title="交易接入" href="/builder/trading-integration" icon="chart-line">
+    了解行情、订单、仓位、保证金和实时数据的接入范围。
+  </Card>
+  <Card title="资产与结算" href="/builder/assets-settlement" icon="wallet">
+    了解资产查询、充提、资金记录与结算相关能力的职责划分。
+  </Card>
+  <Card title="API Reference" href="/api-reference/perpdex/overview" icon="code">
+    查看当前已经开放的接口及参数定义。
+  </Card>
+</CardGroup>
 
-- 品牌名称与 Logo
-- 主题样式
-- 域名
-- 交易市场配置
-- 默认交易对
-- 手续费配置
-- 运营入口
+## 项目方：通过运营后台完成日常运营
 
-<Info>
-具体可配置项以 Builder 平台实际开放能力为准。
-</Info>
+Builder 上线后，项目方可以通过独立运营后台查看业务数据并进行运营管理。后台能力与用户侧交易 API 分离，避免把项目级管理权限暴露给普通用户。
 
-## OpenAPI 自定义接入
-
-Builder 可以基于 DexBuilder OpenAPI 自定义实现自己的交易前端和业务逻辑。当前已开放的 PerpDEX API 主要包括：
-
-- 行情与合约信息
-- Orderbook 与成交数据
-- 账户与资产查询
-- 下单、撤单与改单
-- 仓位及保证金管理
-- 风险相关查询
-
-<Card title="查看 PerpDEX API Reference" href="/api-reference/perpdex/overview" icon="code">
-  查看当前已开放的接口、鉴权方式和请求参数。
+<Card title="查看 Builder 运营后台" href="/builder/operations-console" icon="gauge-high">
+  查看数据看板、用户、交易量、返佣、公告、资金及系统权限等后台能力。
 </Card>
+
+## Builder API
+
+当前 API Reference 主要是用户交易侧 OpenAPI。面向项目方的 Builder API 将根据业务需要逐步补充，例如手续费查询、运营数据、用户统计、返佣及其他项目级能力。
+
+<Note>
+Builder API 尚未完整开放的能力，不会在文档中写成已支持接口；现阶段优先通过运营后台提供项目方管理能力。
+</Note>
