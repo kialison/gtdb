@@ -1,0 +1,39 @@
+---
+title: "账户与认证"
+description: "Builder 用户接入 DexBuilder 时的账户、鉴权与权限边界。"
+---
+
+账户与认证是交易接入的第一步。Builder 需要先完成用户身份识别，再按照 DexBuilder OpenAPI 的鉴权规则访问用户账户和私有交易接口。
+
+## 典型流程
+
+<Steps>
+  <Step title="用户进入 Builder 产品">
+    用户通过 Builder 提供的钱包或账户入口进入交易产品。
+  </Step>
+  <Step title="建立用户与 Builder 的业务关系">
+    Builder 识别用户来源，并在后续交易、数据统计和运营中保持对应关系。
+  </Step>
+  <Step title="完成 API 鉴权">
+    对需要身份认证的请求，按照 PerpDEX API 的签名和鉴权规则生成请求。
+  </Step>
+  <Step title="读取账户状态">
+    获取账户、资产、仓位和订单等用户私有数据，再进入交易流程。
+  </Step>
+</Steps>
+
+## 权限边界
+
+| 类型 | 主要用途 |
+| --- | --- |
+| 公开接口 | 行情、合约信息、Orderbook 等无需用户私有权限的数据 |
+| 用户私有接口 | 用户账户、订单、仓位及交易操作 |
+| Builder 运营权限 | 项目级数据、返佣、资金、公告和后台管理，不提供给普通交易用户 |
+
+<Card title="查看 API 鉴权" href="/api-reference/perpdex/authentication" icon="key">
+  具体 Header、签名方式和请求要求以 API Reference 为准。
+</Card>
+
+<Note>
+项目方运营后台与用户交易权限相互独立。后续开放的 Builder API 也会使用独立的项目级权限控制。
+</Note>
