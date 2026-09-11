@@ -1,0 +1,51 @@
+---
+title: "运营后台"
+description: "Builder 上线后的项目方运营管理入口，覆盖数据、用户、返佣、公告、资金及系统权限。"
+---
+
+DexBuilder 为 Builder 提供独立的**运营管理后台**。它面向项目方运营、财务和管理员使用，与普通交易用户使用的 OpenAPI 分离。
+
+Builder 上线后，不需要把所有运营能力都自行开发在前台；常用的项目级管理能力可以直接在运营后台完成。
+
+## 后台能力
+
+<CardGroup cols={2}>
+  <Card title="运营数据看板" href="/builder/operations-dashboard" icon="chart-column">
+    查看交易量、交易笔数、交易地址、手续费、充提、用户及访问等核心指标和趋势。
+  </Card>
+  <Card title="邀请返佣" href="/builder/referrals" icon="user-plus">
+    管理邀请与返佣业务，查看拉新和返佣相关数据。
+  </Card>
+  <Card title="公告管理" href="/builder/announcements" icon="bullhorn">
+    管理公告内容及公告分类，用于项目方日常运营通知。
+  </Card>
+  <Card title="充提与资金管理" href="/builder/funds-management" icon="money-bill-transfer">
+    查看充值、提现、转账及对应记录。
+  </Card>
+  <Card title="用户与交易量" href="/builder/users-volume" icon="users">
+    查询项目用户和交易量数据，辅助用户运营与业务分析。
+  </Card>
+  <Card title="手续费与收益" href="/builder/fees-revenue" icon="coins">
+    查看手续费收入和趋势；费率配置、分成与结算规则以实际项目配置为准。
+  </Card>
+  <Card title="权限与操作日志" href="/builder/access-audit" icon="shield-halved">
+    管理后台用户、角色权限并查看关键操作日志。
+  </Card>
+  <Card title="Builder API" icon="code">
+    项目级 API 将按业务需要逐步开放，用于自动化查询和运营能力集成。
+  </Card>
+</CardGroup>
+
+## 后台与 OpenAPI 的区别
+
+| | OpenAPI | Builder 运营后台 |
+| --- | --- | --- |
+| 使用对象 | Builder 的交易用户 / 前端 | 项目方运营、财务、管理员 |
+| 核心目标 | 完成行情、账户和交易流程 | 完成业务运营和项目级管理 |
+| 权限范围 | 用户级 | Builder 项目级 |
+| 当前形态 | API Reference 已提供 | 独立管理后台 |
+| 后续扩展 | 持续增加交易接口 | 部分能力逐步开放 Builder API |
+
+<Info>
+后台实际显示的菜单和权限会根据项目开通范围及管理员角色有所不同。
+</Info>
