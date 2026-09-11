@@ -1,0 +1,27 @@
+---
+title: "Event Markets Market Details"
+sidebarTitle: "Market Details"
+description: "Read Event Markets event, market, outcome, and trading metadata."
+---
+
+A market belongs to an Event and exposes one or more outcome tokens. Use the market response as the source for identifiers and trading metadata.
+
+## Lookup endpoints
+
+```http
+GET /api/v4/event_markets/events/{event_id}
+GET /api/v4/event_markets/events/slug/{slug}
+GET /api/v4/event_markets/markets/{market_id}
+GET /api/v4/event_markets/markets/slug/{slug}
+```
+
+Important fields commonly include:
+
+- Event and market IDs
+- Slugs and display titles
+- Market status and lifecycle timestamps
+- Outcome labels
+- Outcome token IDs
+- Price and order-size constraints
+
+Use the returned token ID with the [Market Data](/event-markets-api/market-data) endpoints. Re-read the market before submitting an order so that status and constraints are current.

@@ -1,0 +1,18 @@
+---
+title: "Event Contracts Account Data"
+sidebarTitle: "Account Data"
+description: "Read authenticated Event Contracts orders, trades, positions, balances, and fund flows."
+---
+
+These endpoints are private and require gateway authentication.
+
+```http
+GET /api/v4/event_contract/usertrades
+GET /api/v4/event_contract/positions
+GET /api/v4/event_contract/positions/settled
+GET /api/v4/event_contract/balance
+GET /api/v4/event_contract/fund_flows
+GET /api/v4/event_contract/fee/current
+```
+
+Responses are scoped to the authenticated account supplied by the gateway. Do not construct or expose internal account headers.
