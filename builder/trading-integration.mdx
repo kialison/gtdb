@@ -1,0 +1,57 @@
+---
+title: "交易接入"
+description: "使用现有 PerpDEX OpenAPI 接入行情、订单、仓位、保证金及实时交易数据。"
+---
+
+交易接入主要使用现有 **PerpDEX OpenAPI**。本页说明 Builder 需要覆盖的产品能力，具体字段、请求参数及返回结构请直接查看 API Reference。
+
+## 市场与行情
+
+Builder 前端通常需要接入：
+
+- 合约与交易对信息
+- Orderbook
+- 最新成交
+- K 线
+- Ticker
+- 标记价格、指数及资金费率
+- 风险限额等交易参数
+
+## 订单
+
+需要根据产品范围支持对应订单能力，例如：
+
+- 下单
+- 查询订单
+- 撤单
+- 改单
+- 批量订单
+- 成交记录
+
+## 仓位与保证金
+
+交易页面需要正确展示并处理：
+
+- 当前仓位
+- 仓位方向与模式
+- 杠杆
+- 保证金
+- 风险限额
+- 强平及 ADL 相关信息
+
+## 实时数据
+
+对于 Orderbook、成交、订单状态及仓位等需要实时刷新的数据，优先使用对应实时通道；REST API 用于初始化、查询和必要的补偿请求。
+
+<CardGroup cols={2}>
+  <Card title="PerpDEX API 概览" href="/api-reference/perpdex/overview" icon="code">
+    查看 API 分类、环境及基础说明。
+  </Card>
+  <Card title="API 鉴权" href="/api-reference/perpdex/authentication" icon="key">
+    查看私有交易请求的鉴权规则。
+  </Card>
+</CardGroup>
+
+<Warning>
+不要在 Builder 文档中复制一套接口定义。接口字段、参数和错误码统一以 API Reference 为准，避免两份文档产生版本差异。
+</Warning>
