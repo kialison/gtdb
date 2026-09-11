@@ -1,0 +1,48 @@
+---
+title: "Builder 能力"
+description: "了解项目方可基于 DexBuilder 使用的核心能力。"
+---
+
+Builder 可以基于 DexBuilder 的底层能力构建自己的交易产品。这里关注的是 **项目方能使用哪些能力**，而不是逐个解释 API 参数。
+
+## 核心能力
+
+<CardGroup cols={2}>
+  <Card title="账户体系" icon="user-shield">
+    支持项目侧接入账户创建、认证和账户状态管理。
+  </Card>
+  <Card title="资产与充提" icon="wallet">
+    支持充值、提现、资产查询及相关资金流程。
+  </Card>
+  <Card title="市场数据" icon="chart-candlestick">
+    提供合约信息、行情、盘口、成交、K 线及资金费率等数据。
+  </Card>
+  <Card title="交易" icon="arrow-right-arrow-left">
+    支持订单、撤单、改单、仓位、保证金及风险参数等交易能力。
+  </Card>
+  <Card title="实时数据" icon="bolt">
+    通过 WebSocket 获取行情、订单、成交、仓位等实时变化。
+  </Card>
+  <Card title="Builder 管理" icon="sliders">
+    项目上线后可使用项目级数据、运营和后台管理能力。
+  </Card>
+</CardGroup>
+
+## 文档如何分工
+
+本板块用于回答：
+
+- Builder 应该按什么顺序接入？
+- 哪些能力需要项目方实现？
+- DexBuilder 提供什么？
+- 上线前需要确认什么？
+
+具体 Endpoint、参数、签名方式和返回字段，请查看 **API Reference**。
+
+<Card title="查看 PerpDEX API Reference" href="/api-reference/perpdex/overview" icon="code">
+  进入接口文档查看具体开发细节。
+</Card>
+
+<Note>
+Builder 专属管理 API 会按项目能力逐步开放。未在 API Reference 中出现的能力，不应视为已经对外提供接口。
+</Note>
