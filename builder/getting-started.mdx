@@ -1,0 +1,44 @@
+---
+title: "开始构建"
+description: "从创建 Builder 到完成测试上线，快速了解 DexBuilder 的接入流程。"
+---
+
+按照以下步骤完成 Builder 接入。
+
+<Steps>
+  <Step title="创建 Builder">
+    提交 Builder 名称、项目信息、联系方式及接入方式，完成 Builder 身份创建。
+  </Step>
+  <Step title="选择接入方式">
+    根据产品需求选择标准化接入或基于 OpenAPI 自定义开发。
+  </Step>
+  <Step title="完成身份与权限配置">
+    获取 Builder 标识并配置项目级管理权限，用于后续识别用户来源和 Builder 级能力。
+  </Step>
+  <Step title="接入交易能力">
+    根据产品范围接入行情、账户、订单、仓位及资产等能力。
+  </Step>
+  <Step title="配置产品与手续费">
+    完成品牌、交易市场及相关产品配置。Builder 手续费配置能力将逐步开放。
+  </Step>
+  <Step title="测试并上线">
+    在正式上线前完成交易链路、异常场景和权限安全检查。
+  </Step>
+</Steps>
+
+## 推荐阅读
+
+<CardGroup cols={2}>
+  <Card title="接入方式" href="/builder/integration" icon="plug">
+    选择适合项目的接入方案。
+  </Card>
+  <Card title="Builder 身份与权限" href="/builder/identity-permissions" icon="shield-halved">
+    了解 Builder ID、管理权限与普通交易用户的区别。
+  </Card>
+  <Card title="API Reference" href="/api-reference/perpdex/overview" icon="code">
+    查看当前已开放的 PerpDEX API。
+  </Card>
+  <Card title="上线检查清单" href="/builder/launch-checklist" icon="list-check">
+    上线前逐项确认关键能力。
+  </Card>
+</CardGroup>
