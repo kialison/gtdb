@@ -1,44 +1,53 @@
 ---
 title: "开始构建"
-description: "从创建 Builder 到完成测试上线，快速了解 DexBuilder 的接入流程。"
+description: "面向项目方，从 Builder 创建到 DEX 上线的完整接入流程。"
 ---
 
-按照以下步骤完成 Builder 接入。
+本板块面向 **希望基于 DexBuilder 构建并运营独立交易产品的项目方**。普通交易用户无需阅读本板块；具体接口参数请前往 API Reference。
+
+## 构建流程
 
 <Steps>
+  <Step title="了解 DexBuilder">
+    先确认 DexBuilder 提供的基础设施能力，以及 Builder 项目方需要自行负责的产品、前端和运营范围。
+  </Step>
   <Step title="创建 Builder">
-    提交 Builder 名称、项目信息、联系方式及接入方式，完成 Builder 身份创建。
+    完成项目接入申请并获取 Builder 身份，用于识别项目、用户来源和后续项目级配置。
   </Step>
   <Step title="选择接入方式">
-    根据产品需求选择标准化接入或基于 OpenAPI 自定义开发。
+    根据项目现有前端、开发资源和定制需求确定接入方案，并明确双方的开发边界。
   </Step>
-  <Step title="完成身份与权限配置">
-    获取 Builder 标识并配置项目级管理权限，用于后续识别用户来源和 Builder 级能力。
+  <Step title="接入账户与资产">
+    完成账户创建、认证、充值、提现和资产展示等基础流程。
   </Step>
   <Step title="接入交易能力">
-    根据产品范围接入行情、账户、订单、仓位及资产等能力。
+    接入行情、下单、撤单、仓位、成交回报及实时数据，形成完整交易链路。
   </Step>
-  <Step title="配置产品与运营能力">
-    完成产品配置，并开通项目方所需的运营后台能力。
+  <Step title="完成 Builder 配置">
+    确认手续费、收益规则以及 Builder 管理后台的项目配置和运营权限。
   </Step>
-  <Step title="测试并上线">
-    在正式上线前完成交易链路、异常场景、权限安全及运营后台检查。
+  <Step title="联调、验收并上线">
+    完成主流程、异常场景、风控与权限测试后进入正式环境。
   </Step>
 </Steps>
 
-## 接下来做什么
+## 从这里开始
 
 <CardGroup cols={2}>
-  <Card title="接入概览" href="/builder/integration" icon="plug">
-    先了解用户侧 OpenAPI、Builder 运营后台以及后续 Builder API 的职责边界。
+  <Card title="DexBuilder 架构" href="/builder/architecture" icon="diagram-project">
+    先了解项目方与 DexBuilder 之间的职责边界。
   </Card>
-  <Card title="运营后台" href="/builder/operations-console" icon="gauge-high">
-    查看项目方上线后可使用的数据、用户、返佣、公告和资金管理能力。
+  <Card title="Builder 能力" href="/builder/capabilities" icon="layer-group">
+    查看构建一个 DEX 可使用的核心基础设施能力。
+  </Card>
+  <Card title="构建你的 DEX" href="/builder/create-builder" icon="hammer">
+    从 Builder 创建开始进入正式接入流程。
   </Card>
   <Card title="API Reference" href="/api-reference/perpdex/overview" icon="code">
-    查看当前已开放的 PerpDEX OpenAPI、鉴权方式和接口参数。
-  </Card>
-  <Card title="上线检查清单" href="/builder/launch-checklist" icon="list-check">
-    上线前逐项确认账户、交易、资产、运营和安全配置。
+    开发时查看具体接口、请求参数和返回字段。
   </Card>
 </CardGroup>
+
+<Note>
+Builder 专属的项目管理、运营和手续费能力会与普通交易用户 API 保持权限隔离；当前开放范围以实际合作配置及 API Reference 为准。
+</Note>
