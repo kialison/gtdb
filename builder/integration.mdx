@@ -1,63 +1,62 @@
 ---
-title: "接入概览"
-description: "了解 Builder 接入 DexBuilder 时，用户侧交易能力、项目方运营后台与 Builder API 的职责边界。"
+title: "选择接入方式"
+description: "根据项目现有前端、开发资源和定制需求确定 DexBuilder 接入方案。"
 ---
 
-Builder 接入 DexBuilder 后，主要会使用两类能力：**用户侧交易能力**和**项目方运营能力**。
+在正式开发前，Builder 需要先确认产品层与基础设施层的分工。不同项目可以采用不同接入深度，但核心目标一致：**由 Builder 负责自己的产品体验，由 DexBuilder 提供底层交易能力。**
 
-```text
-Builder 产品
-   │
-   ├─ 用户侧前端
-   │    └─ DexBuilder OpenAPI
-   │         ├─ 行情与合约信息
-   │         ├─ 账户与资产
-   │         ├─ 下单 / 撤单 / 改单
-   │         ├─ 仓位与保证金
-   │         └─ 风险与交易数据
-   │
-   └─ 项目方运营
-        └─ Builder 运营后台
-             ├─ 运营数据
-             ├─ 用户与交易量
-             ├─ 手续费与收益
-             ├─ 邀请返佣
-             ├─ 公告管理
-             ├─ 充提与资金管理
-             └─ 权限与操作日志
-```
+## 常见接入方式
 
-## 用户侧：通过 OpenAPI 完成交易接入
+### 使用现有前端资源
 
-当前公开 OpenAPI 主要面向交易用户侧，Builder 可以使用现有 PerpDEX API 完成行情、账户、订单、仓位及风险等交易能力接入。
+适合希望较快上线、并优先复用现有产品能力的项目。
 
-<CardGroup cols={2}>
-  <Card title="账户与认证" href="/builder/account-authentication" icon="key">
-    了解账户、鉴权及用户请求如何接入现有 OpenAPI。
-  </Card>
-  <Card title="交易接入" href="/builder/trading-integration" icon="chart-line">
-    了解行情、订单、仓位、保证金和实时数据的接入范围。
-  </Card>
-  <Card title="资产与结算" href="/builder/assets-settlement" icon="wallet">
-    了解资产查询、充提、资金记录与结算相关能力的职责划分。
-  </Card>
-  <Card title="API Reference" href="/api-reference/perpdex/overview" icon="code">
-    查看当前已经开放的接口及参数定义。
-  </Card>
-</CardGroup>
+项目方重点完成：
 
-## 项目方：通过运营后台完成日常运营
+- 品牌与页面配置
+- 域名及环境配置
+- 产品范围确认
+- 运营策略与上线验收
 
-Builder 上线后，项目方可以通过独立运营后台查看业务数据并进行运营管理。后台能力与用户侧交易 API 分离，避免把项目级管理权限暴露给普通用户。
+<Info>
+现有前端资源的可复用范围，以项目实际对接方案为准。
+</Info>
 
-<Card title="查看 Builder 运营后台" href="/builder/operations-console" icon="gauge-high">
-  查看数据看板、用户、交易量、返佣、公告、资金及系统权限等后台能力。
+### 自研前端 + OpenAPI
+
+适合已有钱包、交易平台或希望高度定制交易体验的项目。
+
+项目方需要自行完成：
+
+- 账户与认证流程
+- 行情与交易页面
+- 资产、订单和仓位展示
+- API / WebSocket 接入
+- 异常处理、状态同步和前端风控提示
+
+DexBuilder 提供底层账户、资产、行情、交易、风险和结算能力。
+
+## 如何选择
+
+| 维度 | 复用现有前端资源 | 自研前端 + OpenAPI |
+| --- | --- | --- |
+| 上线速度 | 较快 | 取决于开发周期 |
+| UI 定制 | 中 | 高 |
+| 交易流程定制 | 中 | 高 |
+| 项目开发工作量 | 较少 | 较多 |
+| 适合项目 | 快速上线 | 钱包、交易平台、专业开发团队 |
+
+## 下一步
+
+接入方式确认后，建议按照以下顺序推进：
+
+1. 账户与认证
+2. 充提与资产
+3. 交易接入
+4. 实时数据
+5. Builder 配置
+6. 联调与上线
+
+<Card title="查看 API Reference" href="/api-reference/perpdex/overview" icon="code">
+  自研前端时，具体 Endpoint、参数和鉴权方式请以 API Reference 为准。
 </Card>
-
-## Builder API
-
-当前 API Reference 主要是用户交易侧 OpenAPI。面向项目方的 Builder API 将根据业务需要逐步补充，例如手续费查询、运营数据、用户统计、返佣及其他项目级能力。
-
-<Note>
-Builder API 尚未完整开放的能力，不会在文档中写成已支持接口；现阶段优先通过运营后台提供项目方管理能力。
-</Note>
