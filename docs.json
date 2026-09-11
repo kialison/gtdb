@@ -71,7 +71,22 @@
             ]
           },
           {
-            "tab": "在 DexBuilder 上构建"
+            "tab": "在 DexBuilder 上构建",
+            "groups": [
+              {
+                "group": "开始构建",
+                "pages": [
+                  "builder/overview",
+                  "builder/getting-started",
+                  "builder/integration",
+                  "builder/identity-permissions",
+                  "builder/fees-revenue",
+                  "builder/users-operations",
+                  "builder/launch-checklist",
+                  "builder/faq"
+                ]
+              }
+            ]
           },
           {
             "tab": "API Reference",
