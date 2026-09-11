@@ -1,57 +1,54 @@
 ---
 title: "交易接入"
-description: "使用现有 PerpDEX OpenAPI 接入行情、订单、仓位、保证金及实时交易数据。"
+description: "项目方如何把 DexBuilder 的行情、订单、仓位与风险能力接入自己的交易产品。"
 ---
 
-交易接入主要使用现有 **PerpDEX OpenAPI**。本页说明 Builder 需要覆盖的产品能力，具体字段、请求参数及返回结构请直接查看 API Reference。
+交易接入的目标，是把底层交易能力组合成一个完整、稳定的用户交易链路。
 
-## 市场与行情
+## 交易链路
 
-Builder 前端通常需要接入：
+```text
+市场数据
+   ↓
+选择交易对
+   ↓
+填写订单
+   ↓
+提交订单
+   ↓
+订单 / 成交状态
+   ↓
+仓位与保证金更新
+```
 
-- 合约与交易对信息
-- Orderbook
-- 最新成交
-- K 线
-- Ticker
-- 标记价格、指数及资金费率
-- 风险限额等交易参数
+## Builder 需要接入的核心能力
 
-## 订单
+### 市场与合约信息
 
-需要根据产品范围支持对应订单能力，例如：
+用于构建交易对列表、交易规则、价格精度、数量精度及相关产品约束。
 
-- 下单
-- 查询订单
-- 撤单
-- 改单
-- 批量订单
-- 成交记录
+### 下单与订单管理
 
-## 仓位与保证金
+完成下单、撤单、改单、订单状态展示及失败状态处理。
 
-交易页面需要正确展示并处理：
+### 仓位与保证金
 
-- 当前仓位
-- 仓位方向与模式
-- 杠杆
-- 保证金
-- 风险限额
-- 强平及 ADL 相关信息
+展示当前持仓、未实现盈亏、保证金、杠杆及风险相关状态，并在用户操作后及时刷新。
 
-## 实时数据
+### 风险提示
 
-对于 Orderbook、成交、订单状态及仓位等需要实时刷新的数据，优先使用对应实时通道；REST API 用于初始化、查询和必要的补偿请求。
+项目方前端需要根据返回状态展示必要的风险信息，例如保证金不足、订单被拒绝、接近强平等情况。
 
-<CardGroup cols={2}>
-  <Card title="PerpDEX API 概览" href="/api-reference/perpdex/overview" icon="code">
-    查看 API 分类、环境及基础说明。
-  </Card>
-  <Card title="API 鉴权" href="/api-reference/perpdex/authentication" icon="key">
-    查看私有交易请求的鉴权规则。
-  </Card>
-</CardGroup>
+## 推荐接入顺序
 
-<Warning>
-不要在 Builder 文档中复制一套接口定义。接口字段、参数和错误码统一以 API Reference 为准，避免两份文档产生版本差异。
-</Warning>
+1. 合约与市场数据
+2. Orderbook 与成交数据
+3. 下单
+4. 查询 / 撤销 / 修改订单
+5. 仓位与保证金
+6. 成交回报与状态同步
+7. 异常场景与风控提示
+
+<Card title="查看 PerpDEX API Reference" href="/api-reference/perpdex/overview" icon="code">
+  具体接口、参数、订单类型和返回字段请以 API Reference 为准。
+</Card>
