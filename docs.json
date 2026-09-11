@@ -342,6 +342,32 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "Event Markets API",
+                "pages": [
+                  "broker-api/event-markets/overview",
+                  "broker-api/event-markets/discover",
+                  "broker-api/event-markets/details",
+                  "broker-api/event-markets/market-data",
+                  "broker-api/event-markets/orders",
+                  "broker-api/event-markets/account-data",
+                  "broker-api/event-markets/fees",
+                  "broker-api/event-markets/errors"
+                ]
+              },
+              {
+                "group": "Event Contracts API",
+                "pages": [
+                  "broker-api/event-contracts/overview",
+                  "broker-api/event-contracts/discover",
+                  "broker-api/event-contracts/details",
+                  "broker-api/event-contracts/market-data",
+                  "broker-api/event-contracts/orders",
+                  "broker-api/event-contracts/account-data",
+                  "broker-api/event-contracts/errors",
+                  "broker-api/event-contracts/fees"
+                ]
               }
             ]
           }
