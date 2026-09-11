@@ -75,32 +75,35 @@
             "pages": [
               "builder/getting-started",
               {
-                "group": "接入指南",
+                "group": "了解 DexBuilder",
                 "pages": [
+                  "builder/architecture",
+                  "builder/capabilities"
+                ]
+              },
+              {
+                "group": "构建你的 DEX",
+                "pages": [
+                  "builder/create-builder",
                   "builder/integration",
                   "builder/account-authentication",
+                  "builder/assets-settlement",
                   "builder/trading-integration",
-                  "builder/assets-settlement"
+                  "builder/realtime-data"
                 ]
               },
               {
-                "group": "Builder 运营",
+                "group": "Builder 配置",
                 "pages": [
-                  "builder/operations-console",
-                  "builder/operations-dashboard",
                   "builder/fees-revenue",
-                  "builder/users-volume",
-                  "builder/referrals",
-                  "builder/announcements",
-                  "builder/funds-management",
-                  "builder/access-audit"
+                  "builder/operations-console"
                 ]
               },
               {
-                "group": "上线与支持",
+                "group": "上线",
                 "pages": [
                   "builder/launch-checklist",
-                  "builder/faq"
+                  "builder/operations-support"
                 ]
               }
             ]
