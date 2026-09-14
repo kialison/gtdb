@@ -73,6 +73,7 @@
           {
             "tab": "在 DexBuilder 上构建",
             "pages": [
+              "untitled-page-22",
               "builder/getting-started",
               {
                 "group": "了解 DexBuilder",
@@ -232,16 +233,6 @@
                     ]
                   },
                   {
-                    "group": "WebSocket",
-                    "pages": [
-                      "event-markets/websocket/overview",
-                      "event-markets/websocket/protocol",
-                      "event-markets/websocket/public-channels",
-                      "event-markets/websocket/private-channels",
-                      "event-markets/websocket/authentication"
-                    ]
-                  },
-                  {
                     "group": "Trading",
                     "pages": [
                       "event-markets/untitled-page-18",
@@ -266,6 +257,16 @@
                       "event-markets/api/positions",
                       "event-markets/api/public-utilities",
                       "event-markets/api/account"
+                    ]
+                  },
+                  {
+                    "group": "WebSocket",
+                    "pages": [
+                      "event-markets/websocket/overview",
+                      "event-markets/websocket/protocol",
+                      "event-markets/websocket/public-channels",
+                      "event-markets/websocket/private-channels",
+                      "event-markets/websocket/authentication"
                     ]
                   }
                 ]
