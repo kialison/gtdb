@@ -1,0 +1,18 @@
+---
+title: "Event Contracts API Errors"
+sidebarTitle: "Errors"
+description: "HTTP status codes and JSON errors for Event Contracts API."
+---
+
+Errors return JSON with `label` and `message`.
+
+| Status | Meaning |
+| --- | --- |
+| `400` | Invalid request parameters |
+| `401` | Gateway authentication is missing or invalid |
+| `403` | The authenticated account is not allowed to access the resource |
+| `404` | The requested resource does not exist |
+| `429` | Rate limit exceeded |
+| `5xx` | Server-side failure |
+
+Use `label` for programmatic handling and `message` for diagnostics.

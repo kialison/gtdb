@@ -1,0 +1,13 @@
+---
+title: "Event Markets Fees"
+sidebarTitle: "Fees"
+description: "Authenticated Event Markets fee configuration."
+---
+
+Fee configuration is private and requires gateway authentication.
+
+```http
+GET /api/v4/event_markets/fee
+```
+
+Use the current response as the source of truth for applicable fee parameters. Authentication details are gateway-managed; do not send internal account-identity headers.

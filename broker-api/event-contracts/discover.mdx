@@ -1,0 +1,19 @@
+---
+title: "Discover Event Contracts"
+sidebarTitle: "Discover Markets"
+description: "Public Event Contracts discovery endpoints."
+---
+
+Discovery is public and limited to the rolling 30-day parent Event window.
+
+```http
+GET /api/v4/event_contract/events
+GET /api/v4/event_contract/events/{event_id}
+GET /api/v4/event_contract/events/slug/{slug}
+GET /api/v4/event_contract/markets
+GET /api/v4/event_contract/markets/{market_id}
+GET /api/v4/event_contract/markets/slug/{slug}
+GET /api/v4/event_contract/tags
+```
+
+List responses contain `items` and may include `next_cursor`. Use the returned cursor for the next request.

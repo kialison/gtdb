@@ -1,0 +1,17 @@
+---
+title: "Event Contracts API Overview"
+sidebarTitle: "Overview"
+description: "Base URL, public data, private account endpoints, pagination, and visibility rules."
+---
+
+The Event Contracts API provides HTTP JSON endpoints for events, markets, outcome tokens, prices, order books, trades, orders, positions, and account data.
+
+## Base URL
+
+`https://broker.dexbuilder.com`
+
+Public market-data endpoints do not require authentication. Private endpoints require gateway authentication. Authentication details are gateway-managed; do not construct or send internal account-identity headers.
+
+List endpoints use `limit`, `cursor`, and `next_cursor`; `limit` defaults to 20 and accepts up to 100. Public results are limited to records whose parent Event was created within the rolling 30-day window.
+
+Errors return JSON with `label` and `message`.

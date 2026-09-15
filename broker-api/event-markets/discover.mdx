@@ -1,0 +1,25 @@
+---
+title: "Discover Event Markets"
+sidebarTitle: "Discover Markets"
+description: "Public Event and Market discovery endpoints."
+---
+
+Discovery is public and limited to the rolling 30-day parent Event window.
+
+```http
+GET /api/v4/event_markets/events
+GET /api/v4/event_markets/events/{event_id}
+GET /api/v4/event_markets/events/slug/{slug}
+GET /api/v4/event_markets/markets
+GET /api/v4/event_markets/markets/{market_id}
+GET /api/v4/event_markets/markets/slug/{slug}
+GET /api/v4/event_markets/tags
+```
+
+Use `active`, `closed`, `tag_slug`, date, sort, `limit`, and `cursor` filters where supported.
+
+```bash
+curl "https://broker.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true"
+```
+
+List responses contain `items` and may include `next_cursor`.
