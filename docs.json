@@ -90,7 +90,8 @@
                       "zh/event-markets/discover-markets",
                       "zh/event-markets/analytics",
                       "zh/event-markets/market-prices-orderbooks",
-                      "zh/event-markets/realtime-data"
+                      "zh/event-markets/realtime-data",
+                      "zh/event-markets/chainlink-twap"
                     ]
                   },
                   {
