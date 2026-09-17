@@ -1,0 +1,49 @@
+---
+title: "账户活动"
+sidebarTitle: "账户活动"
+description: "查询当前认证账户的事件合约持仓、成交和相关账户活动。"
+---
+
+事件合约 API 提供当前认证账户的持仓和成交记录。相关接口属于私有接口，需要完成认证后调用。
+
+生产环境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查询持仓
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+常见返回字段包括：`position_id`、`event_id`、`token_id`、`outcome`、`size`、`available_size`、`locked_size`、`avg_open_price`、`position_value`、`settlement_status`、`won` 和 `updated_at`。
+
+## 查询单个持仓
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/positions/<position_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+## 查询个人成交
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+个人成交记录通常包含 `trade_id`、`order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate` 等字段。
+
+<Note>
+账户类接口用于查询当前认证用户的数据，不建议将其理解为任意钱包地址的公开链上查询接口。
+</Note>
