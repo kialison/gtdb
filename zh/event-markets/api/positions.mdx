@@ -1,0 +1,62 @@
+---
+title: "持仓与个人成交"
+sidebarTitle: "持仓与个人成交"
+description: "查询预测市场持仓、个人成交和相关私有账户数据。"
+---
+
+本页接口属于私有接口，需要认证。
+
+## 查询持仓列表
+
+```text
+GET /api/v4/event_markets/positions
+```
+
+支持 `event_id`、`condition_id`、`settlement_status`、`limit` 和 `cursor`。
+
+### 持仓字段
+
+| 字段 | 说明 |
+| --- | --- |
+| `position_id` | 持仓 ID |
+| `event_id` / `token_id` | 事件与结果 Token ID |
+| `outcome` | 对应结果 |
+| `size` | 总持仓数量 |
+| `available_size` | 可用数量 |
+| `locked_size` | 锁定数量 |
+| `avg_open_price` | 平均开仓价格 |
+| `position_value` | 当前持仓价值 |
+| `claimable_amount` | 可领取金额 |
+| `settlement_status` | 结算状态 |
+| `won` | 结算后是否获胜 |
+| `updated_at` | 更新时间 |
+
+## 查询持仓详情与平仓
+
+```text
+GET /api/v4/event_markets/positions/{position_id}
+POST /api/v4/event_markets/positions/{position_id}/close
+```
+
+## 查询个人成交
+
+```text
+GET /api/v4/event_markets/usertrades
+```
+
+支持 `condition_id`、`from`、`to`、`sort_type`、`order_id`、`token_id`、`limit` 和 `cursor`。
+
+个人成交字段通常包括 `trade_id`、`order_id`、`client_order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate`。
+
+## 其他账户接口
+
+预测市场还提供资产、资金流水、手续费与 Claim 相关接口。具体字段请参见「账户、手续费与领取」。
+
+## 常见错误
+
+| HTTP 状态 | 说明 |
+| --- | --- |
+| `400` | 参数或请求 Body 无效 |
+| `401` | 认证失败 |
+| `404` | 资源不存在或当前账户不可见 |
+| `503` | 上游依赖暂时不可用 |
