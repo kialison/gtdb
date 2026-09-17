@@ -59,7 +59,25 @@
               {
                 "group": "预测市场",
                 "pages": [
-                  "untitled-page-15"
+                  {
+                    "group": "入门",
+                    "pages": []
+                  },
+                  {
+                    "group": "预测市场介绍",
+                    "pages": [
+                      "zh/event-markets/overview",
+                      "zh/event-markets/event-markets"
+                    ]
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "预测市场",
+                    "pages": []
+                  }
                 ]
               },
               {
