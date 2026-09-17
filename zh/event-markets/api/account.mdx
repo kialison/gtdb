@@ -1,0 +1,70 @@
+---
+title: "账户、手续费与领取"
+sidebarTitle: "账户与领取"
+description: "查询预测市场账户资产、资金流水、手续费以及结算后可领取金额。"
+---
+
+本页接口均为私有接口，需要认证。
+
+## 账户资产
+
+```text
+GET /api/v4/event_markets/assets
+```
+
+常见字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `fund_total` | 账户总资金 |
+| `prediction_market_asset` | 预测市场业务资产 |
+| `prediction_position_value` | 预测市场持仓价值 |
+| `spot_usdt_balance` | 现货 USDT 余额 |
+| `unclaimed_amount` | 待领取金额 |
+
+## 资金流水
+
+```text
+GET /api/v4/event_markets/account_book
+```
+
+支持 `limit` 与 `cursor`。记录通常包含 `amount`、`condition_id`、`created_at`、`currency`、`direction` 和 `related_order_id`。
+
+## 手续费
+
+```text
+GET /api/v4/event_markets/fee
+```
+
+可通过 `fee_type` 查询 `fixed` 或 `dynamic` 费率。返回项通常包含 `category`、`fee_mode`、`maker_fee_rate` 和 `taker_fee_rate`。
+
+## 可领取金额
+
+```text
+GET /api/v4/event_markets/claims/available
+GET /api/v4/event_markets/claims/available/{token_id}
+```
+
+用于查询当前账户已结算且可领取的预测市场资产。
+
+## 发起领取
+
+```text
+POST /api/v4/event_markets/claims
+```
+
+请求示例：
+
+```json
+{"event_id":"event-123"}
+```
+
+返回 `record_id`、`status` 和 `total_count`。
+
+## 查询领取结果
+
+```text
+GET /api/v4/event_markets/claims/{record_id}
+```
+
+返回 `record_id`、`status`、`total_count`、`success_count`、`failed_count`、`initiated_at` 和 `completed_at` 等字段。
