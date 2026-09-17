@@ -1,0 +1,86 @@
+---
+title: "市场与事件"
+sidebarTitle: "市场与事件"
+description: "了解事件合约的基本数据结构：Market 与 Event 的关系、标识方式以及如何通过 API 查询。"
+---
+
+事件合约围绕两个核心概念组织：**Market（市场）** 与 **Event（事件）**。理解二者关系，是进行数据查询、交易和产品展示的基础。
+
+![Image](/images/image-1.png "Image")
+
+## Market
+
+Market 是可交易的最小单元。每个 Market 表示一个可被明确判断结果的问题，通常包含 Yes / No 两个结果。
+
+每个 Market 通常包含：
+
+| 标识 | 说明 |
+| --- | --- |
+| Condition ID | CTF 合约中该市场条件的唯一标识 |
+| Question ID | 用于结果结算的市场问题哈希 |
+| Token IDs | 用于 CLOB 交易的 ERC-1155 结果代币 ID，通常分别对应 Yes 与 No |
+
+### 示例
+
+例如：
+
+> _“Bitcoin 会在 2026 年 12 月前达到 100,000 美元吗？”_
+
+将生成两个结果代币：
+
+- **Yes Token**：若条件成立，可在结算后兑换为 1 USDT；
+- **No Token**：若条件不成立，可在结算后兑换为 1 USDT。
+
+## Event
+
+Event 是用于组织一个或多个相关 Market 的容器。它既可以只包含一个 Market，也可以承载多个相互关联的结果市场。
+
+### 单市场 Event
+
+当一个 Event 只包含一个 Market 时，Event 与 Market 在产品语义上基本对应：
+
+```text
+Event: Bitcoin 会在 2026 年 12 月前达到 100,000 美元吗？
+   └── Market: Bitcoin 会在 2026 年 12 月前达到 100,000 美元吗？ (Yes/No)
+```
+
+### 多市场 Event
+
+当一个 Event 包含多个 Market 时，可以将多个相关问题组织在同一个事件下。部分多结果 Event 中，各个 Market 的结果互斥，这类市场可以组成 Negative Risk Group：最终只有一个 Market 结算为 Yes，其余均结算为 No。
+
+```text
+Event: 谁将赢得总统选举？
+   ├── Market: 候选人 A？ (Yes/No)
+   ├── Market: 候选人 B？ (Yes/No)
+   ├── Market: 候选人 C？ (Yes/No)
+   └── Market: 其他？ (Yes/No)
+```
+
+## 标识 Market 与 Event
+
+Market 与 Event 均具有唯一 slug，可以通过 slug 查询指定资源。
+
+```text
+https://example.com/event/fed-decision-in-october
+                          └── slug: fed-decision-in-october
+```
+
+```bash
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/fed-decision-in-october"
+```
+
+## 体育市场注意事项
+
+对于体育类市场，比赛正式开始后，未成交限价单可能会被自动撤销以清理订单簿。由于实际开赛时间可能提前或延后，接入方应在比赛开始前后主动监控订单状态，不能仅依赖计划开赛时间。
+
+## 下一步
+
+<CardGroup cols={2}>
+  <Card title="价格与订单簿" icon="chart-line" href="/zh/event-contracts/prices-orderbook">
+    了解价格如何形成以及订单簿如何工作。
+  </Card>
+
+  <Card title="发现市场" icon="database" href="/zh/event-contracts/discover-markets">
+    开始通过 API 查询 Event 与 Market。
+  </Card>
+</CardGroup>
