@@ -1,0 +1,76 @@
+---
+title: "账户活动"
+sidebarTitle: "账户活动"
+description: "查询当前认证账户的预测市场持仓、成交和相关账户活动。"
+---
+
+预测市场 API 提供当前认证账户的持仓和成交记录。相关接口属于私有接口，需要完成认证后调用。
+
+生产环境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查询持仓
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+常见返回字段包括：
+
+| 字段 | 说明 |
+| --- | --- |
+| `position_id` | 持仓 ID |
+| `event_id` | 事件 ID |
+| `token_id` | 结果代币 ID |
+| `outcome` | 对应结果 |
+| `size` | 总持仓数量 |
+| `available_size` | 可用数量 |
+| `locked_size` | 锁定数量 |
+| `avg_open_price` | 平均开仓价格 |
+| `position_value` | 当前持仓价值 |
+| `settlement_status` | 结算状态 |
+| `won` | 市场结算后是否获胜 |
+| `updated_at` | 最后更新时间 |
+
+使用返回的 `next_cursor` 作为下一页请求的 `cursor`。
+
+## 查询单个持仓
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/positions/<position_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+## 查询个人成交
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+个人成交记录通常包含 `trade_id`、`order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate` 等字段。
+
+## 查询范围
+
+当前接口主要围绕已认证账户提供数据，包括：
+
+- 持仓；
+- 个人成交；
+- 订单；
+- 账户资产和资金流水；
+- 结算与领取记录。
+
+<Note>
+账户类接口用于查询当前认证用户的数据，不建议将其理解为任意钱包地址的公开链上查询接口。
+</Note>
