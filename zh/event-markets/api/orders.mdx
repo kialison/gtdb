@@ -1,0 +1,73 @@
+---
+title: "订单接口"
+sidebarTitle: "订单"
+description: "创建、查询和取消预测市场私有订单。"
+---
+
+本页订单接口均为私有接口，需要完成认证。
+
+## 创建订单
+
+```text
+POST /api/v4/event_markets/orders
+```
+
+### 请求字段
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `token_id` | string | 交易结果 Token ID |
+| `side` | string | `BUY` 或 `SELL` |
+| `price` | string | 限价价格 |
+| `size` | string | 下单数量 |
+| `total_cost` | string | 指定模式下使用的总成本 |
+| `order_type` | string | 订单类型 |
+| `order_mode` | string | 有效方式 / 执行模式 |
+| `client_order_id` | string | 客户端自定义订单 ID |
+| `post_only` | boolean | 是否仅作为 Maker |
+| `sell_all` | boolean | 是否卖出全部可用持仓 |
+| `expire_time` | integer | 到期时间 |
+
+```bash
+curl -X POST 'https://api.dexbuilder.com/api/v4/event_markets/orders' \
+  -H 'Content-Type: application/json' \
+  -d '{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0}'
+```
+
+成功受理后返回 `order_id`、`client_order_id`、`status` 和 `created_at`。受理成功不代表已经成交。
+
+## 查询订单列表
+
+```text
+GET /api/v4/event_markets/orders
+```
+
+支持按 `status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 和 `cursor` 筛选。
+
+订单记录通常包含：
+
+- `order_id` / `client_order_id`
+- `event_id` / `condition_id`
+- `token_id` / `outcome`
+- `side` / `order_type` / `order_mode`
+- `price` / `size`
+- `size_matched` / `size_left`
+- `status`
+- `error_code`
+- `expire_time`
+- `created_at` / `updated_at`
+
+## 查询单个订单
+
+```text
+GET /api/v4/event_markets/orders/{order_id}
+```
+
+## 取消订单
+
+```text
+DELETE /api/v4/event_markets/orders/{order_id}
+DELETE /api/v4/event_markets/orders?condition_id={condition_id}
+```
+
+单笔撤单返回订单 ID 和撤单状态；按 `condition_id` 批量撤单时返回 `batch_id`、`status` 和 `total_orders`。
