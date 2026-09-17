@@ -104,7 +104,8 @@
                       "zh/event-markets/wallet-activity",
                       "zh/event-markets/error-codes",
                       "zh/event-markets/positions",
-                      "zh/event-markets/fees"
+                      "zh/event-markets/fees",
+                      "zh/event-markets/realtime-order-updates"
                     ]
                   }
                 ]
