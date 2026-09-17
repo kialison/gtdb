@@ -59,7 +59,10 @@
               {
                 "group": "预测市场",
                 "pages": [
-                  "untitled-page-15"
+                  {
+                    "group": "入门",
+                    "pages": []
+                  }
                 ]
               },
               {
