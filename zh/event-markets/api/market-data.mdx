@@ -1,0 +1,67 @@
+---
+title: "价格与订单簿"
+sidebarTitle: "价格与订单簿"
+description: "查询预测市场公开价格、Ticker、订单簿、价格历史和 K 线数据。"
+---
+
+本页接口均为公开接口，无需认证。
+
+## 常用接口
+
+| 能力 | 接口 |
+| --- | --- |
+| Token 对应市场 | `GET /api/v4/event_markets/tokens/{token_id}/market` |
+| 最新价格 | `GET /api/v4/event_markets/tokens/{token_id}/price` |
+| Ticker | `GET /api/v4/event_markets/tokens/{token_id}/ticker` |
+| 订单簿 | `GET /api/v4/event_markets/tokens/{token_id}/order_book` |
+| 价格历史 | `GET /api/v4/event_markets/tokens/{token_id}/price_history` |
+| 批量价格 | `GET /api/v4/event_markets/tokens/prices` |
+| K 线 | `GET /api/v4/event_markets/tokens/{currency}/candlesticks` |
+
+## 订单簿
+
+```text
+GET /api/v4/event_markets/tokens/{token_id}/order_book
+```
+
+`depth` 可选，默认 20，支持 1–100。
+
+返回字段包括 `token_id`、`condition_id`、`bids`、`asks`、`hash`、`timestamp`、`last_trade_price`、`min_order_size`、`tick_size` 和 `neg_risk`。
+
+```json
+{
+  "token_id": "token-yes",
+  "condition_id": "0xcondition",
+  "bids": [{"price":"0.4200","size":"120.00"}],
+  "asks": [{"price":"0.4300","size":"80.00"}],
+  "last_trade_price": "0.4250",
+  "min_order_size": "1",
+  "tick_size": "0.001"
+}
+```
+
+## 最新价格与 Ticker
+
+最新价格接口返回 `token_id`、`price`、`side` 和 `timestamp`。
+
+Ticker 接口返回 `token_id`、`last_price`、`best_bid`、`best_ask` 和 `timestamp`。
+
+## 价格历史
+
+```text
+GET /api/v4/event_markets/tokens/{token_id}/price_history
+```
+
+必填参数包括 `interval`、`from`、`to`。`interval` 支持如 `5m`、`15m`、`1h`、`4h`、`1d`。
+
+## 批量价格
+
+```text
+GET /api/v4/event_markets/tokens/prices?token_ids=token-yes,token-no
+```
+
+一次最多支持 100 个 Token ID。
+
+## K 线
+
+K 线返回 `t`、`o`、`h`、`l`、`c`、`v`，分别代表时间、开盘价、最高价、最低价、收盘价和成交量。
