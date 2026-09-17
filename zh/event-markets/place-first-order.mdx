@@ -1,0 +1,34 @@
+---
+title: "提交第一笔订单"
+sidebarTitle: "第一笔订单"
+description: "使用已有预测市场账户完成认证，并提交第一笔订单。"
+---
+
+本页演示如何使用已有预测市场账户提交第一笔订单。建议账户至少准备 10 USDT 可用资金。
+
+<Steps>
+  <Step title="完成认证">
+    首先按照私有接口认证要求准备 API Key 与签名信息。
+  </Step>
+  <Step title="选择 Outcome">
+    查询 Market，并从 `outcomes[]` 中选择要交易的 Outcome。订单通过 `token_id` 标识具体结果。
+  </Step>
+  <Step title="提交订单">
+    根据订单簿流动性设置价格与数量，然后向订单接口提交交易请求。
+  </Step>
+  <Step title="等待结算">
+    订单撮合后，相关成交仍可能需要异步完成链上结算。确认结算完成后再读取最终资产状态。
+  </Step>
+  <Step title="检查持仓">
+    查询对应 Market 的持仓，确认买入的 Outcome Token 数量、可用数量与结算状态。
+  </Step>
+</Steps>
+
+<CardGroup cols={2}>
+  <Card title="市场详情" icon="circle-info" href="/zh/event-markets/market-details">
+    获取 Market 的 Token ID、Tick Size 与最小下单数量。
+  </Card>
+  <Card title="提交订单" icon="arrow-up-right" href="/zh/event-markets/place-orders">
+    查看完整下单接口与参数说明。
+  </Card>
+</CardGroup>
