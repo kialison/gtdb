@@ -89,7 +89,8 @@
                       "zh/event-markets/market-details",
                       "zh/event-markets/discover-markets",
                       "zh/event-markets/analytics",
-                      "zh/event-markets/market-prices-orderbooks"
+                      "zh/event-markets/market-prices-orderbooks",
+                      "zh/event-markets/realtime-data"
                     ]
                   },
                   {

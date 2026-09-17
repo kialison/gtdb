@@ -1,0 +1,181 @@
+---
+title: "实时数据"
+sidebarTitle: "实时数据"
+description: "订阅市场、体育、加密资产、股票及评论数据流，无需重复轮询即可保持预测市场数据最新。"
+---
+
+通过预测市场实时数据流保持市场数据最新。
+
+当市场状态及相关数据变化时，可通过实时数据流让应用及时响应，无需重复轮询即可维护应用依赖的公开市场数据。已认证的订单与成交更新请参阅[实时订单更新](/zh/event-markets/realtime-order-updates)。
+
+## 市场数据流
+
+使用市场数据流，使应用与市场订单簿及交易状态的变化保持同步。
+
+```text API
+连接市场 WebSocket：
+wss://ws-subscriptions-clob.polymarket.com/ws/market
+```
+
+<Note>
+  市场 WebSocket 使用应用层心跳。每 10 秒发送文本帧 `PING`，服务器会回复 `PONG`。
+</Note>
+
+连接后，发送包含一个或多个 Token ID 的 `market` 订阅帧：
+
+```json
+{"assets_ids":["<token_id>"],"type":"market"}
+```
+
+<Accordion title="标准市场事件">
+  **订单簿**
+  ```json
+  {"event_type":"book","market":"0x747d...","asset_id":"107505...","timestamp":"1782753357257","hash":"0xabc123…","bids":[{"price":"0.08","size":"33343.4"}],"asks":[{"price":"0.99","size":"218442.27"}]}
+  ```
+
+  **价格变化**
+  ```json
+  {"event_type":"price_change","market":"0x747d...","price_changes":[{"asset_id":"107505...","price":"0.08","size":"33343.4","side":"BUY","best_bid":"0.08","best_ask":"0.09"}],"timestamp":"1782753357257"}
+  ```
+
+  **最近成交价**
+  ```json
+  {"event_type":"last_trade_price","market":"0x747d...","asset_id":"107505...","price":"0.08","size":"219.217767","fee_rate_bps":"0","side":"SELL","timestamp":"1782753357257","transaction_hash":"0xeeefff…"}
+  ```
+
+  **最小价格变动单位变化**
+  ```json
+  {"event_type":"tick_size_change","market":"0x747d...","asset_id":"107505...","old_tick_size":"0.01","new_tick_size":"0.001","timestamp":"1782753357257"}
+  ```
+</Accordion>
+
+启用 `custom_feature_enabled` 可接收最优买卖价及市场生命周期更新：
+
+```json
+{"assets_ids":["<token_id>"],"type":"market","custom_feature_enabled":true}
+```
+
+额外事件包括 `best_bid_ask`、`new_market` 和 `market_resolved`，分别提供最佳买卖价、新市场及市场结算更新。
+
+无需新建连接即可增加或移除 Token ID：
+
+<Tabs>
+  <Tab title="订阅">
+    ```json
+    {"assets_ids":["<new_token_id>"],"operation":"subscribe"}
+    ```
+  </Tab>
+  <Tab title="取消订阅">
+    ```json
+    {"assets_ids":["<token_id>"],"operation":"unsubscribe"}
+    ```
+  </Tab>
+</Tabs>
+
+这些帧只会更新当前市场数据流连接的 Token 集合。
+
+## 体育数据流
+
+体育数据流用于同步体育市场对应的实时比赛信息。比赛开始、比分或赛段变化、比赛结束时都会推送更新。NFL 和 CFB 更新还可能包含球权变化。
+
+<Warning>
+  体育数据仅供参考，可能延迟、包含错误或遗漏最新事件。预测市场不提供交易或投资建议，不应仅依据这些数据作出交易决定。
+</Warning>
+
+```text API
+wss://sports-api.polymarket.com/ws
+```
+
+<Note>
+  服务器每 5 秒发送文本帧 `ping`；客户端须在 10 秒内回复 `pong`，否则连接会被关闭。
+</Note>
+
+连接建立后，服务器会直接推送全部比赛更新，无需发送订阅帧。消息本身就是比赛更新对象，没有外层信封或事件类型字段；`score` 是 `"<主队>-<客队>"` 格式的组合字符串。
+
+### 赛段值
+
+| 值 | 含义 |
+| --- | --- |
+| `1H`、`2H` | 上半场或下半场 |
+| `1Q` 至 `4Q` | 第几节 |
+| `HT` | 中场休息 |
+| `FT` | 常规时间结束 |
+| `FT OT` | 加时后结束 |
+| `FT NR` | 无结果结束 |
+| `End 1`、`End 2`… | MLB 某局结束 |
+| `1/3`、`2/3`、`3/3` | 三局两胜中的地图序号 |
+| `1/5`、`2/5`… | 五局三胜中的地图序号 |
+
+比赛状态值因项目而异，并区分大小写；集成时应保留服务端返回的原始枚举值。
+
+## RTDS 数据流
+
+实时数据服务（RTDS）通过一个共享实时连接提供参考价格与评论。只订阅应用需要的主题。
+
+### 加密资产价格
+
+加密资产价格流可用于同步相关市场的参考值。时间加权价格请参阅 [Chainlink TWAP 价格](/zh/event-markets/chainlink-twap)。
+
+| 来源 | 支持的交易对 |
+| --- | --- |
+| Binance | `btcusdt`、`ethusdt`、`solusdt`、`xrpusdt` |
+| Chainlink | `btc/usd`、`eth/usd`、`sol/usd`、`xrp/usd` |
+
+```text API
+wss://ws-live-data.polymarket.com
+```
+
+<Note>
+  RTDS 使用应用层心跳。每 5 秒发送文本帧 `PING` 以保持连接。
+</Note>
+
+```json
+{
+  "action":"subscribe",
+  "subscriptions":[
+    {"topic":"crypto_prices","type":"update","filters":"btcusdt,ethusdt"},
+    {"topic":"crypto_prices_chainlink","type":"*","filters":"[{\"symbol\":\"eth/usd\"}]"}
+  ]
+}
+```
+
+Binance 筛选器使用逗号分隔的交易对；Chainlink 筛选器使用只包含一个 symbol 的 JSON 字符串。省略 `filters` 可接收该主题和类型的全部事件。
+
+### 股票价格
+
+股票价格流提供 Pyth Network 的股票、ETF、外汇、贵金属及大宗商品参考价格。
+
+```json
+{"action":"subscribe","subscriptions":[{"topic":"equity_prices","type":"*","filters":"[{\"symbol\":\"AAPL\"}]"}]}
+```
+
+`filters` 为可选字符串，服务器会验证其是否为合法 JSON。多个 symbol 需分别发送订阅项。空值或省略表示不筛选。
+
+<Note>
+  价格更新可能包含 `full_accuracy_value`。存在该字段时，应优先使用它，而不是数值型 `value`。
+</Note>
+
+订阅某个 symbol 后，数据流会先发送此前两分钟的价格数据，然后继续发送实时更新。请先使用这份历史快照初始化本地状态。
+
+| 资产类别 | 支持的 symbol |
+| --- | --- |
+| 股票 | `AAPL`、`TSLA`、`MSFT`、`GOOGL`、`AMZN`、`META`、`NVDA`、`NFLX`、`PLTR`、`OPEN`、`RKLB`、`ABNB`、`COIN`、`HOOD` |
+| ETF | `QQQ`、`SPY`、`EWY`、`VXX` |
+| 外汇 | `EURUSD`、`GBPUSD`、`USDCAD`、`USDJPY`、`USDKRW` |
+| 贵金属 | `XAUUSD`、`XAGUSD` |
+| 大宗商品 | `WTI`、`CC`、`NGD` |
+
+资产市场休市时，数据流会继续发送最后已知价格，并标记为沿用值。交易时段内，每个数据源每秒最多更新五次。
+
+### 评论
+
+评论数据流可让应用中的预测市场讨论及互动保持最新。评论既可以发起主题，也可以回复其他评论；回复事件会包含父评论 ID。
+
+```json
+{
+  "action":"subscribe",
+  "subscriptions":[{"topic":"comments","type":"comment_created","filters":"[{\"parentEntityID\":18396,\"parentEntityType\":\"Event\"}]"}]
+}
+```
+
+`filters` 必须是格式正确的 JSON，键和字符串值都需加引号。省略或传空值会接收全部评论事件。支持的事件包括 `comment_created`、`comment_removed`、`reaction_created` 和 `reaction_removed`。
