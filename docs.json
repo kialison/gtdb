@@ -67,16 +67,26 @@
                     "group": "预测市场介绍",
                     "pages": [
                       "zh/event-markets/overview",
-                      "zh/event-markets/event-markets"
+                      "zh/event-markets/event-markets",
+                      "zh/event-markets/apis"
                     ]
                   },
                   {
                     "group": "核心概念",
-                    "pages": []
+                    "pages": [
+                      "zh/event-markets/resolution",
+                      "zh/event-markets/positions-and-tokens",
+                      "zh/event-markets/order-lifecycle",
+                      "zh/event-markets/prices-and-orderbook",
+                      "zh/event-markets/markets-and-events",
+                      "zh/event-markets/negative-risk-markets"
+                    ]
                   },
                   {
                     "group": "预测市场",
-                    "pages": []
+                    "pages": [
+                      "zh/event-markets/market-data-overview"
+                    ]
                   }
                 ]
               },
