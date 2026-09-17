@@ -1,0 +1,60 @@
+---
+title: "市场查询"
+sidebarTitle: "市场"
+description: "查询预测市场市场列表、市场详情以及公开成交。"
+---
+
+## 查询市场列表
+
+```text
+GET /api/v4/event_markets/markets
+```
+
+公开接口，无需认证。
+
+### 常用参数
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `limit` | integer | 返回数量，最大 100 |
+| `cursor` | string | 上一页返回的游标 |
+| `market_id` | string | 市场 ID |
+| `event_id` | string | 所属事件 ID |
+| `slug` | string | 市场 Slug |
+| `condition_id` | string | Condition ID |
+| `tag_slug` | string | 标签 Slug |
+| `active` | boolean | 是否活跃 |
+| `closed` | boolean | 是否关闭 |
+
+### 返回字段
+
+市场摘要通常包含：`market_id`、`event_id`、`slug`、`question`、`condition_id`、`status`、`closed`、`start_date`、`end_date`、`outcomes`、`best_bid`、`best_ask`、`last_trade_price`、`volume`、`volume_24hr`、`category` 和 `tags`。
+
+## 查询市场详情
+
+```text
+GET /api/v4/event_markets/markets/{market_id}
+GET /api/v4/event_markets/markets/slug/{slug}
+```
+
+详情还可包含：
+
+| 字段 | 说明 |
+| --- | --- |
+| `accepting_orders` | 当前是否接受订单 |
+| `enable_order_book` | 是否启用订单簿 |
+| `min_order_size` | 最小下单数量 |
+| `tick_size` | 最小价格变动单位 |
+| `neg_risk` | 是否使用 Negative Risk 机制 |
+| `resolution_source` | 结果判定来源 |
+| `resolved_at` | 结算时间 |
+| `winning_outcome` | 最终获胜结果 |
+| `winning_token_id` | 获胜结果 Token ID |
+
+## 查询市场成交
+
+```text
+GET /api/v4/event_markets/markets/{market_id}/trades
+```
+
+支持 `limit` 和 `cursor` 分页。成交记录通常包含 `trade_id`、`market_id`、`condition_id`、`token_id`、`price`、`size`、`side` 和 `timestamp`。
