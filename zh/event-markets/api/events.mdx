@@ -1,0 +1,71 @@
+---
+title: "事件查询"
+sidebarTitle: "事件"
+description: "查询预测市场事件列表，或按 ID、Slug 获取事件详情。"
+---
+
+## 查询事件列表
+
+```text
+GET /api/v4/event_markets/events
+```
+
+公开接口，无需认证。
+
+### 常用参数
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `limit` | integer | 返回数量，最大 100 |
+| `cursor` | string | 上一页返回的游标 |
+| `sort` | string | 排序字段，如 `start_date`、`end_date` |
+| `ascending` | boolean | 是否升序 |
+| `event_id` | string | 事件 ID |
+| `slug` | string | 事件 Slug |
+| `tag_slug` | string | 标签 Slug |
+| `active` | boolean | 是否为活跃事件 |
+| `closed` | boolean | 是否已关闭 |
+| `start_date_min/max` | integer | 开始时间范围，Unix 毫秒 |
+| `end_date_min/max` | integer | 结束时间范围，Unix 毫秒 |
+
+### 请求示例
+
+```bash
+curl --get 'https://api.dexbuilder.com/api/v4/event_markets/events' \
+  --data-urlencode 'limit=20' \
+  --data-urlencode 'sort=start_date' \
+  --data-urlencode 'ascending=false' \
+  --data-urlencode 'active=true'
+```
+
+### 返回结构
+
+```json
+{
+  "items": [
+    {
+      "event_id": "event-123",
+      "slug": "example-event",
+      "title": {"en": "Example event", "cn": "示例事件"},
+      "category": "sports",
+      "active": true,
+      "closed": false,
+      "start_date": 1760000000,
+      "end_date": 1761000000,
+      "volume": "125000.00"
+    }
+  ],
+  "next_cursor": "opaque-cursor"
+}
+```
+
+## 查询单个事件
+
+支持：
+
+```text
+GET /api/v4/event_markets/events/{event_id}
+GET /api/v4/event_markets/events/slug/{slug}
+```
+
+详情除基础字段外，还可包含 `description`、`resolution_source`、`markets` 和 `markets_has_more` 等信息。
