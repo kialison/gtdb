@@ -1,0 +1,198 @@
+---
+title: "发现市场"
+sidebarTitle: "发现市场"
+description: "通过 Event Contracts API 查询公开 Event、Market 与 Tag，支持按 ID、slug、筛选条件和 cursor 分页。"
+---
+
+本页介绍如何查找和筛选公开 Event 与 Market。市场发现和公开市场数据接口无需认证。
+
+生产环境 API Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+除接口另有说明外，Event 和 Market 响应中的时间字段使用 Unix 秒级时间戳。`title`、`question`、`outcome`、Tag `label` 等文本字段以多语言对象返回，实际包含哪些语言取决于源数据。
+
+## Events
+
+Event 用于将一个或多个相关 Market 组织在一起。
+
+### 根据 ID 查询 Event
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/<event_id>"
+```
+
+### 根据 slug 查询 Event
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/<event_slug>"
+```
+
+Event 详情常用字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `event_id` | Event 唯一标识 |
+| `slug` | URL 友好的 Event 标识 |
+| `title` | 多语言 Event 标题对象 |
+| `description` | 多语言 Event 描述对象 |
+| `markets` | Event 下的 Market 摘要 |
+| `markets_has_more` | 内嵌 Market 是否还有更多数据 |
+| `active`, `closed` | Event 生命周期状态 |
+| `start_date`, `start_time`, `end_date`, `closed_time` | Event 时间字段 |
+| `volume` | Event 成交量，使用 decimal string |
+| `tags` | Tag 摘要 |
+
+```json Example
+{
+  "event_id": "event-123",
+  "slug": "example-event",
+  "title": { "en": "Example event" },
+  "active": true,
+  "closed": false,
+  "markets": [],
+  "markets_has_more": false
+}
+```
+
+### Event 列表
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+```
+
+支持的主要 Query 参数：
+
+| 参数 | 说明 |
+| --- | --- |
+| `limit` | 返回数量，范围 1–100 |
+| `cursor` | 上一页返回的 `next_cursor` |
+| `sort` | `start_date`、`start_time`、`end_date` 或 `closed_time` |
+| `ascending` | 是否升序 |
+| `event_id` | 按 Event ID 筛选 |
+| `slug` | 按 Event slug 筛选 |
+| `tag_slug` | 按 Tag slug 筛选 |
+| `active`, `closed` | 按生命周期状态筛选 |
+| `start_date_min`, `start_date_max` | 开始时间范围，Unix 毫秒 |
+| `end_date_min`, `end_date_max` | 结束时间范围，Unix 毫秒 |
+
+响应：
+
+```json Example
+{
+  "items": [
+    {
+      "event_id": "event-123",
+      "slug": "example-event",
+      "title": { "en": "Example event" },
+      "active": true,
+      "closed": false,
+      "volume": "12500.50",
+      "tags": [
+        { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+      ]
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+当 `next_cursor` 非空时，将它原样作为下一次请求的 `cursor`：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events?limit=20&cursor=<next_cursor>"
+```
+
+## Markets
+
+Market 是实际可交易的问题，每个 Market 包含一个或多个 Outcome Token。
+
+### 根据 Market ID 查询
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
+```
+
+### 根据 slug 查询
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/slug/<market_slug>"
+```
+
+Market 详情中的 `outcomes` 数组直接返回订单簿与价格接口所需的 `token_id`。
+
+| 字段 | 说明 |
+| --- | --- |
+| `market_id` | Market 唯一标识 |
+| `event_id` | 所属 Event ID |
+| `slug` | Market slug |
+| `question` | 多语言市场问题 |
+| `condition_id` | Condition ID |
+| `outcomes` | Outcome 列表，包含 `token_id` 与多语言 `outcome` |
+| `status`, `closed` | Market 状态 |
+| `accepting_orders` | 当前是否接受订单 |
+| `enable_order_book` | 是否启用订单簿 |
+| `best_bid`, `best_ask`, `last_trade_price` | 当前盘口与最近成交摘要 |
+| `min_order_size`, `tick_size`, `neg_risk` | 交易限制与 Negative Risk 标记 |
+| `start_date`, `end_date`, `resolved_at` | 生命周期时间 |
+| `winning_outcome`, `winning_token_id` | 已结算后的获胜结果 |
+
+```json Example
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes" } },
+    { "token_id": "token-no", "outcome": { "en": "No" } }
+  ]
+}
+```
+
+### Market 列表
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets?limit=20&active=true&closed=false&tag_slug=sports"
+```
+
+主要参数：
+
+| 参数 | 说明 |
+| --- | --- |
+| `limit` | 返回数量，范围 1–100 |
+| `cursor` | 上一页返回的 `next_cursor` |
+| `market_id` | Market ID |
+| `event_id` | 所属 Event ID |
+| `slug` | Market slug |
+| `condition_id` | Condition ID |
+| `tag_slug` | 所属 Event 的 Tag slug |
+| `active`, `closed` | Market 生命周期状态 |
+
+## Tags
+
+Tag 可用于构建分类筛选：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tags?limit=20&cursor=<cursor>"
+```
+
+```json
+{
+  "items": [
+    { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+## 当前 API 范围
+
+当前 Event Contracts API 提供 Event、Market、Tag、公开市场成交和 Token 市场数据等能力。未在 DexBuilder API 合同中定义的第三方专用接口不应作为正式集成依赖。
