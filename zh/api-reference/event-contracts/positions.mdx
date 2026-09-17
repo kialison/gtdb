@@ -1,0 +1,16 @@
+---
+title: "仓位、用户成交、费用与错误"
+sidebarTitle: "仓位与成交"
+description: "读取事件合约账户数据并了解私有接口行为。"
+---
+
+所有账户接口均为私有接口，需要经过认证的网关请求。内部身份请求头不属于公开 API 合约。
+
+- `GET /api/v4/event_contracts/positions`：按事件、条件、结算状态筛选仓位并使用游标分页
+- `GET /api/v4/event_contracts/positions/{position_id}`：读取单个仓位
+- `GET /api/v4/event_contracts/usertrades`：按条件、订单、代币和时间范围查询用户成交
+- `GET /api/v4/event_contracts/fee`：读取账户适用费率
+
+仓位数量、可用数量、锁定数量、平均开仓价、仓位价值与可领取金额均以十进制字符串返回。用户成交中的 `price`、`size` 与 `fee_rate` 同样应使用十进制运算处理。
+
+私有接口可能返回 401 认证错误、400 参数错误、404 资源不可见及 503 上游不可用。只读请求可采用退避重试；写入请求应先查询状态，避免重复提交。

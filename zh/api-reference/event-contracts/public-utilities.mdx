@@ -1,0 +1,23 @@
+---
+title: "标签、K 线与服务器时间"
+sidebarTitle: "公共工具"
+description: "事件合约集成使用的公开辅助接口。"
+---
+
+## 标签
+
+`GET /api/v4/event_contracts/tags`
+
+支持 `limit`（1–100）和 `cursor`。响应返回标签 `items` 及 `next_cursor`；每个标签包含 `tag_id`、`slug` 和多语言 `label`。
+
+## K 线
+
+`GET /api/v4/event_contracts/tokens/{currency}/candlesticks`
+
+要求 `interval`，可选 `from`、`to` 与 `limit`。每条记录包含时间戳 `t` 及十进制字符串格式的开高低收量 `o`、`h`、`l`、`c`、`v`。
+
+## 服务器时间
+
+`GET /api/v4/event_contracts/time`
+
+返回服务器当前 Unix 时间。签名或时间窗口校验时，应使用该接口校准本地时钟。

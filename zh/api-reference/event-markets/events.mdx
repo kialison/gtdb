@@ -1,0 +1,33 @@
+---
+title: "列出与获取事件"
+sidebarTitle: "事件"
+description: "列出可见的预测市场事件，或通过 ID/slug 获取单个事件。"
+---
+
+## 接口
+
+`GET https://api.dexbuilder.com/api/v4/event_markets/events`
+
+公开接口，无需认证。
+
+## 查询参数
+
+| 名称 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `limit` | integer | 否 | 返回数量，范围 1–100 |
+| `cursor` | string | 否 | 上一页返回的不透明 `next_cursor` |
+| `sort` | string | 否 | `start_date`、`start_time`、`end_date` 或 `closed_time` |
+| `ascending` | boolean | 否 | 是否升序 |
+| `event_id` / `slug` / `tag_slug` | string | 否 | ID、slug 或标签筛选 |
+| `active` / `closed` | boolean | 否 | 生命周期状态筛选 |
+| `start_date_min` / `start_date_max` | integer | 否 | Unix 毫秒格式的开始日期范围 |
+| `end_date_min` / `end_date_max` | integer | 否 | Unix 毫秒格式的结束日期范围 |
+
+响应中的 `items` 为事件摘要，`next_cursor` 为下一页游标。事件摘要包含 `event_id`、`slug`、多语言 `title`、`category`、`active`、`closed`、开始/结束/关闭时间、十进制字符串 `volume`、图片与标签。
+
+## 获取单个事件
+
+- `GET /api/v4/event_markets/events/{event_id}`
+- `GET /api/v4/event_markets/events/slug/{slug}`
+
+详情响应还包含 `description`、`resolution_source`、`markets` 与 `markets_has_more`。

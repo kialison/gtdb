@@ -1,0 +1,23 @@
+---
+title: "价格、行情、订单簿与历史"
+sidebarTitle: "市场数据"
+description: "读取公开的预测市场代币价格与订单簿数据。"
+---
+
+本页接口均为公开接口，无需认证。
+
+| 操作 | 方法与路径 |
+| --- | --- |
+| 代币市场 | `GET /api/v4/event_markets/tokens/{token_id}/market` |
+| 最新价格 | `GET /api/v4/event_markets/tokens/{token_id}/price` |
+| 行情 | `GET /api/v4/event_markets/tokens/{token_id}/ticker` |
+| 订单簿 | `GET /api/v4/event_markets/tokens/{token_id}/order_book` |
+| 价格历史 | `GET /api/v4/event_markets/tokens/{token_id}/price_history` |
+| 批量价格 | `GET /api/v4/event_markets/tokens/prices` |
+| K 线 | `GET /api/v4/event_markets/tokens/{currency}/candlesticks` |
+
+订单簿的 `depth` 可选，默认 20，范围 1–100。响应包含 `token_id`、`condition_id`、买卖档位、快照哈希与时间、最近成交价、最小订单数量、最小价格增量和负风险标记。
+
+最新价格返回 `token_id`、`price`、`side` 与 `timestamp`；无成交时 `price` 可能为空。行情返回 `last_price`、`best_bid`、`best_ask` 与时间戳，缺少可靠数据的字段可能为 `null`。
+
+价格历史要求 `interval`（`5m`、`15m`、`1h`、`4h` 或 `1d`）、`from` 与 `to`，范围不得超过 14 天。批量价格最多接受 100 个逗号分隔的 Token ID。K 线要求 currency 与 interval，可选 `from`、`to`、`limit`；每根 K 线包含时间戳及 OHLCV 字符串。
