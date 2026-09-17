@@ -85,8 +85,16 @@
                   {
                     "group": "预测市场",
                     "pages": [
-                      "zh/event-markets/market-data-overview"
+                      "zh/event-markets/market-data-overview",
+                      "zh/event-markets/market-details",
+                      "zh/event-markets/discover-markets",
+                      "zh/event-markets/analytics",
+                      "zh/event-markets/market-prices-orderbooks"
                     ]
+                  },
+                  {
+                    "group": "交易",
+                    "pages": []
                   }
                 ]
               },

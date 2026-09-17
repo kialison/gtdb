@@ -1,0 +1,198 @@
+---
+title: "发现市场"
+sidebarTitle: "发现市场"
+description: "通过 Prediction API 查找公开事件、市场和标签；支持按 ID 或 slug 获取、筛选及游标分页，无需认证。"
+---
+
+了解如何查找和筛选公开事件与市场。发现及市场数据接口无需认证。
+
+生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。除非另有说明，事件与市场响应中的时间戳均为 Unix 秒。包括 `title`、`question`、`outcome` 及标签 `label` 在内的本地化文本字段，以稀疏语言对象返回。
+
+## 事件
+
+一个事件会把一个或多个市场归入同一组问题。
+
+### 获取事件
+
+通过事件 ID 获取：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
+```
+
+通过 slug 获取：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/events/slug/<event_slug>"
+```
+
+响应为事件详情对象，重要字段包括：
+
+| 字段 | 说明 |
+| --- | --- |
+| `event_id` | 事件标识符 |
+| `slug` | 适用于 URL 的事件标识符 |
+| `title` | 本地化事件标题对象 |
+| `description` | 本地化事件描述对象 |
+| `markets` | 内嵌市场摘要 |
+| `markets_has_more` | 内嵌市场列表是否被截断 |
+| `active`、`closed` | 事件生命周期状态 |
+| `start_date`、`start_time`、`end_date`、`closed_time` | Unix 秒格式的事件时间 |
+| `volume` | 十进制字符串格式的事件交易量 |
+| `tags` | 事件标签摘要 |
+
+```json 示例
+{
+  "event_id": "event-123",
+  "slug": "example-event",
+  "title": { "en": "Example event" },
+  "active": true,
+  "closed": false,
+  "markets": [],
+  "markets_has_more": false
+}
+```
+
+### 获取事件列表
+
+使用可选筛选条件列出可见事件。这是公开接口。
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+```
+
+支持以下查询参数：
+
+| 参数 | 说明 |
+| --- | --- |
+| `limit` | 结果数量，范围 1–100 |
+| `cursor` | 上一响应返回的游标 |
+| `sort` | `start_date`、`start_time`、`end_date` 或 `closed_time` |
+| `ascending` | 排序方向 |
+| `event_id` | 按事件 ID 筛选 |
+| `slug` | 按事件 slug 筛选 |
+| `tag_slug` | 按标签 slug 筛选 |
+| `active`、`closed` | 按生命周期状态筛选 |
+| `start_date_min`、`start_date_max` | Unix 毫秒格式的开始日期范围 |
+| `end_date_min`、`end_date_max` | Unix 毫秒格式的结束日期范围 |
+
+响应在 `items` 中返回事件摘要：
+
+```json 示例
+{
+  "items": [{
+    "event_id": "event-123",
+    "slug": "example-event",
+    "title": { "en": "Example event" },
+    "active": true,
+    "closed": false,
+    "volume": "12500.50",
+    "tags": [{ "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }]
+  }],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+当 `next_cursor` 非空时，将其作为下一次请求的 `cursor`：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&cursor=<next_cursor>"
+```
+
+## 市场
+
+市场是包含一个或多个结果代币的可交易问题。
+
+### 获取市场
+
+通过复合市场 ID 获取：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+```
+
+通过 slug 获取：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
+```
+
+响应为市场详情对象。`outcomes` 数组直接包含订单簿和价格接口使用的 Token ID，无需解析 JSON 字符串。
+
+| 字段 | 说明 |
+| --- | --- |
+| `market_id` | 复合市场标识符 |
+| `event_id` | 所属事件标识符 |
+| `slug` | 适用于 URL 的市场标识符 |
+| `question` | 本地化市场问题对象 |
+| `condition_id` | 条件标识符 |
+| `outcomes` | 结果引用，包含 `token_id` 与本地化 `outcome` |
+| `status`、`closed` | 市场生命周期状态 |
+| `accepting_orders` | 当前是否接受订单 |
+| `enable_order_book` | 是否启用订单簿 |
+| `best_bid`、`best_ask`、`last_trade_price` | 当前市场数据摘要 |
+| `min_order_size`、`tick_size`、`neg_risk` | 交易限制及风险模式 |
+| `start_date`、`end_date`、`resolved_at` | Unix 秒格式的生命周期时间 |
+| `winning_outcome`、`winning_token_id` | 已结算时的结算字段 |
+
+```json 示例
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes" } },
+    { "token_id": "token-no", "outcome": { "en": "No" } }
+  ]
+}
+```
+
+### 获取市场列表
+
+使用筛选条件列出可见市场：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/markets?limit=20&active=true&closed=false&tag_slug=sports"
+```
+
+| 参数 | 说明 |
+| --- | --- |
+| `limit` | 结果数量，范围 1–100 |
+| `cursor` | 上一响应返回的游标 |
+| `market_id` | 按复合市场 ID 筛选 |
+| `event_id` | 按所属事件 ID 筛选 |
+| `slug` | 按市场 slug 筛选 |
+| `condition_id` | 按条件 ID 筛选 |
+| `tag_slug` | 按所属事件标签 slug 筛选 |
+| `active`、`closed` | 按生命周期状态筛选 |
+
+响应在 `items` 中返回市场摘要，在 `next_cursor` 中返回下一页游标。继续分页时，将 `next_cursor` 作为 `cursor` 传入。
+
+## 标签
+
+使用标签构建分类筛选器。标签接口是市场发现功能支持的元数据接口：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_markets/tags?limit=20&cursor=<cursor>"
+```
+
+响应使用相同的游标分页格式：
+
+```json
+{
+  "items": [
+    { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+## 当前 API 范围
+
+Prediction API 当前提供事件、市场、标签、公开市场成交及代币市场数据。独立的 Polymarket Gamma 系列、体育元数据、全局搜索和标签关系接口不属于本 API 合约，集成时不应使用。

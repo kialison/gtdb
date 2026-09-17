@@ -1,0 +1,64 @@
+---
+title: "数据分析"
+sidebarTitle: "数据分析"
+description: "读取最近成交、未平仓量、市场持有人和事件实时交易量，了解预测市场的活动与表现。"
+---
+
+了解预测市场中的活动与表现。这些数据可用于判断交易集中在哪些市场，以及交易者和集成应用的表现如何随时间变化。
+
+## 市场活动
+
+以下示例假设你已经拥有市场对象。如需查找或获取市场，请参阅[发现市场](/zh/event-markets/discover-markets)。
+
+市场对象中的条件 ID 与事件 ID 位于以下字段：
+
+```json API
+{"conditionId":"<condition_id>","events":[{"id":"<event_id>"}]}
+```
+
+为以下请求设置标识符：
+
+```bash
+CONDITION_ID="<condition_id>"
+EVENT_ID="<event_id>"
+```
+
+## 最近成交
+
+查看市场最近撮合的交易，包括方向、价格、数量、结果、钱包和时间戳。
+
+```bash API
+curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
+```
+
+响应包含最近成交记录。
+
+## 未平仓量
+
+衡量一个或多个市场中当前未结仓仓位的价值：
+
+```bash API
+curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
+```
+
+响应按市场返回未平仓量。
+
+## 市场持有人
+
+查询市场中每种结果代币最大的公开持有人：
+
+```bash API
+curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
+```
+
+响应按结果代币对持有人分组。
+
+## 事件实时交易量
+
+汇总整个事件的活动，并按市场拆分交易量：
+
+```bash API
+curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
+```
+
+响应包含事件总交易量及各市场的交易量明细。
