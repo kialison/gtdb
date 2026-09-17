@@ -1,0 +1,27 @@
+---
+title: "错误码"
+sidebarTitle: "错误码"
+description: "已认证事件合约接口返回的全局 HTTP 错误码，包括原因与处理方法。"
+---
+
+事件合约 API 会为每次请求返回标准 HTTP 状态码。本页介绍所有已认证接口都可能出现的全局错误、每种响应的含义及恢复方式。
+
+## 全局错误
+
+以下错误可能发生在**任何已认证接口**。
+
+### 401 Unauthorized
+
+`Unauthorized/Invalid api key`——API Key 缺失、已过期或无效。请确认发送了所有必需的认证请求头。
+
+### 401 Unauthorized
+
+`Invalid L1 Request headers`——L1 认证请求头（HMAC 签名）格式错误或签名不匹配。请参阅认证文档。
+
+### 503 Service Unavailable
+
+`Trading is currently disabled. Check polymarket.com for updates`——交易所暂时停止交易，不接受任何订单，包括取消请求。
+
+### 429 Too Many Requests
+
+`Too Many Requests`——已超过速率限制。请暂停请求，并采用指数退避策略重试。

@@ -116,19 +116,40 @@
                   "untitled-page-21",
                   {
                     "group": "交易",
-                    "pages": []
+                    "pages": [
+                      "zh/event-contracts/trading-overview",
+                      "zh/event-contracts/first-order",
+                      "zh/event-contracts/place-orders",
+                      "zh/event-contracts/manage-orders",
+                      "zh/event-contracts/realtime-order-updates",
+                      "zh/event-contracts/positions",
+                      "zh/event-contracts/wallet-activity",
+                      "zh/event-contracts/fees",
+                      "zh/event-contracts/error-codes"
+                    ]
                   },
                   {
                     "group": "核心概念",
                     "pages": [
                       "zh/event-contracts/markets-and-events",
                       "zh/event-contracts/negative-risk-markets",
-                      "zh/event-contracts/prices-orderbook"
+                      "zh/event-contracts/prices-orderbook",
+                      "zh/event-contracts/positions-and-tokens",
+                      "zh/event-contracts/order-lifecycle",
+                      "zh/event-contracts/resolution"
                     ]
                   },
                   {
                     "group": "市场数据",
-                    "pages": []
+                    "pages": [
+                      "zh/event-contracts/market-data-overview",
+                      "zh/event-contracts/discover-markets",
+                      "zh/event-contracts/market-details",
+                      "zh/event-contracts/market-prices-orderbooks",
+                      "zh/event-contracts/analytics",
+                      "zh/event-contracts/realtime-data",
+                      "zh/event-contracts/chainlink-twap"
+                    ]
                   },
                   {
                     "group": "入门",
