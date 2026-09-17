@@ -1,7 +1,7 @@
 ---
 title: "订单生命周期"
 sidebarTitle: "订单生命周期"
-description: "了解订单从创建、提交、撮合到链上结算的完整流程，以及订单与成交状态。"
+description: "了解订单如何从创建、撮合流转至 CLOB 链上结算，以及期间可能出现的状态。"
 ---
 
 CLOB 订单采用混合模式：链下撮合提供速度，链上结算提供无需信任的最终性。本页介绍订单的完整生命周期、可能经历的状态，以及各阶段必须满足的条件。
@@ -94,11 +94,11 @@ maxOrderSize = balance − ∑(openOrderSize − filledAmount)
 ## 后续步骤
 
 <CardGroup cols={2}>
-  <Card title="结算" icon="flag-checkered" href="/zh/event-markets/resolution">
+  <Card title="结算" icon="flag-checkered" href="/zh/event-contracts/resolution">
     了解市场如何结算以及获胜代币如何兑付。
   </Card>
 
-  <Card title="交易指南" icon="chart-line" href="/zh/event-markets/event-markets">
+  <Card title="交易指南" icon="chart-line" href="/zh/event-contracts/event-contracts">
     提交第一笔订单并管理仓位。
   </Card>
 </CardGroup>

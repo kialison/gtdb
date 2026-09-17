@@ -1,22 +1,22 @@
 ---
 title: "市场数据概览"
 sidebarTitle: "概览"
-description: "了解预测市场的数据结构，以及如何从 Event、Market 和 Outcome 开始获取应用所需数据。"
+description: "了解事件合约如何组织市场数据，以及如何开始发现事件、市场和结果。"
 ---
 
-了解预测市场如何组织市场数据，以及应该从哪里开始。
+了解事件合约如何组织市场数据，以及应该从哪里开始。
 
 获取市场数据，首先要确定应用所关注的事件、市场或结果。本节页面将引导你从这一选择出发，获得应用所需的数据。
 
 ## 理解数据模型
 
-在预测市场中，一个事件包含一个或多个市场。每个市场都是一个可交易的问题，包含 YES 和 NO 两种结果；每种结果都有独立的 Token ID。读取价格或订单簿时，请使用对应结果的 Token ID。
+在事件合约中，一个事件包含一个或多个市场。每个市场都是一个可交易的问题，包含 YES 和 NO 两种结果；每种结果都有独立的 Token ID。读取价格或订单簿时，请使用对应结果的 Token ID。
 
 ![图片](/images/image-6.png "图片")
 
 <Steps>
   <Step title="发现事件">
-    浏览进行中的事件、按主题搜索，或通过预测市场 URL 直接获取事件。
+    浏览进行中的事件、按主题搜索，或通过事件合约 URL 直接获取事件。
   </Step>
   <Step title="选择市场">
     查看事件包含的市场，并选择应用关心的具体问题。
@@ -31,30 +31,30 @@ description: "了解预测市场的数据结构，以及如何从 Event、Market
 
 ## 选择工作流
 
-如果你刚开始接入预测市场数据，请从[发现市场](/zh/event-markets/discover-markets)开始。
+如果你刚开始接入事件合约数据，请从[发现市场](/zh/event-contracts/discover-markets)开始。
 
 <CardGroup cols={2}>
-  <Card title="发现市场" icon="compass" href="/zh/event-markets/discover-markets">
+  <Card title="发现市场" icon="compass" href="/zh/event-contracts/discover-markets">
     查找应用关注的事件和市场。
   </Card>
 
-  <Card title="获取市场详情" icon="circle-info" href="/zh/event-markets/market-details">
+  <Card title="获取市场详情" icon="circle-info" href="/zh/event-contracts/market-details">
     了解市场结果、状态、交易限制、费用及其他属性。
   </Card>
 
-  <Card title="价格与订单簿" icon="chart-line" href="/zh/event-markets/market-prices-orderbooks">
+  <Card title="价格与订单簿" icon="chart-line" href="/zh/event-contracts/market-prices-orderbooks">
     了解当前价格与流动性，或查看价格变化。
   </Card>
 
-  <Card title="数据分析" icon="chart-bar" href="/zh/event-markets/analytics">
+  <Card title="数据分析" icon="chart-bar" href="/zh/event-contracts/analytics">
     分析市场活动，并比较交易者与 Builder 的表现。
   </Card>
 
-  <Card title="实时数据" icon="bolt" href="/zh/event-markets/realtime-data">
+  <Card title="实时数据" icon="bolt" href="/zh/event-contracts/realtime-data">
     在市场及相关数据变化时，让应用保持最新状态。
   </Card>
 
-  <Card title="Chainlink TWAP 价格" icon="link" href="/zh/event-markets/chainlink-twap">
+  <Card title="Chainlink TWAP 价格" icon="link" href="/zh/event-contracts/chainlink-twap">
     订阅 30 秒与 60 秒加密资产时间加权平均价格。
   </Card>
 </CardGroup>

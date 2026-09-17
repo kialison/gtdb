@@ -1,0 +1,20 @@
+---
+title: "WebSocket 公开频道"
+sidebarTitle: "公开频道"
+description: "订阅公开成交、深度、最优买卖价和市场状态更新。"
+---
+
+本页频道均为公开频道，无需认证。
+
+| 频道 | 内容 | 主要筛选 |
+| --- | --- | --- |
+| `ec.trades` | 新公开成交 | `condition_id` |
+| `ec.depth` | 订单簿快照与增量 | `token_id` 或 `condition_id` |
+| `ec.bbo` | 最佳买价、最佳卖价与价差 | `token_id` |
+| `ec.markets` | 市场状态、接单状态与结算更新 | `condition_id` |
+
+```json
+{"op":"subscribe","ch":"ec.trades","payload":{"items":[{"condition_id":"gate_0xcondition"}]}}
+```
+
+价格与数量以十进制字符串返回，时间戳为 Unix 毫秒。深度数据应按服务器序列顺序应用；如检测到缺口，应重新订阅或通过 REST 获取新快照。断线期间的消息不会重放。

@@ -1,0 +1,75 @@
+---
+title: "管理订单"
+sidebarTitle: "管理订单"
+description: "通过 Prediction API 查询并取消私有事件合约订单。"
+---
+
+订单查询与取消属于私有操作，需要认证。认证机制尚未最终确定，因此本页不会记录内部网关身份请求头。
+
+生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。
+
+## 获取订单列表
+
+使用可选筛选条件查询当前用户订单：
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "status=OPEN" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "limit=20"
+```
+
+支持 `status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 与 `cursor`。其中 `from` 和 `to` 为 Unix 毫秒；`sort_type` 可使用 `created_at` 或 `updated_at`。
+
+```json
+{
+  "items":[{
+    "order_id":"order-123","client_order_id":"client-order-001",
+    "event_id":"event-123","condition_id":"0xabc...","token_id":"token-yes",
+    "outcome":"Yes","side":"BUY","price":"0.52","size":"10",
+    "size_matched":"4","size_left":"6","order_type":"LIMIT",
+    "order_mode":"GTC","status":"OPEN","created_at":1782753357,"updated_at":1782753357
+  }],
+  "next_cursor":"eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+将 `next_cursor` 作为 `cursor` 获取下一页。
+
+## 获取单个订单
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+详情响应包含与列表项相同的订单身份和执行字段，以及订单服务返回的 `error_code`。
+
+## 取消单个订单
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{"order_id":"order-123","status":"ACCEPTED","cancel_status":"PENDING"}
+```
+
+## 取消某条件下的订单
+
+取消当前用户在某市场条件下的订单：
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders?condition_id=<condition_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{"batch_id":"batch-123","status":"ACCEPTED","total_orders":3}
+```
+
+## 认证说明
+
+示例使用认证占位请求头，因为公共认证合约仍在最终确定中。外部客户端不得使用由网关注入的身份字段或其他内部请求头。

@@ -1,10 +1,10 @@
 ---
 title: "市场详情"
 sidebarTitle: "市场详情"
-description: "了解预测市场 Market 的结构、状态、结果代币与交易限制。"
+description: "了解事件合约的结构与状态。"
 ---
 
-从[发现预测市场](/zh/event-markets/discover-markets)选择市场后，可调用市场详情接口。市场数据为公开数据，无需认证。
+从[发现事件合约](/zh/event-contracts/discover-markets)选择市场后，可调用市场详情接口。市场数据为公开数据，无需认证。
 
 生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。
 
@@ -13,13 +13,13 @@ description: "了解预测市场 Market 的结构、状态、结果代币与交�
 通过复合市场 ID：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
 ```
 
 通过 slug：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/slug/<market_slug>"
 ```
 
 ## 响应
@@ -84,9 +84,9 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 ```bash cURL
 TOKEN_ID="<token_id>"
 
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/order_book?depth=20"
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/price"
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/ticker"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/price"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/ticker"
 ```
 
 API 直接在 `outcomes` 数组中返回 Token ID。请勿读取或解析 JSON 编码的 `clobTokenIds` 字符串，该字段不属于 Prediction API 响应。
@@ -96,7 +96,7 @@ API 直接在 `outcomes` 数组中返回 Token ID。请勿读取或解析 JSON �
 使用市场响应中的 `event_id` 获取所属事件：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/<event_id>"
 ```
 
 市场数据为公开数据。下单、仓位、账户数据等私有接口需要认证；认证机制另有文档说明，并可能发生变化。

@@ -1,14 +1,14 @@
 ---
 title: "Chainlink TWAP 价格"
-sidebarTitle: "Chainlink TWAP"
-description: "通过预测市场 RTDS 或 Chainlink Data Streams 获取 30 秒与 60 秒时间加权平均价格。"
+sidebarTitle: "Chainlink TWAP 价格"
+description: "通过事件合约 RTDS 或 Chainlink Data Streams 直接获取 Chainlink 计算的 30 秒与 60 秒 TWAP 价格。"
 ---
 
-直接或通过预测市场 RTDS 获取 Chainlink 计算的 TWAP 价格。
+直接或通过事件合约 RTDS 获取 Chainlink 计算的 TWAP 价格。
 
 时间加权平均价格（TWAP）表示资产在回看窗口内的平均价格。本页介绍 Chainlink 计算的 30 秒和 60 秒 TWAP。
 
-## 使用预测市场 RTDS
+## 使用事件合约 RTDS
 
 RTDS 是推荐的生产环境集成方式。它无需凭证即可转发 Chainlink 计算的主网 TWAP 更新。symbol 应使用小写、斜杠分隔格式，例如 `btc/usd`。省略 symbol 筛选器可接收全部可用交易对。
 
@@ -17,7 +17,7 @@ wss://ws-live-data.polymarket.com
 ```
 
 <Note>
-RTDS 使用应用层心跳。每 5 秒发送文本帧 `PING` 以保持连接。
+  RTDS 使用应用层心跳。每 5 秒发送文本帧 `PING` 以保持连接。
 </Note>
 
 需要底层控制时，可直接连接 RTDS，并为所需回看窗口发送订阅帧：

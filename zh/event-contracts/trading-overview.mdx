@@ -1,0 +1,42 @@
+---
+title: "交易概览"
+sidebarTitle: "概览"
+description: "了解在事件合约交易时，订单、结算与仓位如何协同运作。"
+---
+
+交易流程将 CLOB 上的签名订单与 UMA 上的结算连接起来。选择一种结果代币，使用签名者授权订单，然后将其提交至订单簿。订单撮合后，结算流程会在交易账户之间转移 USDT 与结果代币。
+
+## 交易流程
+
+账户仅需设置一次，之后每笔订单重复执行其余步骤。
+
+<Steps>
+  <Step title="设置账户">
+    将签名者连接至账户钱包，为钱包充值，并授予所需的交易授权。
+  </Step>
+  <Step title="选择结果">
+    选择要买入或卖出的结果代币，并检查当前市场限制。
+  </Step>
+  <Step title="提交订单">
+    选择价格与数量，为订单签名并提交至 CLOB。
+  </Step>
+  <Step title="管理订单">
+    监控成交情况，取消剩余未成交数量。已撮合交易在 UMA 上结算，并更新余额与仓位。
+  </Step>
+</Steps>
+
+## 开始交易
+
+<CardGroup cols={3}>
+  <Card title="提交第一笔订单" icon="circle-play" href="/zh/event-contracts/first-order">
+    完成首次认证交易流程。
+  </Card>
+
+  <Card title="钱包与认证" icon="wallet" href="/zh/event-contracts/place-orders">
+    将签名者连接至持有资金和仓位的账户钱包。
+  </Card>
+
+  <Card title="订单生命周期" icon="arrows-rotate" href="/zh/event-contracts/order-lifecycle">
+    了解订单从提交到成交、取消或到期的状态变化。
+  </Card>
+</CardGroup>

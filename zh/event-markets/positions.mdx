@@ -1,0 +1,127 @@
+---
+title: "仓位如何运作"
+sidebarTitle: "仓位"
+description: "了解支撑预测市场仓位的链上代币机制，包括计算仓位 ID，以及将已结算结果赎回为 USDT。"
+---
+
+了解支撑预测市场仓位的链上代币机制。
+
+预测市场使用 [Conditional Token Framework（CTF）](https://docs.gnosis.io/conditionaltokens/)将市场结果代币化。CTF 是 Gnosis 开发的开放标准。理解 CTF 有助于了解仓位如何在链上创建、合并与赎回。
+
+## 什么是 CTF？
+
+CTF 创建代表预测市场结果的 ERC-1155 代币。每个二元市场都有 YES 与 NO 两种结果代币。
+
+这些代币均有足额抵押。每组 YES 和 NO 代币都由通过 CTF 合约锁定的 1 美元抵押品支持。
+
+### 代币标识符
+
+每种结果代币都有唯一仓位 ID，并作为 ERC-1155 Token ID 使用。CTF 在链上分三步计算该 ID。
+
+<Steps>
+  <Step title="计算 Condition ID">
+    ```solidity
+    getConditionId(oracle, questionId, outcomeSlotCount)
+    ```
+    
+    | 参数 | 类型 | 值 |
+    | --- | --- | --- |
+    | `oracle` | address | [UMA CTF Adapter](https://docs.polymarket.com/developers/CTF/overview) |
+    | `questionId` | bytes32 | UMA 附加数据的哈希 |
+    | `outcomeSlotCount` | uint | 二元市场为 `2` |
+  </Step>
+  <Step title="计算 Collection ID">
+    ```solidity
+    getCollectionId(parentCollectionId, conditionId, indexSet)
+    ```
+    
+    | 参数 | 类型 | 值 |
+    | --- | --- | --- |
+    | `parentCollectionId` | bytes32 | 顶层仓位为 `bytes32(0)` |
+    | `conditionId` | bytes32 | 上一步得到的 Condition ID |
+    | `indexSet` | uint | 第一个结果为 `1`（`0b01`），第二个结果为 `2`（`0b10`） |
+    
+    `indexSet` 是标识哪些结果槽属于某集合的位掩码，必须是条件结果槽的非空真子集。二元市场的每个结果各有一个集合。
+  </Step>
+  <Step title="计算 Position ID">
+    ```solidity
+    getPositionId(collateralToken, collectionId)
+    ```
+    
+    | 参数 | 类型 | 值 |
+    | --- | --- | --- |
+    | `collateralToken` | IERC20 | Polygon 上的 USDT 合约地址 |
+    | `collectionId` | bytes32 | 某一市场结果的 Collection ID |
+  </Step>
+</Steps>
+
+得到的 Position ID 即市场 YES 与 NO 结果的 ERC-1155 Token ID。大多数集成应直接从市场数据读取 Token ID；只有直接集成合约时才需要手动计算。
+
+## 赎回已结算仓位
+
+市场结算后，赎回会将结果代币转换为 USDT。每枚获胜代币兑付 1 USDT，失败代币兑付 0。
+
+赎回没有截止时间，获胜代币在结算后可随时赎回。
+
+赎回前请确保：
+
+1. 市场已经结算。
+2. 钱包持有该市场的结果代币。
+3. 已授权对应市场类型的抵押品适配器转移钱包中的结果代币。
+
+### API
+
+为已结算市场构建 `redeemPositions` 调用，并作为免 Gas 钱包交易执行。
+
+<Steps>
+  <Step title="构建赎回调用">
+    当 `negRisk` 为 `false` 时，使用地址 `0xAdA100Db00Ca00073811820692005400218FcE1f` 的 `CtfCollateralAdapter`；为 `true` 时，使用地址 `0xadA2005600Dec949baf300f4C6120000bDB6eAab` 的 `NegRiskCtfCollateralAdapter`。
+    
+    对以下函数调用进行 ABI 编码：
+    
+    ```solidity
+    function redeemPositions(
+        address collateralToken,
+        bytes32 parentCollectionId,
+        bytes32 conditionId,
+        uint256[] indexSets
+    );
+    ```
+    
+    | 参数 | 值 |
+    | --- | --- |
+    | `collateralToken` | `0xC011a7E12a19f781f670d46F03803f3342E82DF8` |
+    | `parentCollectionId` | 32 个零字节 |
+    | `conditionId` | `<market_condition_id>` |
+    | `indexSets` | `[1, 2]` |
+    
+    将编码后的 calldata 放入钱包调用：
+    
+    ```json
+    {"target":"<collateral_adapter_address>","value":"0","data":"<encoded_redeem_positions_calldata>"}
+    ```
+  </Step>
+  <Step title="执行赎回">
+    对于 Deposit Wallet，将赎回调用放入已签名的钱包批次，并使用 Relayer API Key 提交：
+    
+    ```bash API
+    curl -X POST "https://relayer-v2.polymarket.com/submit" \
+      -H "Content-Type: application/json" \
+      -H "RELAYER_API_KEY: $RELAYER_API_KEY" \
+      -H "RELAYER_API_KEY_ADDRESS: $RELAYER_API_KEY_ADDRESS" \
+      --data '{
+        "type":"WALLET","from":"<signer_address>",
+        "to":"0x0000000000Fb5C9ADea0298D729A0CB3823Cc07",
+        "nonce":"<wallet_nonce>","signature":"<wallet_batch_signature>",
+        "metadata":"Redeem positions",
+        "depositWalletParams":{
+          "depositWallet":"<deposit_wallet_address>",
+          "deadline":"<unix_seconds>",
+          "calls":[{"target":"<collateral_adapter_address>","value":"0","data":"<encoded_redeem_positions_calldata>"}]
+        }
+      }'
+    ```
+    
+    有关 nonce 创建、钱包批次签名与确认，请参阅“执行免 Gas 交易”。使用兑付款项前，请等待状态变为 `STATE_CONFIRMED`。
+  </Step>
+</Steps>

@@ -1,7 +1,7 @@
 ---
 title: "提交订单"
 sidebarTitle: "提交订单"
-description: "通过 Prediction API 创建预测市场私有订单。"
+description: "通过 Prediction API 创建私有事件合约订单；认证细节尚待最终确定。"
 ---
 
 确认市场正在接受订单后，可针对结果代币下单。市场数据为公开信息；下单属于私有操作，需要认证。
@@ -13,13 +13,13 @@ description: "通过 Prediction API 创建预测市场私有订单。"
 获取市场并从 `outcomes[].token_id` 中选择代币：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
 ```
 
 读取公开订单簿：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/order_book?depth=20"
 ```
 
 提交前，使用响应中的 `min_order_size` 与 `tick_size` 校验订单。
@@ -29,7 +29,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_bo
 创建认证请求：
 
 ```bash cURL
-curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
+curl -X POST "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
   -H "Content-Type: application/json" \
   -H "<authentication-header>: <authentication-value>" \
   --data '{
@@ -73,7 +73,7 @@ curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
 {"order_id":"order-123","client_order_id":"client-order-001","status":"ACCEPTED","created_at":1782753357}
 ```
 
-接受响应不代表订单已全部成交。请通过[管理订单](/zh/event-markets/manage-orders)查询状态。
+接受响应不代表订单已全部成交。请通过[管理订单](/zh/event-contracts/manage-orders)查询状态。
 
 ## 提交前检查
 

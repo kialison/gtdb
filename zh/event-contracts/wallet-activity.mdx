@@ -1,0 +1,55 @@
+---
+title: "钱包活动"
+sidebarTitle: "钱包活动"
+description: "通过 Prediction API 读取已认证用户的事件合约仓位与成交。"
+---
+
+Prediction API 提供已认证用户的账户活动，不提供与 Polymarket Data API 等价的公开钱包地址查询接口。
+
+生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。仓位与用户成交属于私有接口，需要认证。认证机制尚未最终确定，因此此处不记录内部身份请求头。
+
+## 仓位
+
+列出已认证用户的仓位：
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+响应使用游标分页，并在 `items` 中返回仓位，在 `next_cursor` 中返回下一页游标。
+
+获取单个仓位：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/positions/<position_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+## 用户成交
+
+列出已认证用户的成交：
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "market_id=<market_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+将返回的 `next_cursor` 作为下一页的 `cursor`。事件合约成交响应字段见 [API Reference](/zh/event-contracts/api/positions)。
+
+## 重要范围说明
+
+当前 Prediction API 合约不包含以下 Polymarket Data API 能力：
+
+- 按任意公开钱包地址查询仓位
+- 公开的已平仓仓位与投资组合价值接口
+- 通用钱包活动时间线
+
+请改用已认证的仓位、用户成交、订单与账户接口。

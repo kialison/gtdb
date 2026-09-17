@@ -1,0 +1,17 @@
+---
+title: "预测市场 WebSocket"
+sidebarTitle: "WebSocket 概览"
+description: "连接预测市场 WebSocket API，获取实时公开行情及已认证账户事件。"
+---
+
+预测市场 WebSocket API 提供实时市场与账户事件。公开频道用于行情更新；私有频道用于订单、用户成交、仓位与结算；REST API 用于历史查询、分页、订单管理及断线后的状态恢复。
+
+生产环境地址：
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+连接后使用 JSON v2 协议订阅频道。公开频道无需认证；私有频道需要 API Key 与 HMAC-SHA512 签名。服务器通过 Ping 控制帧维护连接，客户端也可发送 `op: "ping"`。
+
+断线后应使用指数退避重连、重新认证并恢复订阅，再通过 REST API 重建状态。

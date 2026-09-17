@@ -1,7 +1,7 @@
 ---
 title: "发现市场"
 sidebarTitle: "发现市场"
-description: "通过 Prediction API 查询公开 Event、Market 与 Tag，支持按 ID、slug、筛选条件和 cursor 分页。"
+description: "通过 Prediction API 查找公开事件、市场和标签；支持按 ID 或 slug 获取、筛选及游标分页，无需认证。"
 ---
 
 了解如何查找和筛选公开事件与市场。发现及市场数据接口无需认证。
@@ -17,13 +17,13 @@ description: "通过 Prediction API 查询公开 Event、Market 与 Tag，支持
 通过事件 ID 获取：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/<event_id>"
 ```
 
 通过 slug 获取：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/slug/<event_slug>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/<event_slug>"
 ```
 
 响应为事件详情对象，重要字段包括：
@@ -58,7 +58,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/events/slug/<event_slug>"
 使用可选筛选条件列出可见事件。这是公开接口。
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
 ```
 
 支持以下查询参数：
@@ -96,7 +96,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&active=tru
 当 `next_cursor` 非空时，将其作为下一次请求的 `cursor`：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&cursor=<next_cursor>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events?limit=20&cursor=<next_cursor>"
 ```
 
 ## 市场
@@ -108,13 +108,13 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&cursor=<ne
 通过复合市场 ID 获取：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
 ```
 
 通过 slug 获取：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/slug/<market_slug>"
 ```
 
 响应为市场详情对象。`outcomes` 数组直接包含订单簿和价格接口使用的 Token ID，无需解析 JSON 字符串。
@@ -158,7 +158,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 使用筛选条件列出可见市场：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets?limit=20&active=true&closed=false&tag_slug=sports"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets?limit=20&active=true&closed=false&tag_slug=sports"
 ```
 
 | 参数 | 说明 |
@@ -179,7 +179,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets?limit=20&active=tr
 使用标签构建分类筛选器。标签接口是市场发现功能支持的元数据接口：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tags?limit=20&cursor=<cursor>"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tags?limit=20&cursor=<cursor>"
 ```
 
 响应使用相同的游标分页格式：

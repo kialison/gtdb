@@ -1,12 +1,12 @@
 ---
-title: "市场结算"
-sidebarTitle: "市场结算"
-description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果，以及获胜持仓如何完成赎回。"
+title: "结算"
+sidebarTitle: "结算"
+description: "了解市场如何利用 UMA Optimistic Oracle 以去中心化、无需许可的方式完成结果判定和获胜仓位兑付。"
 ---
 
 当事件结果确定后，市场进入结算。结算决定哪个结果获胜，获胜代币持有人可按每枚 1 美元赎回；失败代币将失去价值。
 
-预测市场使用 UMA Optimistic Oracle，以去中心化、无需许可的方式完成结算。任何人都可以提出结果；认为结果不正确的人也可以发起争议。
+事件合约使用 UMA Optimistic Oracle，以去中心化、无需许可的方式完成结算。任何人都可以提出结果；认为结果不正确的人也可以发起争议。
 
 ![图片](/images/image-5.png "图片")
 
@@ -19,7 +19,7 @@ description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果�
 - **边界情况**——发生模糊情况时如何处理
 
 <Note>
-交易前务必阅读结算规则。市场标题描述问题，而规则决定市场如何结算。
+  交易前务必阅读结算规则。市场标题描述问题，而规则决定市场如何结算。
 </Note>
 
 <Steps>
@@ -33,10 +33,9 @@ description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果�
     如果提议正确且无人争议，提议者将取回保证金并获得奖励。
 
     <Warning>
-    如果提议错误或提交过早，你将损失全部保证金。只有在确认结果并充分理解流程后，才应提交提议。
+      如果提议错误或提交过早，你将损失全部保证金。只有在确认结果并充分理解流程后，才应提交提议。
     </Warning>
   </Step>
-
   <Step title="挑战期">
     提议提交后有 2 小时挑战期，任何人都可以对结果提出争议。
 
@@ -49,7 +48,6 @@ description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果�
     2. **一次争议**——提议、挑战、第二次提议、结算
     3. **两次争议**——提议、挑战、第二次提议、第二次挑战，再由 DVM 投票结算
   </Step>
-
   <Step title="争议">
     对提议发起争议需要：
 
@@ -58,7 +56,6 @@ description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果�
 
     在 24–48 小时讨论期内，可在 UMA Discord 的 #evidence-rationale 与 #voting-discussion 频道提交证据。
   </Step>
-
   <Step title="UMA 投票">
     讨论期结束后，UMA 代币持有人对正确结果投票，整个过程约需 48 小时。
 
@@ -97,11 +94,11 @@ description: "了解预测市场如何通过 UMA Optimistic Oracle 确认结果�
 ## 后续步骤
 
 <CardGroup cols={2}>
-  <Card title="仓位与代币" icon="coins" href="/zh/event-markets/positions-and-tokens">
+  <Card title="仓位与代币" icon="coins" href="/zh/event-contracts/positions-and-tokens">
     了解市场结算后如何赎回获胜代币。
   </Card>
 
-  <Card title="市场与事件" icon="chart-line" href="/zh/event-markets/markets-and-events">
+  <Card title="市场与事件" icon="chart-line" href="/zh/event-contracts/markets-and-events">
     了解市场结构。
   </Card>
 </CardGroup>
