@@ -1,0 +1,63 @@
+---
+title: "WebSocket 概览"
+sidebarTitle: "概览"
+description: "连接预测市场 WebSocket，接收实时公开行情和认证账户事件。"
+---
+
+预测市场 WebSocket 用于实时市场数据和账户事件，通常与 REST API 配合使用：
+
+- WebSocket：实时行情、订单、成交、持仓和结算推送；
+- REST：历史查询、分页、订单管理以及断线后的状态恢复。
+
+## 连接地址
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+当前协议版本为 **v2**，使用 JSON 消息。
+
+## 公开频道
+
+| 频道 | 用途 |
+| --- | --- |
+| `em.trades` | 公开成交 |
+| `em.depth` | 完整订单簿深度 |
+| `em.bbo` | 最优买卖价与最新价 |
+| `em.cpi` | CPI 价格更新 |
+| `em.candlestick` | K 线更新 |
+| `em.oc_price` | 开盘 / 收盘参考价 |
+| `em.status` | 市场生命周期与可交易状态 |
+
+## 私有频道
+
+| 频道 | 用途 |
+| --- | --- |
+| `em.orders` | 订单状态更新 |
+| `em.usertrades` | 当前用户成交 |
+| `em.positions` | 持仓更新 |
+| `em.settlements` | 结算更新 |
+
+## 首次订阅示例
+
+```json
+{
+  "t": 1787026512123,
+  "id": "depth-1",
+  "op": "subscribe",
+  "ch": "em.depth",
+  "payload": {
+    "items": [{"token_id":"gate_token_id","level":20}]
+  }
+}
+```
+
+## 重要约定
+
+- `t` 为 Unix 毫秒时间戳；
+- ID 应作为不透明字符串处理；
+- 价格、数量、金额和费率使用字符串；
+- 公开频道无需认证；
+- 私有频道需要认证；
+- 断线重连后需要重新认证并恢复订阅；
+- WebSocket 不补发断线期间的数据，应使用 REST 进行恢复。
