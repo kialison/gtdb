@@ -66,8 +66,13 @@
                   {
                     "group": "预测市场介绍",
                     "pages": [
-                      "zh/event-markets/overview"
+                      "zh/event-markets/overview",
+                      "zh/event-markets/event-markets"
                     ]
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
                   }
                 ]
               },
