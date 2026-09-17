@@ -1,0 +1,38 @@
+---
+title: "订单接口"
+sidebarTitle: "订单"
+description: "创建、查询和取消事件合约私有订单。"
+---
+
+本页订单接口均为私有接口，需要完成认证。
+
+## 创建订单
+
+```text
+POST /api/v4/event_markets/orders
+```
+
+主要请求字段包括 `token_id`、`side`、`price`、`size`、`total_cost`、`order_type`、`order_mode`、`client_order_id`、`post_only`、`sell_all` 和 `expire_time`。
+
+成功受理后返回 `order_id`、`client_order_id`、`status` 和 `created_at`。受理成功不代表已经成交。
+
+## 查询订单列表
+
+```text
+GET /api/v4/event_markets/orders
+```
+
+支持按 `status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 和 `cursor` 筛选。
+
+## 查询单个订单
+
+```text
+GET /api/v4/event_markets/orders/{order_id}
+```
+
+## 取消订单
+
+```text
+DELETE /api/v4/event_markets/orders/{order_id}
+DELETE /api/v4/event_markets/orders?condition_id={condition_id}
+```
