@@ -1,0 +1,104 @@
+---
+title: "市场详情"
+sidebarTitle: "市场详情"
+description: "了解事件合约 Market 的结构、状态、结果代币与交易限制。"
+---
+
+在通过「发现市场」选定 Market 后，可以使用 Market Detail 接口读取完整属性。该接口属于公开市场数据，不需要认证。
+
+生产环境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查询 Market
+
+根据 Market ID：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/<market_id>"
+```
+
+根据 slug：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/markets/slug/<market_slug>"
+```
+
+## 响应示例
+
+```json Example
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes", "cn": "是", "tw": "是" } },
+    { "token_id": "token-no", "outcome": { "en": "No", "cn": "否", "tw": "否" } }
+  ],
+  "best_bid": "0.48",
+  "best_ask": "0.52",
+  "last_trade_price": "0.50",
+  "min_order_size": "5",
+  "tick_size": "0.01",
+  "neg_risk": false,
+  "volume": "12500.50",
+  "volume_24hr": "850.25",
+  "resolution_source": "https://example.com/source"
+}
+```
+
+## 字段说明
+
+| 字段 | 说明 |
+| --- | --- |
+| `market_id` | Market 唯一标识 |
+| `event_id` | 所属 Event ID |
+| `slug` | Market slug |
+| `question` | 多语言问题对象 |
+| `condition_id` | 结算 Condition ID |
+| `outcomes` | Outcome 数组，每个元素包含 `token_id` 与 `outcome` |
+| `status` | Market 当前状态 |
+| `closed` | Market 是否关闭 |
+| `accepting_orders` | 当前是否接受订单 |
+| `enable_order_book` | 是否启用订单簿 |
+| `best_bid`, `best_ask` | 当前最佳买价与卖价 |
+| `last_trade_price` | 最近成交价 |
+| `min_order_size` | 最小下单数量 |
+| `tick_size` | 最小价格变动单位 |
+| `neg_risk` | 是否使用 Negative Risk 结算机制 |
+| `start_date`, `end_date` | Market 时间字段，Unix 秒 |
+| `resolved_at` | 已结算时的结算时间 |
+| `winning_outcome`, `winning_token_id` | 获胜结果与对应 Token ID |
+| `tags` | Market 关联 Tag |
+
+## 使用 Outcome Token
+
+从 `outcomes[].token_id` 获取 Token ID 后，可以继续调用价格、Ticker 和订单簿接口：
+
+```bash cURL
+TOKEN_ID="<token_id>"
+
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/price"
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/$TOKEN_ID/ticker"
+```
+
+API 已直接在 `outcomes` 数组中返回 Token ID，无需额外解析 JSON 字符串形式的 Token 列表。
+
+## 查询所属 Event
+
+使用响应中的 `event_id` 查询父级 Event：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/<event_id>"
+```
+
+Market 公开数据无需认证；下单、持仓、账户等私有接口需要认证。
