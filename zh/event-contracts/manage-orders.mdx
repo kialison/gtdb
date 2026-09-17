@@ -1,0 +1,98 @@
+---
+title: "管理订单"
+sidebarTitle: "管理订单"
+description: "通过 Event Contracts API 查询和取消事件合约私有订单。"
+---
+
+订单查询与撤单都属于私有操作，需要认证。生产环境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查询订单列表
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "status=OPEN" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "limit=20"
+```
+
+常用筛选参数包括：`status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 与 `cursor`。
+
+`from`、`to` 使用 Unix 毫秒；`sort_type` 可按 `created_at` 或 `updated_at` 排序。
+
+响应：
+
+```json
+{
+  "items": [
+    {
+      "order_id": "order-123",
+      "client_order_id": "client-order-001",
+      "event_id": "event-123",
+      "condition_id": "0xabc...",
+      "token_id": "token-yes",
+      "outcome": "Yes",
+      "side": "BUY",
+      "price": "0.52",
+      "size": "10",
+      "size_matched": "4",
+      "size_left": "6",
+      "order_type": "LIMIT",
+      "order_mode": "GTC",
+      "status": "OPEN",
+      "created_at": 1782753357,
+      "updated_at": 1782753357
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+将 `next_cursor` 原样作为下一页请求的 `cursor`。
+
+## 查询单个订单
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+详情响应包含列表中的订单标识、价格、数量、成交进度与状态等字段，并可能包含订单服务返回的 `error_code`。
+
+## 取消单个订单
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "order_id": "order-123",
+  "status": "ACCEPTED",
+  "cancel_status": "PENDING"
+}
+```
+
+## 按 Condition 取消订单
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders?condition_id=<condition_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "batch_id": "batch-123",
+  "status": "ACCEPTED",
+  "total_orders": 3
+}
+```
+
+<Note>
+文档中的认证 Header 为占位写法，正式接入应使用最终对外认证方案。内部网关注入的身份字段不属于外部客户端请求参数。
+</Note>
