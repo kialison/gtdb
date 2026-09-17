@@ -1,0 +1,16 @@
+---
+title: "WebSocket 私有频道"
+sidebarTitle: "私有频道"
+description: "订阅已认证的订单、用户成交、仓位与结算事件。"
+---
+
+私有频道仅返回已认证用户的数据。可在第一个私有订阅/取消订阅请求中认证，也可先使用 `server.sign` 认证整条连接。
+
+| 频道 | 内容 |
+| --- | --- |
+| `ec.orders` | 订单创建、部分成交、取消与失败 |
+| `ec.usertrades` | 用户的 `MATCHED` / `CONFIRMED` 成交 |
+| `ec.positions` | 仓位数量、平均价格、锁定与可用数量 |
+| `ec.settlements` | 获胜结果、是否获胜及可领取金额 |
+
+私有频道可使用 `condition_id` 筛选，或设置 `payload.all=true` 接收全部账户更新。服务器不发送初始私有快照；订阅前与重连后必须使用 REST 接口恢复订单、成交和仓位状态。

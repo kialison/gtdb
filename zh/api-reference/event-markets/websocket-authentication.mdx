@@ -1,0 +1,23 @@
+---
+title: "WebSocket 认证与可靠性"
+sidebarTitle: "认证"
+description: "认证私有 WebSocket 操作，并处理心跳、错误和重连。"
+---
+
+公开频道无需认证，私有频道需要 API Key 认证。端点为：
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+订阅或取消订阅时，对以下字符串使用 API Secret 执行 HMAC-SHA512，并进行十六进制编码：
+
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
+
+时间值为请求外层 `t`。API Secret 仅用于本地签名，不通过 WebSocket 发送。使用 `server.sign` 预认证时，对 `t` 的十进制字符串签名。
+
+常见错误码：1 请求格式无效、2 参数无效、3 服务器错误、4 认证失败。服务器发送 Ping 控制帧，标准客户端应自动回复 Pong。
+
+断线后订阅不会保留，消息也不会重放。请使用带抖动的指数退避重连，重新认证、恢复订阅，并通过 REST 获取状态后再处理新事件。不要在日志或客户端代码中暴露 API 凭证。

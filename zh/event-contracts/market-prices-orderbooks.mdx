@@ -1,0 +1,107 @@
+---
+title: "价格与订单簿数据"
+sidebarTitle: "价格与订单簿"
+description: "从 Prediction API 读取公开订单簿、代币价格、行情、批量价格与价格历史。"
+---
+
+每个市场结果都由一种代币表示。请先通过[发现事件合约](/zh/event-contracts/discover-markets)或[市场详情](/zh/event-contracts/market-details)获取 `outcomes[].token_id`。
+
+本页所有接口均为公开市场数据接口，无需认证。生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。
+
+## 订单簿
+
+### 获取订单簿
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/order_book?depth=20"
+```
+
+`depth` 可选，默认值为 20，可接受 1–100。
+
+```json 示例
+{
+  "token_id": "token-yes",
+  "condition_id": "0xabc...",
+  "timestamp": 1782753357257,
+  "hash": "a1b2c3d4",
+  "bids": [{ "price": "0.48", "size": "100.00" }],
+  "asks": [{ "price": "0.52", "size": "80.00" }],
+  "last_trade_price": "0.50",
+  "min_order_size": "5",
+  "tick_size": "0.01",
+  "neg_risk": false
+}
+```
+
+| 字段 | 说明 |
+| --- | --- |
+| `token_id` | 结果代币标识符 |
+| `condition_id` | 结算条件标识符 |
+| `bids`、`asks` | 价格档位数组，每档包含十进制字符串格式的 `price` 和 `size` |
+| `timestamp` | Unix 毫秒格式的快照时间 |
+| `hash` | 订单簿快照哈希 |
+| `last_trade_price` | 最近成交价 |
+| `min_order_size`、`tick_size`、`neg_risk` | 交易限制 |
+
+当前 API 不提供批量订单簿接口。如需多个订单簿，请分别请求各 Token ID。
+
+## 最新代币价格
+
+获取最新成交价与方向：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price"
+```
+
+```json
+{"token_id":"token-yes","price":"0.50","side":"BUY","timestamp":1782753357257}
+```
+
+若无可用成交，`price` 可能为空字符串。
+
+## 代币行情
+
+同时获取最新价格、最佳买价与最佳卖价：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/ticker"
+```
+
+```json
+{"token_id":"token-yes","last_price":"0.50","best_bid":"0.48","best_ask":"0.52","timestamp":1782753357257}
+```
+
+缺少可靠数据的字段可能为 `null`。
+
+## 批量代币价格
+
+传入以逗号分隔的 Token ID。单次请求最多包含 100 个不同 Token ID：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/prices?token_ids=token-yes,token-no"
+```
+
+未知或不可见的代币会被忽略；返回项目保持请求顺序。
+
+## 价格历史
+
+获取代币历史价格：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price_history?interval=1h&from=1782666000000&to=1782752400000"
+```
+
+| 参数 | 说明 |
+| --- | --- |
+| `interval` | `5m`、`15m`、`1h`、`4h` 或 `1d` |
+| `from` | Unix 毫秒格式的开始时间 |
+| `to` | Unix 毫秒格式的结束时间 |
+|  | 请求范围最长 14 天 |
+
+```json
+{"history":[{"t":1782666000,"p":0.485},{"t":1782669600,"p":0.500}]}
+```
+
+## 不支持的 CLOB 专用接口
+
+Prediction API 当前不提供 Polymarket CLOB 的 `/books`、`/prices` POST、`/midpoint`、`/midpoints`、`/spread`、`/spreads` 或 `/last-trades-prices`。请改用上述订单簿、价格、行情、批量价格和价格历史接口。

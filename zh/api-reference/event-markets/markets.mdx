@@ -1,0 +1,37 @@
+---
+title: "列出与获取市场"
+sidebarTitle: "市场"
+description: "列出可见的预测市场，获取详情并查询公开成交。"
+---
+
+## 市场列表
+
+`GET https://api.dexbuilder.com/api/v4/event_markets/markets`
+
+公开接口，无需认证。支持 `limit`（1–100）、`cursor`、`market_id`、`event_id`、`slug`、`condition_id`、`tag_slug`、`active` 和 `closed`。
+
+响应中的 `items` 包含市场摘要，`next_cursor` 为下一页游标。市场摘要包含市场与事件 ID、slug、多语言问题、Condition ID、生命周期状态、日期、结果代币、最佳买卖价、最近成交价、总交易量、24 小时交易量、分类和标签。
+
+## 市场详情
+
+- `GET /api/v4/event_markets/markets/{market_id}`
+- `GET /api/v4/event_markets/markets/slug/{slug}`
+
+详情响应还包含：
+
+| 字段 | 说明 |
+| --- | --- |
+| `accepting_orders` | 撮合引擎当前是否接受订单 |
+| `enable_order_book` | 是否启用订单簿交易 |
+| `min_order_size` | 最小订单数量 |
+| `tick_size` | 最小价格增量 |
+| `neg_risk` | 是否采用负风险结算 |
+| `resolution_source` | 结算来源说明或 URL |
+| `resolved_at` | 结算时间戳 |
+| `winning_outcome` / `winning_token_id` | 获胜结果及其 Token ID |
+
+## 市场成交
+
+`GET /api/v4/event_markets/markets/{market_id}/trades`
+
+支持 `limit` 与 `cursor`。每条成交包含 `trade_id`、`market_id`、`condition_id`、`token_id`、执行 `price` / `size`、`side` 与 `timestamp`。

@@ -1,0 +1,177 @@
+---
+title: "实时订单更新"
+sidebarTitle: "实时订单更新"
+description: "通过 CLOB 用户 WebSocket 数据流，实时响应已认证账户的订单与成交活动。"
+---
+
+使用预测市场 WebSocket 接收账户更新，包括订单状态变化、成交撮合或确认、仓位变化以及可领取结算款项。
+
+<Note>
+  公开市场数据频道无需认证。本页频道均为私有频道，需要 API Key 认证。
+</Note>
+
+## 连接
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+该端点实现 Broker WebSocket v2 JSON 协议。客户端请求使用 `op` 字段；服务器响应包含 `op`、`ch`、`result` 与 `err`。如需关联 ACK 或错误与具体请求，请提供客户端生成的 `id`。
+
+## 认证私有订阅
+
+可在首个私有请求中内联认证：
+
+```json
+{
+  "t":1787026512123,"id":"orders-1","op":"subscribe","ch":"em.orders",
+  "payload":{"all":true},
+  "auth":{"method":"api_key","key":"<api_key>","sign":"<signature>"}
+}
+```
+
+订阅和取消订阅时，使用 HMAC-SHA512 对以下精确消息签名，并将结果编码为十六进制：
+
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
+
+`time` 使用外层请求的 `t`。API Secret 仅在本地生成签名，不会通过 WebSocket 发送。
+
+也可以通过 `server.sign` 在每条连接上预认证一次。此时应对外层 `t` 的十进制字符串执行：
+
+```text
+HexEncode(HMAC-SHA512(api_secret, decimal(t)))
+```
+
+## 订阅账户更新
+
+私有订阅支持以下两种形式，二者不可同时使用：
+
+- `payload.items`：筛选对象数组，每个对象包含 `condition_id`
+- `payload.all: true`：接收已认证用户可访问的全部账户更新
+
+单个请求最多包含 100 个项目，每条连接最多支持 10,000 个活跃订阅。
+
+单市场订阅示例：
+
+```json
+{
+  "t":1787026512123,"id":"orders-2","op":"subscribe","ch":"em.orders",
+  "payload":{"items":[{"condition_id":"gate_0xb610...901a"}]}
+}
+```
+
+取消筛选器时，发送相同请求并将 `op` 改为 `unsubscribe`。服务器不会发送私有数据初始快照；应使用 REST 接口建立初始状态，并在重连后恢复错过的消息。
+
+## 私有频道
+
+| 频道 | 用途 | 筛选字段 |
+| --- | --- | --- |
+| `em.orders` | 订单生命周期更新 | `condition_id` |
+| `em.usertrades` | 已认证用户的成交 | `condition_id` |
+| `em.positions` | 仓位变化 | `condition_id` |
+| `em.settlements` | 结算与可领取状态更新 | `condition_id` |
+
+### 订单更新
+
+订单结果包含已认证账户的公开订单状态：
+
+```json
+{
+  "order_id":"123456789","client_order_id":"client-order-1",
+  "event_id":"gate_632804","condition_id":"gate_0xb610...901a",
+  "token_id":"gate_572803...39200","outcome":"Yes","side":"BUY",
+  "order_mode":"LIMIT","order_type":"GTC","px":"0.45","qty":"100",
+  "filled_qty":"20","left_qty":"80","status":"OPEN",
+  "created_ts":1787026500000,"updated_ts":1787026512027
+}
+```
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `order_id` | string | 平台订单标识符 |
+| `client_order_id` | string | 可选客户端订单标识符 |
+| `event_id` | string | 可选事件标识符 |
+| `condition_id` | string | 市场条件标识符 |
+| `token_id` | string | 可选结果代币标识符 |
+| `outcome` | string | 可选结果标签 |
+| `side` | string | `BUY` 或 `SELL` |
+| `order_mode` | string | 执行模式，如 `LIMIT` 或 `MARKET` |
+| `order_type` | string | 有效期或订单类型，如 `GTC`、`GTD`、`FOK` 或 `FAK` |
+| `px` | string | 可选订单价格 |
+| `qty` | string | 原始订单数量 |
+| `filled_qty` | string | 已成交数量 |
+| `left_qty` | string | 剩余数量 |
+| `status` | string | `PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 或 `FAILED` |
+| `error_code` | string | 可选失败或拒绝码 |
+| `created_ts` | integer | Unix 毫秒格式创建时间 |
+| `updated_ts` | integer | Unix 毫秒格式最后更新时间 |
+
+部分成交订单通常仍保持 `OPEN`；使用 `filled_qty` 和 `left_qty` 判断执行进度。
+
+### 用户成交
+
+`em.usertrades` 频道推送与已认证用户相关的成交。服务配置可能启用 `MATCHED` 事件；`CONFIRMED` 事件始终会推送。
+
+```json
+{
+  "trade_id":"trade-1","order_id":"123456789","client_order_id":"client-order-1",
+  "event_id":"gate_632804","condition_id":"gate_0xb610...901a",
+  "token_id":"gate_572803...39200","outcome":"Yes","side":"BUY",
+  "role":"MAKER","px":"0.45","qty":"20","fee_rate":"0.001",
+  "status":"CONFIRMED","created_ts":1787026512027
+}
+```
+
+关键字段包括成交 ID、关联订单、事件/条件/代币、方向、`MAKER` 或 `TAKER` 角色、成交价格 `px`、数量 `qty`、费率、状态与创建时间。
+
+权威历史数据请查询 `GET https://api.dexbuilder.com/api/v4/event_markets/usertrades`。REST 响应使用 `price` 与 `size`，WebSocket 结果使用 `px` 与 `qty`。可按 `condition_id`、时间范围、`order_id`、`token_id` 筛选，并使用游标分页。
+
+### 仓位
+
+`em.positions` 结果包含仓位数量及结算状态。公开 WebSocket 合约不包含标记价格字段。
+
+```json
+{
+  "position_id":"987654321","event_id":"gate_632804",
+  "token_id":"gate_572803...39200","outcome":"Yes","qty":"80",
+  "avg_px":"0.45","settle_status":"UNSETTLED",
+  "locked_qty":"10","available_qty":"70","claimable_amount":"0",
+  "updated_ts":1787026512027
+}
+```
+
+字段分别表示仓位 ID、关联事件与结果代币、结果标签、仓位数量、平均开仓价、结算状态、锁定数量、可用数量、可领取金额及最后更新时间。
+
+### 结算
+
+```json
+{
+  "position_id":"987654321","event_id":"gate_632804",
+  "condition_id":"gate_0xb610...901a","winning_outcome":"Yes",
+  "is_winner":true,"claimable_amount":"80","created_ts":1787026512027
+}
+```
+
+结果包含已结算仓位 ID、关联事件、市场条件、获胜结果、仓位是否获胜、可领取金额及结算创建时间。
+
+## REST 恢复
+
+重连后，通过相应私有 REST 接口重建状态并恢复遗漏更新：
+
+- 订单：`GET https://api.dexbuilder.com/api/v4/event_markets/orders`
+- 用户成交：`GET https://api.dexbuilder.com/api/v4/event_markets/usertrades`
+- 仓位：`GET https://api.dexbuilder.com/api/v4/event_markets/positions`
+
+## 心跳、错误与重连
+
+服务器发送 WebSocket Ping 控制帧，标准客户端通常会自动回复 Pong。客户端也可以发送：
+
+```json
+{"t":1787026512123,"id":"ping-1","op":"ping"}
+```
+
+错误响应包含请求 `id`、频道、操作及 `err.code`、`err.message`。常见错误码：1 表示请求格式无效，2 表示参数无效，3 表示服务器错误，4 表示认证失败。
+
+断开连接后，订阅和遗漏消息不会保留。请使用退避策略重连、重新认证、恢复订阅，再通过 REST 恢复状态后处理新事件。

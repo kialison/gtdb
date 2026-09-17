@@ -1,0 +1,16 @@
+---
+title: "账户、费用与领取"
+sidebarTitle: "账户"
+description: "预测市场账户、费用、账本与领取响应参考。"
+---
+
+本页所有接口均为私有接口。认证由网关提供，内部身份请求头不是公开请求参数。
+
+- `GET /api/v4/event_markets/assets`：读取账户总资金、预测市场资产、仓位价值和可用余额
+- `GET /api/v4/event_markets/balances`：读取各币种余额
+- `GET /api/v4/event_markets/fee`：读取账户或市场适用费率
+- `GET /api/v4/event_markets/account_book`：查询账户资金变更记录并使用游标分页
+- `GET /api/v4/event_markets/claims`：查询可领取结算金额
+- `POST /api/v4/event_markets/claims`：提交领取请求
+
+资金、余额、费用和领取金额均以十进制字符串返回。领取属于异步操作，提交后应通过账户与仓位接口确认最终状态。

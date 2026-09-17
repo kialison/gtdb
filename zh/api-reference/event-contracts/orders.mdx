@@ -1,0 +1,28 @@
+---
+title: "订单"
+sidebarTitle: "订单"
+description: "创建、列出、查询和取消私有事件合约订单。"
+---
+
+本页所有接口均为私有接口，需要网关认证。客户端不得发送内部网关身份请求头。
+
+## 创建订单
+
+`POST /api/v4/event_contracts/orders`
+
+请求字段包括结果代币 `token_id`、方向 `side`、十进制字符串 `price`、`size` 与 `total_cost`、`order_type`、`order_mode`、可选 `client_order_id`、`post_only`、`sell_all` 和 Unix 秒格式 `expire_time`。
+
+成功响应返回 `order_id`、`client_order_id`、`status` 与 `created_at`。接受订单不代表已经成交。
+
+## 查询订单
+
+`GET /api/v4/event_contracts/orders` 支持按状态、条件、事件、订单 ID、客户端订单 ID 与时间范围筛选，并使用游标分页。
+
+`GET /api/v4/event_contracts/orders/{order_id}` 返回单个订单详情，包括方向、价格、原始数量、已成交数量、剩余数量、状态及错误码。
+
+## 取消订单
+
+- `DELETE /api/v4/event_contracts/orders/{order_id}`：取消单个订单
+- `DELETE /api/v4/event_contracts/orders?condition_id={condition_id}`：取消某市场条件下的订单
+
+取消为异步请求，响应中的 `ACCEPTED` / `PENDING` 表示已受理，应继续查询订单状态。
