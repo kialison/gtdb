@@ -113,7 +113,23 @@
               {
                 "group": "事件合约",
                 "pages": [
-                  "untitled-page-21"
+                  "untitled-page-21",
+                  {
+                    "group": "交易",
+                    "pages": []
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": []
+                  },
+                  {
+                    "group": "市场数据",
+                    "pages": []
+                  },
+                  {
+                    "group": "入门",
+                    "pages": []
+                  }
                 ]
               }
             ]
