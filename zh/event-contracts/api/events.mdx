@@ -1,0 +1,29 @@
+---
+title: "事件查询"
+sidebarTitle: "事件"
+description: "查询事件合约事件列表，或按 ID、Slug 获取事件详情。"
+---
+
+## 查询事件列表
+
+```text
+GET /api/v4/event_markets/events
+```
+
+公开接口，无需认证。支持 `limit`、`cursor`、`sort`、`ascending`、`event_id`、`slug`、`tag_slug`、`active`、`closed`、`start_date_min/max`、`end_date_min/max` 等参数。
+
+```bash
+curl --get 'https://api.dexbuilder.com/api/v4/event_markets/events' \
+  --data-urlencode 'limit=20' \
+  --data-urlencode 'sort=start_date' \
+  --data-urlencode 'active=true'
+```
+
+返回 `items` 与 `next_cursor`。事件详情通常包含 `event_id`、`slug`、多语言 `title`、`category`、状态、开始/结束时间、成交量、`description`、`resolution_source` 与 `markets`。
+
+## 查询单个事件
+
+```text
+GET /api/v4/event_markets/events/{event_id}
+GET /api/v4/event_markets/events/slug/{slug}
+```
