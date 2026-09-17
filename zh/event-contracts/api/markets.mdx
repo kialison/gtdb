@@ -1,0 +1,32 @@
+---
+title: "市场查询"
+sidebarTitle: "市场"
+description: "查询事件合约市场列表、市场详情以及公开成交。"
+---
+
+## 查询市场列表
+
+```text
+GET /api/v4/event_markets/markets
+```
+
+公开接口，无需认证。支持 `limit`、`cursor`、`market_id`、`event_id`、`slug`、`condition_id`、`tag_slug`、`active` 和 `closed` 等参数。
+
+市场摘要通常包含 `market_id`、`event_id`、`slug`、`question`、`condition_id`、状态、时间、`outcomes`、最佳买卖价、最新成交价、成交量、分类与标签。
+
+## 查询市场详情
+
+```text
+GET /api/v4/event_markets/markets/{market_id}
+GET /api/v4/event_markets/markets/slug/{slug}
+```
+
+详情还可包含 `accepting_orders`、`enable_order_book`、`min_order_size`、`tick_size`、`neg_risk`、`resolution_source`、`resolved_at`、`winning_outcome` 与 `winning_token_id`。
+
+## 查询市场成交
+
+```text
+GET /api/v4/event_markets/markets/{market_id}/trades
+```
+
+支持 `limit` 和 `cursor` 分页。
