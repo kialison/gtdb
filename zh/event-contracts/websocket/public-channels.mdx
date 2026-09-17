@@ -1,0 +1,79 @@
+---
+title: "公共频道"
+sidebarTitle: "公共频道"
+description: "订阅事件合约公开成交、深度、BBO、价格和市场状态。"
+---
+
+本页频道均为公开频道，无需认证。
+
+## 公开成交 `ec.trades`
+
+按 `condition_id` 订阅：
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.trades",
+  "payload":{"items":[{"condition_id":"gate_0xcondition"}]}
+}
+```
+
+每条更新包含 `condition_id`、`token_id`、`outcome`、`side`、`px`、`qty` 和 `ts`。
+
+## 订单簿深度 `ec.depth`
+
+按 `token_id` 和深度等级订阅。支持 `5`、`10`、`20`、`50` 档。
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.depth",
+  "payload":{"items":[{"token_id":"gate_token_id","level":20}]}
+}
+```
+
+服务端推送的是完整快照，不是增量 Delta。
+
+## 最优买卖价 `ec.bbo`
+
+返回 `bid_px`、`ask_px`、`last_px` 和时间戳。
+
+## CPI 价格 `ec.cpi`
+
+按 `symbol` 和 `interval` 订阅，例如：
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.cpi",
+  "payload":{"items":[{"symbol":"btcusdt","interval":"1m"}]}
+}
+```
+
+返回标准化后的 Symbol、周期、价格和价格时间。
+
+## K 线 `ec.candlestick`
+
+按 Symbol 和周期订阅。推送字段包括：
+
+- `t`：K 线开始时间；
+- `o`：开盘价；
+- `h`：最高价；
+- `l`：最低价；
+- `c`：收盘价；
+- `v`：成交量；
+- `closed`：K 线是否已结束。
+
+## 开收盘参考价 `ec.oc_price`
+
+可按市场 `slug`、`market_id`，或 Symbol + Interval 订阅。返回 `price_to_beat` 与 `final_price`。
+
+## 市场状态 `ec.status`
+
+按 `market_id` 订阅市场状态。常见状态：
+
+- `ACTIVE`
+- `CLOSED`
+- `RESOLVED`
+
+推送还可包含 `closed`、`accepting_orders`、各结果 Token 及当前价格。
