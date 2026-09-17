@@ -62,6 +62,12 @@
                   {
                     "group": "入门",
                     "pages": []
+                  },
+                  {
+                    "group": "预测市场介绍",
+                    "pages": [
+                      "zh/event-markets/overview"
+                    ]
                   }
                 ]
               },
