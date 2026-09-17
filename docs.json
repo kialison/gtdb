@@ -120,7 +120,11 @@
                   },
                   {
                     "group": "核心概念",
-                    "pages": []
+                    "pages": [
+                      "zh/event-contracts/markets-and-events",
+                      "zh/event-contracts/negative-risk-markets",
+                      "zh/event-contracts/prices-orderbook"
+                    ]
                   },
                   {
                     "group": "市场数据",
@@ -128,7 +132,11 @@
                   },
                   {
                     "group": "入门",
-                    "pages": []
+                    "pages": [
+                      "zh/event-contracts/overview",
+                      "zh/event-contracts/event-contracts",
+                      "zh/event-contracts/apis"
+                    ]
                   }
                 ]
               }

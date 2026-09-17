@@ -1,0 +1,46 @@
+---
+title: "市场与事件"
+sidebarTitle: "市场与事件"
+description: "了解事件合约的基础组成：市场与事件之间的关系、如何通过 slug 标识，以及如何从 API 获取。"
+---
+
+每份事件合约都围绕两个核心概念构建：**市场**与**事件**。
+
+## 市场
+
+市场是事件合约中最基本的可交易单元。每个市场代表一个包含 Yes/No 结果的二元问题。
+
+| 标识符 | 说明 |
+| --- | --- |
+| Condition ID | CTF 合约中市场条件的唯一标识 |
+| Question ID | 用于结算的市场问题哈希 |
+| Token ID | 在 CLOB 交易的 ERC1155 Token ID，Yes 与 No 各一个 |
+
+例如，“BTC 5 分钟后上涨还是下跌？”会创建两种结果代币：
+
+- **Yes 代币**——如果比特币上涨，可兑付 1
+- **No 代币**——如果比特币未上涨，可兑付 1
+
+## 事件
+
+事件是将一个或多个相关市场组合在一起的容器，提供组织结构并支持多结果事件合约。只有一个市场时，事件和市场基本等价。
+
+```text
+事件：BTC 5 分钟后上涨还是下跌？
+   └── 市场：BTC 5 分钟后上涨还是下跌？（Up/Down）
+```
+
+## 识别市场
+
+每个市场和事件都有唯一 slug，并出现在 URL 中：
+
+```text
+https://app.dexbuilder.com/event/fed-decision-in-october
+                            └── slug: fed-decision-in-october
+```
+
+通过 slug 获取事件：
+
+```bash
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/fed-decision-in-october"
+```

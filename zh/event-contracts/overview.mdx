@@ -1,0 +1,30 @@
+---
+title: "事件合约文档"
+sidebarTitle: "概览"
+description: "面向事件合约开发者的 API 与工具，用于获取数据、提交订单和赎回仓位。"
+---
+
+## 开发者快速入门
+
+几分钟内发起第一次 API 请求。了解事件合约平台基础，获取市场数据、提交订单并赎回获胜仓位。
+
+```bash API
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/markets" \
+  --data-urlencode "active=true" \
+  --data-urlencode "closed=false" \
+  --data-urlencode "limit=5"
+```
+
+## 了解事件合约
+
+<CardGroup cols={3}>
+  <Card title="事件合约" icon="chart-line" href="/zh/event-contracts/event-contracts">了解事件合约如何运作与使用。</Card>
+  <Card title="核心概念" icon="book" href="/zh/event-contracts/markets-and-events">了解市场与事件、价格与订单簿、仓位、订单和结算。</Card>
+  <Card title="API" icon="code" href="/zh/api-reference/event-contracts/overview">快速了解 API 并构建产品。</Card>
+</CardGroup>
+
+## 申请 DexBuilder Grants
+
+可申请超过 **3,000,000 美元**的 Grants。告诉我们你的项目，以及 DexBuilder 能如何帮助你构建。
+
+<Card title="立即申请" icon="rocket" href="mailto:grants@example.com">提交申请，获取事件合约项目 Grants 与支持。</Card>
