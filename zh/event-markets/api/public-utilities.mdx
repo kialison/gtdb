@@ -1,0 +1,44 @@
+---
+title: "公共工具接口"
+sidebarTitle: "公共工具"
+description: "查询标签、K 线和服务器时间等预测市场公共辅助数据。"
+---
+
+## 标签
+
+```text
+GET /api/v4/event_markets/tags
+```
+
+公开接口。支持 `limit` 和 `cursor`。
+
+返回 `items` 与 `next_cursor`，每个标签通常包含：
+
+- `tag_id`
+- `slug`
+- `label` 多语言对象
+
+## K 线
+
+```text
+GET /api/v4/event_markets/tokens/{currency}/candlesticks
+```
+
+参数：
+
+| 参数 | 位置 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `currency` | path | 是 | 基础资产，如 `BTC`、`ETH` |
+| `interval` | query | 是 | K 线周期 |
+| `from` / `to` | query | 否 | Unix 毫秒 |
+| `limit` | query | 否 | 返回数量 |
+
+每根 K 线包含 `t`、`o`、`h`、`l`、`c`、`v`。
+
+## 服务器时间
+
+```text
+GET /api/v4/event_markets/time
+```
+
+返回字段 `server_time`，单位为 Unix 毫秒。
