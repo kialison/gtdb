@@ -1,0 +1,62 @@
+---
+title: "持仓机制"
+sidebarTitle: "持仓机制"
+description: "了解事件合约持仓、结果代币、Position ID 以及市场结算后的赎回机制。"
+---
+
+事件合约的持仓本质上是结果代币。每个市场结果对应一个可识别的 Token，用户买入后形成持仓，并在市场结算后根据最终结果进行赎回。
+
+## 结果代币
+
+事件合约基于 Conditional Token Framework（CTF）表示不同结果。二元市场通常包含两个结果，例如 `Yes` 与 `No`。
+
+每个结果代币都有唯一的 Position ID，并作为链上的 Token ID 使用。多数接入场景无需自行计算 Position ID，直接使用市场接口返回的 `token_id` 即可。
+
+## Position ID 生成逻辑
+
+Position ID 的底层计算过程包括：
+
+1. 根据 Oracle、Question ID 和结果数量计算 `conditionId`；
+2. 根据 `conditionId` 和 `indexSet` 计算对应结果的 `collectionId`；
+3. 根据抵押资产与 `collectionId` 计算最终 `positionId`。
+
+```solidity
+getConditionId(oracle, questionId, outcomeSlotCount)
+getCollectionId(parentCollectionId, conditionId, indexSet)
+getPositionId(collateralToken, collectionId)
+```
+
+对于普通 API 接入方，这些链上计算通常由底层系统处理。
+
+## 持仓数量
+
+账户持仓接口会返回当前结果代币数量，并区分：
+
+- 总持仓数量；
+- 被订单或结算流程锁定的数量；
+- 当前可用于卖出或其他操作的数量；
+- 平均开仓价格；
+- 当前持仓价值；
+- 结算后可领取金额。
+
+## 市场结算
+
+市场结果确认后：
+
+- 获胜结果代币可按结算规则兑换对应抵押资产；
+- 失败结果代币价值归零；
+- 账户会更新 `settlement_status`、`won` 和 `claimable_amount` 等字段。
+
+## 赎回已结算持仓
+
+完成赎回前需要确认：
+
+1. 市场已经完成最终结算；
+2. 当前账户持有对应结果代币；
+3. 该持仓存在可领取金额。
+
+建议优先通过事件合约账户和 Claim 相关接口完成领取流程，而不是由普通 API 接入方自行拼装底层合约交易。
+
+<Note>
+如果只是使用 DexBuilder API 构建前端或交易应用，直接依赖市场返回的 `token_id`、账户持仓和 Claim 接口即可，不需要自行实现 CTF Position ID 计算。
+</Note>
