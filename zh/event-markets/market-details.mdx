@@ -4,31 +4,29 @@ sidebarTitle: "市场详情"
 description: "了解预测市场 Market 的结构、状态、结果代币与交易限制。"
 ---
 
-在通过「发现市场」选定 Market 后，可以使用 Market Detail 接口读取完整属性。该接口属于公开市场数据，不需要认证。
+从[发现预测市场](/zh/event-markets/discover-markets)选择市场后，可调用市场详情接口。市场数据为公开数据，无需认证。
 
-生产环境 Base URL：
+生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。
 
-```text
-https://api.dexbuilder.com
-```
+## 获取市场
 
-## 查询 Market
-
-根据 Market ID：
+通过复合市场 ID：
 
 ```bash cURL
 curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
 ```
 
-根据 slug：
+通过 slug：
 
 ```bash cURL
 curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
 ```
 
-## 响应示例
+## 响应
 
-```json Example
+响应为单个市场详情对象：
+
+```json 示例
 {
   "market_id": "market-123",
   "event_id": "event-123",
@@ -59,29 +57,29 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 
 | 字段 | 说明 |
 | --- | --- |
-| `market_id` | Market 唯一标识 |
-| `event_id` | 所属 Event ID |
-| `slug` | Market slug |
-| `question` | 多语言问题对象 |
-| `condition_id` | 结算 Condition ID |
-| `outcomes` | Outcome 数组，每个元素包含 `token_id` 与 `outcome` |
-| `status` | Market 当前状态 |
-| `closed` | Market 是否关闭 |
+| `market_id` | 市场专用接口使用的复合 ID |
+| `event_id` | 所属事件 ID |
+| `slug` | 稳定、适用于 URL 的市场标识符 |
+| `question` | 稀疏本地化对象，可用语言键取决于源数据 |
+| `condition_id` | 结算条件标识符 |
+| `outcomes` | 结果对象数组，每项包含 `token_id` 与本地化 `outcome` |
+| `status` | 当前市场状态 |
+| `closed` | 交易或市场活动是否已关闭 |
 | `accepting_orders` | 当前是否接受订单 |
-| `enable_order_book` | 是否启用订单簿 |
-| `best_bid`, `best_ask` | 当前最佳买价与卖价 |
+| `enable_order_book` | 是否提供订单簿数据 |
+| `best_bid`、`best_ask` | 当前最佳买价与卖价 |
 | `last_trade_price` | 最近成交价 |
-| `min_order_size` | 最小下单数量 |
-| `tick_size` | 最小价格变动单位 |
-| `neg_risk` | 是否使用 Negative Risk 结算机制 |
-| `start_date`, `end_date` | Market 时间字段，Unix 秒 |
-| `resolved_at` | 已结算时的结算时间 |
-| `winning_outcome`, `winning_token_id` | 获胜结果与对应 Token ID |
-| `tags` | Market 关联 Tag |
+| `min_order_size` | 十进制字符串格式的最小订单数量 |
+| `tick_size` | 十进制字符串格式的价格最小变动单位 |
+| `neg_risk` | 是否采用负风险结算 |
+| `start_date`、`end_date` | Unix 秒格式的市场时间 |
+| `resolved_at` | 已结算时的 Unix 秒格式结算时间 |
+| `winning_outcome`、`winning_token_id` | 可用时的结算结果 |
+| `tags` | 与市场关联的标签摘要 |
 
-## 使用 Outcome Token
+## 使用结果代币
 
-从 `outcomes[].token_id` 获取 Token ID 后，可以继续调用价格、Ticker 和订单簿接口：
+将 `outcomes[].token_id` 用于公开价格接口：
 
 ```bash cURL
 TOKEN_ID="<token_id>"
@@ -91,14 +89,14 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/price"
 curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/ticker"
 ```
 
-API 已直接在 `outcomes` 数组中返回 Token ID，无需额外解析 JSON 字符串形式的 Token 列表。
+API 直接在 `outcomes` 数组中返回 Token ID。请勿读取或解析 JSON 编码的 `clobTokenIds` 字符串，该字段不属于 Prediction API 响应。
 
-## 查询所属 Event
+## 关联事件
 
-使用响应中的 `event_id` 查询父级 Event：
+使用市场响应中的 `event_id` 获取所属事件：
 
 ```bash cURL
 curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
 ```
 
-Market 公开数据无需认证；下单、持仓、账户等私有接口需要认证。
+市场数据为公开数据。下单、仓位、账户数据等私有接口需要认证；认证机制另有文档说明，并可能发生变化。

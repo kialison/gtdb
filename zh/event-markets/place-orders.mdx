@@ -4,31 +4,29 @@ sidebarTitle: "提交订单"
 description: "通过 Prediction API 创建预测市场私有订单。"
 ---
 
-在确认 Market 当前接受订单后，可以针对指定 Outcome Token 提交交易。公开市场数据无需认证；下单属于私有操作，需要完成认证。
+确认市场正在接受订单后，可针对结果代币下单。市场数据为公开信息；下单属于私有操作，需要认证。
 
-生产环境 Base URL：
+生产环境 API 基础 URL 为 `https://api.dexbuilder.com`。认证机制尚未最终确定。请勿在客户端请求中复制内部网关身份请求头。
 
-```text
-https://api.dexbuilder.com
-```
+## 1. 读取市场限制
 
-## 1. 读取 Market 交易限制
-
-先查询 Market，并从 `outcomes[].token_id` 中选择要交易的 Token：
+获取市场并从 `outcomes[].token_id` 中选择代币：
 
 ```bash cURL
 curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
 ```
 
-再读取公开订单簿：
+读取公开订单簿：
 
 ```bash cURL
 curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
 ```
 
-提交订单前应根据响应中的 `min_order_size` 和 `tick_size` 做数量和价格校验。
+提交前，使用响应中的 `min_order_size` 与 `tick_size` 校验订单。
 
 ## 2. 提交订单
+
+创建认证请求：
 
 ```bash cURL
 curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
@@ -49,44 +47,39 @@ curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
   }'
 ```
 
-<Note>
-上例认证 Header 仅用于表示接口需要认证，实际公开认证方案以正式认证文档为准。不要把内部网关身份 Header 用作客户端认证参数。
-</Note>
+在公共认证方案最终确定前，上述认证占位符有意保持不可用。请勿发送内部网关身份请求头或其他内部请求头。
 
 ## 请求字段
 
 | 字段 | 说明 |
 | --- | --- |
-| `token_id` | 要交易的 Outcome Token |
-| `side` | 订单方向，例如 `BUY` / `SELL` |
-| `price` | 限价，decimal string |
-| `size` | 下单数量，decimal string |
-| `total_cost` | 某些订单模式下使用的订单总成本 |
+| `token_id` | 要交易的结果代币 |
+| `side` | 交易方向，如 `BUY` 或 `SELL` |
+| `price` | 十进制字符串格式的限价 |
+| `size` | 十进制字符串格式的订单数量 |
+| `total_cost` | 十进制字符串格式的订单总成本 |
 | `order_type` | 交易服务定义的订单类型 |
-| `order_mode` | Time-in-force / 执行模式 |
-| `client_order_id` | 可选的客户端幂等 / 跟踪 ID |
-| `post_only` | 是否只作为 Maker 提供流动性 |
-| `sell_all` | 卖出时是否使用全部可用持仓 |
-| `expire_time` | 适用时的过期时间，Unix 秒 |
+| `order_mode` | 交易服务定义的有效期或执行模式 |
+| `client_order_id` | 可选的客户端幂等/引用 ID |
+| `post_only` | 是否只允许增加流动性 |
+| `sell_all` | 卖单是否使用全部可用仓位 |
+| `expire_time` | 适用时的 Unix 秒格式到期时间 |
 
 ## 接受响应
 
+成功请求会返回已接受的订单引用：
+
 ```json
-{
-  "order_id": "order-123",
-  "client_order_id": "client-order-001",
-  "status": "ACCEPTED",
-  "created_at": 1782753357
-}
+{"order_id":"order-123","client_order_id":"client-order-001","status":"ACCEPTED","created_at":1782753357}
 ```
 
-`ACCEPTED` 只表示订单请求已被系统接受，并不代表已经全部成交。后续应通过订单查询接口读取实际状态。
+接受响应不代表订单已全部成交。请通过[管理订单](/zh/event-markets/manage-orders)查询状态。
 
-## 下单前检查
+## 提交前检查
 
-- Market 必须满足 `accepting_orders: true`；
-- `token_id` 应来自 Market 的 `outcomes` 数组；
-- `size` 必须满足 `min_order_size`；
-- `price` 必须符合 `tick_size`；
-- 价格、数量、金额建议始终使用字符串，避免浮点精度误差；
-- 私有请求必须使用正式认证方案。
+- 确认市场为 `accepting_orders: true`
+- 使用市场 `outcomes` 数组中的 Token ID
+- 确认订单数量满足 `min_order_size`
+- 按市场 `tick_size` 对价格取整
+- 将十进制值保留为字符串，避免浮点舍入误差
+- 公共认证方案可用后，使用已认证的私有请求
