@@ -1,0 +1,19 @@
+---
+title: "价格与订单簿"
+sidebarTitle: "价格与订单簿"
+description: "查询事件合约公开价格、Ticker、订单簿、价格历史和 K 线数据。"
+---
+
+本页接口均为公开接口，无需认证。
+
+| 能力 | 接口 |
+| --- | --- |
+| Token 对应市场 | `GET /api/v4/event_markets/tokens/{token_id}/market` |
+| 最新价格 | `GET /api/v4/event_markets/tokens/{token_id}/price` |
+| Ticker | `GET /api/v4/event_markets/tokens/{token_id}/ticker` |
+| 订单簿 | `GET /api/v4/event_markets/tokens/{token_id}/order_book` |
+| 价格历史 | `GET /api/v4/event_markets/tokens/{token_id}/price_history` |
+| 批量价格 | `GET /api/v4/event_markets/tokens/prices` |
+| K 线 | `GET /api/v4/event_markets/tokens/{currency}/candlesticks` |
+
+订单簿返回 `bids`、`asks`、`last_trade_price`、`min_order_size`、`tick_size` 等字段；价格历史支持 `5m`、`15m`、`1h`、`4h`、`1d` 等周期；批量价格一次最多支持 100 个 Token ID。
