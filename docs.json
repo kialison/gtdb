@@ -98,7 +98,11 @@
                       "zh/event-markets/manage-orders",
                       "zh/event-markets/place-orders",
                       "zh/event-markets/trading-overview",
-                      "zh/event-markets/first-order"
+                      "zh/event-markets/first-order",
+                      "zh/event-markets/wallet-activity",
+                      "zh/event-markets/error-codes",
+                      "zh/event-markets/positions",
+                      "zh/event-markets/fees"
                     ]
                   }
                 ]
