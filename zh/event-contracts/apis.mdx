@@ -1,0 +1,13 @@
+---
+title: "API 接入方式"
+sidebarTitle: "API 接入方式"
+description: "了解何时直接使用事件合约 REST API 与 WebSocket。"
+---
+
+当使用的运行环境没有现成 SDK，或业务需要对请求、签名、分页和实时订阅进行更细粒度控制时，可以直接使用 API 接入。
+
+REST API 返回原始 JSON 数据，并按业务提供独立接口。私有接口的认证和签名需要由接入方实现；不同接口的分页规则以具体页面说明为准。对于实时数据，需要连接相应的 WebSocket 服务并订阅所需频道。
+
+<Card title="API" icon="sparkles" href="/zh/event-contracts/api/overview">
+  直接接入事件合约 REST API 与 WebSocket 实时数据流。
+</Card>
