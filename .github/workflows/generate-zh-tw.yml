@@ -88,7 +88,7 @@ jobs:
               return p.stdout
 
           def twize(text: str) -> str:
-              text = twize(text)
+              text = hant(text)
               for src, dst in TW_TERMS:
                   text = text.replace(src, dst)
               return text
@@ -113,7 +113,7 @@ jobs:
               return "zh-TW/" + src
 
           def localize_content(text: str) -> str:
-              text = hant(text)
+              text = twize(text)
 
               # Locale-aware internal links.
               text = text.replace('href="/zh/', 'href="/zh-TW/')
