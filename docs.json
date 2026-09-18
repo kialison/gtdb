@@ -427,109 +427,109 @@
         "language": "en",
         "tabs": [
           {
-            "tab": "介绍",
+            "tab": "Introduction",
             "groups": [
               {
-                "group": "入门",
+                "group": "Getting Started",
                 "pages": [
-                  "untitled-page",
-                  "untitled-page-2",
-                  "untitled-page-3",
-                  "untitled-page-4",
-                  "untitled-page-5"
+                  "en/untitled-page",
+                  "en/untitled-page-2",
+                  "en/untitled-page-3",
+                  "en/untitled-page-4",
+                  "en/untitled-page-5"
                 ]
               },
               {
                 "group": "PerpDEX",
                 "pages": [
                   {
-                    "group": "交易",
+                    "group": "Trading",
                     "pages": [
-                      "untitled-page-6",
-                      "untitled-page-7",
-                      "untitled-page-8",
-                      "untitled-page-9",
-                      "untitled-page-10",
-                      "untitled-page-11",
-                      "untitled-page-12",
-                      "untitled-page-13"
+                      "en/untitled-page-6",
+                      "en/untitled-page-7",
+                      "en/untitled-page-8",
+                      "en/untitled-page-9",
+                      "en/untitled-page-10",
+                      "en/untitled-page-11",
+                      "en/untitled-page-12",
+                      "en/untitled-page-13"
                     ]
                   },
                   {
-                    "group": "风险机制",
+                    "group": "Risk Mechanisms",
                     "pages": [
-                      "untitled-page-17",
-                      "untitled-page-16"
+                      "en/untitled-page-17",
+                      "en/untitled-page-16"
                     ]
                   },
                   {
-                    "group": "费率",
+                    "group": "Fees",
                     "pages": [
-                      "untitled-page-14"
+                      "en/untitled-page-14"
                     ]
                   }
                 ]
               },
               {
-                "group": "预测市场",
+                "group": "Prediction Markets",
                 "pages": [
                   {
-                    "group": "快速开始",
+                    "group": "Getting Started",
                     "pages": [
-                      "zh/event-markets/overview",
-                      "zh/event-markets/event-markets",
-                      "zh/event-markets/place-first-order"
+                      "en/event-markets/overview",
+                      "en/event-markets/event-markets",
+                      "en/event-markets/place-first-order"
                     ]
                   },
                   {
-                    "group": "核心概念",
+                    "group": "Core Concepts",
                     "pages": [
-                      "zh/event-markets/markets-events",
-                      "zh/event-markets/negative-risk",
-                      "zh/event-markets/prices-orderbook",
-                      "zh/event-markets/positions-tokens",
-                      "zh/event-markets/order-lifecycle",
-                      "zh/event-markets/resolution"
+                      "en/event-markets/markets-events",
+                      "en/event-markets/negative-risk",
+                      "en/event-markets/prices-orderbook",
+                      "en/event-markets/positions-tokens",
+                      "en/event-markets/order-lifecycle",
+                      "en/event-markets/resolution"
                     ]
                   },
                   {
-                    "group": "交易机制",
+                    "group": "Trading Mechanics",
                     "pages": [
-                      "zh/event-markets/trading-overview",
-                      "zh/event-markets/how-positions-work",
-                      "zh/event-markets/fees"
+                      "en/event-markets/trading-overview",
+                      "en/event-markets/how-positions-work",
+                      "en/event-markets/fees"
                     ]
                   }
                 ]
               },
               {
-                "group": "事件合约",
+                "group": "Event Contracts",
                 "pages": [
                   {
-                    "group": "快速开始",
+                    "group": "Getting Started",
                     "pages": [
-                      "zh/event-contracts/overview",
-                      "zh/event-contracts/event-contracts",
-                      "zh/event-contracts/place-first-order"
+                      "en/event-contracts/overview",
+                      "en/event-contracts/event-contracts",
+                      "en/event-contracts/place-first-order"
                     ]
                   },
                   {
-                    "group": "核心概念",
+                    "group": "Core Concepts",
                     "pages": [
-                      "zh/event-contracts/markets-events",
-                      "zh/event-contracts/negative-risk",
-                      "zh/event-contracts/prices-orderbook",
-                      "zh/event-contracts/positions-tokens",
-                      "zh/event-contracts/resolution",
-                      "zh/event-contracts/order-lifecycle"
+                      "en/event-contracts/markets-events",
+                      "en/event-contracts/negative-risk",
+                      "en/event-contracts/prices-orderbook",
+                      "en/event-contracts/positions-tokens",
+                      "en/event-contracts/resolution",
+                      "en/event-contracts/order-lifecycle"
                     ]
                   },
                   {
-                    "group": "交易机制",
+                    "group": "Trading Mechanics",
                     "pages": [
-                      "zh/event-contracts/trading-overview",
-                      "zh/event-contracts/how-positions-work",
-                      "zh/event-contracts/fees"
+                      "en/event-contracts/trading-overview",
+                      "en/event-contracts/how-positions-work",
+                      "en/event-contracts/fees"
                     ]
                   }
                 ]
@@ -537,33 +537,33 @@
             ]
           },
           {
-            "tab": "在 DexBuilder 上构建",
+            "tab": "Build on DexBuilder",
             "pages": [
-              "builder/architecture",
-              "untitled-page-22",
+              "en/builder/architecture",
+              "en/untitled-page-22",
               {
-                "group": "构建你的 DEX",
+                "group": "Build Your DEX",
                 "pages": [
-                  "builder/create-builder",
-                  "builder/integration",
-                  "builder/account-authentication",
-                  "builder/assets-settlement",
-                  "builder/trading-integration",
-                  "builder/realtime-data"
+                  "en/builder/create-builder",
+                  "en/builder/integration",
+                  "en/builder/account-authentication",
+                  "en/builder/assets-settlement",
+                  "en/builder/trading-integration",
+                  "en/builder/realtime-data"
                 ]
               },
               {
-                "group": "Builder 配置",
+                "group": "Builder Configuration",
                 "pages": [
-                  "builder/fees-revenue",
-                  "builder/operations-console"
+                  "en/builder/fees-revenue",
+                  "en/builder/operations-console"
                 ]
               },
               {
-                "group": "上线",
+                "group": "Launch",
                 "pages": [
-                  "builder/launch-checklist",
-                  "builder/operations-support"
+                  "en/builder/launch-checklist",
+                  "en/builder/operations-support"
                 ]
               }
             ]
@@ -577,94 +577,94 @@
                   {
                     "group": "PerpDEX API",
                     "pages": [
-                      "api-reference/perpdex/overview",
-                      "api-reference/perpdex/changelog",
-                      "api-reference/perpdex/api",
-                      "api-reference/perpdex/authentication",
+                      "en/api-reference/perpdex/overview",
+                      "en/api-reference/perpdex/changelog",
+                      "en/api-reference/perpdex/api",
+                      "en/api-reference/perpdex/authentication",
                       {
                         "group": "REST API",
                         "pages": [
-                          "api-reference/perpdex/query-all-contracts",
-                          "api-reference/perpdex/query-contract",
-                          "api-reference/perpdex/query-order-book",
-                          "api-reference/perpdex/query-market-trades",
-                          "api-reference/perpdex/query-candlesticks",
-                          "api-reference/perpdex/query-premium-index",
-                          "api-reference/perpdex/query-tickers",
-                          "api-reference/perpdex/query-funding-rate",
-                          "api-reference/perpdex/query-insurance",
-                          "api-reference/perpdex/query-contract-stats",
-                          "api-reference/perpdex/query-index-constituents",
-                          "api-reference/perpdex/query-market-liquidation-orders",
-                          "api-reference/perpdex/query-risk-limit-tiers",
-                          "api-reference/perpdex/query-account",
-                          "api-reference/perpdex/query-account-book",
-                          "api-reference/perpdex/query-positions",
-                          "api-reference/perpdex/query-position",
-                          "api-reference/perpdex/update-position-margin",
-                          "api-reference/perpdex/update-position-leverage",
-                          "api-reference/perpdex/switch-position-margin-mode",
-                          "api-reference/perpdex/switch-hedge-margin-mode",
-                          "api-reference/perpdex/update-position-risk-limit",
-                          "api-reference/perpdex/set-position-mode",
-                          "api-reference/perpdex/query-hedge-positions",
-                          "api-reference/perpdex/update-hedge-position-margin",
-                          "api-reference/perpdex/update-hedge-position-leverage",
-                          "api-reference/perpdex/update-hedge-position-risk-limit",
-                          "api-reference/perpdex/place-order",
-                          "api-reference/perpdex/query-orders",
-                          "api-reference/perpdex/cancel-all-orders",
-                          "api-reference/perpdex/query-orders-by-time-range",
-                          "api-reference/perpdex/place-batch-orders",
-                          "api-reference/perpdex/query-order",
-                          "api-reference/perpdex/cancel-order",
-                          "api-reference/perpdex/amend-order",
-                          "api-reference/perpdex/query-my-trades",
-                          "api-reference/perpdex/query-my-trades-by-time-range",
-                          "api-reference/perpdex/query-position-close-history",
-                          "api-reference/perpdex/query-liquidation-history",
-                          "api-reference/perpdex/query-adl-history",
-                          "api-reference/perpdex/countdown-cancel-orders",
-                          "api-reference/perpdex/query-fee",
-                          "api-reference/perpdex/cancel-batch-orders",
-                          "api-reference/perpdex/amend-batch-orders",
-                          "api-reference/perpdex/query-risk-limit-table",
-                          "api-reference/perpdex/place-bbo-order"
+                          "en/api-reference/perpdex/query-all-contracts",
+                          "en/api-reference/perpdex/query-contract",
+                          "en/api-reference/perpdex/query-order-book",
+                          "en/api-reference/perpdex/query-market-trades",
+                          "en/api-reference/perpdex/query-candlesticks",
+                          "en/api-reference/perpdex/query-premium-index",
+                          "en/api-reference/perpdex/query-tickers",
+                          "en/api-reference/perpdex/query-funding-rate",
+                          "en/api-reference/perpdex/query-insurance",
+                          "en/api-reference/perpdex/query-contract-stats",
+                          "en/api-reference/perpdex/query-index-constituents",
+                          "en/api-reference/perpdex/query-market-liquidation-orders",
+                          "en/api-reference/perpdex/query-risk-limit-tiers",
+                          "en/api-reference/perpdex/query-account",
+                          "en/api-reference/perpdex/query-account-book",
+                          "en/api-reference/perpdex/query-positions",
+                          "en/api-reference/perpdex/query-position",
+                          "en/api-reference/perpdex/update-position-margin",
+                          "en/api-reference/perpdex/update-position-leverage",
+                          "en/api-reference/perpdex/switch-position-margin-mode",
+                          "en/api-reference/perpdex/switch-hedge-margin-mode",
+                          "en/api-reference/perpdex/update-position-risk-limit",
+                          "en/api-reference/perpdex/set-position-mode",
+                          "en/api-reference/perpdex/query-hedge-positions",
+                          "en/api-reference/perpdex/update-hedge-position-margin",
+                          "en/api-reference/perpdex/update-hedge-position-leverage",
+                          "en/api-reference/perpdex/update-hedge-position-risk-limit",
+                          "en/api-reference/perpdex/place-order",
+                          "en/api-reference/perpdex/query-orders",
+                          "en/api-reference/perpdex/cancel-all-orders",
+                          "en/api-reference/perpdex/query-orders-by-time-range",
+                          "en/api-reference/perpdex/place-batch-orders",
+                          "en/api-reference/perpdex/query-order",
+                          "en/api-reference/perpdex/cancel-order",
+                          "en/api-reference/perpdex/amend-order",
+                          "en/api-reference/perpdex/query-my-trades",
+                          "en/api-reference/perpdex/query-my-trades-by-time-range",
+                          "en/api-reference/perpdex/query-position-close-history",
+                          "en/api-reference/perpdex/query-liquidation-history",
+                          "en/api-reference/perpdex/query-adl-history",
+                          "en/api-reference/perpdex/countdown-cancel-orders",
+                          "en/api-reference/perpdex/query-fee",
+                          "en/api-reference/perpdex/cancel-batch-orders",
+                          "en/api-reference/perpdex/amend-batch-orders",
+                          "en/api-reference/perpdex/query-risk-limit-table",
+                          "en/api-reference/perpdex/place-bbo-order"
                         ]
                       },
                       {
                         "group": "WebSocket API",
                         "pages": [
-                          "api-reference/perpdex/websocket/overview",
-                          "api-reference/perpdex/websocket/system",
-                          "api-reference/perpdex/websocket/ticker",
-                          "api-reference/perpdex/websocket/public-trades",
-                          "api-reference/perpdex/websocket/order-book",
-                          "api-reference/perpdex/websocket/order-book-v2",
-                          "api-reference/perpdex/websocket/candlesticks",
-                          "api-reference/perpdex/websocket/public-liquidates",
-                          "api-reference/perpdex/websocket/contract-stats",
-                          "api-reference/perpdex/websocket/orders",
-                          "api-reference/perpdex/websocket/user-trades",
-                          "api-reference/perpdex/websocket/liquidates",
-                          "api-reference/perpdex/websocket/auto-deleverages",
-                          "api-reference/perpdex/websocket/position-closes",
-                          "api-reference/perpdex/websocket/balances",
-                          "api-reference/perpdex/websocket/reduce-risk-limits",
-                          "api-reference/perpdex/websocket/positions",
-                          "api-reference/perpdex/websocket/position-adl-rank",
-                          "api-reference/perpdex/websocket/autoorders",
-                          "api-reference/perpdex/websocket/trading-api"
+                          "en/api-reference/perpdex/websocket/overview",
+                          "en/api-reference/perpdex/websocket/system",
+                          "en/api-reference/perpdex/websocket/ticker",
+                          "en/api-reference/perpdex/websocket/public-trades",
+                          "en/api-reference/perpdex/websocket/order-book",
+                          "en/api-reference/perpdex/websocket/order-book-v2",
+                          "en/api-reference/perpdex/websocket/candlesticks",
+                          "en/api-reference/perpdex/websocket/public-liquidates",
+                          "en/api-reference/perpdex/websocket/contract-stats",
+                          "en/api-reference/perpdex/websocket/orders",
+                          "en/api-reference/perpdex/websocket/user-trades",
+                          "en/api-reference/perpdex/websocket/liquidates",
+                          "en/api-reference/perpdex/websocket/auto-deleverages",
+                          "en/api-reference/perpdex/websocket/position-closes",
+                          "en/api-reference/perpdex/websocket/balances",
+                          "en/api-reference/perpdex/websocket/reduce-risk-limits",
+                          "en/api-reference/perpdex/websocket/positions",
+                          "en/api-reference/perpdex/websocket/position-adl-rank",
+                          "en/api-reference/perpdex/websocket/autoorders",
+                          "en/api-reference/perpdex/websocket/trading-api"
                         ]
                       },
                       {
-                        "group": "模型",
+                        "group": "Models",
                         "pages": [
-                          "api-reference/perpdex/models/contract",
-                          "api-reference/perpdex/models/position",
-                          "api-reference/perpdex/models/dexfuturesorder",
-                          "api-reference/perpdex/models/dexfuturesbboorder",
-                          "api-reference/perpdex/models/batchamendorderreq"
+                          "en/api-reference/perpdex/models/contract",
+                          "en/api-reference/perpdex/models/position",
+                          "en/api-reference/perpdex/models/dexfuturesorder",
+                          "en/api-reference/perpdex/models/dexfuturesbboorder",
+                          "en/api-reference/perpdex/models/batchamendorderreq"
                         ]
                       }
                     ]
@@ -672,80 +672,80 @@
                 ]
               },
               {
-                "item": "预测市场",
+                "item": "Prediction Markets",
                 "pages": [
                   {
-                    "group": "预测市场 API",
+                    "group": "Prediction Markets API",
                     "pages": [
-                      "zh/event-markets/api/overview",
-                      "zh/event-markets/apis",
-                      "zh/event-markets/error-codes",
+                      "en/event-markets/api/overview",
+                      "en/event-markets/apis",
+                      "en/event-markets/error-codes",
                       {
                         "group": "REST API",
                         "pages": [
-                          "zh/event-markets/rest/query-events",
-                          "zh/event-markets/rest/query-event",
-                          "zh/event-markets/rest/query-event-by-slug",
-                          "zh/event-markets/rest/query-markets",
-                          "zh/event-markets/rest/query-market",
-                          "zh/event-markets/rest/query-market-by-slug",
-                          "zh/event-markets/rest/query-market-trades",
-                          "zh/event-markets/rest/query-token-market",
-                          "zh/event-markets/rest/query-token-price",
-                          "zh/event-markets/rest/query-token-ticker",
-                          "zh/event-markets/rest/query-order-book",
-                          "zh/event-markets/rest/query-price-history",
-                          "zh/event-markets/rest/query-token-prices",
-                          "zh/event-markets/rest/query-candlesticks",
-                          "zh/event-markets/rest/place-order",
-                          "zh/event-markets/rest/query-orders",
-                          "zh/event-markets/rest/query-order",
-                          "zh/event-markets/rest/cancel-order",
-                          "zh/event-markets/rest/cancel-orders-by-condition",
-                          "zh/event-markets/rest/query-positions",
-                          "zh/event-markets/rest/query-position",
-                          "zh/event-markets/rest/close-position",
-                          "zh/event-markets/rest/query-user-trades",
-                          "zh/event-markets/rest/query-assets",
-                          "zh/event-markets/rest/query-account-book",
-                          "zh/event-markets/rest/query-fee",
-                          "zh/event-markets/rest/query-available-claims",
-                          "zh/event-markets/rest/query-available-claim",
-                          "zh/event-markets/rest/create-claim",
-                          "zh/event-markets/rest/query-claim",
-                          "zh/event-markets/rest/query-tags",
-                          "zh/event-markets/rest/query-server-time"
+                          "en/event-markets/rest/query-events",
+                          "en/event-markets/rest/query-event",
+                          "en/event-markets/rest/query-event-by-slug",
+                          "en/event-markets/rest/query-markets",
+                          "en/event-markets/rest/query-market",
+                          "en/event-markets/rest/query-market-by-slug",
+                          "en/event-markets/rest/query-market-trades",
+                          "en/event-markets/rest/query-token-market",
+                          "en/event-markets/rest/query-token-price",
+                          "en/event-markets/rest/query-token-ticker",
+                          "en/event-markets/rest/query-order-book",
+                          "en/event-markets/rest/query-price-history",
+                          "en/event-markets/rest/query-token-prices",
+                          "en/event-markets/rest/query-candlesticks",
+                          "en/event-markets/rest/place-order",
+                          "en/event-markets/rest/query-orders",
+                          "en/event-markets/rest/query-order",
+                          "en/event-markets/rest/cancel-order",
+                          "en/event-markets/rest/cancel-orders-by-condition",
+                          "en/event-markets/rest/query-positions",
+                          "en/event-markets/rest/query-position",
+                          "en/event-markets/rest/close-position",
+                          "en/event-markets/rest/query-user-trades",
+                          "en/event-markets/rest/query-assets",
+                          "en/event-markets/rest/query-account-book",
+                          "en/event-markets/rest/query-fee",
+                          "en/event-markets/rest/query-available-claims",
+                          "en/event-markets/rest/query-available-claim",
+                          "en/event-markets/rest/create-claim",
+                          "en/event-markets/rest/query-claim",
+                          "en/event-markets/rest/query-tags",
+                          "en/event-markets/rest/query-server-time"
                         ]
                       },
                       {
                         "group": "WebSocket",
                         "pages": [
-                          "zh/event-markets/websocket/overview",
-                          "zh/event-markets/websocket/protocol",
-                          "zh/event-markets/websocket/public-channels",
-                          "zh/event-markets/websocket/private-channels",
-                          "zh/event-markets/websocket/authentication"
+                          "en/event-markets/websocket/overview",
+                          "en/event-markets/websocket/protocol",
+                          "en/event-markets/websocket/public-channels",
+                          "en/event-markets/websocket/private-channels",
+                          "en/event-markets/websocket/authentication"
                         ]
                       },
                       {
-                        "group": "行情与市场数据",
+                        "group": "Market Data",
                         "pages": [
-                          "zh/event-markets/market-data-overview",
-                          "zh/event-markets/discover-markets",
-                          "zh/event-markets/market-details",
-                          "zh/event-markets/market-prices-orderbooks",
-                          "zh/event-markets/analytics",
-                          "zh/event-markets/realtime-data",
-                          "zh/event-markets/chainlink-twap"
+                          "en/event-markets/market-data-overview",
+                          "en/event-markets/discover-markets",
+                          "en/event-markets/market-details",
+                          "en/event-markets/market-prices-orderbooks",
+                          "en/event-markets/analytics",
+                          "en/event-markets/realtime-data",
+                          "en/event-markets/chainlink-twap"
                         ]
                       },
                       {
-                        "group": "交易与账户",
+                        "group": "Trading & Accounts",
                         "pages": [
-                          "zh/event-markets/place-orders",
-                          "zh/event-markets/manage-orders",
-                          "zh/event-markets/realtime-order-updates",
-                          "zh/event-markets/wallet-activity"
+                          "en/event-markets/place-orders",
+                          "en/event-markets/manage-orders",
+                          "en/event-markets/realtime-order-updates",
+                          "en/event-markets/wallet-activity"
                         ]
                       }
                     ]
@@ -753,80 +753,80 @@
                 ]
               },
               {
-                "item": "事件合约",
+                "item": "Event Contracts",
                 "pages": [
                   {
-                    "group": "事件合约 API",
+                    "group": "Event Contracts API",
                     "pages": [
-                      "zh/event-contracts/api/overview",
-                      "zh/event-contracts/apis",
-                      "zh/event-contracts/error-codes",
+                      "en/event-contracts/api/overview",
+                      "en/event-contracts/apis",
+                      "en/event-contracts/error-codes",
                       {
                         "group": "REST API",
                         "pages": [
-                          "zh/event-contracts/rest/query-events",
-                          "zh/event-contracts/rest/query-event",
-                          "zh/event-contracts/rest/query-event-by-slug",
-                          "zh/event-contracts/rest/query-markets",
-                          "zh/event-contracts/rest/query-market",
-                          "zh/event-contracts/rest/query-market-by-slug",
-                          "zh/event-contracts/rest/query-market-trades",
-                          "zh/event-contracts/rest/query-token-market",
-                          "zh/event-contracts/rest/query-token-price",
-                          "zh/event-contracts/rest/query-token-ticker",
-                          "zh/event-contracts/rest/query-order-book",
-                          "zh/event-contracts/rest/query-price-history",
-                          "zh/event-contracts/rest/query-token-prices",
-                          "zh/event-contracts/rest/query-candlesticks",
-                          "zh/event-contracts/rest/place-order",
-                          "zh/event-contracts/rest/query-orders",
-                          "zh/event-contracts/rest/query-order",
-                          "zh/event-contracts/rest/cancel-order",
-                          "zh/event-contracts/rest/cancel-orders-by-condition",
-                          "zh/event-contracts/rest/query-positions",
-                          "zh/event-contracts/rest/query-position",
-                          "zh/event-contracts/rest/close-position",
-                          "zh/event-contracts/rest/query-user-trades",
-                          "zh/event-contracts/rest/query-assets",
-                          "zh/event-contracts/rest/query-account-book",
-                          "zh/event-contracts/rest/query-fee",
-                          "zh/event-contracts/rest/query-available-claims",
-                          "zh/event-contracts/rest/query-available-claim",
-                          "zh/event-contracts/rest/create-claim",
-                          "zh/event-contracts/rest/query-claim",
-                          "zh/event-contracts/rest/query-tags",
-                          "zh/event-contracts/rest/query-server-time"
+                          "en/event-contracts/rest/query-events",
+                          "en/event-contracts/rest/query-event",
+                          "en/event-contracts/rest/query-event-by-slug",
+                          "en/event-contracts/rest/query-markets",
+                          "en/event-contracts/rest/query-market",
+                          "en/event-contracts/rest/query-market-by-slug",
+                          "en/event-contracts/rest/query-market-trades",
+                          "en/event-contracts/rest/query-token-market",
+                          "en/event-contracts/rest/query-token-price",
+                          "en/event-contracts/rest/query-token-ticker",
+                          "en/event-contracts/rest/query-order-book",
+                          "en/event-contracts/rest/query-price-history",
+                          "en/event-contracts/rest/query-token-prices",
+                          "en/event-contracts/rest/query-candlesticks",
+                          "en/event-contracts/rest/place-order",
+                          "en/event-contracts/rest/query-orders",
+                          "en/event-contracts/rest/query-order",
+                          "en/event-contracts/rest/cancel-order",
+                          "en/event-contracts/rest/cancel-orders-by-condition",
+                          "en/event-contracts/rest/query-positions",
+                          "en/event-contracts/rest/query-position",
+                          "en/event-contracts/rest/close-position",
+                          "en/event-contracts/rest/query-user-trades",
+                          "en/event-contracts/rest/query-assets",
+                          "en/event-contracts/rest/query-account-book",
+                          "en/event-contracts/rest/query-fee",
+                          "en/event-contracts/rest/query-available-claims",
+                          "en/event-contracts/rest/query-available-claim",
+                          "en/event-contracts/rest/create-claim",
+                          "en/event-contracts/rest/query-claim",
+                          "en/event-contracts/rest/query-tags",
+                          "en/event-contracts/rest/query-server-time"
                         ]
                       },
                       {
                         "group": "WebSocket",
                         "pages": [
-                          "zh/event-contracts/websocket/overview",
-                          "zh/event-contracts/websocket/protocol",
-                          "zh/event-contracts/websocket/public-channels",
-                          "zh/event-contracts/websocket/private-channels",
-                          "zh/event-contracts/websocket/authentication"
+                          "en/event-contracts/websocket/overview",
+                          "en/event-contracts/websocket/protocol",
+                          "en/event-contracts/websocket/public-channels",
+                          "en/event-contracts/websocket/private-channels",
+                          "en/event-contracts/websocket/authentication"
                         ]
                       },
                       {
-                        "group": "行情与市场数据",
+                        "group": "Market Data",
                         "pages": [
-                          "zh/event-contracts/market-data-overview",
-                          "zh/event-contracts/discover-markets",
-                          "zh/event-contracts/market-details",
-                          "zh/event-contracts/market-prices-orderbooks",
-                          "zh/event-contracts/analytics",
-                          "zh/event-contracts/realtime-data",
-                          "zh/event-contracts/chainlink-twap"
+                          "en/event-contracts/market-data-overview",
+                          "en/event-contracts/discover-markets",
+                          "en/event-contracts/market-details",
+                          "en/event-contracts/market-prices-orderbooks",
+                          "en/event-contracts/analytics",
+                          "en/event-contracts/realtime-data",
+                          "en/event-contracts/chainlink-twap"
                         ]
                       },
                       {
-                        "group": "交易与账户",
+                        "group": "Trading & Accounts",
                         "pages": [
-                          "zh/event-contracts/place-orders",
-                          "zh/event-contracts/manage-orders",
-                          "zh/event-contracts/realtime-order-updates",
-                          "zh/event-contracts/wallet-activity"
+                          "en/event-contracts/place-orders",
+                          "en/event-contracts/manage-orders",
+                          "en/event-contracts/realtime-order-updates",
+                          "en/event-contracts/wallet-activity"
                         ]
                       }
                     ]
