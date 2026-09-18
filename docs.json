@@ -64,7 +64,7 @@
                     "pages": [
                       "zh/event-markets/overview",
                       "zh/event-markets/event-markets",
-                      "zh/event-markets/apis"
+                      "zh/event-markets/place-first-order"
                     ]
                   },
                   {
@@ -79,52 +79,11 @@
                     ]
                   },
                   {
-                    "group": "市场与订单",
+                    "group": "交易机制",
                     "pages": [
-                      "zh/event-markets/market-data-overview",
-                      "zh/event-markets/discover-markets",
-                      "zh/event-markets/market-details",
-                      "zh/event-markets/market-prices-orderbooks",
-                      "zh/event-markets/analytics",
-                      "zh/event-markets/realtime-data",
-                      "zh/event-markets/chainlink-twap"
-                    ]
-                  },
-                  {
-                    "group": "交易",
-                    "pages": [
-                      "zh/event-markets/place-first-order",
                       "zh/event-markets/trading-overview",
-                      "zh/event-markets/place-orders",
-                      "zh/event-markets/manage-orders",
-                      "zh/event-markets/realtime-order-updates",
                       "zh/event-markets/how-positions-work",
-                      "zh/event-markets/wallet-activity",
-                      "zh/event-markets/fees",
-                      "zh/event-markets/error-codes"
-                    ]
-                  },
-                  {
-                    "group": "API Reference",
-                    "pages": [
-                      "zh/event-markets/api/overview",
-                      "zh/event-markets/api/events",
-                      "zh/event-markets/api/markets",
-                      "zh/event-markets/api/market-data",
-                      "zh/event-markets/api/orders",
-                      "zh/event-markets/api/positions",
-                      "zh/event-markets/api/public-utilities",
-                      "zh/event-markets/api/account"
-                    ]
-                  },
-                  {
-                    "group": "WebSocket",
-                    "pages": [
-                      "zh/event-markets/websocket/overview",
-                      "zh/event-markets/websocket/protocol",
-                      "zh/event-markets/websocket/public-channels",
-                      "zh/event-markets/websocket/private-channels",
-                      "zh/event-markets/websocket/authentication"
+                      "zh/event-markets/fees"
                     ]
                   }
                 ]
@@ -317,7 +276,50 @@
                 ]
               },
               {
-                "item": "预测市场"
+                "item": "预测市场",
+                "pages": [
+                  "zh/event-markets/api/overview",
+                  "zh/event-markets/apis",
+                  "zh/event-markets/error-codes",
+                  {
+                    "group": "接口",
+                    "pages": [
+                      "zh/event-markets/api/events",
+                      "zh/event-markets/api/markets",
+                      "zh/event-markets/api/market-data",
+                      "zh/event-markets/api/orders",
+                      "zh/event-markets/api/positions",
+                      "zh/event-markets/api/account",
+                      "zh/event-markets/api/public-utilities"
+                    ]
+                  },
+                  {
+                    "group": "WebSocket",
+                    "pages": [
+                      "zh/event-markets/websocket/overview",
+                      "zh/event-markets/websocket/protocol",
+                      "zh/event-markets/websocket/public-channels",
+                      "zh/event-markets/websocket/private-channels",
+                      "zh/event-markets/websocket/authentication"
+                    ]
+                  },
+                  {
+                    "group": "开发指南",
+                    "pages": [
+                      "zh/event-markets/market-data-overview",
+                      "zh/event-markets/discover-markets",
+                      "zh/event-markets/market-details",
+                      "zh/event-markets/market-prices-orderbooks",
+                      "zh/event-markets/analytics",
+                      "zh/event-markets/realtime-data",
+                      "zh/event-markets/chainlink-twap",
+                      "zh/event-markets/place-orders",
+                      "zh/event-markets/manage-orders",
+                      "zh/event-markets/realtime-order-updates",
+                      "zh/event-markets/wallet-activity"
+                    ]
+                  }
+                ]
               },
               {
                 "item": "事件合约"
