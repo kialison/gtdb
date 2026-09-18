@@ -125,15 +125,8 @@
           {
             "tab": "在 DexBuilder 上构建",
             "pages": [
+              "builder/architecture",
               "untitled-page-22",
-              "builder/getting-started",
-              {
-                "group": "了解 DexBuilder",
-                "pages": [
-                  "builder/architecture",
-                  "builder/capabilities"
-                ]
-              },
               {
                 "group": "构建你的 DEX",
                 "pages": [
