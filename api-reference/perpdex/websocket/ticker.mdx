@@ -1,0 +1,28 @@
+---
+title: "Ticker 频道"
+description: "订阅永续合约实时 Ticker 行情。"
+---
+
+订阅永续合约实时 Ticker 行情。
+
+**频道：** `futures.tickers`
+
+**认证：** 不需要
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.tickers",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"]
+}
+```
+
+服务端确认订阅后，会通过同一 `channel` 持续推送 `event: "update"` 消息。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持 `payload` 与订阅时一致。
+

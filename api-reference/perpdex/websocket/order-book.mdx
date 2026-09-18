@@ -1,0 +1,29 @@
+---
+title: "深度频道"
+description: "订阅订单簿全量或增量深度更新。"
+---
+
+订阅订单簿全量或增量深度更新。
+
+**频道：** `futures.order_book`
+
+**认证：** 不需要
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.order_book",
+  "event": "subscribe",
+  "payload": ["BTC_USDT", "20", "0"]
+}
+```
+
+服务端确认订阅后，会通过同一 `channel` 持续推送 `event: "update"` 消息。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持 `payload` 与订阅时一致。
+
+标准深度相关频道包括 `futures.order_book` 与 `futures.order_book_update`。客户端应按频道定义维护本地订单簿。

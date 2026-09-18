@@ -1,0 +1,43 @@
+---
+title: "账户交易 API"
+description: "通过 WebSocket 完成下单、撤单、改单及订单查询等交易操作"
+---
+
+WebSocket 账户交易 API 允许在已建立的 WebSocket 连接中直接执行交易操作。
+
+## 服务地址
+
+```text
+wss://api.dexbuilder.com/v1/ws/dex
+```
+
+## 支持的交易频道
+
+| 频道 | 功能 |
+| --- | --- |
+| `futures.login` | WebSocket 交易登录 |
+| `futures.order_place` | 下单 |
+| `futures.order_batch_place` | 批量下单 |
+| `futures.order_cancel` | 撤销单个订单 |
+| `futures.order_cancel_cp` | 按条件批量撤单 |
+| `futures.order_cancel_ids` | 按订单 ID 列表批量撤单 |
+| `futures.order_amend` | 修改订单 |
+| `futures.order_list` | 查询订单列表 |
+| `futures.order_status` | 查询订单详情 |
+
+## 请求签名
+
+账户交易 API 使用独立的 WebSocket API 签名原文：
+
+```text
+api
+<channel>
+<request_param>
+<timestamp>
+```
+
+使用 API Secret 执行 HMAC-SHA512，并将结果编码为十六进制。
+
+<Warning>
+交易类频道属于写操作，请确保 API Key 具有读写权限。
+</Warning>

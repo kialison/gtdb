@@ -1,0 +1,57 @@
+---
+title: "WebSocket API 概览"
+description: "DexBuilder PerpDEX WebSocket API 的服务地址、频道分类与使用说明"
+---
+
+DexBuilder PerpDEX WebSocket API 用于实时接收行情、成交、深度、订单、持仓、余额及风险相关数据，也支持通过 WebSocket 执行账户交易操作。
+
+## 服务地址
+
+```text
+wss://api.dexbuilder.com/v1/ws/dex
+```
+
+## 频道类型
+
+### 公开频道
+
+无需认证：
+
+- Ticker
+- 公有成交
+- 深度 / 深度 V2
+- K 线
+- 公共强平订单
+- 合约统计信息
+
+### 私有频道
+
+需要 API Key 认证：
+
+- 订单
+- 用户私有成交
+- 强制平仓
+- 自动减仓
+- 平仓
+- 余额
+- 降低风险率
+- 仓位
+- 仓位 ADL 排名
+- 自动订单
+
+### 账户交易 API
+
+可在 WebSocket 连接中完成下单、批量下单、撤单、改单和订单查询等操作。
+
+## 基本请求格式
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.tickers",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"]
+}
+```
+
+私有频道需要额外携带 `auth`。

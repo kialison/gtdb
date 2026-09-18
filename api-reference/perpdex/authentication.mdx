@@ -1,6 +1,6 @@
 ---
 title: "认证与签名"
-description: "PerpDEX REST API 的权限、认证 Header、签名规则与签名示例"
+description: "PerpDEX REST API 与 WebSocket API 的权限、认证及签名规则"
 ---
 
 # 认证与签名
@@ -174,3 +174,40 @@ POST / PUT 等带 Request Body 的接口，需要确保：
 <Warning>
 不要在工单、聊天记录、截图或日志中公开 API Secret。若 API Secret 已泄露，应立即停用当前 API Key 并重新创建。
 </Warning>
+
+
+## WebSocket 认证与签名
+
+公开 WebSocket 频道无需认证。订阅订单、用户成交、持仓、余额等私有频道时，需要在请求中携带 `auth`：
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.orders",
+  "event": "subscribe",
+  "payload": ["<user_id>", "BTC_USDT"],
+  "auth": {
+    "method": "api_key",
+    "KEY": "<API_KEY>",
+    "SIGN": "<SIGN>"
+  }
+}
+```
+
+私有频道签名原文：
+
+```text
+channel=<channel>&event=<event>&time=<timestamp>
+```
+
+使用 API Secret 执行 HMAC-SHA512，并将结果编码为十六进制：
+
+```text
+SIGN = HexEncode(HMAC_SHA512(API Secret, Signature String))
+```
+
+<Warning>
+API Secret 仅用于本地生成签名，不通过 WebSocket 发送。
+</Warning>
+
+WebSocket 账户交易 API 的请求签名与频道订阅签名不同，具体以「账户交易 API」页面为准。

@@ -1,30 +1,28 @@
 ---
-title: "REST API 概览"
-description: "DexBuilder PerpDEX REST API 的版本、访问地址、能力范围与问题排查说明"
+title: "API 概览"
+description: "DexBuilder PerpDEX API 的版本、REST 与 WebSocket 访问地址、能力范围及问题排查说明"
 ---
 
-# REST API 概览
+# API 概览
 
-DexBuilder PerpDEX REST API 提供完整的程序化交易能力，可用于行情查询、账户与持仓管理、订单交易、历史记录查询及风险参数获取。
+DexBuilder PerpDEX API 同时提供 **REST API** 与 **WebSocket API**：
+
+- **REST API**：用于行情查询、账户与持仓管理、订单交易、历史记录查询及风险参数获取。
+- **WebSocket API**：用于实时行情、深度、成交、订单、持仓、余额以及交易状态推送，并支持通过 WebSocket 执行部分账户交易操作。
 
 当前版本：`V1.0.0`
 
-主要能力包括：
+## 服务地址
 
-- **公开数据**：合约信息、订单簿、成交、K 线、资金费率、市场统计等。
-- **私有数据**：账户、持仓、订单、个人成交及历史记录等。
-- **交易操作**：下单、撤单、改单、批量订单及持仓管理。
-- **风险管理**：风险限额、强平记录、ADL 等相关数据与操作。
+### REST API
 
-## Access URL
-
-REST API Base URL：
+Base URL：
 
 ```text
 https://api.dexbuilder.com/api/v1
 ```
 
-接口页面中的 Path 需要拼接在 Base URL 后。例如：
+接口页面中的 Path 需要拼接在 Base URL 后，例如：
 
 ```text
 GET /dex_futures/usdt/contracts
@@ -36,26 +34,47 @@ GET /dex_futures/usdt/contracts
 https://api.dexbuilder.com/api/v1/dex_futures/usdt/contracts
 ```
 
-## 接口类型
+### WebSocket API
 
-### 公开接口
+Base URL：
 
-公开行情接口无需 API Key，可直接请求。典型接口包括合约信息、市场深度、成交、K 线和市场统计等。
+```text
+wss://api.dexbuilder.com/v1/ws/dex
+```
 
-### 私有接口
+WebSocket 连接建立后，可通过 `channel` 与 `event` 订阅公开或私有频道。
 
-账户、持仓、订单和个人交易记录等接口需要 API Key，并按照「认证与签名」中的规则生成请求签名。
+## 能力范围
+
+### REST API
+
+- **公开数据**：合约信息、订单簿、成交、K 线、资金费率、市场统计等。
+- **私有数据**：账户、持仓、订单、个人成交及历史记录等。
+- **交易操作**：下单、撤单、改单、批量订单及持仓管理。
+- **风险管理**：风险限额、强平记录、ADL 等相关数据与操作。
+
+### WebSocket API
+
+- **公开行情**：Ticker、公共成交、深度、K 线、公共强平和合约统计。
+- **私有数据**：订单、用户成交、持仓、余额、强平、ADL 等实时更新。
+- **账户交易**：通过 WebSocket 完成下单、撤单、改单及订单查询等操作。
+
+## 认证
+
+公开 REST 接口和公开 WebSocket 频道无需 API Key。
+
+私有 REST 接口、私有 WebSocket 频道以及 WebSocket 账户交易 API 需要 API Key，并按照「认证与签名」中的规则完成认证。
 
 ## 技术支持与问题排查
 
-遇到接口问题时，建议先整理以下信息：
+遇到接口问题时，建议整理以下信息：
 
 1. 问题现象与复现步骤
-2. Request Method 与 Request URI
-3. Query 参数或 Request Body
-4. HTTP 状态码
-5. API 返回内容
-6. `X-Trace-ID`（如响应中存在）
+2. REST Request Method / URI，或 WebSocket Channel / Event
+3. Query 参数、Request Body 或 WebSocket Payload
+4. HTTP 状态码或 WebSocket Error
+5. 服务端返回内容
+6. Trace ID（如响应中存在）
 
 <Warning>
 提交问题时不要提供 API Secret、私钥或完整签名凭证。如 API Key 已泄露，应立即停用并重新创建。

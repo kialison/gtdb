@@ -1,0 +1,28 @@
+---
+title: "合约统计信息频道"
+description: "订阅合约持仓量、标记价格、多空比及强平统计等数据。"
+---
+
+订阅合约持仓量、标记价格、多空比及强平统计等数据。
+
+**频道：** `futures.contract_stats`
+
+**认证：** 不需要
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.contract_stats",
+  "event": "subscribe",
+  "payload": ["BTC_USDT", "1m"]
+}
+```
+
+服务端确认订阅后，会通过同一 `channel` 持续推送 `event: "update"` 消息。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持 `payload` 与订阅时一致。
+

@@ -1,9 +1,35 @@
 ---
 title: "通用说明"
-description: "PerpDEX REST API 的 HTTP 约定、时间、分页、限频、返回格式、STP 与异常处理说明"
+description: "PerpDEX REST API 与 WebSocket API 的请求约定、限频、返回格式与异常处理说明"
 ---
 
 # 通用说明
+
+## WebSocket 通用格式
+
+WebSocket 请求统一使用 JSON。常见字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `time` | Unix 秒级时间戳 |
+| `channel` | 频道名称，例如 `futures.tickers` |
+| `event` | 操作类型，例如 `subscribe`、`unsubscribe`、`update` |
+| `payload` | 频道订阅参数 |
+| `auth` | 私有频道认证信息 |
+
+订阅示例：
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.tickers",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"]
+}
+```
+
+取消订阅时将 `event` 改为 `unsubscribe`。服务端数据推送通常使用 `event: "update"`。
+
 
 ## HTTP 通用格式
 

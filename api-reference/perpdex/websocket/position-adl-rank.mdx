@@ -1,0 +1,34 @@
+---
+title: "仓位 ADL 排名频道"
+description: "接收仓位 ADL 排名变化。"
+---
+
+接收仓位 ADL 排名变化。
+
+**频道：** `futures.position_adl_rank`
+
+**认证：** 需要 API Key
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.position_adl_rank",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"],
+  "auth": {
+    "method": "api_key",
+    "KEY": "<API_KEY>",
+    "SIGN": "<SIGN>"
+  }
+}
+```
+
+如需订阅全部合约，可在支持的频道中使用 `!all`。签名方式请参见「认证与签名」。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持认证信息与订阅参数一致。
+
+推送数据会包含合约、持仓模式及 ADL 排名区间等信息。

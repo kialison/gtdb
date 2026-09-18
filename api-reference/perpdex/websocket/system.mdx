@@ -1,0 +1,23 @@
+---
+title: "System API"
+description: "WebSocket 连接状态检查与系统通知"
+---
+
+System API 用于检查 WebSocket 连接状态并接收系统通知。
+
+## Ping / Pong
+
+客户端可主动发送：
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.ping"
+}
+```
+
+服务端返回 `futures.pong`。
+
+## 系统通知
+
+服务端可能通过 `futures.system` + `event: "update"` 推送系统级通知，例如服务升级或连接即将关闭。收到升级通知后，客户端应尽快建立新连接并恢复订阅。

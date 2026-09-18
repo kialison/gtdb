@@ -1,0 +1,28 @@
+---
+title: "公有成交频道"
+description: "订阅市场公开成交数据。"
+---
+
+订阅市场公开成交数据。
+
+**频道：** `futures.trades`
+
+**认证：** 不需要
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.trades",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"]
+}
+```
+
+服务端确认订阅后，会通过同一 `channel` 持续推送 `event: "update"` 消息。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持 `payload` 与订阅时一致。
+

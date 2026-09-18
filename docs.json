@@ -213,7 +213,7 @@
                   "api-reference/perpdex/api",
                   "api-reference/perpdex/authentication",
                   {
-                    "group": "接口",
+                    "group": "REST API",
                     "pages": [
                       "api-reference/perpdex/query-all-contracts",
                       "api-reference/perpdex/query-contract",
@@ -261,6 +261,31 @@
                       "api-reference/perpdex/amend-batch-orders",
                       "api-reference/perpdex/query-risk-limit-table",
                       "api-reference/perpdex/place-bbo-order"
+                    ]
+                  },
+                  {
+                    "group": "WebSocket API",
+                    "pages": [
+                      "api-reference/perpdex/websocket/overview",
+                      "api-reference/perpdex/websocket/system",
+                      "api-reference/perpdex/websocket/ticker",
+                      "api-reference/perpdex/websocket/public-trades",
+                      "api-reference/perpdex/websocket/order-book",
+                      "api-reference/perpdex/websocket/order-book-v2",
+                      "api-reference/perpdex/websocket/candlesticks",
+                      "api-reference/perpdex/websocket/public-liquidates",
+                      "api-reference/perpdex/websocket/contract-stats",
+                      "api-reference/perpdex/websocket/orders",
+                      "api-reference/perpdex/websocket/user-trades",
+                      "api-reference/perpdex/websocket/liquidates",
+                      "api-reference/perpdex/websocket/auto-deleverages",
+                      "api-reference/perpdex/websocket/position-closes",
+                      "api-reference/perpdex/websocket/balances",
+                      "api-reference/perpdex/websocket/reduce-risk-limits",
+                      "api-reference/perpdex/websocket/positions",
+                      "api-reference/perpdex/websocket/position-adl-rank",
+                      "api-reference/perpdex/websocket/autoorders",
+                      "api-reference/perpdex/websocket/trading-api"
                     ]
                   },
                   {

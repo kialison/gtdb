@@ -1,0 +1,33 @@
+---
+title: "平仓频道"
+description: "接收当前账户的平仓结果与盈亏更新。"
+---
+
+接收当前账户的平仓结果与盈亏更新。
+
+**频道：** `futures.position_closes`
+
+**认证：** 需要 API Key
+
+## 订阅
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.position_closes",
+  "event": "subscribe",
+  "payload": ["<user_id>", "BTC_USDT"],
+  "auth": {
+    "method": "api_key",
+    "KEY": "<API_KEY>",
+    "SIGN": "<SIGN>"
+  }
+}
+```
+
+如需订阅全部合约，可在支持的频道中使用 `!all`。签名方式请参见「认证与签名」。
+
+## 取消订阅
+
+将 `event` 改为 `unsubscribe`，并保持认证信息与订阅参数一致。
+
