@@ -587,7 +587,26 @@
   "footer": {
     "socials": {
       "website": "https://www.dexbuilder.com/"
-    }
+    },
+    "links": [
+      {
+        "header": "DexBuilder",
+        "items": [
+          {
+            "label": "DexBuilder 官网",
+            "href": "https://www.dexbuilder.com/"
+          },
+          {
+            "label": "交易演示",
+            "href": "https://demo.dexbuilder.com/en/perps"
+          },
+          {
+            "label": "打开 Builder",
+            "href": "https://www.dexbuilder.com/en/dex"
+          }
+        ]
+      }
+    ]
   },
   "contextual": {
     "options": [
