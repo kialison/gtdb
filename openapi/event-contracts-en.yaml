@@ -1,0 +1,1355 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DexBuilder Event Contracts API",
+    "version": "1.0.0",
+    "description": "DexBuilder Event Contracts REST API."
+  },
+  "servers": [
+    {
+      "url": "https://api.dexbuilder.com"
+    }
+  ],
+  "paths": {
+    "/api/v4/event_markets/events": {
+      "get": {
+        "summary": "List Events",
+        "description": "List Events.",
+        "operationId": "query_events",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag_slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "closed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/events/{event_id}": {
+      "get": {
+        "summary": "Get Event",
+        "description": "Get Event.",
+        "operationId": "query_event",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/events/slug/{slug}": {
+      "get": {
+        "summary": "Get Event by Slug",
+        "description": "Get Event by Slug.",
+        "operationId": "query_event_by_slug",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets": {
+      "get": {
+        "summary": "List Markets",
+        "description": "List Markets.",
+        "operationId": "query_markets",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "market_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag_slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "closed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/{market_id}": {
+      "get": {
+        "summary": "Get Market",
+        "description": "Get Market.",
+        "operationId": "query_market",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "market_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/slug/{slug}": {
+      "get": {
+        "summary": "Get Market by Slug",
+        "description": "Get Market by Slug.",
+        "operationId": "query_market_by_slug",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/{market_id}/trades": {
+      "get": {
+        "summary": "Get Market Trades",
+        "description": "Get Market Trades.",
+        "operationId": "query_market_trades",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "market_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/market": {
+      "get": {
+        "summary": "Get Market for Token",
+        "description": "Get Market for Token.",
+        "operationId": "query_token_market",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/price": {
+      "get": {
+        "summary": "Get Latest Token Price",
+        "description": "Get Latest Token Price.",
+        "operationId": "query_token_price",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+      "get": {
+        "summary": "Get Token Ticker",
+        "description": "Get Token Ticker.",
+        "operationId": "query_token_ticker",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+      "get": {
+        "summary": "Get Order Book",
+        "description": "Get Order Book.",
+        "operationId": "query_order_book",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+      "get": {
+        "summary": "Get Price History",
+        "description": "Get Price History.",
+        "operationId": "query_price_history",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/prices": {
+      "get": {
+        "summary": "Get Token Prices",
+        "description": "Get Token Prices.",
+        "operationId": "query_token_prices",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+      "get": {
+        "summary": "Get Candlesticks",
+        "description": "Get Candlesticks.",
+        "operationId": "query_candlesticks",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/orders": {
+      "post": {
+        "summary": "Place Order",
+        "description": "Place Order.",
+        "operationId": "place_order",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token_id",
+                  "side"
+                ],
+                "properties": {
+                  "token_id": {
+                    "type": "string"
+                  },
+                  "side": {
+                    "type": "string",
+                    "enum": [
+                      "BUY",
+                      "SELL"
+                    ]
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "string"
+                  },
+                  "total_cost": {
+                    "type": "string"
+                  },
+                  "order_type": {
+                    "type": "string"
+                  },
+                  "order_mode": {
+                    "type": "string"
+                  },
+                  "client_order_id": {
+                    "type": "string"
+                  },
+                  "post_only": {
+                    "type": "boolean"
+                  },
+                  "sell_all": {
+                    "type": "boolean"
+                  },
+                  "expire_time": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List Orders",
+        "description": "List Orders.",
+        "operationId": "query_orders",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Cancel Orders by Market Condition",
+        "description": "Cancel Orders by Market Condition.",
+        "operationId": "cancel_orders_by_condition",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/orders/{order_id}": {
+      "get": {
+        "summary": "Get Order",
+        "description": "Get Order.",
+        "operationId": "query_order",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Cancel Order",
+        "description": "Cancel Order.",
+        "operationId": "cancel_order",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions": {
+      "get": {
+        "summary": "List Positions",
+        "description": "List Positions.",
+        "operationId": "query_positions",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "settlement_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions/{position_id}": {
+      "get": {
+        "summary": "Get Position",
+        "description": "Get Position.",
+        "operationId": "query_position",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "position_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions/{position_id}/close": {
+      "post": {
+        "summary": "Close Position",
+        "description": "Close Position.",
+        "operationId": "close_position",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "position_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/usertrades": {
+      "get": {
+        "summary": "List User Trades",
+        "description": "List User Trades.",
+        "operationId": "query_user_trades",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/assets": {
+      "get": {
+        "summary": "Get Account Assets",
+        "description": "Get Account Assets.",
+        "operationId": "query_assets",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/account_book": {
+      "get": {
+        "summary": "Get Account Book",
+        "description": "Get Account Book.",
+        "operationId": "query_account_book",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/fee": {
+      "get": {
+        "summary": "Get Trading Fee",
+        "description": "Get Trading Fee.",
+        "operationId": "query_fee",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fee_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/claims/available": {
+      "get": {
+        "summary": "List Available Claims",
+        "description": "List Available Claims.",
+        "operationId": "query_available_claims",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/claims/available/{token_id}": {
+      "get": {
+        "summary": "Get Available Claim for Token",
+        "description": "Get Available Claim for Token.",
+        "operationId": "query_available_claim",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/claims": {
+      "post": {
+        "summary": "Create Claim",
+        "description": "Create Claim.",
+        "operationId": "create_claim",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/claims/{record_id}": {
+      "get": {
+        "summary": "Get Claim Result",
+        "description": "Get Claim Result.",
+        "operationId": "query_claim",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tags": {
+      "get": {
+        "summary": "List Tags",
+        "description": "List Tags.",
+        "operationId": "query_tags",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/time": {
+      "get": {
+        "summary": "Get Server Time",
+        "description": "Get Server Time.",
+        "operationId": "query_server_time",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        }
+      }
+    }
+  }
+}
