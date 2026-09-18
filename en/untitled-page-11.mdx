@@ -1,0 +1,27 @@
+---
+title: "Margin"
+---
+
+Margin is the capital required to open and maintain a perpetual position.
+
+## Position margin
+
+```text
+Position Margin = Initial Position Margin + Manual Margin Adjustments
+```
+
+In isolated mode, margin can be added or removed as long as the remaining margin does not fall below the required initial margin.
+
+## Initial margin
+
+```text
+Initial Margin = Position Value / Leverage + Closing Fee
+```
+
+## Maintenance margin
+
+```text
+Maintenance Margin = Position Value × Maintenance Margin Rate + Closing Fee
+```
+
+The maintenance margin rate depends on the position tier. Larger positions may use higher maintenance margin rates and lower maximum leverage.

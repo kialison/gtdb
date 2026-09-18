@@ -1,0 +1,36 @@
+---
+title: "Order Types"
+---
+
+DexBuilder supports multiple order types so users can choose the execution behavior that matches their strategy.
+
+## Market order
+
+Executes immediately against the best available prices.
+
+- **Advantage:** fast execution.
+- **Trade-off:** execution price is not guaranteed and may be affected by slippage.
+
+## Limit order
+
+Executes only at the specified price or a better price.
+
+- **Advantage:** precise price control.
+- **Trade-off:** execution is not guaranteed.
+
+## Advanced limit order
+
+Additional execution instructions can be applied to limit orders:
+
+- **GTC:** remains active until fully filled or cancelled.
+- **IOC:** executes immediately and cancels any unfilled quantity.
+- **FOK:** must fill completely at once or be cancelled.
+- **Post Only:** can only be added to the order book as a maker order; otherwise it is cancelled.
+
+## Order management
+
+Open orders and positions can be reviewed from the trading interface.
+
+- Filter by market, order type, and status.
+- Amend or cancel eligible open orders.
+- Close all or part of an existing position.

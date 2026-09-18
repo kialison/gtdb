@@ -1,0 +1,29 @@
+---
+title: "Mark Price"
+---
+
+Mark Price is designed to provide a stable reference price for unrealized PnL and liquidation calculations.
+
+## Calculation
+
+The final mark price uses the median of multiple reference prices:
+
+```text
+Mark Price = median(Price 1, Price 2, Last Traded Price)
+```
+
+Where:
+
+- **Price 1** is derived from the index price and funding basis.
+- **Price 2** is derived from the spot index and a moving-average basis.
+
+Additional safeguards can limit short-lived abnormal deviations before normal mark-price updates resume.
+
+## Uses
+
+Mark Price is used for:
+
+- unrealized PnL;
+- position value;
+- liquidation calculations;
+- margin-related calculations.

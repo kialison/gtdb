@@ -1,0 +1,25 @@
+---
+title: "Liquidation"
+---
+
+Liquidation can be triggered when available margin is no longer sufficient to maintain an open position.
+
+## Trigger conditions
+
+### Isolated margin
+
+Each position is evaluated independently. If the position margin ratio reaches the liquidation threshold, that position can be liquidated.
+
+### Cross margin
+
+Cross-margin positions share eligible account balance. Unrealized PnL is included in the shared margin calculation. Liquidation can be triggered when the account margin ratio reaches the threshold.
+
+## Liquidation process
+
+1. The liquidation condition is triggered.
+2. Open orders may be cancelled.
+3. Position exposure is reduced according to the applicable position tier and maintenance requirement.
+4. The account is recalculated after each reduction.
+5. The process stops once the margin condition recovers or the relevant position has been fully closed.
+
+Liquidation orders are processed using the platform's liquidation pricing and insurance-fund rules.

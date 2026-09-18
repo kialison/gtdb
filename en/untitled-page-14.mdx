@@ -1,0 +1,33 @@
+---
+title: "Funding Rate"
+---
+
+## What is the funding rate?
+
+Funding is a periodic payment exchanged between long and short position holders. Its purpose is to help perpetual contract prices remain aligned with the underlying reference market.
+
+- Positive funding: longs pay shorts.
+- Negative funding: shorts pay longs.
+- Funding payments are exchanged between traders rather than collected as a trading fee by the platform.
+
+Funding intervals can vary by contract, such as 8-hour or 4-hour cycles.
+
+## Funding-rate calculation
+
+A simplified representation is:
+
+```text
+Premium Index =
+[Max(0, Impact Bid - Index Price) - Max(0, Index Price - Impact Ask)] / Index Price
+```
+
+```text
+Funding Rate =
+Average Premium Index + clamp(Interest Interval - Current Premium Index, 0.05%, -0.05%)
+```
+
+The final funding rate is bounded by the configured maximum funding range for the market.
+
+## Impact prices
+
+Impact bid and ask prices are calculated from the order book using a configured notional depth. They represent the average executable price needed to trade the target notional amount.

@@ -1,0 +1,23 @@
+---
+title: "ADL Mechanism"
+---
+
+## ADL and the insurance fund
+
+Auto-Deleveraging (ADL) is used when liquidation losses cannot be fully absorbed through normal liquidation execution and the insurance fund.
+
+When ADL is activated, profitable positions on the opposite side of the market may be reduced according to the platform's ranking rules.
+
+## Trigger flow
+
+- A position enters liquidation.
+- The liquidation loss exceeds the amount that can be absorbed by the insurance fund.
+- ADL is activated.
+- Opposing profitable positions are selected according to ADL ranking.
+- Open orders for selected accounts may be cancelled before the reduction is executed.
+
+## Ranking
+
+The ranking considers profitability and the applicable margin requirement. Higher-ranked positions are selected first when ADL is required.
+
+Users can monitor their ADL ranking through the corresponding position information and API data.

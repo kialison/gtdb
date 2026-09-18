@@ -1,0 +1,30 @@
+---
+title: "Platform Architecture"
+description: "Understand how the product interface, accounts, execution, ledger updates, and settlement fit together."
+---
+
+DexBuilder separates the user-facing trading experience from the services that process market data, orders, accounts, assets, and settlement.
+
+<Frame caption="DexBuilder platform architecture">
+  ![Wallets and trading applications connecting to DexBuilder services](/images/platform-architecture-zh.svg)
+</Frame>
+
+## Architecture layers
+
+| Layer | Role |
+| --- | --- |
+| Trading experience | Market, order, position, balance, and wallet interfaces presented to users |
+| Integration | REST, WebSocket, request signing, idempotency, permissions, and API clients |
+| Trading services | Market data, order lifecycle, matching, trades, positions, margin modes, funding, and liquidation |
+| Account and ledger | Account state, balances, account book, trading history, fees, and reconciliation |
+| Assets and settlement | Deposits, withdrawals, transfers, wallet authorization, PnL, and Builder revenue settlement |
+| Builder operations | Project registration, user registration, configuration, campaigns, referrals, fee settings, and administrative data |
+
+## Request flow
+
+1. The application reads public market and contract data.
+2. The user signs in or connects a wallet.
+3. Authenticated requests use the required credentials and signature rules.
+4. Trading services process orders and position changes.
+5. Trades, balances, positions, fees, and settlement events update account records.
+6. The application confirms final account and asset state before presenting completion to the user.

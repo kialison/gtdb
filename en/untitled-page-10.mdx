@@ -1,0 +1,33 @@
+---
+title: "Cross & Isolated Margin"
+---
+
+DexBuilder supports both cross and isolated margin modes.
+
+## Leverage and margin
+
+Margin is the capital required to open and maintain a leveraged position. Higher leverage lowers the initial margin required, but also places the liquidation price closer to the entry price. Lower leverage requires more margin and generally gives the position more room before liquidation.
+
+## Isolated margin
+
+In isolated mode, the position margin is separated from the rest of the account balance.
+
+Initial isolated margin:
+
+```text
+Position Value / Leverage + Closing Fee
+```
+
+If the position margin balance falls to or below the maintenance margin requirement, the position can be liquidated.
+
+## Cross margin
+
+In cross mode, eligible account balance is shared across cross-margin positions.
+
+Initial cross margin:
+
+```text
+Position Value × Initial Margin Rate + Closing Fee
+```
+
+Unrealized losses increase the margin requirement, while unrealized profits are not treated as additional available margin for opening new positions.
