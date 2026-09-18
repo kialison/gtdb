@@ -1,0 +1,27 @@
+---
+title: "API Overview"
+description: "DexBuilder PerpDEX API versions, REST and WebSocket endpoints, capabilities, and troubleshooting guidance."
+---
+
+DexBuilder PerpDEX provides both **REST API** and **WebSocket API**.
+
+- **REST API:** market data, accounts, positions, orders, trade history, and trading operations.
+- **WebSocket API:** real-time market data, depth, trades, orders, positions, balances, and trading events.
+
+Current version: `V1.0.0`
+
+## Service endpoints
+
+### REST API
+
+```text
+https://api.dexbuilder.com/api/v1
+```
+
+### WebSocket API
+
+```text
+wss://api.dexbuilder.com/v1/ws/dex
+```
+
+Public market endpoints and public WebSocket channels do not require authentication. Private account, order, and position operations require API credentials and signing.

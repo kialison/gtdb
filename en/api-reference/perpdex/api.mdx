@@ -1,0 +1,31 @@
+---
+title: "General API Conventions"
+description: "Request conventions, timestamps, pagination, rate limits, response formats, and errors."
+---
+
+## HTTP conventions
+
+- Read operations use `GET`.
+- Resource deletion can use `DELETE`.
+- Create and update operations use `POST`, `PUT`, or `PATCH` according to the endpoint.
+- Successful requests return `2xx`; authentication errors commonly return `401`; invalid requests return `4xx`; server errors return `5xx`.
+
+## Time
+
+Unless otherwise documented, timestamps use Unix time. Returned values may be integer, number, or string representations.
+
+## Pagination
+
+List endpoints may use `limit`, `offset`, `last_id`, `from`, and `to`, depending on the endpoint.
+
+## Rate limits
+
+Applications should implement request throttling, retry with backoff, and WebSocket reconnect logic.
+
+## Trace ID
+
+Preserve the response Trace ID when troubleshooting an API request.
+
+## WebSocket message format
+
+WebSocket requests use JSON and typically include `time`, `channel`, `event`, and `payload`.

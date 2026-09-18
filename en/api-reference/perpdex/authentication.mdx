@@ -1,0 +1,24 @@
+---
+title: "Authentication & Signing"
+description: "PerpDEX REST API and WebSocket API authentication and signing rules."
+---
+
+Public market APIs do not require authentication. Private account, position, order, and trading operations require API credentials.
+
+## REST API headers
+
+| Header | Description |
+| --- | --- |
+| `KEY` | API Key |
+| `Timestamp` | Unix timestamp in seconds |
+| `SIGN` | Request signature |
+
+The REST signature string is constructed from the HTTP method, request path, query string, hashed request body, and timestamp, then signed with HMAC-SHA512 using the API Secret.
+
+## WebSocket authentication
+
+Private WebSocket channels include an `auth` object with the API Key and signature. Public channels do not require authentication.
+
+<Warning>
+Never send or expose the API Secret. It is only used locally to generate signatures.
+</Warning>
