@@ -1,0 +1,17 @@
+---
+title: "Error Codes"
+description: "Event Contracts API error handling."
+---
+
+Applications should handle both HTTP status codes and returned API error details.
+
+| Status | Meaning |
+| --- | --- |
+| `2xx` | Request succeeded |
+| `400` | Invalid request or parameter |
+| `401` | Authentication failed |
+| `403` | Permission denied |
+| `429` | Rate limit exceeded |
+| `5xx` | Server-side error |
+
+Preserve the returned request or trace identifier when troubleshooting.

@@ -1,0 +1,21 @@
+---
+title: "Event Contracts"
+description: "Understand how Event Contracts work on DexBuilder."
+---
+
+## Product model
+
+A event contract represents a defined event or outcome set. Each market exposes clear rules, available outcomes, trading state, important times, and the conditions used for final settlement.
+
+Users trade outcome tokens through the order book. Prices reflect the market's current view of each outcome.
+
+## Lifecycle
+
+A typical lifecycle is:
+
+1. Market published
+2. Trading opens
+3. Orders and trades update the order book
+4. Trading closes when required
+5. The event is resolved
+6. Eligible positions are settled or claimed

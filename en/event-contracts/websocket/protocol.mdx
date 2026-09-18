@@ -1,0 +1,16 @@
+---
+title: "WebSocket Protocol"
+description: "Event Contracts API WebSocket message format and subscription flow."
+---
+
+WebSocket messages use JSON. A subscription normally identifies the channel, operation, and subscription payload.
+
+Clients should:
+
+1. establish the connection;
+2. authenticate when required;
+3. subscribe to channels;
+4. process update messages;
+5. reconnect and resubscribe after a disconnect.
+
+Do not rely on locally cached state after a reconnect without confirming current server state.
