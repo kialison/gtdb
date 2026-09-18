@@ -1,0 +1,1617 @@
+
+
+
+
+
+
+
+#
+
+
+
+
+
+
+#
+
+
+
+
+
+#
+# openapi: "/openapi/perpdex.yaml GET /dex_futures/{settle}/contracts"
+# openapi: "/openapi/perpdex.yaml POST /dex_futures/{settle}/orders"
+#
+
+
+openapi: 3.0.3
+info:
+  title: DexBuilder PerpDEX API
+  version: 1.0.0
+  description: DexBuilder PerpDEX REST API。
+servers:
+  - url: https://api.dexbuilder.com/api/v1
+    description: DexBuilder PerpDEX REST API
+tags:
+  - name: "See API documentation."
+    description: "See the API definition for this field or response."
+  - name: "See API documentation."
+    description: "See the API definition for this field or response."
+  - name: "See API documentation."
+    description: "See the API definition for this field or response."
+  - name: "See API documentation."
+    description: "See the API definition for this field or response."
+  - name: "See API documentation."
+    description: "See the API definition for this field or response."
+security:
+  - DexBuilderKey: []
+    DexBuilderTimestamp: []
+    DexBuilderSignature: []
+
+paths:
+  /dex_futures/{settle}/contracts:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpContracts
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contract'
+
+  /dex_futures/{settle}/contracts/{contract}:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpContract
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+
+  /dex_futures/{settle}/order_book:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpOrderBook
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - name: interval
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, default: '0' }
+        - name: limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer, default: 10 }
+        - name: with_id
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+
+  /dex_futures/{settle}/trades:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpTrades
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          deprecated: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trade'
+
+  /dex_futures/{settle}/candlesticks:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpCandlesticks
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer }
+        - name: interval
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, default: 5m }
+        - name: timezone
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, default: utc0 }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candlestick'
+
+  /dex_futures/{settle}/premium_index:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpPremiumIndex
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer }
+        - name: interval
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, default: 5m }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PremiumIndex'
+
+  /dex_futures/{settle}/tickers:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpTickers
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticker'
+
+  /dex_futures/{settle}/funding_rate:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpFundingRateHistory
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundingRate'
+
+  /dex_futures/{settle}/insurance:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpInsurance
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InsuranceRecord'
+
+  /dex_futures/{settle}/contract_stats:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpContractStats
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - name: interval
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, default: 5m }
+        - name: limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractStat'
+
+  /dex_futures/{settle}/index_constituents/{index}:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpIndexConstituents
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: index
+          in: path
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexConstituents'
+
+  /dex_futures/{settle}/liq_orders:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpLiquidatedOrders
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LiquidatedOrder'
+
+  /dex_futures/{settle}/risk_limit_tiers:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpRiskLimitTiers
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskLimitTier'
+
+  /dex_futures/{settle}/risk_limit_table:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpRiskLimitTable
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: table_id
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskLimitTier'
+
+  /dex_futures/{settle}/accounts:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpAccount
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /dex_futures/{settle}/account_book:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpAccountBook
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: type
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountBook'
+
+  /dex_futures/{settle}/fee:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpFee
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeMap'
+
+  /dex_futures/{settle}/positions:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpPositions
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: holding
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: boolean }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpPosition
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/margin:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpPositionMargin
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: change
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/leverage:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpPositionLeverage
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: leverage
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - name: cross_leverage_limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - name: pid
+          in: query
+          required: false
+          description: Position ID
+          schema: { type: integer, format: int32 }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/cross_mode:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: switchPerpPositionMarginMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrossModeRequest'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/cross_mode:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: switchPerpHedgeMarginMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrossModeRequest'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/risk_limit:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpPositionRiskLimit
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: risk_limit
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_mode:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: setPerpPositionMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: dual_mode
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpHedgePositions
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/margin:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpHedgePositionMargin
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: change
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - name: dual_side
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [dual_long, dual_short] }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/leverage:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpHedgePositionLeverage
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: leverage
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - name: cross_leverage_limit
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/risk_limit:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: updatePerpHedgePositionRiskLimit
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: risk_limit
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/position_close:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpPositionCloseHistory
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: side
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [long, short] }
+        - name: pnl
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [profit, loss] }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PositionClose'
+
+  /dex_futures/{settle}/liquidates:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpLiquidationHistory
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: at
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Liquidate'
+
+  /dex_futures/{settle}/auto_deleverages:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpAutoDeleverages
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: at
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutoDeleverage'
+
+  /dex_futures/{settle}/orders:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: status
+          in: query
+          required: true
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [open, finished] }
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: placePerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEXFuturesOrderRequest'
+      responses:
+        '201':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    delete:
+      tags: "See API documentation."
+      summary: "PerpDEX DELETE operation"
+      description: "See the API definition for this field or response."
+      operationId: cancelAllOpenPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: contract
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+        - name: side
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [bid, ask] }
+        - name: exclude_reduce_only
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: boolean, default: false }
+        - name: text
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/orders_timerange:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpOrdersByTimeRange
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/batch_orders:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: placeBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 10
+              items:
+                $ref: '#/components/schemas/DEXFuturesOrderRequest'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/orders/{order_id}:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: getPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    delete:
+      tags: "See API documentation."
+      summary: "PerpDEX DELETE operation"
+      description: "See the API definition for this field or response."
+      operationId: cancelPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    put:
+      tags: "See API documentation."
+      summary: "PerpDEX PUT operation"
+      description: "See the API definition for this field or response."
+      operationId: amendPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderAmendment'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/my_trades:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpMyTrades
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - name: order
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: integer, format: int64 }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          deprecated: true
+          description: "See the API definition for this field or response."
+          schema: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyTrade'
+
+  /dex_futures/{settle}/my_trades_timerange:
+    get:
+      tags: "See API documentation."
+      summary: "PerpDEX GET operation"
+      description: "See the API definition for this field or response."
+      operationId: listPerpMyTradesByTimeRange
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: role
+          in: query
+          required: false
+          description: "See the API definition for this field or response."
+          schema: { type: string, enum: [maker, taker] }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyTrade'
+
+  /dex_futures/{settle}/countdown_cancel_all:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: countdownCancelPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountdownRequest'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountdownResult'
+
+  /dex_futures/{settle}/batch_cancel_orders:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: cancelBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 20
+              items: { type: string }
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancelOrderResult'
+
+  /dex_futures/{settle}/batch_amend_orders:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: amendBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 10
+              items:
+                $ref: '#/components/schemas/BatchAmendOrderReq'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/bbo_orders:
+    post:
+      tags: "See API documentation."
+      summary: "PerpDEX POST operation"
+      description: "See the API definition for this field or response."
+      operationId: placePerpBBOOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEXFuturesBBOOrder'
+      responses:
+        '200':
+          description: "See the API definition for this field or response."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesBBOOrder'
+
+components:
+  securitySchemes:
+    DexBuilderKey:
+      type: apiKey
+      in: header
+      name: KEY
+      description: DexBuilder API Key
+    DexBuilderTimestamp:
+      type: apiKey
+      in: header
+      name: Timestamp
+      description: "See the API definition for this field or response."
+    DexBuilderSignature:
+      type: apiKey
+      in: header
+      name: SIGN
+      description: "See the API definition for this field or response."
+
+  parameters:
+    Settle:
+      name: settle
+      in: path
+      required: true
+      description: "See the API definition for this field or response."
+      schema: { type: string, enum: [usdt] }
+      example: usdt
+    ContractPath:
+      name: contract
+      in: path
+      required: true
+      description: "See the API definition for this field or response."
+      schema: { type: string }
+      example: BTC_USDT
+    OrderIdPath:
+      name: order_id
+      in: path
+      required: true
+      description: "See the API definition for this field or response."
+      schema: { type: string }
+      example: '12345'
+    ContractQueryRequired:
+      name: contract
+      in: query
+      required: true
+      description: "See the API definition for this field or response."
+      schema: { type: string }
+      example: BTC_USDT
+    ContractQuery:
+      name: contract
+      in: query
+      required: false
+      description: "See the API definition for this field or response."
+      schema: { type: string }
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: "See the API definition for this field or response."
+      schema: { type: integer }
+    Offset:
+      name: offset
+      in: query
+      required: false
+      description: "See the API definition for this field or response."
+      schema: { type: integer }
+    From:
+      name: from
+      in: query
+      required: false
+      description: "See the API definition for this field or response."
+      schema: { type: integer, format: int64 }
+    To:
+      name: to
+      in: query
+      required: false
+      description: "See the API definition for this field or response."
+      schema: { type: integer, format: int64 }
+
+  schemas:
+    Contract:
+      type: object
+      description: "See the API definition for this field or response."
+      properties:
+        name: "See API documentation."
+        type: "See API documentation."
+        quanto_multiplier: "See API documentation."
+        leverage_min: "See API documentation."
+        leverage_max: "See API documentation."
+        maintenance_rate: "See API documentation."
+        order_price_round: "See API documentation."
+        order_size_min: "See API documentation."
+        order_size_max: "See API documentation."
+        status: "See API documentation."
+        mark_price: "See API documentation."
+        index_price: "See API documentation."
+        funding_rate: "See API documentation."
+        funding_next_apply: "See API documentation."
+        market_order_slip_ratio: "See API documentation."
+      additionalProperties: true
+
+    OrderBookItem:
+      type: object
+      properties:
+        p: "See API documentation."
+        s: "See API documentation."
+      additionalProperties: true
+    OrderBook:
+      type: object
+      properties:
+        id: "See API documentation."
+        current: "See API documentation."
+        update: "See API documentation."
+        asks: { type: array, items: { $ref: '#/components/schemas/OrderBookItem' } }
+        bids: { type: array, items: { $ref: '#/components/schemas/OrderBookItem' } }
+      additionalProperties: true
+
+    Trade:
+      type: object
+      properties:
+        id: "See API documentation."
+        create_time: "See API documentation."
+        contract: "See API documentation."
+        size: "See API documentation."
+        price: "See API documentation."
+      additionalProperties: true
+
+    Candlestick:
+      type: object
+      properties:
+        t: "See API documentation."
+        v: "See API documentation."
+        c: "See API documentation."
+        h: "See API documentation."
+        l: "See API documentation."
+        o: "See API documentation."
+        sum: "See API documentation."
+      additionalProperties: true
+
+    PremiumIndex:
+      type: object
+      properties:
+        t: "See API documentation."
+        o: "See API documentation."
+        h: "See API documentation."
+        l: "See API documentation."
+        c: "See API documentation."
+      additionalProperties: true
+
+    Ticker:
+      type: object
+      properties:
+        contract: "See API documentation."
+        last: "See API documentation."
+        change_percentage: "See API documentation."
+        total_size: "See API documentation."
+        volume_24h: "See API documentation."
+        volume_24h_usd: "See API documentation."
+        mark_price: "See API documentation."
+        index_price: "See API documentation."
+        funding_rate: "See API documentation."
+      additionalProperties: true
+
+    FundingRate:
+      type: object
+      properties:
+        t: "See API documentation."
+        r: "See API documentation."
+      additionalProperties: true
+    InsuranceRecord:
+      type: object
+      properties:
+        t: "See API documentation."
+        b: "See API documentation."
+      additionalProperties: true
+    ContractStat:
+      type: object
+      properties:
+        time: "See API documentation."
+        lsr_taker: "See API documentation."
+        lsr_account: "See API documentation."
+        open_interest: "See API documentation."
+        open_interest_usd: "See API documentation."
+        mark_price: "See API documentation."
+      additionalProperties: true
+
+    IndexConstituents:
+      type: object
+      properties:
+        index: "See API documentation."
+        constituents:
+          type: array
+          items:
+            type: object
+            properties:
+              exchange: "See API documentation."
+              symbols: { type: array, items: { type: string } }
+            additionalProperties: true
+      additionalProperties: true
+
+    LiquidatedOrder:
+      type: object
+      properties:
+        time: "See API documentation."
+        contract: "See API documentation."
+        size: "See API documentation."
+        price: "See API documentation."
+      additionalProperties: true
+    RiskLimitTier:
+      type: object
+      properties:
+        tier: "See API documentation."
+        risk_limit: "See API documentation."
+        initial_rate: "See API documentation."
+        maintenance_rate: "See API documentation."
+        leverage_max: "See API documentation."
+        contract: "See API documentation."
+        deduction: "See API documentation."
+      additionalProperties: true
+
+    Account:
+      type: object
+      properties:
+        user: "See API documentation."
+        currency: "See API documentation."
+        total: "See API documentation."
+        unrealised_pnl: "See API documentation."
+        position_margin: "See API documentation."
+        order_margin: "See API documentation."
+        available: "See API documentation."
+        in_dual_mode: "See API documentation."
+        cross_available: "See API documentation."
+        cross_margin_balance: "See API documentation."
+      additionalProperties: true
+
+    AccountBook:
+      type: object
+      properties:
+        time: "See API documentation."
+        change: "See API documentation."
+        balance: "See API documentation."
+        text: "See API documentation."
+        type: "See API documentation."
+        contract: "See API documentation."
+      additionalProperties: true
+
+    Position:
+      type: object
+      description: "See the API definition for this field or response."
+      properties:
+        user: "See API documentation."
+        contract: "See API documentation."
+        size: "See API documentation."
+        leverage: "See API documentation."
+        risk_limit: "See API documentation."
+        leverage_max: "See API documentation."
+        maintenance_rate: "See API documentation."
+        value: "See API documentation."
+        margin: "See API documentation."
+        entry_price: "See API documentation."
+        liq_price: "See API documentation."
+        mark_price: "See API documentation."
+        unrealised_pnl: "See API documentation."
+        realised_pnl: "See API documentation."
+        mode: "See API documentation."
+        cross_leverage_limit: "See API documentation."
+        pid: { type: integer, format: int64, description: Position ID }
+      additionalProperties: true
+
+    CrossModeRequest:
+      type: object
+      required: [mode, contract]
+      properties:
+        mode: "See API documentation."
+        contract: "See API documentation."
+
+    DEXFuturesOrderRequest:
+      type: object
+      required: [contract, size, price]
+      properties:
+        contract: "See API documentation."
+        size: "See API documentation."
+        iceberg: "See API documentation."
+        price: "See API documentation."
+        close: "See API documentation."
+        reduce_only: "See API documentation."
+        tif: "See API documentation."
+        text: "See API documentation."
+        auto_size: "See API documentation."
+        stp_act: "See API documentation."
+        bbo: "See API documentation."
+        default_leverage: "See API documentation."
+        pid: { type: integer, format: int64, description: Position ID }
+        order_value: "See API documentation."
+        trade_value: "See API documentation."
+        market_order_slip_ratio: "See API documentation."
+
+    DEXFuturesOrder:
+      allOf:
+        - $ref: '#/components/schemas/DEXFuturesOrderRequest'
+        - type: object
+          properties:
+            id: "See API documentation."
+            user: "See API documentation."
+            create_time: "See API documentation."
+            update_time: "See API documentation."
+            finish_time: "See API documentation."
+            finish_as: "See API documentation."
+            status: "See API documentation."
+            left: "See API documentation."
+            fill_price: "See API documentation."
+            is_close: "See API documentation."
+            is_reduce_only: "See API documentation."
+            is_liq: "See API documentation."
+            tkfr: "See API documentation."
+            mkfr: "See API documentation."
+            stp_id: "See API documentation."
+            amend_text: "See API documentation."
+          additionalProperties: true
+
+    OrderAmendment:
+      type: object
+      properties:
+        size: "See API documentation."
+        price: "See API documentation."
+        amend_text: "See API documentation."
+        text: "See API documentation."
+
+    MyTrade:
+      type: object
+      properties:
+        id: "See API documentation."
+        create_time: "See API documentation."
+        contract: "See API documentation."
+        order_id: "See API documentation."
+        size: "See API documentation."
+        price: "See API documentation."
+        role: { type: string, description: Maker / Taker }
+        fee: "See API documentation."
+      additionalProperties: true
+
+    PositionClose:
+      type: object
+      properties:
+        time: "See API documentation."
+        contract: "See API documentation."
+        side: "See API documentation."
+        pnl: "See API documentation."
+        text: "See API documentation."
+      additionalProperties: true
+    Liquidate:
+      type: object
+      properties:
+        time: "See API documentation."
+        contract: "See API documentation."
+        size: "See API documentation."
+        leverage: "See API documentation."
+        entry_price: "See API documentation."
+        fill_price: "See API documentation."
+      additionalProperties: true
+    AutoDeleverage:
+      type: object
+      properties:
+        time: "See API documentation."
+        contract: "See API documentation."
+        size: "See API documentation."
+        entry_price: "See API documentation."
+        fill_price: "See API documentation."
+      additionalProperties: true
+
+    CountdownRequest:
+      type: object
+      required: [timeout]
+      properties:
+        timeout: "See API documentation."
+        contract: "See API documentation."
+    CountdownResult:
+      type: object
+      properties:
+        triggerTime: "See API documentation."
+      additionalProperties: true
+
+    FeeItem:
+      type: object
+      properties:
+        taker_fee: "See API documentation."
+        maker_fee: "See API documentation."
+    FeeMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/FeeItem'
+
+    CancelOrderResult:
+      type: object
+      properties:
+        id: "See API documentation."
+        user_id: "See API documentation."
+        succeeded: "See API documentation."
+        message: "See API documentation."
+
+    BatchAmendOrderReq:
+      type: object
+      required: [order_id]
+      properties:
+        order_id: "See API documentation."
+        amend_text: "See API documentation."
+        size: "See API documentation."
+        price: "See API documentation."
+
+    DEXFuturesBBOOrder:
+      type: object
+      required: [contract, size, direction, level]
+      properties:
+        contract: "See API documentation."
+        size: "See API documentation."
+        direction: "See API documentation."
+        iceberg: "See API documentation."
+        level: "See API documentation."
+        close: "See API documentation."
+        reduce_only: "See API documentation."
+        tif: "See API documentation."
+        text: "See API documentation."
+        auto_size: "See API documentation."
+        stp_act: "See API documentation."
+        default_leverage: "See API documentation."
+        limit_vip: "See API documentation."
+        pid: { type: integer, format: int64, description: Position ID }
+      additionalProperties: true
