@@ -1,23 +1,14 @@
-/* DexBuilder persistent sidebar links */
-#sidebar-content {
-  /* Reserve scroll space so the last navigation item is not covered by the floating links. */
-  padding-bottom: 172px !important;
-}
-
-#sidebar [data-dexbuilder-hidden-anchor="true"] {
-  display: none !important;
-}
-
+/* DexBuilder fixed links above the language selector */
 #dexbuilder-sidebar-links {
   position: fixed;
-  z-index: 100;
-  box-sizing: border-box;
+  left: 0;
   bottom: 44px;
+  width: 20rem;
+  box-sizing: border-box;
+  z-index: 40;
   padding: 14px 28px 12px;
   border-top: 1px solid rgba(127, 127, 127, 0.22);
-  background-color: inherit;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--background, #0b0f0d);
 }
 
 #dexbuilder-sidebar-links a {
@@ -40,17 +31,14 @@
 #dexbuilder-sidebar-links a::after {
   content: "↗";
   flex: 0 0 auto;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1;
   opacity: 0.8;
 }
 
+/* Do not render the desktop floating block on mobile/tablet. */
 @media (max-width: 1023px) {
   #dexbuilder-sidebar-links {
     display: none;
-  }
-
-  #sidebar-content {
-    padding-bottom: 32px !important;
   }
 }
