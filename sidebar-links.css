@@ -1,10 +1,7 @@
 /* DexBuilder persistent sidebar links */
-#sidebar {
-  position: relative;
-}
-
 #sidebar-content {
-  padding-bottom: 176px !important;
+  /* Reserve scroll space so the last navigation item is not covered by the floating links. */
+  padding-bottom: 172px !important;
 }
 
 #sidebar [data-dexbuilder-hidden-anchor="true"] {
@@ -12,14 +9,15 @@
 }
 
 #dexbuilder-sidebar-links {
-  position: absolute;
-  left: 0;
-  right: 0;
+  position: fixed;
+  z-index: 100;
+  box-sizing: border-box;
   bottom: 44px;
-  z-index: 30;
   padding: 14px 28px 12px;
   border-top: 1px solid rgba(127, 127, 127, 0.22);
-  background: inherit;
+  background-color: inherit;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 #dexbuilder-sidebar-links a {
@@ -49,9 +47,7 @@
 
 @media (max-width: 1023px) {
   #dexbuilder-sidebar-links {
-    position: static;
-    margin-top: 20px;
-    padding: 14px 20px;
+    display: none;
   }
 
   #sidebar-content {
