@@ -1,0 +1,25 @@
+---
+title: "Real-Time Data"
+description: "Understand real-time market, order, trade, position, and account updates on DexBuilder."
+---
+
+DexBuilder uses WebSocket and internal real-time data services to keep DEX market and trading state up to date.
+
+## Real-time data
+
+- Ticker and market data
+- Order book
+- Market trades
+- User order updates
+- User trades
+- Position changes
+- Account balances
+- Liquidation and related position-state updates
+
+## Synchronization
+
+The DEX loads a complete current state and then applies real-time updates. When a connection changes, it reconnects and restores the required state.
+
+<Card title="View PerpDEX WebSocket API" href="/en/api-reference/perpdex/websocket/overview" icon="bolt">
+  View WebSocket endpoints, channels, authentication, and message formats.
+</Card>

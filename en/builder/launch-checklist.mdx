@@ -1,0 +1,51 @@
+---
+title: "Launch Checklist"
+description: "Product, technical, and operational checks before launching a DEX."
+---
+
+Complete an end-to-end acceptance pass before production launch.
+
+## Product & branding
+
+- [ ] Brand name, logo, domain, and page configuration confirmed
+- [ ] Supported markets and trading pairs confirmed
+- [ ] Required notices, Terms, and Privacy pages configured
+- [ ] User-facing error and empty states reviewed
+
+## Accounts & assets
+
+- [ ] Account creation and authentication work correctly
+- [ ] Deposit flow verified
+- [ ] Withdrawal flow verified
+- [ ] Balances and states display correctly
+- [ ] Networks, assets, and fees match production configuration
+
+## Trading
+
+- [ ] Market data, order book, and trades are correct
+- [ ] Place, cancel, and amend order flows work correctly
+- [ ] Order status is synchronized
+- [ ] Positions, margin, and PnL display correctly
+- [ ] Error cases and trading notices are covered
+
+## Real-time data
+
+- [ ] WebSocket connection works
+- [ ] Reconnection works
+- [ ] Full state is restored after reconnection
+- [ ] Duplicate messages do not create duplicate orders, trades, or positions
+
+## Builder configuration
+
+- [ ] Builder identity and production settings confirmed
+- [ ] Fee and revenue settings confirmed
+- [ ] Management-console accounts and permissions configured
+- [ ] Operations, support, and technical contacts confirmed
+
+## Launch acceptance
+
+- [ ] Sandbox acceptance completed
+- [ ] Production configuration reviewed
+- [ ] API/signature security checks completed
+- [ ] Monitoring and alerts configured
+- [ ] Rollback and incident procedures confirmed
