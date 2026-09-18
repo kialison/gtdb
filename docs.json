@@ -304,7 +304,7 @@
                     ]
                   },
                   {
-                    "group": "开发指南",
+                    "group": "行情与市场数据",
                     "pages": [
                       "zh/event-markets/market-data-overview",
                       "zh/event-markets/discover-markets",
@@ -312,7 +312,12 @@
                       "zh/event-markets/market-prices-orderbooks",
                       "zh/event-markets/analytics",
                       "zh/event-markets/realtime-data",
-                      "zh/event-markets/chainlink-twap",
+                      "zh/event-markets/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易与账户",
+                    "pages": [
                       "zh/event-markets/place-orders",
                       "zh/event-markets/manage-orders",
                       "zh/event-markets/realtime-order-updates",
