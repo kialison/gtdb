@@ -1,0 +1,181 @@
+name: Generate Traditional Chinese docs
+
+on:
+  push:
+    paths:
+      - ".github/workflows/generate-zh-tw.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install ICU tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y icu-devtools
+
+      - name: Generate zh-TW from current zh docs
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import shutil
+          import subprocess
+          from pathlib import Path
+
+          ROOT = Path(".")
+          DOCS = ROOT / "docs.json"
+          cfg = json.loads(DOCS.read_text(encoding="utf-8"))
+
+          zh = next(x for x in cfg["navigation"]["languages"] if x["language"] == "zh")
+
+          def hant(text: str) -> str:
+              p = subprocess.run(
+                  ["uconv", "-x", "Simplified-Traditional"],
+                  input=text,
+                  text=True,
+                  capture_output=True,
+                  check=True,
+              )
+              return p.stdout
+
+          def collect_pages(node, out=None):
+              if out is None:
+                  out = []
+              if isinstance(node, str):
+                  out.append(node)
+              elif isinstance(node, list):
+                  for item in node:
+                      collect_pages(item, out)
+              elif isinstance(node, dict):
+                  for key in ("pages", "groups", "menu", "tabs"):
+                      if key in node:
+                          collect_pages(node[key], out)
+              return out
+
+          def tw_path(src: str) -> str:
+              if src.startswith("zh/"):
+                  return "zh-TW/" + src[3:]
+              return "zh-TW/" + src
+
+          def localize_content(text: str) -> str:
+              text = hant(text)
+
+              # Locale-aware internal links.
+              text = text.replace('href="/zh/', 'href="/zh-TW/')
+              text = text.replace('](/zh/', '](/zh-TW/')
+              text = text.replace("https://dexbuilder.mintlify.site/zh/", "https://dexbuilder.mintlify.site/zh-TW/")
+
+              # Internal absolute links that point to current Chinese pages.
+              for prefix in ("builder/", "api-reference/", "untitled-page", "event-markets/", "event-contracts/"):
+                  text = text.replace(f'href="/{prefix}', f'href="/zh-TW/{prefix}')
+                  text = text.replace(f'](/{prefix}', f'](/zh-TW/{prefix}')
+
+              # Bind Traditional Chinese API pages to Traditional Chinese OpenAPI specs.
+              text = text.replace("/openapi/perpdex.yaml", "/openapi/perpdex-zh-TW.yaml")
+              text = text.replace("/openapi/event-markets.yaml", "/openapi/event-markets-zh-TW.yaml")
+              text = text.replace("/openapi/event-contracts.yaml", "/openapi/event-contracts-zh-TW.yaml")
+              return text
+
+          # Rebuild the Traditional Chinese page tree from the current Simplified Chinese navigation.
+          tw_root = ROOT / "zh-TW"
+          if tw_root.exists():
+              shutil.rmtree(tw_root)
+
+          pages = list(dict.fromkeys(collect_pages(zh)))
+          created = []
+
+          for ref in pages:
+              src = ROOT / (ref + ".mdx")
+              if not src.exists():
+                  raise SystemExit(f"Missing source page: {src}")
+
+              dst_ref = tw_path(ref)
+              dst = ROOT / (dst_ref + ".mdx")
+              dst.parent.mkdir(parents=True, exist_ok=True)
+
+              content = src.read_text(encoding="utf-8")
+              dst.write_text(localize_content(content), encoding="utf-8")
+              created.append(dst_ref)
+
+          # Generate Traditional Chinese OpenAPI specs from the current Simplified Chinese specs.
+          specs = [
+              ("openapi/perpdex.yaml", "openapi/perpdex-zh-TW.yaml"),
+              ("openapi/event-markets.yaml", "openapi/event-markets-zh-TW.yaml"),
+              ("openapi/event-contracts.yaml", "openapi/event-contracts-zh-TW.yaml"),
+          ]
+          for src_name, dst_name in specs:
+              src = ROOT / src_name
+              dst = ROOT / dst_name
+              dst.write_text(hant(src.read_text(encoding="utf-8")), encoding="utf-8")
+
+          # Mirror the Simplified Chinese navigation and convert labels + page paths.
+          def clone_nav(node, parent_key=None):
+              if isinstance(node, list):
+                  return [clone_nav(x, parent_key) for x in node]
+
+              if isinstance(node, dict):
+                  out = {}
+                  for k, v in node.items():
+                      if k == "language":
+                          out[k] = "zh-TW"
+                      elif k in ("tab", "group", "item") and isinstance(v, str):
+                          out[k] = hant(v)
+                      elif k in ("pages", "groups", "menu", "tabs"):
+                          out[k] = clone_nav(v, k)
+                      else:
+                          out[k] = v
+                  return out
+
+              if isinstance(node, str):
+                  if parent_key == "pages":
+                      return tw_path(node)
+                  return hant(node)
+
+              return node
+
+          tw = clone_nav(zh)
+
+          langs = cfg["navigation"]["languages"]
+          langs[:] = [x for x in langs if x.get("language") != "zh-TW"]
+          zh_index = next(i for i, x in enumerate(langs) if x.get("language") == "zh")
+          langs.insert(zh_index + 2 if zh_index + 1 < len(langs) and langs[zh_index + 1].get("language") == "en" else zh_index + 1, tw)
+
+          DOCS.write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          # Validate every Traditional Chinese navigation reference.
+          tw_refs = list(dict.fromkeys(collect_pages(tw)))
+          missing = [x for x in tw_refs if not (ROOT / (x + ".mdx")).exists()]
+          if missing:
+              raise SystemExit("Missing zh-TW pages:\n" + "\n".join(missing))
+
+          if len(tw_refs) != len(pages):
+              raise SystemExit(f"Page count mismatch: zh={len(pages)} zh-TW={len(tw_refs)}")
+
+          print(f"Generated {len(created)} Traditional Chinese pages.")
+          print(f"Validated {len(tw_refs)} zh-TW navigation references with 0 missing pages.")
+          PY
+
+      - name: Commit generated Traditional Chinese docs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs.json zh-TW openapi/perpdex-zh-TW.yaml openapi/event-markets-zh-TW.yaml openapi/event-contracts-zh-TW.yaml
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Generate Traditional Chinese docs from current Chinese content"
+          git push origin HEAD:main
