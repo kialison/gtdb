@@ -35,7 +35,7 @@ servers:
 tags:
   - name: 行情
     description: 永续合约公开行情与市场数据
-  - name: 风控
+  - name: 风险数据
     description: 风险限额与市场强平数据
   - name: 账户
     description: 账户与费率
@@ -338,7 +338,7 @@ paths:
 
   /dex_futures/{settle}/liq_orders:
     get:
-      tags: [风控]
+      tags: [风险数据]
       summary: 查询市场强平订单历史
       description: 查询市场强平订单历史。from 与 to 的时间跨度最大为 3600 秒。
       operationId: listPerpLiquidatedOrders
@@ -361,7 +361,7 @@ paths:
 
   /dex_futures/{settle}/risk_limit_tiers:
     get:
-      tags: [风控]
+      tags: [风险数据]
       summary: 查询风险限额档位
       description: 查询永续合约风险限额档位。未传 contract 时按市场分页查询。
       operationId: listPerpRiskLimitTiers
@@ -383,7 +383,7 @@ paths:
 
   /dex_futures/{settle}/risk_limit_table:
     get:
-      tags: [风控]
+      tags: [风险数据]
       summary: 按表 ID 查询风险限额表
       description: 根据 table_id 查询对应风险限额表。
       operationId: getPerpRiskLimitTable
