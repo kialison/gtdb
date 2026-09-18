@@ -1,3 +1,9 @@
+/* Reserve space in the scrollable navigation for the fixed links. */
+#sidebar-content {
+  padding-bottom: 190px !important;
+  scroll-padding-bottom: 190px;
+}
+
 /* DexBuilder fixed links above the language selector */
 #dexbuilder-sidebar-links {
   position: fixed;
