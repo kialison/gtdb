@@ -96,7 +96,7 @@
                     "pages": [
                       "zh/event-contracts/overview",
                       "zh/event-contracts/event-contracts",
-                      "zh/event-contracts/apis"
+                      "zh/event-contracts/place-first-order"
                     ]
                   },
                   {
@@ -111,52 +111,11 @@
                     ]
                   },
                   {
-                    "group": "市场与订单",
+                    "group": "交易机制",
                     "pages": [
-                      "zh/event-contracts/market-data-overview",
-                      "zh/event-contracts/discover-markets",
-                      "zh/event-contracts/market-details",
-                      "zh/event-contracts/market-prices-orderbooks",
-                      "zh/event-contracts/analytics",
-                      "zh/event-contracts/realtime-data",
-                      "zh/event-contracts/chainlink-twap"
-                    ]
-                  },
-                  {
-                    "group": "WebSocket",
-                    "pages": [
-                      "zh/event-contracts/websocket/overview",
-                      "zh/event-contracts/websocket/protocol",
-                      "zh/event-contracts/websocket/public-channels",
-                      "zh/event-contracts/websocket/private-channels",
-                      "zh/event-contracts/websocket/authentication"
-                    ]
-                  },
-                  {
-                    "group": "交易",
-                    "pages": [
-                      "zh/event-contracts/place-first-order",
                       "zh/event-contracts/trading-overview",
-                      "zh/event-contracts/place-orders",
-                      "zh/event-contracts/manage-orders",
-                      "zh/event-contracts/realtime-order-updates",
                       "zh/event-contracts/how-positions-work",
-                      "zh/event-contracts/wallet-activity",
-                      "zh/event-contracts/fees",
-                      "zh/event-contracts/error-codes"
-                    ]
-                  },
-                  {
-                    "group": "API Reference",
-                    "pages": [
-                      "zh/event-contracts/api/overview",
-                      "zh/event-contracts/api/events",
-                      "zh/event-contracts/api/markets",
-                      "zh/event-contracts/api/market-data",
-                      "zh/event-contracts/api/orders",
-                      "zh/event-contracts/api/positions",
-                      "zh/event-contracts/api/public-utilities",
-                      "zh/event-contracts/api/account"
+                      "zh/event-contracts/fees"
                     ]
                   }
                 ]
@@ -377,7 +336,80 @@
                 ]
               },
               {
-                "item": "事件合约"
+                "item": "事件合约",
+                "pages": [
+                  "zh/event-contracts/api/overview",
+                  "zh/event-contracts/apis",
+                  "zh/event-contracts/error-codes",
+                  {
+                    "group": "REST API",
+                    "pages": [
+                      "zh/event-contracts/rest/query-events",
+                      "zh/event-contracts/rest/query-event",
+                      "zh/event-contracts/rest/query-event-by-slug",
+                      "zh/event-contracts/rest/query-markets",
+                      "zh/event-contracts/rest/query-market",
+                      "zh/event-contracts/rest/query-market-by-slug",
+                      "zh/event-contracts/rest/query-market-trades",
+                      "zh/event-contracts/rest/query-token-market",
+                      "zh/event-contracts/rest/query-token-price",
+                      "zh/event-contracts/rest/query-token-ticker",
+                      "zh/event-contracts/rest/query-order-book",
+                      "zh/event-contracts/rest/query-price-history",
+                      "zh/event-contracts/rest/query-token-prices",
+                      "zh/event-contracts/rest/query-candlesticks",
+                      "zh/event-contracts/rest/place-order",
+                      "zh/event-contracts/rest/query-orders",
+                      "zh/event-contracts/rest/query-order",
+                      "zh/event-contracts/rest/cancel-order",
+                      "zh/event-contracts/rest/cancel-orders-by-condition",
+                      "zh/event-contracts/rest/query-positions",
+                      "zh/event-contracts/rest/query-position",
+                      "zh/event-contracts/rest/close-position",
+                      "zh/event-contracts/rest/query-user-trades",
+                      "zh/event-contracts/rest/query-assets",
+                      "zh/event-contracts/rest/query-account-book",
+                      "zh/event-contracts/rest/query-fee",
+                      "zh/event-contracts/rest/query-available-claims",
+                      "zh/event-contracts/rest/query-available-claim",
+                      "zh/event-contracts/rest/create-claim",
+                      "zh/event-contracts/rest/query-claim",
+                      "zh/event-contracts/rest/query-tags",
+                      "zh/event-contracts/rest/query-server-time"
+                    ]
+                  },
+                  {
+                    "group": "WebSocket",
+                    "pages": [
+                      "zh/event-contracts/websocket/overview",
+                      "zh/event-contracts/websocket/protocol",
+                      "zh/event-contracts/websocket/public-channels",
+                      "zh/event-contracts/websocket/private-channels",
+                      "zh/event-contracts/websocket/authentication"
+                    ]
+                  },
+                  {
+                    "group": "行情与市场数据",
+                    "pages": [
+                      "zh/event-contracts/market-data-overview",
+                      "zh/event-contracts/discover-markets",
+                      "zh/event-contracts/market-details",
+                      "zh/event-contracts/market-prices-orderbooks",
+                      "zh/event-contracts/analytics",
+                      "zh/event-contracts/realtime-data",
+                      "zh/event-contracts/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易与账户",
+                    "pages": [
+                      "zh/event-contracts/place-orders",
+                      "zh/event-contracts/manage-orders",
+                      "zh/event-contracts/realtime-order-updates",
+                      "zh/event-contracts/wallet-activity"
+                    ]
+                  }
+                ]
               }
             ]
           }
