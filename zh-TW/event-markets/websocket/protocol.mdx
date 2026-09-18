@@ -20,14 +20,14 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
 }
 ```
 
-| 字段 | 說明 |
+| 欄位 | 說明 |
 | --- | --- |
 | `t` | 客戶端 Unix 毫秒時間戳 |
 | `id` | 客戶端請求 ID，用於關聯響應 |
 | `op` | `subscribe`、`unsubscribe`、`auth` 或 `ping` |
 | `ch` | 頻道名稱 |
 | `payload` | 操作參數 |
-| `auth` | 首次私有操作時攜帶的認證信息 |
+| `auth` | 首次私有操作時攜帶的認證資訊 |
 
 ## 成功 ACK
 
@@ -80,7 +80,7 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
 
 ## 訂閱參數
 
-支持：
+支援：
 
 ```json
 {"items":[{"token_id":"gate_token_id"}]}
@@ -96,6 +96,6 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
 
 - `items` 與 `all` 不能同時出現；
 - 單次最多提交 100 個訂閱項；
-- 單連接最多支持 10,000 個有效訂閱；
-- 公共頻道不支持 `all=true`；
+- 單連接最多支援 10,000 個有效訂閱；
+- 公共頻道不支援 `all=true`；
 - 取消訂閱使用與訂閱相同的 item 結構。

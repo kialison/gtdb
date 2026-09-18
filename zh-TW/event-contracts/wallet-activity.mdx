@@ -1,10 +1,10 @@
 ---
-title: "賬戶活動"
-sidebarTitle: "賬戶活動"
-description: "查詢當前認證賬戶的事件合約持倉、成交和相關賬戶活動。"
+title: "帳戶活動"
+sidebarTitle: "帳戶活動"
+description: "查詢目前認證帳戶的事件合約持倉、成交和相關帳戶活動。"
 ---
 
-事件合約 API 提供當前認證賬戶的持倉和成交記錄。相關接口屬於私有接口，需要完成認證後調用。
+事件合約 API 提供目前認證帳戶的持倉和成交記錄。相關介面屬於私有介面，需要完成認證後呼叫。
 
 生產環境 Base URL：
 
@@ -23,7 +23,7 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
   --data-urlencode "limit=20"
 ```
 
-常見返回字段包括：`position_id`、`event_id`、`token_id`、`outcome`、`size`、`available_size`、`locked_size`、`avg_open_price`、`position_value`、`settlement_status`、`won` 和 `updated_at`。
+常見回傳欄位包括：`position_id`、`event_id`、`token_id`、`outcome`、`size`、`available_size`、`locked_size`、`avg_open_price`、`position_value`、`settlement_status`、`won` 和 `updated_at`。
 
 ## 查詢單個持倉
 
@@ -42,8 +42,8 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
   --data-urlencode "limit=20"
 ```
 
-個人成交記錄通常包含 `trade_id`、`order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate` 等字段。
+個人成交記錄通常包含 `trade_id`、`order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate` 等欄位。
 
 <Note>
-賬戶類接口用於查詢當前認證用戶的數據，不建議將其理解為任意錢包地址的公開鏈上查詢接口。
+帳戶類介面用於查詢目前認證使用者的資料，不建議將其理解為任意錢包位址的公開鏈上查詢介面。
 </Note>

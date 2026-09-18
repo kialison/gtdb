@@ -1,10 +1,10 @@
 ---
 title: "訂單生命週期"
 sidebarTitle: "訂單生命週期"
-description: "瞭解訂單從創建、提交、撮合到鏈上結算的完整流程，以及訂單與成交狀態。"
+description: "瞭解訂單從建立、提交、撮合到鏈上結算的完整流程，以及訂單與成交狀態。"
 ---
 
-事件合約 CLOB 採用混合模式：訂單撮合在鏈下完成以獲得更高效率，最終資產交割在鏈上執行。下面介紹訂單從創建到結算的完整生命週期。
+事件合約 CLOB 採用混合模式：訂單撮合在鏈下完成以獲得更高效率，最終資產交割在鏈上執行。下面介紹訂單從建立到結算的完整生命週期。
 
 ![Image](/images/image-4.png "Image")
 
@@ -30,20 +30,20 @@ Post Only 訂單保證只作為 Maker。如果提交時會立即與現有訂單�
 ## 完整生命週期
 
 <Steps>
-  <Step title="創建並簽名">
+  <Step title="建立並簽名">
     構造訂單參數，包括 Token ID、方向（`BUY` / `SELL`）、價格、數量、過期時間和時間戳，並使用交易錢包簽名。
   </Step>
   <Step title="提交到 CLOB">
     CLOB 驗證簽名、餘額與授權，並校驗 tick size、最小下單數量等交易規則。不合法訂單不會進入訂單簿。
   </Step>
   <Step title="撮合或進入訂單簿">
-    可立即成交的訂單與現有流動性撮合；無法立即成交的訂單繼續留在訂單簿，直到成交、撤銷或過期。部分市場可能對 Taker 設置撮合延遲保護 Maker。
+    可立即成交的訂單與現有流動性撮合；無法立即成交的訂單繼續留在訂單簿，直到成交、撤銷或過期。部分市場可能對 Taker 設定撮合延遲保護 Maker。
   </Step>
   <Step title="鏈上結算">
     撮合完成後，結算合約驗證訂單並在一次原子交易中完成結果代幣與 USDT 的資產交割。
   </Step>
   <Step title="確認完成">
-    鏈上交易確認後，賬戶餘額、成交記錄和持倉同步更新。
+    鏈上交易確認後，帳戶餘額、成交記錄和持倉同步更新。
   </Step>
 </Steps>
 
@@ -85,7 +85,7 @@ Taker 實際成交價格按照訂單簿上對手方的掛單價格執行。例�
 | --- | --- |
 | Balance | 買入需要足夠 USDT，賣出需要足夠結果代幣 |
 | Allowance | 對應合約需要獲得資產轉移授權 |
-| API credentials | 私有交易接口需要有效認證信息 |
+| API credentials | 私有交易介面需要有效認證資訊 |
 
 單筆新訂單最大可用數量應扣除現有未成交訂單已佔用的餘額：
 
@@ -101,6 +101,6 @@ maxOrderSize = balance − ∑(openOrderSize − filledAmount)
   </Card>
 
   <Card title="提交訂單" icon="chart-line" href="/zh-TW/event-contracts/place-orders">
-    查看交易接口與下單流程。
+    檢視交易介面與下單流程。
   </Card>
 </CardGroup>

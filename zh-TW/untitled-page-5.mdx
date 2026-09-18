@@ -1,30 +1,30 @@
 ---
-title: "賬戶"
-description: "瞭解錢包用戶、賬戶、Builder 資料與管理員賬戶之間的關係。"
+title: "帳戶"
+description: "瞭解錢包使用者、帳戶、Builder 資料與管理員帳戶之間的關係。"
 ---
 
-## 賬戶結構
+## 帳戶結構
 
-一個錢包用戶可以為每個受支持的 Builder 注冊一個獨立賬戶。通過不同 Builder 注冊的賬戶彼此獨立。
+一個錢包使用者可以為每個受支援的 Builder 注冊一個獨立帳戶。透過不同 Builder 注冊的帳戶彼此獨立。
 
 | 對象 | 所有者 | 包含或控制的內容 |
 | --- | --- | --- |
-| 錢包 | 用戶 | 賬戶注冊與資產操作的簽名權限 |
-| 賬戶 | 用戶 | 餘額、訂單、倉位、成交與 API 憑證 |
+| 錢包 | 使用者 | 帳戶注冊與資產操作的簽名權限 |
+| 帳戶 | 使用者 | 餘額、訂單、倉位、成交與 API 憑證 |
 | Builder 資料 | Builder | Builder 名稱、上線方式、Broker ID 與手續費等級 |
-| 管理員賬戶 | Builder | Builder 設置、手續費配置與 Builder API 訪問權限 |
+| 管理員帳戶 | Builder | Builder 設定、手續費設定與 Builder API 存取權限 |
 
 ## Account ID
 
-每個賬戶使用 `account_id` 標識。賬戶標識由錢包地址與 Builder 的 `brokerId` 共同計算，因此同一個錢包可以在不同 Builder 下擁有不同賬戶。
+每個帳戶使用 `account_id` 標識。帳戶標識由錢包位址與 Builder 的 `brokerId` 共同計算，因此同一個錢包可以在不同 Builder 下擁有不同帳戶。
 
 ## Broker ID
 
-`broker_id` 是 Builder 在 API 中的唯一標識。簽名消息使用對應結構規定的字段名，例如 EIP-712 Typed Data 中的 `brokerId`。每個請求都必須使用接口規定的準確大小寫。
+`broker_id` 是 Builder 在 API 中的唯一標識。簽名消息使用對應結構規定的欄位名，例如 EIP-712 Typed Data 中的 `brokerId`。每個請求都必須使用介面規定的準確大小寫。
 
 ## 隔離規則
 
-- 賬戶餘額、訂單、倉位與憑證屬於對應錢包用戶；
-- Builder API 只能訪問通過該 Builder 注冊的賬戶；
-- 管理員賬戶不能替代用戶錢包完成資產操作簽名；
-- Sandbox 與生產賬戶及憑證必須隔離。
+- 帳戶餘額、訂單、倉位與憑證屬於對應錢包使用者；
+- Builder API 只能存取透過該 Builder 注冊的帳戶；
+- 管理員帳戶不能替代使用者錢包完成資產操作簽名；
+- Sandbox 與生產帳戶及憑證必須隔離。

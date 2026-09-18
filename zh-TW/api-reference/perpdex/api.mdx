@@ -1,21 +1,21 @@
 ---
 title: "通用說明"
-description: "PerpDEX REST API 與 WebSocket API 的請求約定、限頻、返回格式與異常處理說明"
+description: "PerpDEX REST API 與 WebSocket API 的請求約定、限頻、回傳格式與異常處理說明"
 ---
 
 # 通用說明
 
 ## WebSocket 通用格式
 
-WebSocket 請求統一使用 JSON。常見字段：
+WebSocket 請求統一使用 JSON。常見欄位：
 
-| 字段 | 說明 |
+| 欄位 | 說明 |
 | --- | --- |
 | `time` | Unix 秒級時間戳 |
 | `channel` | 頻道名稱，例如 `futures.tickers` |
 | `event` | 操作類型，例如 `subscribe`、`unsubscribe`、`update` |
 | `payload` | 頻道訂閱參數 |
-| `auth` | 私有頻道認證信息 |
+| `auth` | 私有頻道認證資訊 |
 
 訂閱示例：
 
@@ -28,19 +28,19 @@ WebSocket 請求統一使用 JSON。常見字段：
 }
 ```
 
-取消訂閱時將 `event` 改為 `unsubscribe`。服務端數據推送通常使用 `event: "update"`。
+取消訂閱時將 `event` 改為 `unsubscribe`。服務端資料推送通常使用 `event: "update"`。
 
 
 ## HTTP 通用格式
 
 - 所有讀操作使用 `GET` 方法，只接收 URL / Query 參數，不讀取請求體。
-- `DELETE` 用於刪除指定資源，例如撤銷訂單；由於 `DELETE` 不讀取請求體，複雜刪除操作會通過 `POST` 並在請求體中傳參實現。
-- 更新操作根據接口使用 `POST`、`PUT` 或 `PATCH`，參數可能位於 Query 或 Request Body，具體以接口頁面為準。
-- 請求成功返回 `2xx`；`401` 通常表示認證失敗；其他 `4xx` 表示請求參數、格式或權限存在問題；`5xx` 表示服務端處理異常。
+- `DELETE` 用於刪除指定資源，例如撤銷訂單；由於 `DELETE` 不讀取請求體，複雜刪除操作會透過 `POST` 並在請求體中傳參實現。
+- 更新操作根據介面使用 `POST`、`PUT` 或 `PATCH`，參數可能位於 Query 或 Request Body，具體以介面頁面為準。
+- 請求成功回傳 `2xx`；`401` 通常表示認證失敗；其他 `4xx` 表示請求參數、格式或權限存在問題；`5xx` 表示服務端處理異常。
 
 ## 時間
 
-除接口另有說明外，時間相關字段統一使用 Unix 時間戳，單位為秒。不同接口返回的數據類型可能不同，例如：
+除介面另有說明外，時間相關欄位統一使用 Unix 時間戳，單位為秒。不同介面回傳的資料類型可能不同，例如：
 
 ```text
 1596531048
@@ -49,18 +49,18 @@ WebSocket 請求統一使用 JSON。常見字段：
 "1596531048.285"
 ```
 
-建議客戶端將時間字段先按可帶小數的數值處理；如果業務不需要毫秒級精度，再轉換為整數。
+建議客戶端將時間欄位先按可帶小數的數值處理；如果業務不需要毫秒級精度，再轉換為整數。
 
 認證請求中的 `Timestamp` 使用 Unix 秒級時間戳，並需要滿足服務端允許的時間偏差。
 
 ## 網關入出站時間
 
-API 響應 Header 會返回網關接收請求和發出響應的時間，可用於分析請求在網關及服務端的耗時：
+API 響應 Header 會回傳網關接收請求和發出響應的時間，可用於分析請求在網關及服務端的耗時：
 
 | Header | 說明 |
 | --- | --- |
 | `X-In-Time` | API 網關收到請求的時間，Unix 時間戳，單位微秒 |
-| `X-Out-Time` | API 網關返回響應的時間，Unix 時間戳，單位微秒 |
+| `X-Out-Time` | API 網關回傳響應的時間，Unix 時間戳，單位微秒 |
 
 示例：
 
@@ -71,45 +71,45 @@ X-Out-Time: 1695715091551905
 
 ## 分頁
 
-列表接口根據接口類型使用以下一種或多種方式分頁。
+清單介面根據介面類型使用以下一種或多種方式分頁。
 
 ### limit + offset
 
 | 參數 | 說明 |
 | --- | --- |
-| `limit` | 單次返回的最大記錄數量 |
-| `offset` | 列表偏移量，從 `0` 開始 |
+| `limit` | 單次回傳的最大記錄數量 |
+| `offset` | 清單偏移量，從 `0` 開始 |
 
 ### last_id
 
-部分歷史接口支持使用上一頁最後一條記錄的 ID 作為下一頁起點。具體字段名稱和是否已廢棄，以接口頁面為準。
+部分歷史介面支援使用上一頁最後一條記錄的 ID 作為下一頁起點。具體欄位名稱和是否已廢棄，以介面頁面為準。
 
 ### from + to
 
-時間範圍接口通常使用：
+時間範圍介面通常使用：
 
 | 參數 | 說明 |
 | --- | --- |
 | `from` | 開始時間，Unix 秒 |
 | `to` | 結束時間，Unix 秒 |
 
-部分接口會同時配合 `limit`、`offset` 使用。
+部分介面會同時配合 `limit`、`offset` 使用。
 
 ## 限頻規則
 
-當前 PerpDEX 交易類請求按以下規則控制頻率：
+目前 PerpDEX 交易類請求按以下規則控制頻率：
 
 - 單筆下單、批量下單、改單、撤單、批量撤單等交易請求：合計最高 `100 req/s`。
-- 其他接口當前不設置相同的交易請求頻率限制，但仍應避免無意義的高頻輪詢。
+- 其他介面目前不設定相同的交易請求頻率限制，但仍應避免無意義的高頻輪詢。
 - 單 IP 最大連接數：`300`。
 
-當請求超過限制時，服務端可能返回 `429`。客戶端應根據狀態碼進行退避重試，避免立即連續重放請求。
+當請求超過限制時，服務端可能回傳 `429`。客戶端應根據狀態碼進行退避重試，避免立即連續重放請求。
 
-## 返回格式
+## 回傳格式
 
-接口默認使用 JSON 返回數據。
+介面預設使用 JSON 回傳資料。
 
-請求成功時根據接口定義返回對象、數組或空結果；請求失敗時通常返回非 `2xx` 狀態碼，並在 JSON 中提供錯誤類型和錯誤說明。
+請求成功時根據介面定義回傳對象、數組或空結果；請求失敗時通常回傳非 `2xx` 狀態碼，並在 JSON 中提供錯誤類型和錯誤說明。
 
 成功示例：
 
@@ -129,21 +129,21 @@ X-Out-Time: 1695715091551905
 }
 ```
 
-## 數據類型
+## 資料類型
 
-常見數據類型：
+常見資料類型：
 
 | 類型 | 說明 |
 | --- | --- |
-| `string` | 字符串；價格、數量、金額等高精度數據通常以字符串返回 |
+| `string` | 字串；價格、數量、金額等高精度資料通常以字串回傳 |
 | `integer` / `int64` | 整數，例如 ID、時間戳、檔位 |
-| `number` / `double` | 數值，例如統計值或帶小數的時間字段 |
+| `number` / `double` | 數值，例如統計值或帶小數的時間欄位 |
 | `boolean` | 布爾值 |
 | `array` | 數組 |
 | `object` | 對象 |
 
 <Note>
-價格、數量、保證金等金融數值建議保持字符串或使用高精度 Decimal 處理，避免直接使用二進制浮點數造成精度損失。
+價格、數量、保證金等金融數值建議保持字串或使用高精度 Decimal 處理，避免直接使用二進制浮點數造成精度損失。
 </Note>
 
 ## Trace ID
@@ -154,11 +154,11 @@ API 響應 Header 中會攜帶：
 X-Trace-ID
 ```
 
-該字段用於定位單次請求鏈路。出現異常時，建議將 `X-Trace-ID` 與請求 URI、HTTP 狀態碼、請求時間一起保留。
+該欄位用於定位單次請求鏈路。出現異常時，建議將 `X-Trace-ID` 與請求 URI、HTTP 狀態碼、請求時間一起保留。
 
 ## Self-Trade Prevention（STP）
 
-STP 用於防止同一 STP Group 內的賬戶訂單相互成交。
+STP 用於防止同一 STP Group 內的帳戶訂單相互成交。
 
 ### STP 策略
 
@@ -167,15 +167,15 @@ STP 用於防止同一 STP Group 內的賬戶訂單相互成交。
 | `cn` | Cancel new | 取消新訂單，保留舊訂單 |
 | `co` | Cancel old | 取消舊訂單，保留新訂單 |
 | `cb` | Cancel both | 新舊訂單同時取消 |
-| `-` | 未啓用 | 當前訂單未使用 STP |
+| `-` | 未啓用 | 目前訂單未使用 STP |
 
-使用 STP 前，賬戶需要加入 STP Group。屬於同一 Group 的訂單發生潛在自成交時，系統會根據 Taker 訂單的 `stp_act` 決定取消哪一側訂單。
+使用 STP 前，帳戶需要加入 STP Group。屬於同一 Group 的訂單發生潛在自成交時，系統會根據 Taker 訂單的 `stp_act` 決定取消哪一側訂單。
 
-如果賬戶已加入 STP Group，但下單時沒有指定 `stp_act`，默認按 `cn` 處理。賬戶未加入 STP Group 時傳入 STP 參數，服務端可能拒絕該請求。
+如果帳戶已加入 STP Group，但下單時沒有指定 `stp_act`，預設按 `cn` 處理。帳戶未加入 STP Group 時傳入 STP 參數，服務端可能拒絕該請求。
 
-### 下單相關字段
+### 下單相關欄位
 
-以創建訂單接口為例：
+以建立訂單介面為例：
 
 ```text
 POST /dex_futures/{settle}/orders
@@ -183,25 +183,25 @@ POST /dex_futures/{settle}/orders
 
 請求可包含：
 
-| 字段 | 類型 | 說明 |
+| 欄位 | 類型 | 說明 |
 | --- | --- | --- |
 | `stp_act` | string | 自成交防護策略：`cn`、`co`、`cb` |
 
 響應中可能包含：
 
-| 字段 | 類型 | 說明 |
+| 欄位 | 類型 | 說明 |
 | --- | --- | --- |
-| `stp_act` | string | 當前訂單使用的 STP 策略 |
-| `stp_id` | integer | 當前賬戶所屬 STP Group ID |
+| `stp_act` | string | 目前訂單使用的 STP 策略 |
+| `stp_id` | integer | 目前帳戶所屬 STP Group ID |
 | `finish_as` | string | 當值為 `stp` 時表示訂單因自成交防護被取消 |
 
 <Warning>
-如果當前 DexBuilder PerpDEX 部署未啓用 STP，應以實際交易系統能力為準，並避免依賴 `stp_act`、`stp_id` 或 `finish_as=stp` 進行核心業務判斷。
+如果目前 DexBuilder PerpDEX 部署未啓用 STP，應以實際交易系統能力為準，並避免依賴 `stp_act`、`stp_id` 或 `finish_as=stp` 進行核心業務判斷。
 </Warning>
 
 ## 異常處理
 
-所有異常請求都會返回非 `2xx` HTTP 狀態碼，並通常使用 JSON 描述錯誤。
+所有異常請求都會回傳非 `2xx` HTTP 狀態碼，並通常使用 JSON 描述錯誤。
 
 標準錯誤結構示例：
 
@@ -212,8 +212,8 @@ POST /dex_futures/{settle}/orders
 }
 ```
 
-- `label`：穩定的錯誤類型標識，程序應優先使用該字段判斷錯誤類型。
-- `message` 或 `detail`：用於說明具體錯誤原因，適合展示和排查，不建議依賴完整文本做程序判斷。
+- `label`：穩定的錯誤類型標識，程式應優先使用該欄位判斷錯誤類型。
+- `message` 或 `detail`：用於說明具體錯誤原因，適合展示和排查，不建議依賴完整文本做程式判斷。
 
 客戶端建議按以下順序處理異常：
 
@@ -222,7 +222,7 @@ POST /dex_futures/{settle}/orders
 3. 使用 `message` / `detail` 輔助排查。
 4. 保存 `X-Trace-ID` 便於定位請求鏈路。
 
-## 異常 Label 列表
+## 異常 Label 清單
 
 ### 請求參數與格式
 
@@ -237,7 +237,7 @@ POST /dex_futures/{settle}/orders
 | `INVALID_CONTENT_TYPE` | `Content-Type` 無效 |
 | `NOT_ACCEPTABLE` | `Accept` Header 無效 |
 | `METHOD_NOT_ALLOWED` | 請求 Method 不允許 |
-| `NOT_FOUND` | 請求地址不存在 |
+| `NOT_FOUND` | 請求位址不存在 |
 
 ### 認證與權限
 
@@ -249,30 +249,30 @@ POST /dex_futures/{settle}/orders
 | `READ_ONLY` | API Key 為只讀權限 |
 | `INVALID_SIGNATURE` | 請求籤名無效 |
 | `MISSING_REQUIRED_HEADER` | 缺少認證 Header |
-| `REQUEST_EXPIRED` | `Timestamp` 與服務器時間偏差過大 |
-| `ACCOUNT_LOCKED` | 賬戶已鎖定 |
-| `FORBIDDEN` | 當前賬戶或 API Key 無權限執行該操作 |
+| `REQUEST_EXPIRED` | `Timestamp` 與伺服器時間偏差過大 |
+| `ACCOUNT_LOCKED` | 帳戶已鎖定 |
+| `FORBIDDEN` | 目前帳戶或 API Key 無權限執行該操作 |
 
 ### PerpDEX 業務錯誤
 
 | Label | 說明 |
 | --- | --- |
-| `USER_NOT_FOUND` | 用戶不存在對應 PerpDEX 賬戶 |
+| `USER_NOT_FOUND` | 使用者不存在對應 PerpDEX 帳戶 |
 | `CONTRACT_NO_COUNTER` | 沒有可成交的對手訂單 |
 | `CONTRACT_NOT_FOUND` | 合約不存在 |
 | `RISK_LIMIT_EXCEEDED` | 超過風險限額 |
 | `INSUFFICIENT_AVAILABLE` | 可用餘額不足 |
-| `LIQUIDATE_IMMEDIATELY` | 當前操作可能立即觸發強平 |
+| `LIQUIDATE_IMMEDIATELY` | 目前操作可能立即觸發強平 |
 | `LEVERAGE_TOO_HIGH` | 槓桿過高 |
 | `LEVERAGE_TOO_LOW` | 槓桿過低 |
 | `ORDER_NOT_FOUND` | 訂單不存在 |
-| `ORDER_NOT_OWNED` | 訂單不屬於當前用戶 |
+| `ORDER_NOT_OWNED` | 訂單不屬於目前使用者 |
 | `ORDER_FINISHED` | 訂單已結束 |
-| `TOO_MANY_ORDERS` | 當前掛單數量過多 |
+| `TOO_MANY_ORDERS` | 目前掛單數量過多 |
 | `POSITION_CROSS_MARGIN` | 全倉模式下不允許執行該保證金操作 |
 | `POSITION_IN_LIQUIDATION` | 持倉正在強平 |
 | `POSITION_IN_CLOSE` | 持倉正在平倉 |
-| `POSITION_EMPTY` | 當前沒有持倉 |
+| `POSITION_EMPTY` | 目前沒有持倉 |
 | `REMOVE_TOO_MUCH` | 減少的保證金超過允許範圍 |
 | `RISK_LIMIT_NOT_MULTIPLE` | 風險限額不是要求步長的整數倍 |
 | `RISK_LIMIT_TOO_HIGH` | 風險限額過高 |
@@ -283,15 +283,15 @@ POST /dex_futures/{settle}/orders
 | `PRICE_OVER_LIQUIDATION` | 加倉價格超過允許的強平價格範圍 |
 | `PRICE_OVER_BANKRUPT` | 減倉價格超過允許的破產價格範圍 |
 | `ORDER_POC_IMMEDIATE` | POC 訂單會立即成交，無法作為 Post Only 掛單 |
-| `INCREASE_POSITION` | 當前操作會導致只減倉訂單增加倉位 |
+| `INCREASE_POSITION` | 目前操作會導致只減倉訂單增加倉位 |
 | `CONTRACT_IN_DELISTING` | 合約正在下架，僅允許減倉或平倉 |
 | `POSITION_NOT_FOUND` | 持倉不存在 |
-| `POSITION_DUAL_MODE` | 雙向持倉模式下不允許當前操作 |
-| `ORDER_PENDING` | 存在掛單時不允許當前操作 |
-| `POSITION_HOLDING` | 存在持倉時不允許當前操作 |
+| `POSITION_DUAL_MODE` | 雙向持倉模式下不允許目前操作 |
+| `ORDER_PENDING` | 存在掛單時不允許目前操作 |
+| `POSITION_HOLDING` | 存在持倉時不允許目前操作 |
 | `REDUCE_EXCEEDED` | 雙向模式下減倉量超過持倉量 |
 | `NO_CHANGE` | 本次請求沒有產生任何變更 |
-| `AMEND_WITH_STOP` | 當前訂單類型不允許改單 |
+| `AMEND_WITH_STOP` | 目前訂單類型不允許改單 |
 | `ORDER_FOK` | FOK 訂單未能全部成交並被取消 |
 
 ### 服務端錯誤
@@ -303,5 +303,5 @@ POST /dex_futures/{settle}/orders
 | `TOO_BUSY` | 服務暫時繁忙 |
 
 <Warning>
-業務錯誤處理應優先依賴 `label`，不要依賴完整的 `message` 文本。排查問題時不要提供 API Secret、私鑰或其他敏感認證信息。
+業務錯誤處理應優先依賴 `label`，不要依賴完整的 `message` 文本。排查問題時不要提供 API Secret、私鑰或其他敏感認證資訊。
 </Warning>

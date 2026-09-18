@@ -967,7 +967,7 @@
                 ]
               },
               {
-                "group": "Builder 配置",
+                "group": "Builder 設定",
                 "pages": [
                   "zh-TW/builder/fees-revenue",
                   "zh-TW/builder/operations-console"
@@ -1142,7 +1142,7 @@
                         ]
                       },
                       {
-                        "group": "行情與市場數據",
+                        "group": "行情與市場資料",
                         "pages": [
                           "zh-TW/event-markets/market-data-overview",
                           "zh-TW/event-markets/discover-markets",
@@ -1154,7 +1154,7 @@
                         ]
                       },
                       {
-                        "group": "交易與賬戶",
+                        "group": "交易與帳戶",
                         "pages": [
                           "zh-TW/event-markets/place-orders",
                           "zh-TW/event-markets/manage-orders",
@@ -1223,7 +1223,7 @@
                         ]
                       },
                       {
-                        "group": "行情與市場數據",
+                        "group": "行情與市場資料",
                         "pages": [
                           "zh-TW/event-contracts/market-data-overview",
                           "zh-TW/event-contracts/discover-markets",
@@ -1235,7 +1235,7 @@
                         ]
                       },
                       {
-                        "group": "交易與賬戶",
+                        "group": "交易與帳戶",
                         "pages": [
                           "zh-TW/event-contracts/place-orders",
                           "zh-TW/event-contracts/manage-orders",

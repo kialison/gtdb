@@ -1,10 +1,10 @@
 ---
-title: "數據分析"
-sidebarTitle: "數據分析"
-description: "通過成交、Open Interest、持有人與 Event 實時成交量等數據分析事件合約活動。"
+title: "資料分析"
+sidebarTitle: "資料分析"
+description: "透過成交、Open Interest、持有人與 Event 即時成交量等資料分析事件合約活動。"
 ---
 
-本頁介紹如何觀察事件合約的交易活躍度、資金分布和持倉情況。開始前，先通過「發現市場」獲取 Market 的 `condition_id` 與 `event_id`。
+本頁介紹如何觀察事件合約的交易活躍度、資金分布和持倉情況。開始前，先透過「發現市場」取得 Market 的 `condition_id` 與 `event_id`。
 
 ```bash
 CONDITION_ID="<condition_id>"
@@ -13,7 +13,7 @@ EVENT_ID="<event_id>"
 
 ## 最近成交
 
-用於查看最近撮合的交易，包括方向、價格、數量、結果、錢包和時間戳等信息。
+用於檢視最近撮合的交易，包括方向、價格、數量、結果、錢包和時間戳等資訊。
 
 ```bash API
 curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
@@ -39,7 +39,7 @@ curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
 
 ## Open Interest
 
-用於查看一個或多個 Market 當前未平倉持倉的價值。
+用於檢視一個或多個 Market 目前未平倉持倉的價值。
 
 ```bash API
 curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
@@ -58,7 +58,7 @@ curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
 
 ## Market 持有人
 
-查看不同 Outcome Token 的主要公開持有人。
+檢視不同 Outcome Token 的主要公開持有人。
 
 ```bash API
 curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
@@ -82,9 +82,9 @@ curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
   ```
 </Accordion>
 
-## Event 實時成交量
+## Event 即時成交量
 
-按 Event 匯總成交量，並查看各 Market 的成交量拆分。
+按 Event 匯總成交量，並檢視各 Market 的成交量拆分。
 
 ```bash API
 curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
@@ -107,5 +107,5 @@ curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
 </Accordion>
 
 <Note>
-部分分析接口來自外部數據服務。正式集成時應區分 DexBuilder Event Contracts API 與外部數據源，避免將外部接口當作 DexBuilder API 合同的一部分。
+部分分析介面來自外部資料服務。正式集成時應區分 DexBuilder Event Contracts API 與外部資料源，避免將外部介面當作 DexBuilder API 合同的一部分。
 </Note>

@@ -3,22 +3,22 @@ title: "瞭解 DexBuilder"
 description: "瞭解 DexBuilder 提供的完整 DEX 產品能力、交易基礎設施與 Broker 能力。"
 ---
 
-DexBuilder 提供從 **DEX 創建、品牌配置、用戶賬戶、資產、行情、交易、結算到運營管理** 的完整能力。項目可以直接基於 DexBuilder 創建並運營自己的 DEX，無需分別建設交易前端和底層交易系統。
+DexBuilder 提供從 **DEX 建立、品牌設定、使用者帳戶、資產、行情、交易、結算到營運管理** 的完整能力。專案可以直接基於 DexBuilder 建立並營運自己的 DEX，無需分別建設交易前端和底層交易系統。
 
 ## DexBuilder 能力
 
 <CardGroup cols={2}>
-  <Card title="DEX 創建與品牌配置" icon="wand-magic-sparkles">
-    創建獨立 DEX，並配置名稱、Logo、主題、域名、語言及其他品牌信息。
+  <Card title="DEX 建立與品牌設定" icon="wand-magic-sparkles">
+    建立獨立 DEX，並設定名稱、Logo、主題、域名、語言及其他品牌資訊。
   </Card>
-  <Card title="賬戶與認證" icon="user-shield">
-    提供用戶登錄、賬戶創建、身份識別、認證及賬戶狀態管理能力。
+  <Card title="帳戶與認證" icon="user-shield">
+    提供使用者登入、帳戶建立、身份識別、認證及帳戶狀態管理能力。
   </Card>
   <Card title="資產與充提" icon="wallet">
     提供資產展示、充值、提現、資金流水及結算相關能力。
   </Card>
   <Card title="市場與行情" icon="chart-candlestick">
-    提供市場信息、Ticker、訂單簿、成交、K 線及實時行情。
+    提供市場資訊、Ticker、訂單簿、成交、K 線及即時行情。
   </Card>
   <Card title="交易與倉位" icon="arrow-right-arrow-left">
     提供下單、撤單、改單、訂單、成交、倉位、保證金與槓桿等完整交易能力。
@@ -26,45 +26,45 @@ DexBuilder 提供從 **DEX 創建、品牌配置、用戶賬戶、資產、行�
   <Card title="保證金與結算" icon="shield-halved">
     提供保證金、強平、ADL、保險基金及結算相關能力。
   </Card>
-  <Card title="實時數據" icon="bolt">
-    提供行情、訂單、成交、倉位、餘額等實時數據推送。
+  <Card title="即時資料" icon="bolt">
+    提供行情、訂單、成交、倉位、餘額等即時資料推送。
   </Card>
-  <Card title="運營管理" icon="sliders">
-    提供項目級數據、用戶、手續費、返傭、公告、資金及權限管理能力。
+  <Card title="營運管理" icon="sliders">
+    提供專案級資料、使用者、手續費、返傭、公告、資金及權限管理能力。
   </Card>
 </CardGroup>
 
 ## Broker 能力
 
-創建 Builder 後，DexBuilder 會為項目建立項目級標識，用於關聯該項目的用戶、交易和運營數據。
+建立 Builder 後，DexBuilder 會為專案建立專案級標識，用於關聯該專案的使用者、交易和營運資料。
 
 <CardGroup cols={2}>
-  <Card title="項目與用戶歸屬" icon="users">
-    識別不同項目來源，並關聯項目下用戶、訂單與交易數據。
+  <Card title="專案與使用者歸屬" icon="users">
+    識別不同專案來源，並關聯專案下使用者、訂單與交易資料。
   </Card>
   <Card title="手續費與收益" icon="coins">
-    支持項目級手續費配置、交易費率、收入統計及相關結算能力。
+    支援專案級手續費設定、交易費率、收入統計及相關結算能力。
   </Card>
-  <Card title="數據與運營" icon="chart-column">
-    通過 Builder 管理後台查看項目級用戶、交易量、手續費及運營數據。
+  <Card title="資料與營運" icon="chart-column">
+    透過 Builder 管理後台檢視專案級使用者、交易量、手續費及營運資料。
   </Card>
   <Card title="API 與 WebSocket" icon="code">
     對需要系統集成的場景，提供 REST API 與 WebSocket 能力。
   </Card>
 </CardGroup>
 
-## 支持的產品
+## 支援的產品
 
 | 產品 | 說明 |
 | --- | --- |
-| PerpDEX | 永續合約交易、行情、訂單、持倉與賬戶能力 |
+| PerpDEX | 永續合約交易、行情、訂單、持倉與帳戶能力 |
 | 預測市場 | 事件結果市場、訂單簿、交易、持倉與結算 |
-| 事件合約 | 事件類合約市場、交易、實時數據與結算 |
+| 事件合約 | 事件類合約市場、交易、即時資料與結算 |
 | 多產品 DEX | 可根據業務需要組合啓用多個產品 |
 
 ## 使用方式
 
-DexBuilder 默認提供完整的 DEX 產品與管理能力。完成 Builder 創建後，可繼續配置產品、品牌、市場、賬戶、手續費及運營能力並上線 DEX。
+DexBuilder 預設提供完整的 DEX 產品與管理能力。完成 Builder 建立後，可繼續設定產品、品牌、市場、帳戶、手續費及營運能力並上線 DEX。
 
-對於需要與其他系統連接的場景，可使用對應產品的 REST API 與 WebSocket。具體接口、參數與認證方式統一在 **API Reference** 中維護。
+對於需要與其他系統連接的場景，可使用對應產品的 REST API 與 WebSocket。具體介面、參數與認證方式統一在 **API Reference** 中維護。
 

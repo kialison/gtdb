@@ -1,15 +1,15 @@
 ---
-title: "創建永續合約訂單"
-description: "創建一筆永續合約訂單"
+title: "建立永續合約訂單"
+description: "建立一筆永續合約訂單"
 openapi: "/openapi/perpdex-zh-TW.yaml POST /dex_futures/{settle}/orders"
 ---
 
-該接口用於創建一筆永續合約訂單。
+該介面用於建立一筆永續合約訂單。
 
 <Warning>
-該接口需要 API Key、時間戳和請求籤名認證。
+該介面需要 API Key、時間戳和請求籤名認證。
 </Warning>
 
-`size` 表示合約張數，不是幣的數量。每張合約對應的標的資產數量可通過合約信息中的 `quanto_multiplier` 獲取。
+`size` 表示合約張數，不是幣的數量。每張合約對應的標的資產數量可透過合約資訊中的 `quanto_multiplier` 取得。
 
 當 `price` 為 `0` 且 `tif` 為 `ioc` 時，可用於提交市價單。

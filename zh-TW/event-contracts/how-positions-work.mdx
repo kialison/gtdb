@@ -4,13 +4,13 @@ sidebarTitle: "持倉機制"
 description: "瞭解事件合約持倉、結果代幣、Position ID 以及市場結算後的贖回機制。"
 ---
 
-事件合約的持倉本質上是結果代幣。每個市場結果對應一個可識別的 Token，用戶買入後形成持倉，並在市場結算後根據最終結果進行贖回。
+事件合約的持倉本質上是結果代幣。每個市場結果對應一個可識別的 Token，使用者買入後形成持倉，並在市場結算後根據最終結果進行贖回。
 
 ## 結果代幣
 
 事件合約基於 Conditional Token Framework（CTF）表示不同結果。二元市場通常包含兩個結果，例如 `Yes` 與 `No`。
 
-每個結果代幣都有唯一的 Position ID，並作為鏈上的 Token ID 使用。多數接入場景無需自行計算 Position ID，直接使用市場接口返回的 `token_id` 即可。
+每個結果代幣都有唯一的 Position ID，並作為鏈上的 Token ID 使用。多數接入場景無需自行計算 Position ID，直接使用市場介面回傳的 `token_id` 即可。
 
 ## Position ID 生成邏輯
 
@@ -30,13 +30,13 @@ getPositionId(collateralToken, collectionId)
 
 ## 持倉數量
 
-賬戶持倉接口會返回當前結果代幣數量，並區分：
+帳戶持倉介面會回傳目前結果代幣數量，並區分：
 
 - 總持倉數量；
 - 被訂單或結算流程鎖定的數量；
-- 當前可用於賣出或其他操作的數量；
+- 目前可用於賣出或其他操作的數量；
 - 平均開倉價格；
-- 當前持倉價值；
+- 目前持倉價值；
 - 結算後可領取金額。
 
 ## 市場結算
@@ -45,18 +45,18 @@ getPositionId(collateralToken, collectionId)
 
 - 獲勝結果代幣可按結算規則兌換對應抵押資產；
 - 失敗結果代幣價值歸零；
-- 賬戶會更新 `settlement_status`、`won` 和 `claimable_amount` 等字段。
+- 帳戶會更新 `settlement_status`、`won` 和 `claimable_amount` 等欄位。
 
 ## 贖回已結算持倉
 
 完成贖回前需要確認：
 
 1. 市場已經完成最終結算；
-2. 當前賬戶持有對應結果代幣；
+2. 目前帳戶持有對應結果代幣；
 3. 該持倉存在可領取金額。
 
-建議優先通過事件合約賬戶和 Claim 相關接口完成領取流程，而不是由普通 API 接入方自行拼裝底層合約交易。
+建議優先透過事件合約帳戶和 Claim 相關介面完成領取流程，而不是由普通 API 接入方自行拼裝底層合約交易。
 
 <Note>
-如果只是使用 DexBuilder API 構建前端或交易應用，直接依賴市場返回的 `token_id`、賬戶持倉和 Claim 接口即可，不需要自行實現 CTF Position ID 計算。
+如果只是使用 DexBuilder API 構建前端或交易應用，直接依賴市場回傳的 `token_id`、帳戶持倉和 Claim 介面即可，不需要自行實現 CTF Position ID 計算。
 </Note>

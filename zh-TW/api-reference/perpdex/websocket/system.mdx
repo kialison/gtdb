@@ -16,8 +16,8 @@ System API 用於檢查 WebSocket 連接狀態並接收系統通知。
 }
 ```
 
-服務端返回 `futures.pong`。
+服務端回傳 `futures.pong`。
 
 ## 系統通知
 
-服務端可能通過 `futures.system` + `event: "update"` 推送系統級通知，例如服務升級或連接即將關閉。收到升級通知後，客戶端應盡快建立新連接並恢復訂閱。
+服務端可能透過 `futures.system` + `event: "update"` 推送系統級通知，例如服務升級或連接即將關閉。收到升級通知後，客戶端應盡快建立新連接並恢復訂閱。

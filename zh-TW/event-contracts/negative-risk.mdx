@@ -1,10 +1,10 @@
 ---
 title: "Negative Risk 市場"
 sidebarTitle: "Negative Risk 市場"
-description: "瞭解多結果事件中的 Negative Risk 機制，以及如何通過結果轉換提升資金效率。"
+description: "瞭解多結果事件中的 Negative Risk 機制，以及如何透過結果轉換提升資金效率。"
 ---
 
-Negative Risk 是面向多結果事件的一種機制，適用於最終只有一個結果能夠獲勝的場景。它通過結果之間的轉換關係，將同一 Event 下的多個 Market 連接起來，從而提高資金利用效率。
+Negative Risk 是面向多結果事件的一種機制，適用於最終只有一個結果能夠獲勝的場景。它透過結果之間的轉換關係，將同一 Event 下的多個 Market 連接起來，從而提高資金利用效率。
 
 ## 工作方式
 
@@ -13,13 +13,13 @@ Negative Risk 是面向多結果事件的一種機制，適用於最終只有一
 Negative Risk 會建立這種關係：
 
 - 任意一個 Market 的 1 份 No，可以轉換為同一 Event 中其他每個 Market 的 1 份 Yes；
-- 轉換通過 Neg Risk Adapter 合約完成。
+- 轉換透過 Neg Risk Adapter 合約完成。
 
 ### 示例
 
 假設 Event 為“誰將贏得總統選舉？”，包含三個結果：
 
-| 結果 | 當前持倉 |
+| 結果 | 目前持倉 |
 | --- | --- |
 | 候選人 A | — |
 | 候選人 B | — |
@@ -37,13 +37,13 @@ Negative Risk 會建立這種關係：
 
 ## Augmented Negative Risk
 
-標準 Negative Risk 通常要求在市場創建時就確定完整結果集合。但實際場景中，交易開始後可能出現新的候選結果，例如新的候選人加入競選。
+標準 Negative Risk 通常要求在市場建立時就確定完整結果集合。但實際場景中，交易開始後可能出現新的候選結果，例如新的候選人加入競選。
 
 Augmented Negative Risk 使用以下結果類型處理動態變化：
 
 | 結果類型 | 說明 |
 | --- | --- |
-| Named outcomes | 創建市場時已經明確的結果 |
+| Named outcomes | 建立市場時已經明確的結果 |
 | Placeholder outcomes | 預留位置，後續可明確成具體結果 |
 | Other | 捕獲未被明確列出的其他結果 |
 
@@ -72,13 +72,13 @@ Augmented Negative Risk 使用以下結果類型處理動態變化：
 
 <Steps>
   <Step title="持有 No Token">
-    用戶持有 Outcome A 的 1 份 No Token。
+    使用者持有 Outcome A 的 1 份 No Token。
   </Step>
-  <Step title="調用 convert">
-    調用 Adapter 的 `convert` 方法。
+  <Step title="呼叫 convert">
+    呼叫 Adapter 的 `convert` 方法。
   </Step>
   <Step title="收到其他結果的 Yes Token">
-    用戶收到同一 Event 中其他每個結果各 1 份 Yes Token。
+    使用者收到同一 Event 中其他每個結果各 1 份 Yes Token。
   </Step>
 </Steps>
 

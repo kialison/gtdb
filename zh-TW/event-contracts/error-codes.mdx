@@ -4,7 +4,7 @@ sidebarTitle: "錯誤碼"
 description: "事件合約 API 常見 HTTP 錯誤、原因及處理建議。"
 ---
 
-事件合約 API 使用標準 HTTP 狀態碼表示請求處理結果。以下錯誤可能出現在需要認證的接口中。
+事件合約 API 使用標準 HTTP 狀態碼表示請求處理結果。以下錯誤可能出現在需要認證的介面中。
 
 ## `401 Unauthorized`
 
@@ -19,7 +19,7 @@ description: "事件合約 API 常見 HTTP 錯誤、原因及處理建議。"
 
 ## `429 Too Many Requests`
 
-表示請求頻率超過當前限頻規則。建議客戶端使用指數退避後重試，並避免短時間內重復請求同一資源。
+表示請求頻率超過目前限頻規則。建議客戶端使用指數退避後重試，並避免短時間內重復請求同一資源。
 
 ## `503 Service Unavailable`
 
@@ -27,8 +27,8 @@ description: "事件合約 API 常見 HTTP 錯誤、原因及處理建議。"
 
 ## 通用錯誤處理建議
 
-建議記錄 Request Method、Request Path、Query、請求時間戳、`trace_id`、HTTP 狀態碼以及服務端結構化錯誤碼與錯誤信息。
+建議記錄 Request Method、Request Path、Query、請求時間戳、`trace_id`、HTTP 狀態碼以及服務端結構化錯誤碼與錯誤資訊。
 
 <Warning>
-排查日誌時不要記錄或對外暴露 API Secret、完整簽名密鑰或其他敏感認證信息。
+排查日誌時不要記錄或對外暴露 API Secret、完整簽名金鑰或其他敏感認證資訊。
 </Warning>

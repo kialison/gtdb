@@ -1,12 +1,12 @@
 ---
-title: "實時訂單更新"
-sidebarTitle: "實時訂單更新"
-description: "通過私有 WebSocket 頻道實時接收訂單、成交、持倉和結算狀態變化。"
+title: "即時訂單更新"
+sidebarTitle: "即時訂單更新"
+description: "透過私有 WebSocket 頻道即時接收訂單、成交、持倉和結算狀態變化。"
 ---
 
-預測市場 WebSocket 可實時推送賬戶側的訂單、成交、持倉和結算變化。公開行情頻道無需認證，本頁涉及的私有頻道需要完成 API Key 認證。
+預測市場 WebSocket 可即時推送帳戶側的訂單、成交、持倉和結算變化。公開行情頻道無需認證，本頁涉及的私有頻道需要完成 API Key 認證。
 
-## 連接地址
+## 連接位址
 
 ```text
 wss://broker.dexbuilder.com/v4/ws/event_markets
@@ -16,7 +16,7 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 
 ## 私有訂閱認證
 
-首次訂閱私有頻道時可以直接攜帶認證信息：
+首次訂閱私有頻道時可以直接攜帶認證資訊：
 
 ```json
 {
@@ -39,30 +39,30 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 channel=<channel>&event=<operation>&time=<timestamp_ms>
 ```
 
-使用 API Secret 對上述字符串執行 HMAC-SHA512，並將結果轉為十六進制。API Secret 只在本地參與簽名，不通過 WebSocket 發送。
+使用 API Secret 對上述字串執行 HMAC-SHA512，並將結果轉為十六進制。API Secret 只在本地參與簽名，不透過 WebSocket 發送。
 
-也可以先通過 `server.sign` 完成一次預認證，後續同一連接中的私有訂閱可不再重復攜帶 `auth`。
+也可以先透過 `server.sign` 完成一次預認證，後續同一連接中的私有訂閱可不再重復攜帶 `auth`。
 
 ## 私有頻道
 
 | 頻道 | 用途 |
 | --- | --- |
 | `em.orders` | 訂單生命週期更新 |
-| `em.usertrades` | 當前用戶成交更新 |
+| `em.usertrades` | 目前使用者成交更新 |
 | `em.positions` | 持倉變化 |
 | `em.settlements` | 結算與可領取狀態變化 |
 
-私有訂閱支持兩種方式：按 `condition_id` 過濾，或使用 `payload.all=true` 訂閱當前賬戶全部相關更新。兩種方式不能同時使用。
+私有訂閱支援兩種方式：按 `condition_id` 過濾，或使用 `payload.all=true` 訂閱目前帳戶全部相關更新。兩種方式不能同時使用。
 
 ## 訂單更新
 
-訂單更新包含 `order_id`、`client_order_id`、`condition_id`、`token_id`、方向、價格、數量、已成交數量、剩餘數量和訂單狀態等字段。
+訂單更新包含 `order_id`、`client_order_id`、`condition_id`、`token_id`、方向、價格、數量、已成交數量、剩餘數量和訂單狀態等欄位。
 
 常見狀態包括：`PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 和 `FAILED`。部分成交後訂單通常仍保持 `OPEN`，應結合 `filled_qty` 與 `left_qty` 判斷成交進度。
 
-## 用戶成交
+## 使用者成交
 
-`em.usertrades` 用於推送當前認證用戶的成交。常見字段包括：
+`em.usertrades` 用於推送目前認證使用者的成交。常見欄位包括：
 
 - `trade_id`
 - `order_id`
@@ -89,9 +89,9 @@ WebSocket 不保存斷線期間的消息。重新連接後建議：
 
 1. 重新認證；
 2. 恢復原有訂閱；
-3. 使用 REST 接口查詢訂單、成交和持倉當前狀態；
+3. 使用 REST 介面查詢訂單、成交和持倉目前狀態；
 4. 再繼續消費新的 WebSocket 推送。
 
 <Note>
-WebSocket 適合實時增量數據，REST 接口適合查詢完整狀態、歷史記錄和斷線後的數據恢復。
+WebSocket 適合即時增量資料，REST 介面適合查詢完整狀態、歷史記錄和斷線後的資料恢復。
 </Note>

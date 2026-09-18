@@ -1,21 +1,21 @@
 ---
 title: "WebSocket 概覽"
 sidebarTitle: "概覽"
-description: "連接預測市場 WebSocket，接收實時公開行情和認證賬戶事件。"
+description: "連接預測市場 WebSocket，接收即時公開行情和認證帳戶事件。"
 ---
 
-預測市場 WebSocket 用於實時市場數據和賬戶事件，通常與 REST API 配合使用：
+預測市場 WebSocket 用於即時市場資料和帳戶事件，通常與 REST API 配合使用：
 
-- WebSocket：實時行情、訂單、成交、持倉和結算推送；
+- WebSocket：即時行情、訂單、成交、持倉和結算推送；
 - REST：歷史查詢、分頁、訂單管理以及斷線後的狀態恢復。
 
-## 連接地址
+## 連接位址
 
 ```text
 wss://broker.dexbuilder.com/v4/ws/event_markets
 ```
 
-當前協議版本為 **v2**，使用 JSON 消息。
+目前協議版本為 **v2**，使用 JSON 消息。
 
 ## 公開頻道
 
@@ -34,7 +34,7 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 | 頻道 | 用途 |
 | --- | --- |
 | `em.orders` | 訂單狀態更新 |
-| `em.usertrades` | 當前用戶成交 |
+| `em.usertrades` | 目前使用者成交 |
 | `em.positions` | 持倉更新 |
 | `em.settlements` | 結算更新 |
 
@@ -55,9 +55,9 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 ## 重要約定
 
 - `t` 為 Unix 毫秒時間戳；
-- ID 應作為不透明字符串處理；
-- 價格、數量、金額和費率使用字符串；
+- ID 應作為不透明字串處理；
+- 價格、數量、金額和費率使用字串；
 - 公開頻道無需認證；
 - 私有頻道需要認證；
 - 斷線重連後需要重新認證並恢復訂閱；
-- WebSocket 不補發斷線期間的數據，應使用 REST 進行恢復。
+- WebSocket 不補發斷線期間的資料，應使用 REST 進行恢復。

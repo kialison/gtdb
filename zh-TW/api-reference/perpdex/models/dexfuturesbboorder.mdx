@@ -7,19 +7,19 @@ description: "BBO 永續合約訂單模型"
 
 BBO 永續合約訂單模型，對應 OpenAPI Schema：`DEXFuturesBBOOrder`。
 
-| 字段 | 類型 | 說明 |
+| 欄位 | 類型 | 說明 |
 | --- | --- | --- |
 | `contract` | string | 永續合約 |
 | `size` | integer(int64) | 交易數量；正數買入、負數賣出 |
-| `direction` | string | `sell` 獲取買盤檔位，`buy` 獲取賣盤檔位 |
+| `direction` | string | `sell` 取得買盤檔位，`buy` 取得賣盤檔位 |
 | `iceberg` | integer(int64) | 冰山單顯示數量 |
 | `level` | integer(int64) | 盤口檔位，範圍 `1-20` |
 | `close` | boolean | 是否平倉 |
 | `reduce_only` | boolean | 是否只減倉 |
 | `tif` | string | 訂單有效方式：`gtc` / `ioc` / `poc` / `fok` |
-| `text` | string | 自定義訂單信息 |
+| `text` | string | 自定義訂單資訊 |
 | `auto_size` | string | 雙向持倉平倉方向 |
 | `stp_act` | string | 自成交防護策略 |
-| `default_leverage` | string | 默認槓桿 |
+| `default_leverage` | string | 預設槓桿 |
 | `limit_vip` | integer(int64) | 對手方 VIP 等級限制 |
 | `pid` | integer(int64) | Position ID |

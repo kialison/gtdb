@@ -1,13 +1,13 @@
 ---
 title: "Contract"
-description: "永續合約信息模型"
+description: "永續合約資訊模型"
 ---
 
 # Contract
 
-永續合約基礎信息模型，對應 OpenAPI Schema：`Contract`。
+永續合約基礎資訊模型，對應 OpenAPI Schema：`Contract`。
 
-| 字段 | 類型 | 說明 |
+| 欄位 | 類型 | 說明 |
 | --- | --- | --- |
 | `name` | string | 合約名稱 |
 | `type` | string | 合約類型：`inverse` / `direct` |
@@ -21,6 +21,6 @@ description: "永續合約信息模型"
 | `status` | string | 合約狀態 |
 | `mark_price` | string | 標記價格 |
 | `index_price` | string | 指數價格 |
-| `funding_rate` | string | 當前資金費率 |
+| `funding_rate` | string | 目前資金費率 |
 | `funding_next_apply` | integer(int64) | 下次資金費率結算時間 |
 | `market_order_slip_ratio` | string | 市價單最大滑點比例 |

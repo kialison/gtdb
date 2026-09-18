@@ -1,18 +1,18 @@
 ---
 title: "API 概覽"
-description: "DexBuilder PerpDEX API 的版本、REST 與 WebSocket 訪問地址、能力範圍及問題排查說明"
+description: "DexBuilder PerpDEX API 的版本、REST 與 WebSocket 存取位址、能力範圍及問題排查說明"
 ---
 
 # API 概覽
 
 DexBuilder PerpDEX API 同時提供 **REST API** 與 **WebSocket API**：
 
-- **REST API**：用於行情查詢、賬戶與持倉管理、訂單交易、歷史記錄查詢及風險參數獲取。
-- **WebSocket API**：用於實時行情、深度、成交、訂單、持倉、餘額以及交易狀態推送，並支持通過 WebSocket 執行部分賬戶交易操作。
+- **REST API**：用於行情查詢、帳戶與持倉管理、訂單交易、歷史記錄查詢及風險參數取得。
+- **WebSocket API**：用於即時行情、深度、成交、訂單、持倉、餘額以及交易狀態推送，並支援透過 WebSocket 執行部分帳戶交易操作。
 
-當前版本：`V1.0.0`
+目前版本：`V1.0.0`
 
-## 服務地址
+## 服務位址
 
 ### REST API
 
@@ -22,13 +22,13 @@ Base URL：
 https://api.dexbuilder.com/api/v1
 ```
 
-接口頁面中的 Path 需要拼接在 Base URL 後，例如：
+介面頁面中的 Path 需要拼接在 Base URL 後，例如：
 
 ```text
 GET /dex_futures/usdt/contracts
 ```
 
-完整請求地址：
+完整請求位址：
 
 ```text
 https://api.dexbuilder.com/api/v1/dex_futures/usdt/contracts
@@ -42,40 +42,40 @@ Base URL：
 wss://api.dexbuilder.com/v1/ws/dex
 ```
 
-WebSocket 連接建立後，可通過 `channel` 與 `event` 訂閱公開或私有頻道。
+WebSocket 連接建立後，可透過 `channel` 與 `event` 訂閱公開或私有頻道。
 
 ## 能力範圍
 
 ### REST API
 
-- **公開數據**：合約信息、訂單簿、成交、K 線、資金費率、市場統計等。
-- **私有數據**：賬戶、持倉、訂單、個人成交及歷史記錄等。
+- **公開資料**：合約資訊、訂單簿、成交、K 線、資金費率、市場統計等。
+- **私有資料**：帳戶、持倉、訂單、個人成交及歷史記錄等。
 - **交易操作**：下單、撤單、改單、批量訂單及持倉管理。
-- **風險管理**：風險限額、強平記錄、ADL 等相關數據與操作。
+- **風險管理**：風險限額、強平記錄、ADL 等相關資料與操作。
 
 ### WebSocket API
 
 - **公開行情**：Ticker、公共成交、深度、K 線、公共強平和合約統計。
-- **私有數據**：訂單、用戶成交、持倉、餘額、強平、ADL 等實時更新。
-- **賬戶交易**：通過 WebSocket 完成下單、撤單、改單及訂單查詢等操作。
+- **私有資料**：訂單、使用者成交、持倉、餘額、強平、ADL 等即時更新。
+- **帳戶交易**：透過 WebSocket 完成下單、撤單、改單及訂單查詢等操作。
 
 ## 認證
 
-公開 REST 接口和公開 WebSocket 頻道無需 API Key。
+公開 REST 介面和公開 WebSocket 頻道無需 API Key。
 
-私有 REST 接口、私有 WebSocket 頻道以及 WebSocket 賬戶交易 API 需要 API Key，並按照「認證與簽名」中的規則完成認證。
+私有 REST 介面、私有 WebSocket 頻道以及 WebSocket 帳戶交易 API 需要 API Key，並按照「認證與簽名」中的規則完成認證。
 
-## 技術支持與問題排查
+## 技術支援與問題排查
 
-遇到接口問題時，建議整理以下信息：
+遇到介面問題時，建議整理以下資訊：
 
 1. 問題現象與復現步驟
 2. REST Request Method / URI，或 WebSocket Channel / Event
 3. Query 參數、Request Body 或 WebSocket Payload
 4. HTTP 狀態碼或 WebSocket Error
-5. 服務端返回內容
+5. 服務端回傳內容
 6. Trace ID（如響應中存在）
 
 <Warning>
-提交問題時不要提供 API Secret、私鑰或完整簽名憑證。如 API Key 已洩露，應立即停用並重新創建。
+提交問題時不要提供 API Secret、私鑰或完整簽名憑證。如 API Key 已洩露，應立即停用並重新建立。
 </Warning>

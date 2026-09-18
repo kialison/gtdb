@@ -4,7 +4,7 @@ sidebarTitle: "市場詳情"
 description: "瞭解預測市場 Market 的結構、狀態、結果代幣與交易限制。"
 ---
 
-在通過「發現市場」選定 Market 後，可以使用 Market Detail 接口讀取完整屬性。該接口屬於公開市場數據，不需要認證。
+在透過「發現市場」選定 Market 後，可以使用 Market Detail 介面讀取完整屬性。該介面屬於公開市場資料，不需要認證。
 
 生產環境 Base URL：
 
@@ -55,9 +55,9 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 }
 ```
 
-## 字段說明
+## 欄位說明
 
-| 字段 | 說明 |
+| 欄位 | 說明 |
 | --- | --- |
 | `market_id` | Market 唯一標識 |
 | `event_id` | 所屬 Event ID |
@@ -65,23 +65,23 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 | `question` | 多語言問題對象 |
 | `condition_id` | 結算 Condition ID |
 | `outcomes` | Outcome 數組，每個元素包含 `token_id` 與 `outcome` |
-| `status` | Market 當前狀態 |
+| `status` | Market 目前狀態 |
 | `closed` | Market 是否關閉 |
-| `accepting_orders` | 當前是否接受訂單 |
+| `accepting_orders` | 目前是否接受訂單 |
 | `enable_order_book` | 是否啓用訂單簿 |
-| `best_bid`, `best_ask` | 當前最佳買價與賣價 |
+| `best_bid`, `best_ask` | 目前最佳買價與賣價 |
 | `last_trade_price` | 最近成交價 |
 | `min_order_size` | 最小下單數量 |
 | `tick_size` | 最小價格變動單位 |
 | `neg_risk` | 是否使用 Negative Risk 結算機制 |
-| `start_date`, `end_date` | Market 時間字段，Unix 秒 |
+| `start_date`, `end_date` | Market 時間欄位，Unix 秒 |
 | `resolved_at` | 已結算時的結算時間 |
 | `winning_outcome`, `winning_token_id` | 獲勝結果與對應 Token ID |
 | `tags` | Market 關聯 Tag |
 
 ## 使用 Outcome Token
 
-從 `outcomes[].token_id` 獲取 Token ID 後，可以繼續調用價格、Ticker 和訂單簿接口：
+從 `outcomes[].token_id` 取得 Token ID 後，可以繼續呼叫價格、Ticker 和訂單簿介面：
 
 ```bash cURL
 TOKEN_ID="<token_id>"
@@ -91,7 +91,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/price"
 curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/ticker"
 ```
 
-API 已直接在 `outcomes` 數組中返回 Token ID，無需額外解析 JSON 字符串形式的 Token 列表。
+API 已直接在 `outcomes` 數組中回傳 Token ID，無需額外解析 JSON 字串形式的 Token 清單。
 
 ## 查詢所屬 Event
 
@@ -101,4 +101,4 @@ API 已直接在 `outcomes` 數組中返回 Token ID，無需額外解析 JSON �
 curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
 ```
 
-Market 公開數據無需認證；下單、持倉、賬戶等私有接口需要認證。
+Market 公開資料無需認證；下單、持倉、帳戶等私有介面需要認證。

@@ -7,31 +7,31 @@ description: "PerpDEX REST API 與 WebSocket API 的權限、認證及簽名規�
 
 ## API 權限
 
-創建 API Key 時，需要根據使用場景配置對應權限。
+建立 API Key 時，需要根據使用場景設定對應權限。
 
 | 權限 | 可執行操作 |
 | --- | --- |
-| 只讀 | 查詢訂單、持倉、賬戶信息、個人成交記錄等 |
+| 只讀 | 查詢訂單、持倉、帳戶資訊、個人成交記錄等 |
 | 讀寫 | 在只讀權限基礎上，可下單、撤單、改單及管理持倉 |
 
 所有 `GET` 操作屬於讀請求；下單、撤單、改單及其他非 `GET` 操作屬於寫請求。
 
 使用時需要注意：
 
-- PerpDEX API 使用獨立的 API Key 進行服務端調用與認證。
-- 交易類接口需要 API Key 具備對應的讀寫權限。
-- 建議為 API Key 配置 IP 白名單，減少密鑰洩露後的風險。
-- API Secret 僅用於本地生成簽名，不應發送給服務端，也不應寫入前端代碼。
+- PerpDEX API 使用獨立的 API Key 進行服務端呼叫與認證。
+- 交易類介面需要 API Key 具備對應的讀寫權限。
+- 建議為 API Key 設定 IP 白名單，減少金鑰洩露後的風險。
+- API Secret 僅用於本地生成簽名，不應發送給服務端，也不應寫入前端程式碼。
 
 ## API 簽名請求要求
 
-調用需要認證的接口時，請按以下步驟構造請求：
+呼叫需要認證的介面時，請按以下步驟構造請求：
 
-1. 創建 API Key，並確認已配置正確權限。
-2. Header `KEY` 設置為 API Key。
-3. Header `Timestamp` 設置為當前 Unix 秒級時間戳，與服務器時間差不得超過 `60` 秒。
-4. 根據當前請求生成簽名，並將結果寫入 Header `SIGN`。
-5. 如果 API Key 配置了 IP 白名單，請確保調用服務器 IP 已加入白名單。
+1. 建立 API Key，並確認已設定正確權限。
+2. Header `KEY` 設定為 API Key。
+3. Header `Timestamp` 設定為目前 Unix 秒級時間戳，與伺服器時間差不得超過 `60` 秒。
+4. 根據目前請求生成簽名，並將結果寫入 Header `SIGN`。
+5. 如果 API Key 設定了 IP 白名單，請確保呼叫伺服器 IP 已加入白名單。
 
 請求 Header：
 
@@ -42,10 +42,10 @@ description: "PerpDEX REST API 與 WebSocket API 的權限、認證及簽名規�
 | `SIGN` | 是 | `HMAC-SHA512` 生成的十六進制簽名 |
 
 <Warning>
-服務器時間與客戶端時間偏差過大時會返回認證錯誤。建議調用服務器保持 NTP 時間同步。
+伺服器時間與客戶端時間偏差過大時會回傳認證錯誤。建議呼叫伺服器保持 NTP 時間同步。
 </Warning>
 
-## API 簽名字符串生成
+## API 簽名字串生成
 
 簽名原文按以下順序拼接，每個部分之間使用換行符 `\n`：
 
@@ -94,7 +94,7 @@ DELETE
 status=finished&limit=50
 ```
 
-沒有 Query 參數時使用空字符串：
+沒有 Query 參數時使用空字串：
 
 ```text
 ""
@@ -104,14 +104,14 @@ status=finished&limit=50
 
 對實際發送的 Request Body 原文執行 `SHA512`，再取十六進制結果。
 
-沒有 Request Body 時，對空字符串進行 SHA512，其結果為：
+沒有 Request Body 時，對空字串進行 SHA512，其結果為：
 
 ```text
 cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e
 ```
 
 <RequestExample>
-如果請求 Body 為 JSON，請以最終實際發送的 JSON 字符串計算 Hash。字段順序、空格或換行變化都會導致 Payload Hash 變化。
+如果請求 Body 為 JSON，請以最終實際發送的 JSON 字串計算 Hash。欄位順序、空格或換行變化都會導致 Payload Hash 變化。
 </RequestExample>
 
 ### Timestamp
@@ -152,33 +152,33 @@ cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0
 
 ## POST 請求籤名注意事項
 
-POST / PUT 等帶 Request Body 的接口，需要確保：
+POST / PUT 等帶 Request Body 的介面，需要確保：
 
 - 用於計算 SHA512 的 Body 與實際發送 Body 完全一致。
-- `Content-Type` 與接口要求一致，通常為 `application/json`。
+- `Content-Type` 與介面要求一致，通常為 `application/json`。
 - Query String 即使為空，也必須在簽名原文中保留對應的空行。
-- 不要對已經拼接好的簽名字符串額外做 URL Encode。
+- 不要對已經拼接好的簽名字串額外做 URL Encode。
 
 ## 常見認證錯誤
 
 | Label | 常見原因 |
 | --- | --- |
 | `INVALID_KEY` | API Key 不存在、已失效或填寫錯誤 |
-| `IP_FORBIDDEN` | 調用 IP 不在 API Key 白名單 |
-| `READ_ONLY` | 使用只讀 Key 調用了寫接口 |
+| `IP_FORBIDDEN` | 呼叫 IP 不在 API Key 白名單 |
+| `READ_ONLY` | 使用只讀 Key 呼叫了寫介面 |
 | `INVALID_SIGNATURE` | 簽名原文或 API Secret 不正確 |
 | `MISSING_REQUIRED_HEADER` | 缺少 `KEY`、`Timestamp` 或 `SIGN` |
-| `REQUEST_EXPIRED` | Timestamp 與服務器時間偏差超過允許範圍 |
-| `FORBIDDEN` | 當前賬戶或 Key 無對應操作權限 |
+| `REQUEST_EXPIRED` | Timestamp 與伺服器時間偏差超過允許範圍 |
+| `FORBIDDEN` | 目前帳戶或 Key 無對應操作權限 |
 
 <Warning>
-不要在工單、聊天記錄、截圖或日誌中公開 API Secret。若 API Secret 已洩露，應立即停用當前 API Key 並重新創建。
+不要在工單、聊天記錄、截圖或日誌中公開 API Secret。若 API Secret 已洩露，應立即停用目前 API Key 並重新建立。
 </Warning>
 
 
 ## WebSocket 認證與簽名
 
-公開 WebSocket 頻道無需認證。訂閱訂單、用戶成交、持倉、餘額等私有頻道時，需要在請求中攜帶 `auth`：
+公開 WebSocket 頻道無需認證。訂閱訂單、使用者成交、持倉、餘額等私有頻道時，需要在請求中攜帶 `auth`：
 
 ```json
 {
@@ -207,7 +207,7 @@ SIGN = HexEncode(HMAC_SHA512(API Secret, Signature String))
 ```
 
 <Warning>
-API Secret 僅用於本地生成簽名，不通過 WebSocket 發送。
+API Secret 僅用於本地生成簽名，不透過 WebSocket 發送。
 </Warning>
 
-WebSocket 賬戶交易 API 的請求籤名與頻道訂閱簽名不同，具體以「賬戶交易 API」頁面為準。
+WebSocket 帳戶交易 API 的請求籤名與頻道訂閱簽名不同，具體以「帳戶交易 API」頁面為準。

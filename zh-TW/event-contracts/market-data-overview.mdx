@@ -1,12 +1,12 @@
 ---
-title: "市場數據概覽"
+title: "市場資料概覽"
 sidebarTitle: "概覽"
-description: "瞭解事件合約的數據結構，以及如何從 Event、Market 和 Outcome 開始獲取應用所需數據。"
+description: "瞭解事件合約的資料結構，以及如何從 Event、Market 和 Outcome 開始取得應用所需資料。"
 ---
 
-事件合約的數據接入通常從確定應用關注的 Event、Market 或 Outcome 開始。本節將介紹如何完成市場發現、讀取市場詳情、獲取價格與訂單簿、查看統計數據，以及訂閱實時數據。
+事件合約的資料接入通常從確定應用關注的 Event、Market 或 Outcome 開始。本節將介紹如何完成市場發現、讀取市場詳情、取得價格與訂單簿、檢視統計資料，以及訂閱即時資料。
 
-## 數據模型
+## 資料模型
 
 在事件合約中，一個 Event 可以包含一個或多個 Market。每個 Market 是一個可交易問題，並包含 YES / NO 等結果。每個 Outcome 都有對應的 Token ID。
 
@@ -16,16 +16,16 @@ description: "瞭解事件合約的數據結構，以及如何從 Event、Market
 
 <Steps>
   <Step title="發現 Event">
-    瀏覽當前 Event、按分類篩選，或根據 slug / ID 直接查詢指定 Event。
+    瀏覽目前 Event、按分類篩選，或根據 slug / ID 直接查詢指定 Event。
   </Step>
   <Step title="選擇 Market">
-    查看 Event 下的 Market，並選擇應用需要處理的具體問題。
+    檢視 Event 下的 Market，並選擇應用需要處理的具體問題。
   </Step>
   <Step title="選擇 Outcome">
     選擇 YES、NO 或其他結果，並保存對應的 Token ID。
   </Step>
-  <Step title="讀取或訂閱數據">
-    使用已獲取的標識查詢 REST API，或通過 WebSocket 訂閱實時更新。
+  <Step title="讀取或訂閱資料">
+    使用已取得的標識查詢 REST API，或透過 WebSocket 訂閱即時更新。
   </Step>
 </Steps>
 
@@ -37,22 +37,22 @@ description: "瞭解事件合約的數據結構，以及如何從 Event、Market
   </Card>
 
   <Card title="市場詳情" icon="circle-info" href="/zh-TW/event-contracts/market-details">
-    查看結果、狀態、交易限制、費率和其他 Market 屬性。
+    檢視結果、狀態、交易限制、費率和其他 Market 屬性。
   </Card>
 
   <Card title="價格與訂單簿" icon="chart-line" href="/zh-TW/event-contracts/market-prices-orderbooks">
-    獲取當前價格、流動性和歷史價格數據。
+    取得目前價格、流動性和歷史價格資料。
   </Card>
 
-  <Card title="數據分析" icon="chart-bar" href="/zh-TW/event-contracts/analytics">
-    查看成交、持倉量、持有人與 Event 成交量等數據。
+  <Card title="資料分析" icon="chart-bar" href="/zh-TW/event-contracts/analytics">
+    檢視成交、持倉量、持有人與 Event 成交量等資料。
   </Card>
 
-  <Card title="實時數據" icon="bolt" href="/zh-TW/event-contracts/realtime-data">
-    通過實時數據流保持市場狀態同步。
+  <Card title="即時資料" icon="bolt" href="/zh-TW/event-contracts/realtime-data">
+    透過即時資料流保持市場狀態同步。
   </Card>
 
   <Card title="Chainlink TWAP" icon="link" href="/zh-TW/event-contracts/chainlink-twap">
-    獲取 30 秒與 60 秒時間加權平均價格。
+    取得 30 秒與 60 秒時間加權平均價格。
   </Card>
 </CardGroup>

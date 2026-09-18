@@ -1,18 +1,18 @@
 ---
 title: "私有頻道"
 sidebarTitle: "私有頻道"
-description: "訂閱當前認證用戶的訂單、成交、持倉和結算更新。"
+description: "訂閱目前認證使用者的訂單、成交、持倉和結算更新。"
 ---
 
-私有頻道僅返回當前認證用戶的數據。可以在首次私有訂閱時攜帶認證信息，也可以先使用 `server.sign` 預認證。
+私有頻道僅回傳目前認證使用者的資料。可以在首次私有訂閱時攜帶認證資訊，也可以先使用 `server.sign` 預認證。
 
-私有頻道支持按 `condition_id` 過濾，或使用：
+私有頻道支援按 `condition_id` 過濾，或使用：
 
 ```json
 {"all":true}
 ```
 
-訂閱當前賬戶全部相關更新。
+訂閱目前帳戶全部相關更新。
 
 ## 訂單 `ec.orders`
 
@@ -36,9 +36,9 @@ description: "訂閱當前認證用戶的訂單、成交、持倉和結算更新
 
 訂單狀態包括 `PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 和 `FAILED`。
 
-## 用戶成交 `ec.usertrades`
+## 使用者成交 `ec.usertrades`
 
-返回當前用戶成交，包括 `trade_id`、`order_id`、`condition_id`、`token_id`、`side`、`role`、`px`、`qty`、`fee_rate`、`status` 和 `created_ts`。
+回傳目前使用者成交，包括 `trade_id`、`order_id`、`condition_id`、`token_id`、`side`、`role`、`px`、`qty`、`fee_rate`、`status` 和 `created_ts`。
 
 `role` 為 `MAKER` 或 `TAKER`；狀態通常為 `MATCHED` 或 `CONFIRMED`。
 
@@ -63,5 +63,5 @@ description: "訂閱當前認證用戶的訂單、成交、持倉和結算更新
 結算更新包含 `position_id`、`event_id`、`condition_id`、`winning_outcome`、`is_winner`、`claimable_amount` 和 `created_ts`。
 
 <Note>
-私有頻道不會在訂閱後自動返回完整賬戶快照。需要完整當前狀態時，應先調用對應 REST 接口，再用 WebSocket 接收後續增量變化。
+私有頻道不會在訂閱後自動回傳完整帳戶快照。需要完整目前狀態時，應先呼叫對應 REST 介面，再用 WebSocket 接收後續增量變化。
 </Note>

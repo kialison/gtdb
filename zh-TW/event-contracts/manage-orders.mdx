@@ -1,7 +1,7 @@
 ---
 title: "管理訂單"
 sidebarTitle: "管理訂單"
-description: "通過 Event Contracts API 查詢和取消事件合約私有訂單。"
+description: "透過 Event Contracts API 查詢和取消事件合約私有訂單。"
 ---
 
 訂單查詢與撤單都屬於私有操作，需要認證。生產環境 Base URL：
@@ -10,7 +10,7 @@ description: "通過 Event Contracts API 查詢和取消事件合約私有訂單
 https://api.dexbuilder.com
 ```
 
-## 查詢訂單列表
+## 查詢訂單清單
 
 ```bash cURL
 curl -G "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
@@ -61,7 +61,7 @@ curl "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
   -H "<authentication-header>: <authentication-value>"
 ```
 
-詳情響應包含列表中的訂單標識、價格、數量、成交進度與狀態等字段，並可能包含訂單服務返回的 `error_code`。
+詳情響應包含清單中的訂單標識、價格、數量、成交進度與狀態等欄位，並可能包含訂單服務回傳的 `error_code`。
 
 ## 取消單個訂單
 
@@ -94,5 +94,5 @@ curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders?conditi
 ```
 
 <Note>
-文檔中的認證 Header 為佔位寫法，正式接入應使用最終對外認證方案。內部網關注入的身份字段不屬於外部客戶端請求參數。
+文檔中的認證 Header 為佔位寫法，正式接入應使用最終對外認證方案。內部網關注入的身份欄位不屬於外部客戶端請求參數。
 </Note>

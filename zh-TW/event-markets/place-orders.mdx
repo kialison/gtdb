@@ -1,10 +1,10 @@
 ---
 title: "提交訂單"
 sidebarTitle: "提交訂單"
-description: "通過 Prediction API 創建預測市場私有訂單。"
+description: "透過 Prediction API 建立預測市場私有訂單。"
 ---
 
-在確認 Market 當前接受訂單後，可以針對指定 Outcome Token 提交交易。公開市場數據無需認證；下單屬於私有操作，需要完成認證。
+在確認 Market 目前接受訂單後，可以針對指定 Outcome Token 提交交易。公開市場資料無需認證；下單屬於私有操作，需要完成認證。
 
 生產環境 Base URL：
 
@@ -50,12 +50,12 @@ curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
 ```
 
 <Note>
-上例認證 Header 僅用於表示接口需要認證，實際公開認證方案以正式認證文檔為準。不要把內部網關身份 Header 用作客戶端認證參數。
+上例認證 Header 僅用於表示介面需要認證，實際公開認證方案以正式認證文檔為準。不要把內部網關身份 Header 用作客戶端認證參數。
 </Note>
 
-## 請求字段
+## 請求欄位
 
-| 字段 | 說明 |
+| 欄位 | 說明 |
 | --- | --- |
 | `token_id` | 要交易的 Outcome Token |
 | `side` | 訂單方向，例如 `BUY` / `SELL` |
@@ -80,7 +80,7 @@ curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
 }
 ```
 
-`ACCEPTED` 只表示訂單請求已被系統接受，並不代表已經全部成交。後續應通過訂單查詢接口讀取實際狀態。
+`ACCEPTED` 只表示訂單請求已被系統接受，並不代表已經全部成交。後續應透過訂單查詢介面讀取實際狀態。
 
 ## 下單前檢查
 
@@ -88,5 +88,5 @@ curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
 - `token_id` 應來自 Market 的 `outcomes` 數組；
 - `size` 必須滿足 `min_order_size`；
 - `price` 必須符合 `tick_size`；
-- 價格、數量、金額建議始終使用字符串，避免浮點精度誤差；
+- 價格、數量、金額建議始終使用字串，避免浮點精度誤差；
 - 私有請求必須使用正式認證方案。

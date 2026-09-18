@@ -13,8 +13,8 @@
   "paths": {
     "/api/v4/event_markets/events": {
       "get": {
-        "summary": "查詢事件列表",
-        "description": "查詢事件列表",
+        "summary": "查詢事件清單",
+        "description": "查詢事件清單",
         "operationId": "query_events",
         "responses": {
           "200": {
@@ -161,8 +161,8 @@
     },
     "/api/v4/event_markets/markets": {
       "get": {
-        "summary": "查詢市場列表",
-        "description": "查詢市場列表",
+        "summary": "查詢市場清單",
+        "description": "查詢市場清單",
         "operationId": "query_markets",
         "responses": {
           "200": {
@@ -685,8 +685,8 @@
         }
       },
       "get": {
-        "summary": "查詢訂單列表",
-        "description": "查詢訂單列表",
+        "summary": "查詢訂單清單",
+        "description": "查詢訂單清單",
         "operationId": "query_orders",
         "responses": {
           "200": {
@@ -877,8 +877,8 @@
     },
     "/api/v4/event_markets/positions": {
       "get": {
-        "summary": "查詢持倉列表",
-        "description": "查詢持倉列表",
+        "summary": "查詢持倉清單",
+        "description": "查詢持倉清單",
         "operationId": "query_positions",
         "responses": {
           "200": {
@@ -1089,8 +1089,8 @@
     },
     "/api/v4/event_markets/assets": {
       "get": {
-        "summary": "查詢賬戶資產",
-        "description": "查詢賬戶資產",
+        "summary": "查詢帳戶資產",
+        "description": "查詢帳戶資產",
         "operationId": "query_assets",
         "responses": {
           "200": {
@@ -1335,8 +1335,8 @@
     },
     "/api/v4/event_markets/time": {
       "get": {
-        "summary": "查詢服務器時間",
-        "description": "查詢服務器時間",
+        "summary": "查詢伺服器時間",
+        "description": "查詢伺服器時間",
         "operationId": "query_server_time",
         "responses": {
           "200": {

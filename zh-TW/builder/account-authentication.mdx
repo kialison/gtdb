@@ -1,44 +1,44 @@
 ---
-title: "賬戶與認證"
-description: "瞭解 DexBuilder 提供的用戶賬戶、登錄與認證能力。"
+title: "帳戶與認證"
+description: "瞭解 DexBuilder 提供的使用者帳戶、登入與認證能力。"
 ---
 
-DexBuilder 提供完整的用戶賬戶與認證能力，用於支撐 DEX 的登錄、賬戶創建、賬戶識別和交易認證流程。
+DexBuilder 提供完整的使用者帳戶與認證能力，用於支撐 DEX 的登入、帳戶建立、帳戶識別和交易認證流程。
 
-## 賬戶流程
+## 帳戶流程
 
 ```text
-用戶進入 DEX
+使用者進入 DEX
       ↓
-登錄 / 連接錢包
+登入 / 連接錢包
       ↓
-創建或識別賬戶
+建立或識別帳戶
       ↓
 完成必要認證
       ↓
 進入資產與交易
 ```
 
-DexBuilder 會統一處理賬戶狀態及交易所需的認證流程，並在 DEX 中提供對應的頁面與狀態展示。
+DexBuilder 會統一處理帳戶狀態及交易所需的認證流程，並在 DEX 中提供對應的頁面與狀態展示。
 
-## 支持能力
+## 支援能力
 
-- 用戶登錄與賬戶識別
+- 使用者登入與帳戶識別
 - 錢包連接與授權
-- 交易賬戶創建
-- 賬戶狀態查詢
+- 交易帳戶建立
+- 帳戶狀態查詢
 - 認證狀態管理
-- 多端賬戶狀態同步
+- 多端帳戶狀態同步
 - 異常狀態與認證提示
 
 ## API 認證
 
-對於通過 REST API 或 WebSocket 進行系統集成的場景，需要按照對應產品的 API 認證規則完成簽名和權限校驗。
+對於透過 REST API 或 WebSocket 進行系統集成的場景，需要按照對應產品的 API 認證規則完成簽名和權限校驗。
 
-<Card title="查看認證文檔" href="/zh-TW/api-reference/perpdex/authentication" icon="key">
-  查看 PerpDEX API 的認證與簽名規則。
+<Card title="檢視認證文檔" href="/zh-TW/api-reference/perpdex/authentication" icon="key">
+  檢視 PerpDEX API 的認證與簽名規則。
 </Card>
 
 <Note>
-DEX 頁面中的用戶賬戶流程由 DexBuilder 產品能力提供；API Key、簽名等內容主要用於程序化接口調用場景。
+DEX 頁面中的使用者帳戶流程由 DexBuilder 產品能力提供；API Key、簽名等內容主要用於程式化介面呼叫場景。
 </Note>
