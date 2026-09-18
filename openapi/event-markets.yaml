@@ -1,0 +1,1355 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "DexBuilder Prediction Market API",
+    "version": "1.0.0",
+    "description": "DexBuilder 预测市场 REST API"
+  },
+  "servers": [
+    {
+      "url": "https://api.dexbuilder.com"
+    }
+  ],
+  "paths": {
+    "/api/v4/event_markets/events": {
+      "get": {
+        "summary": "查询事件列表",
+        "description": "查询事件列表",
+        "operationId": "query_events",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag_slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "closed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/events/{event_id}": {
+      "get": {
+        "summary": "查询事件详情",
+        "description": "查询事件详情",
+        "operationId": "query_event",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/events/slug/{slug}": {
+      "get": {
+        "summary": "按 Slug 查询事件",
+        "description": "按 Slug 查询事件",
+        "operationId": "query_event_by_slug",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets": {
+      "get": {
+        "summary": "查询市场列表",
+        "description": "查询市场列表",
+        "operationId": "query_markets",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "market_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tag_slug",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "closed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/{market_id}": {
+      "get": {
+        "summary": "查询市场详情",
+        "description": "查询市场详情",
+        "operationId": "query_market",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "market_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/slug/{slug}": {
+      "get": {
+        "summary": "按 Slug 查询市场",
+        "description": "按 Slug 查询市场",
+        "operationId": "query_market_by_slug",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/markets/{market_id}/trades": {
+      "get": {
+        "summary": "查询市场成交记录",
+        "description": "查询市场成交记录",
+        "operationId": "query_market_trades",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "market_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/market": {
+      "get": {
+        "summary": "查询 Token 对应市场",
+        "description": "查询 Token 对应市场",
+        "operationId": "query_token_market",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/price": {
+      "get": {
+        "summary": "查询 Token 最新价格",
+        "description": "查询 Token 最新价格",
+        "operationId": "query_token_price",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+      "get": {
+        "summary": "查询 Token Ticker",
+        "description": "查询 Token Ticker",
+        "operationId": "query_token_ticker",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+      "get": {
+        "summary": "查询订单簿",
+        "description": "查询订单簿",
+        "operationId": "query_order_book",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+      "get": {
+        "summary": "查询价格历史",
+        "description": "查询价格历史",
+        "operationId": "query_price_history",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/prices": {
+      "get": {
+        "summary": "批量查询 Token 价格",
+        "description": "批量查询 Token 价格",
+        "operationId": "query_token_prices",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+      "get": {
+        "summary": "查询 K 线",
+        "description": "查询 K 线",
+        "operationId": "query_candlesticks",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "currency",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "interval",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/orders": {
+      "post": {
+        "summary": "提交订单",
+        "description": "提交订单",
+        "operationId": "place_order",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token_id",
+                  "side"
+                ],
+                "properties": {
+                  "token_id": {
+                    "type": "string"
+                  },
+                  "side": {
+                    "type": "string",
+                    "enum": [
+                      "BUY",
+                      "SELL"
+                    ]
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "string"
+                  },
+                  "total_cost": {
+                    "type": "string"
+                  },
+                  "order_type": {
+                    "type": "string"
+                  },
+                  "order_mode": {
+                    "type": "string"
+                  },
+                  "client_order_id": {
+                    "type": "string"
+                  },
+                  "post_only": {
+                    "type": "boolean"
+                  },
+                  "sell_all": {
+                    "type": "boolean"
+                  },
+                  "expire_time": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "查询订单列表",
+        "description": "查询订单列表",
+        "operationId": "query_orders",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "按市场条件批量撤单",
+        "description": "按市场条件批量撤单",
+        "operationId": "cancel_orders_by_condition",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/orders/{order_id}": {
+      "get": {
+        "summary": "查询单个订单",
+        "description": "查询单个订单",
+        "operationId": "query_order",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "summary": "取消单个订单",
+        "description": "取消单个订单",
+        "operationId": "cancel_order",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions": {
+      "get": {
+        "summary": "查询持仓列表",
+        "description": "查询持仓列表",
+        "operationId": "query_positions",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "settlement_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions/{position_id}": {
+      "get": {
+        "summary": "查询持仓详情",
+        "description": "查询持仓详情",
+        "operationId": "query_position",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "position_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/positions/{position_id}/close": {
+      "post": {
+        "summary": "平仓",
+        "description": "平仓",
+        "operationId": "close_position",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "position_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/usertrades": {
+      "get": {
+        "summary": "查询个人成交",
+        "description": "查询个人成交",
+        "operationId": "query_user_trades",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/assets": {
+      "get": {
+        "summary": "查询账户资产",
+        "description": "查询账户资产",
+        "operationId": "query_assets",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/account_book": {
+      "get": {
+        "summary": "查询资金流水",
+        "description": "查询资金流水",
+        "operationId": "query_account_book",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/fee": {
+      "get": {
+        "summary": "查询手续费",
+        "description": "查询手续费",
+        "operationId": "query_fee",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fee_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/claims/available": {
+      "get": {
+        "summary": "查询全部可领取资产",
+        "description": "查询全部可领取资产",
+        "operationId": "query_available_claims",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/claims/available/{token_id}": {
+      "get": {
+        "summary": "查询 Token 可领取资产",
+        "description": "查询 Token 可领取资产",
+        "operationId": "query_available_claim",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/claims": {
+      "post": {
+        "summary": "发起领取",
+        "description": "发起领取",
+        "operationId": "create_claim",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "event_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v4/event_markets/claims/{record_id}": {
+      "get": {
+        "summary": "查询领取结果",
+        "description": "查询领取结果",
+        "operationId": "query_claim",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/tags": {
+      "get": {
+        "summary": "查询标签",
+        "description": "查询标签",
+        "operationId": "query_tags",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_markets/time": {
+      "get": {
+        "summary": "查询服务器时间",
+        "description": "查询服务器时间",
+        "operationId": "query_server_time",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        }
+      }
+    }
+  }
+}
