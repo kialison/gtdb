@@ -1,0 +1,234 @@
+---
+title: "實時數據"
+sidebarTitle: "實時數據"
+description: "訂閱 Market、體育、加密資產、股票與評論等實時數據流，減少輪詢並保持預測市場數據同步。"
+---
+
+預測市場提供多種實時數據流，用於在 Market 狀態、價格或關聯數據發生變化時及時更新應用。私有訂單與成交更新請查看「實時訂單更新」。
+
+## Market Stream
+
+Market Stream 用於同步訂單簿和交易狀態變化。
+
+```text API
+wss://ws-subscriptions-clob.polymarket.com/ws/market
+```
+
+<Note>
+Market WebSocket 使用應用層心跳。每 10 秒發送文本幀 `PING`，服務端返回 `PONG`。
+</Note>
+
+連接後發送 `market` 訂閱消息：
+
+```json
+{
+  "assets_ids": ["<token_id>"],
+  "type": "market"
+}
+```
+
+### 標準 Market 事件
+
+主要事件包括：
+
+| `event_type` | 說明 |
+| --- | --- |
+| `book` | 完整訂單簿快照 |
+| `price_change` | 價格與最佳買賣價變化 |
+| `last_trade_price` | 最近成交價 |
+| `tick_size_change` | 最小價格變動單位變化 |
+
+訂單簿示例：
+
+```json
+{
+  "event_type": "book",
+  "market": "0x747dc809...",
+  "asset_id": "1075058827...",
+  "timestamp": "1782753357257",
+  "hash": "0xabc123…",
+  "bids": [
+    { "price": "0.08", "size": "33343.4" }
+  ],
+  "asks": [
+    { "price": "0.09", "size": "163939.58" }
+  ]
+}
+```
+
+啓用 `custom_feature_enabled` 後，可以額外接收最佳買賣價、新 Market 與 Market 結算等事件：
+
+```json
+{
+  "assets_ids": ["<token_id>"],
+  "type": "market",
+  "custom_feature_enabled": true
+}
+```
+
+可在不重建連接的情況下動態增加或移除 Token：
+
+<Tabs>
+  <Tab title="訂閱">
+    ```json
+    {
+      "assets_ids": ["<new_token_id>"],
+      "operation": "subscribe"
+    }
+    ```
+  </Tab>
+  <Tab title="取消訂閱">
+    ```json
+    {
+      "assets_ids": ["<token_id>"],
+      "operation": "unsubscribe"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Sports Stream
+
+體育實時流用於同步比賽狀態、比分、節次和是否結束等信息。
+
+```text API
+wss://sports-api.polymarket.com/ws
+```
+
+<Note>
+服務端每 5 秒發送文本 `ping`，客戶端應在 10 秒內返回 `pong`。
+</Note>
+
+連接成功後無需發送訂閱消息，服務端會直接推送比賽更新。
+
+```json
+{
+  "gameId": "5127839",
+  "leagueAbbreviation": "NBA",
+  "homeTeam": "Los Angeles Lakers",
+  "awayTeam": "Boston Celtics",
+  "status": "InProgress",
+  "live": true,
+  "ended": false,
+  "score": "98-94",
+  "period": "Q4",
+  "elapsed": "05:12"
+}
+```
+
+<Warning>
+體育數據僅用於信息展示，可能存在延遲、缺失或錯誤，不應單獨作為交易決策依據。
+</Warning>
+
+### 常見比賽階段
+
+| 值 | 含義 |
+| --- | --- |
+| `1H`, `2H` | 上半場 / 下半場 |
+| `1Q`–`4Q` | 第 1–4 節 |
+| `HT` | 半場結束 |
+| `FT` | 常規時間結束 |
+| `FT OT` | 加時結束 |
+| `FT NR` | 無結果結束 |
+
+不同體育項目的 `status` 取值不同，應按服務端返回值處理，例如 `Scheduled`、`InProgress`、`Final`、`Postponed`、`Canceled` 等。
+
+## RTDS 實時數據服務
+
+RTDS（Real-Time Data Service）通過統一實時連接提供參考價格等數據。
+
+```text API
+wss://ws-live-data.polymarket.com
+```
+
+RTDS 使用應用層心跳，每 5 秒發送一次 `PING` 以保持連接。
+
+### 加密資產價格
+
+不同數據源使用不同 symbol 格式：
+
+| Source | 示例 |
+| --- | --- |
+| Binance | `btcusdt`, `ethusdt`, `solusdt`, `xrpusdt` |
+| Chainlink | `btc/usd`, `eth/usd`, `sol/usd`, `xrp/usd` |
+
+訂閱示例：
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "crypto_prices",
+      "type": "update",
+      "filters": "btcusdt,ethusdt"
+    },
+    {
+      "topic": "crypto_prices_chainlink",
+      "type": "*",
+      "filters": "[{\"symbol\":\"eth/usd\"}]"
+    }
+  ]
+}
+```
+
+返回示例：
+
+```json
+{
+  "topic": "crypto_prices",
+  "type": "update",
+  "timestamp": 1782753357257,
+  "payload": {
+    "symbol": "btcusdt",
+    "timestamp": 1782753357213,
+    "value": 67334.5
+  }
+}
+```
+
+### 股票及其他資產價格
+
+`equity_prices` 可提供基於 Pyth Network 的股票、ETF、外匯、貴金屬及商品參考價格。
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "equity_prices",
+      "type": "*",
+      "filters": "[{\"symbol\":\"AAPL\"}]"
+    }
+  ]
+}
+```
+
+價格事件可能同時提供 `value` 與 `full_accuracy_value`。存在 `full_accuracy_value` 時，應優先使用該字符串以避免精度損失。
+
+```json
+{
+  "topic": "equity_prices",
+  "type": "update",
+  "timestamp": 1782753357257,
+  "payload": {
+    "symbol": "aapl",
+    "timestamp": 1782753357213,
+    "value": 189.42,
+    "full_accuracy_value": "189.4217",
+    "received_at": 1782753357220,
+    "is_earliest_forward": false
+  }
+}
+```
+
+訂閱某個 symbol 後，服務可能先發送一段歷史 Snapshot，再持續推送實時更新，接入方可以用 Snapshot 初始化本地狀態。
+
+## 連接恢復建議
+
+實時連接斷開後應：
+
+1. 使用退避策略重新連接；
+2. 恢復全部訂閱；
+3. 對需要完整狀態的業務重新通過 REST API 獲取快照；
+4. 使用業務 ID 與時間戳對重放或重復消息去重。

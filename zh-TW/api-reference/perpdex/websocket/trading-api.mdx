@@ -1,0 +1,43 @@
+---
+title: "賬戶交易 API"
+description: "通過 WebSocket 完成下單、撤單、改單及訂單查詢等交易操作"
+---
+
+WebSocket 賬戶交易 API 允許在已建立的 WebSocket 連接中直接執行交易操作。
+
+## 服務地址
+
+```text
+wss://api.dexbuilder.com/v1/ws/dex
+```
+
+## 支持的交易頻道
+
+| 頻道 | 功能 |
+| --- | --- |
+| `futures.login` | WebSocket 交易登錄 |
+| `futures.order_place` | 下單 |
+| `futures.order_batch_place` | 批量下單 |
+| `futures.order_cancel` | 撤銷單個訂單 |
+| `futures.order_cancel_cp` | 按條件批量撤單 |
+| `futures.order_cancel_ids` | 按訂單 ID 列表批量撤單 |
+| `futures.order_amend` | 修改訂單 |
+| `futures.order_list` | 查詢訂單列表 |
+| `futures.order_status` | 查詢訂單詳情 |
+
+## 請求籤名
+
+賬戶交易 API 使用獨立的 WebSocket API 簽名原文：
+
+```text
+api
+<channel>
+<request_param>
+<timestamp>
+```
+
+使用 API Secret 執行 HMAC-SHA512，並將結果編碼為十六進制。
+
+<Warning>
+交易類頻道屬於寫操作，請確保 API Key 具有讀寫權限。
+</Warning>

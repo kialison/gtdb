@@ -1,0 +1,46 @@
+---
+title: "事件合約開發文檔"
+sidebarTitle: "概覽"
+description: "面向事件合約開發者的 API 與工具文檔，用於獲取數據、下單和贖回持倉。"
+---
+
+## 開發者快速開始
+
+幾分鐘內完成第一次 API 請求。瞭解事件合約平台基礎能力，獲取市場數據、提交訂單，並在市場結算後贖回獲勝持倉。
+
+<CodeGroup>
+
+```bash API
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/markets" \
+  --data-urlencode "active=true" \
+  --data-urlencode "closed=false" \
+  --data-urlencode "limit=5"
+```
+
+</CodeGroup>
+
+## 瞭解事件合約
+
+先瞭解事件合約如何運作、市場與交易的核心概念，再選擇適合自己的接入方式。
+
+<CardGroup cols={3}>
+  <Card title="事件合約" icon="chart-line" href="/zh-TW/event-contracts/event-contracts">
+    瞭解事件合約的運作方式和基本使用方法。
+  </Card>
+
+  <Card title="核心概念" icon="book" href="/zh-TW/event-contracts/markets-events">
+    瞭解事件、市場、價格、訂單簿、持倉、訂單與結算機制。
+  </Card>
+
+  <Card title="API" icon="code" href="/zh-TW/event-contracts/api/overview">
+    快速瞭解 API，並開始構建自己的產品。
+  </Card>
+</CardGroup>
+
+## DexBuilder Grants
+
+DexBuilder 為生態項目提供開發支持與激勵資源。項目方可根據實際業務場景提交申請。
+
+<Card title="申請支持" icon="rocket" href="mailto:grants@example.com">
+  提交項目資料，申請事件合約相關開發支持。
+</Card>

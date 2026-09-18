@@ -1,0 +1,79 @@
+---
+title: "公共頻道"
+sidebarTitle: "公共頻道"
+description: "訂閱事件合約公開成交、深度、BBO、價格和市場狀態。"
+---
+
+本頁頻道均為公開頻道，無需認證。
+
+## 公開成交 `ec.trades`
+
+按 `condition_id` 訂閱：
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.trades",
+  "payload":{"items":[{"condition_id":"gate_0xcondition"}]}
+}
+```
+
+每條更新包含 `condition_id`、`token_id`、`outcome`、`side`、`px`、`qty` 和 `ts`。
+
+## 訂單簿深度 `ec.depth`
+
+按 `token_id` 和深度等級訂閱。支持 `5`、`10`、`20`、`50` 檔。
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.depth",
+  "payload":{"items":[{"token_id":"gate_token_id","level":20}]}
+}
+```
+
+服務端推送的是完整快照，不是增量 Delta。
+
+## 最優買賣價 `ec.bbo`
+
+返回 `bid_px`、`ask_px`、`last_px` 和時間戳。
+
+## CPI 價格 `ec.cpi`
+
+按 `symbol` 和 `interval` 訂閱，例如：
+
+```json
+{
+  "op":"subscribe",
+  "ch":"ec.cpi",
+  "payload":{"items":[{"symbol":"btcusdt","interval":"1m"}]}
+}
+```
+
+返回標準化後的 Symbol、週期、價格和價格時間。
+
+## K 線 `ec.candlestick`
+
+按 Symbol 和週期訂閱。推送字段包括：
+
+- `t`：K 線開始時間；
+- `o`：開盤價；
+- `h`：最高價；
+- `l`：最低價；
+- `c`：收盤價；
+- `v`：成交量；
+- `closed`：K 線是否已結束。
+
+## 開收盤參考價 `ec.oc_price`
+
+可按市場 `slug`、`market_id`，或 Symbol + Interval 訂閱。返回 `price_to_beat` 與 `final_price`。
+
+## 市場狀態 `ec.status`
+
+按 `market_id` 訂閱市場狀態。常見狀態：
+
+- `ACTIVE`
+- `CLOSED`
+- `RESOLVED`
+
+推送還可包含 `closed`、`accepting_orders`、各結果 Token 及當前價格。

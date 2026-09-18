@@ -1,0 +1,68 @@
+---
+title: "甚麼是 DexBuilder"
+description: "面向去中心化交易產品的專業市場、賬戶、結算與 Builder 基礎設施。"
+---
+
+DexBuilder 是面向去中心化交易產品的基礎設施。平台將市場接入、訂單執行、賬戶、資產流程、結算與 Builder 運營能力整合在統一體系中，使項目團隊無需分別搭建每一層能力，即可推出具有獨立品牌的交易產品。
+
+同一套平台基礎既可支持完整的品牌化交易體驗，也可支持專注於 API 的接入方式，項目團隊可以根據自身產品選擇適合的運營模式。
+
+<Frame caption="使用 DexBuilder 構建去中心化市場">
+  ![DexBuilder 去中心化交易基礎設施](/images/dexbuilder-cover.svg)
+</Frame>
+
+## 一個平台，多種市場體驗
+
+DexBuilder 支持三類產品：永續合約 DEX、預測市場與事件合約。項目方可以使用自有前端呈現產品，並通過公開文檔中的 API 與接入流程連接平台能力。
+
+<Columns cols={3}>
+  <Card title="永續合約 DEX" icon="chart-candlestick" href="/zh-TW/concepts/product-suite#永續合約-dex">
+    構建訂單簿永續合約市場，覆蓋訂單、倉位、保證金、資金費率與結算流程。
+  </Card>
+
+  <Card title="預測市場" icon="chart-line" href="/zh-TW/concepts/product-suite#預測市場">
+    圍繞定義清晰的現實事件結果推出預測市場產品。
+  </Card>
+
+  <Card title="事件合約" icon="calendar-check" href="/zh-TW/concepts/product-suite#事件合約">
+    提供條款、生命週期狀態與結算結果明確的事件型合約。
+  </Card>
+</Columns>
+
+## 面向專業交易產品
+
+DexBuilder 將熟悉的訂單簿交易體驗，與生產級交易應用所需的賬戶、資產和運營能力結合起來。
+
+- **交易基礎設施：** 行情、訂單管理、倉位、保證金模式、資金費率、強平與成交歷史；
+- **可核對的賬戶記錄：** 餘額、訂單、成交、倉位和賬戶賬本變動通過一致的賬戶接口提供；
+- **靈活的產品設計：** 項目團隊掌控品牌、用戶體驗、市場呈現與接入方式；
+- **Builder 運營能力：** 用戶注冊、手續費配置、活動、推薦關係、用戶數據與收入結算按照產品流程組織；
+- **開發者優先：** 中英文指南、OpenAPI、請求籤名、代碼示例、WebSocket 指南與生產檢查清單集中維護。
+
+## 平台如何協同
+
+<Frame caption="DexBuilder 平台架構">
+  ![交易應用與錢包用戶連接到 DexBuilder 的市場、賬戶、賬本與結算服務](/images/platform-architecture-zh.svg)
+</Frame>
+
+用戶通過交易應用發起操作，並對賬戶或資產動作進行授權。應用使用公開行情接口與已認證的賬戶接口；DexBuilder 協調交易執行、倉位記賬、賬本更新與結算。Builder 運營能力則提供項目運行所需的配置與管理入口。
+
+## 選擇接入路徑
+
+<Columns cols={2}>
+  <Card title="理解產品" icon="circle-info" href="/zh-TW/concepts/product-suite">
+    瞭解產品體系、平台能力、架構、賬戶、交易生命週期、結算與手續費。
+  </Card>
+
+  <Card title="在 DexBuilder 上構建" icon="code" href="/zh-TW/getting-started/choose-a-path">
+    從注冊、認證、交易和資產接入開始，完成測試與生產上線。
+  </Card>
+
+  <Card title="接入交易 API" icon="brackets-curly" href="/zh-TW/api-reference/query-all-perp-contracts">
+    使用完整的永續合約 API 接入行情、賬戶、倉位、訂單與交易歷史。
+  </Card>
+
+  <Card title="生產運營" icon="rocket" href="/zh-TW/operations/go-live">
+    校驗憑證、權限、資產流程、異常恢復、監控與上線準備。
+  </Card>
+</Columns>

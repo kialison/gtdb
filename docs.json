@@ -838,7 +838,418 @@
         ]
       },
       {
-        "language": "zh-TW"
+        "language": "zh-TW",
+        "tabs": [
+          {
+            "tab": "介紹",
+            "groups": [
+              {
+                "group": "入門",
+                "pages": [
+                  "zh-TW/untitled-page",
+                  "zh-TW/untitled-page-2",
+                  "zh-TW/untitled-page-3",
+                  "zh-TW/untitled-page-4",
+                  "zh-TW/untitled-page-5"
+                ]
+              },
+              {
+                "group": "PerpDEX",
+                "pages": [
+                  {
+                    "group": "交易",
+                    "pages": [
+                      "zh-TW/untitled-page-6",
+                      "zh-TW/untitled-page-7",
+                      "zh-TW/untitled-page-8",
+                      "zh-TW/untitled-page-9",
+                      "zh-TW/untitled-page-10",
+                      "zh-TW/untitled-page-11",
+                      "zh-TW/untitled-page-12",
+                      "zh-TW/untitled-page-13"
+                    ]
+                  },
+                  {
+                    "group": "風險機制",
+                    "pages": [
+                      "zh-TW/untitled-page-17",
+                      "zh-TW/untitled-page-16"
+                    ]
+                  },
+                  {
+                    "group": "費率",
+                    "pages": [
+                      "zh-TW/untitled-page-14"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "預測市場",
+                "pages": [
+                  {
+                    "group": "快速開始",
+                    "pages": [
+                      "zh-TW/event-markets/overview",
+                      "zh-TW/event-markets/event-markets",
+                      "zh-TW/event-markets/place-first-order"
+                    ]
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": [
+                      "zh-TW/event-markets/markets-events",
+                      "zh-TW/event-markets/negative-risk",
+                      "zh-TW/event-markets/prices-orderbook",
+                      "zh-TW/event-markets/positions-tokens",
+                      "zh-TW/event-markets/order-lifecycle",
+                      "zh-TW/event-markets/resolution"
+                    ]
+                  },
+                  {
+                    "group": "交易機制",
+                    "pages": [
+                      "zh-TW/event-markets/trading-overview",
+                      "zh-TW/event-markets/how-positions-work",
+                      "zh-TW/event-markets/fees"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "事件合約",
+                "pages": [
+                  {
+                    "group": "快速開始",
+                    "pages": [
+                      "zh-TW/event-contracts/overview",
+                      "zh-TW/event-contracts/event-contracts",
+                      "zh-TW/event-contracts/place-first-order"
+                    ]
+                  },
+                  {
+                    "group": "核心概念",
+                    "pages": [
+                      "zh-TW/event-contracts/markets-events",
+                      "zh-TW/event-contracts/negative-risk",
+                      "zh-TW/event-contracts/prices-orderbook",
+                      "zh-TW/event-contracts/positions-tokens",
+                      "zh-TW/event-contracts/resolution",
+                      "zh-TW/event-contracts/order-lifecycle"
+                    ]
+                  },
+                  {
+                    "group": "交易機制",
+                    "pages": [
+                      "zh-TW/event-contracts/trading-overview",
+                      "zh-TW/event-contracts/how-positions-work",
+                      "zh-TW/event-contracts/fees"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "在 DexBuilder 上構建",
+            "pages": [
+              "zh-TW/builder/architecture",
+              "zh-TW/untitled-page-22",
+              {
+                "group": "構建你的 DEX",
+                "pages": [
+                  "zh-TW/builder/create-builder",
+                  "zh-TW/builder/integration",
+                  "zh-TW/builder/account-authentication",
+                  "zh-TW/builder/assets-settlement",
+                  "zh-TW/builder/trading-integration",
+                  "zh-TW/builder/realtime-data"
+                ]
+              },
+              {
+                "group": "Builder 配置",
+                "pages": [
+                  "zh-TW/builder/fees-revenue",
+                  "zh-TW/builder/operations-console"
+                ]
+              },
+              {
+                "group": "上線",
+                "pages": [
+                  "zh-TW/builder/launch-checklist",
+                  "zh-TW/builder/operations-support"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "menu": [
+              {
+                "item": "PerpDEX",
+                "pages": [
+                  {
+                    "group": "PerpDEX API",
+                    "pages": [
+                      "zh-TW/api-reference/perpdex/overview",
+                      "zh-TW/api-reference/perpdex/changelog",
+                      "zh-TW/api-reference/perpdex/api",
+                      "zh-TW/api-reference/perpdex/authentication",
+                      {
+                        "group": "REST API",
+                        "pages": [
+                          "zh-TW/api-reference/perpdex/query-all-contracts",
+                          "zh-TW/api-reference/perpdex/query-contract",
+                          "zh-TW/api-reference/perpdex/query-order-book",
+                          "zh-TW/api-reference/perpdex/query-market-trades",
+                          "zh-TW/api-reference/perpdex/query-candlesticks",
+                          "zh-TW/api-reference/perpdex/query-premium-index",
+                          "zh-TW/api-reference/perpdex/query-tickers",
+                          "zh-TW/api-reference/perpdex/query-funding-rate",
+                          "zh-TW/api-reference/perpdex/query-insurance",
+                          "zh-TW/api-reference/perpdex/query-contract-stats",
+                          "zh-TW/api-reference/perpdex/query-index-constituents",
+                          "zh-TW/api-reference/perpdex/query-market-liquidation-orders",
+                          "zh-TW/api-reference/perpdex/query-risk-limit-tiers",
+                          "zh-TW/api-reference/perpdex/query-account",
+                          "zh-TW/api-reference/perpdex/query-account-book",
+                          "zh-TW/api-reference/perpdex/query-positions",
+                          "zh-TW/api-reference/perpdex/query-position",
+                          "zh-TW/api-reference/perpdex/update-position-margin",
+                          "zh-TW/api-reference/perpdex/update-position-leverage",
+                          "zh-TW/api-reference/perpdex/switch-position-margin-mode",
+                          "zh-TW/api-reference/perpdex/switch-hedge-margin-mode",
+                          "zh-TW/api-reference/perpdex/update-position-risk-limit",
+                          "zh-TW/api-reference/perpdex/set-position-mode",
+                          "zh-TW/api-reference/perpdex/query-hedge-positions",
+                          "zh-TW/api-reference/perpdex/update-hedge-position-margin",
+                          "zh-TW/api-reference/perpdex/update-hedge-position-leverage",
+                          "zh-TW/api-reference/perpdex/update-hedge-position-risk-limit",
+                          "zh-TW/api-reference/perpdex/place-order",
+                          "zh-TW/api-reference/perpdex/query-orders",
+                          "zh-TW/api-reference/perpdex/cancel-all-orders",
+                          "zh-TW/api-reference/perpdex/query-orders-by-time-range",
+                          "zh-TW/api-reference/perpdex/place-batch-orders",
+                          "zh-TW/api-reference/perpdex/query-order",
+                          "zh-TW/api-reference/perpdex/cancel-order",
+                          "zh-TW/api-reference/perpdex/amend-order",
+                          "zh-TW/api-reference/perpdex/query-my-trades",
+                          "zh-TW/api-reference/perpdex/query-my-trades-by-time-range",
+                          "zh-TW/api-reference/perpdex/query-position-close-history",
+                          "zh-TW/api-reference/perpdex/query-liquidation-history",
+                          "zh-TW/api-reference/perpdex/query-adl-history",
+                          "zh-TW/api-reference/perpdex/countdown-cancel-orders",
+                          "zh-TW/api-reference/perpdex/query-fee",
+                          "zh-TW/api-reference/perpdex/cancel-batch-orders",
+                          "zh-TW/api-reference/perpdex/amend-batch-orders",
+                          "zh-TW/api-reference/perpdex/query-risk-limit-table",
+                          "zh-TW/api-reference/perpdex/place-bbo-order"
+                        ]
+                      },
+                      {
+                        "group": "WebSocket API",
+                        "pages": [
+                          "zh-TW/api-reference/perpdex/websocket/overview",
+                          "zh-TW/api-reference/perpdex/websocket/system",
+                          "zh-TW/api-reference/perpdex/websocket/ticker",
+                          "zh-TW/api-reference/perpdex/websocket/public-trades",
+                          "zh-TW/api-reference/perpdex/websocket/order-book",
+                          "zh-TW/api-reference/perpdex/websocket/order-book-v2",
+                          "zh-TW/api-reference/perpdex/websocket/candlesticks",
+                          "zh-TW/api-reference/perpdex/websocket/public-liquidates",
+                          "zh-TW/api-reference/perpdex/websocket/contract-stats",
+                          "zh-TW/api-reference/perpdex/websocket/orders",
+                          "zh-TW/api-reference/perpdex/websocket/user-trades",
+                          "zh-TW/api-reference/perpdex/websocket/liquidates",
+                          "zh-TW/api-reference/perpdex/websocket/auto-deleverages",
+                          "zh-TW/api-reference/perpdex/websocket/position-closes",
+                          "zh-TW/api-reference/perpdex/websocket/balances",
+                          "zh-TW/api-reference/perpdex/websocket/reduce-risk-limits",
+                          "zh-TW/api-reference/perpdex/websocket/positions",
+                          "zh-TW/api-reference/perpdex/websocket/position-adl-rank",
+                          "zh-TW/api-reference/perpdex/websocket/autoorders",
+                          "zh-TW/api-reference/perpdex/websocket/trading-api"
+                        ]
+                      },
+                      {
+                        "group": "模型",
+                        "pages": [
+                          "zh-TW/api-reference/perpdex/models/contract",
+                          "zh-TW/api-reference/perpdex/models/position",
+                          "zh-TW/api-reference/perpdex/models/dexfuturesorder",
+                          "zh-TW/api-reference/perpdex/models/dexfuturesbboorder",
+                          "zh-TW/api-reference/perpdex/models/batchamendorderreq"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "item": "預測市場",
+                "pages": [
+                  {
+                    "group": "預測市場 API",
+                    "pages": [
+                      "zh-TW/event-markets/api/overview",
+                      "zh-TW/event-markets/apis",
+                      "zh-TW/event-markets/error-codes",
+                      {
+                        "group": "REST API",
+                        "pages": [
+                          "zh-TW/event-markets/rest/query-events",
+                          "zh-TW/event-markets/rest/query-event",
+                          "zh-TW/event-markets/rest/query-event-by-slug",
+                          "zh-TW/event-markets/rest/query-markets",
+                          "zh-TW/event-markets/rest/query-market",
+                          "zh-TW/event-markets/rest/query-market-by-slug",
+                          "zh-TW/event-markets/rest/query-market-trades",
+                          "zh-TW/event-markets/rest/query-token-market",
+                          "zh-TW/event-markets/rest/query-token-price",
+                          "zh-TW/event-markets/rest/query-token-ticker",
+                          "zh-TW/event-markets/rest/query-order-book",
+                          "zh-TW/event-markets/rest/query-price-history",
+                          "zh-TW/event-markets/rest/query-token-prices",
+                          "zh-TW/event-markets/rest/query-candlesticks",
+                          "zh-TW/event-markets/rest/place-order",
+                          "zh-TW/event-markets/rest/query-orders",
+                          "zh-TW/event-markets/rest/query-order",
+                          "zh-TW/event-markets/rest/cancel-order",
+                          "zh-TW/event-markets/rest/cancel-orders-by-condition",
+                          "zh-TW/event-markets/rest/query-positions",
+                          "zh-TW/event-markets/rest/query-position",
+                          "zh-TW/event-markets/rest/close-position",
+                          "zh-TW/event-markets/rest/query-user-trades",
+                          "zh-TW/event-markets/rest/query-assets",
+                          "zh-TW/event-markets/rest/query-account-book",
+                          "zh-TW/event-markets/rest/query-fee",
+                          "zh-TW/event-markets/rest/query-available-claims",
+                          "zh-TW/event-markets/rest/query-available-claim",
+                          "zh-TW/event-markets/rest/create-claim",
+                          "zh-TW/event-markets/rest/query-claim",
+                          "zh-TW/event-markets/rest/query-tags",
+                          "zh-TW/event-markets/rest/query-server-time"
+                        ]
+                      },
+                      {
+                        "group": "WebSocket",
+                        "pages": [
+                          "zh-TW/event-markets/websocket/overview",
+                          "zh-TW/event-markets/websocket/protocol",
+                          "zh-TW/event-markets/websocket/public-channels",
+                          "zh-TW/event-markets/websocket/private-channels",
+                          "zh-TW/event-markets/websocket/authentication"
+                        ]
+                      },
+                      {
+                        "group": "行情與市場數據",
+                        "pages": [
+                          "zh-TW/event-markets/market-data-overview",
+                          "zh-TW/event-markets/discover-markets",
+                          "zh-TW/event-markets/market-details",
+                          "zh-TW/event-markets/market-prices-orderbooks",
+                          "zh-TW/event-markets/analytics",
+                          "zh-TW/event-markets/realtime-data",
+                          "zh-TW/event-markets/chainlink-twap"
+                        ]
+                      },
+                      {
+                        "group": "交易與賬戶",
+                        "pages": [
+                          "zh-TW/event-markets/place-orders",
+                          "zh-TW/event-markets/manage-orders",
+                          "zh-TW/event-markets/realtime-order-updates",
+                          "zh-TW/event-markets/wallet-activity"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "item": "事件合約",
+                "pages": [
+                  {
+                    "group": "事件合約 API",
+                    "pages": [
+                      "zh-TW/event-contracts/api/overview",
+                      "zh-TW/event-contracts/apis",
+                      "zh-TW/event-contracts/error-codes",
+                      {
+                        "group": "REST API",
+                        "pages": [
+                          "zh-TW/event-contracts/rest/query-events",
+                          "zh-TW/event-contracts/rest/query-event",
+                          "zh-TW/event-contracts/rest/query-event-by-slug",
+                          "zh-TW/event-contracts/rest/query-markets",
+                          "zh-TW/event-contracts/rest/query-market",
+                          "zh-TW/event-contracts/rest/query-market-by-slug",
+                          "zh-TW/event-contracts/rest/query-market-trades",
+                          "zh-TW/event-contracts/rest/query-token-market",
+                          "zh-TW/event-contracts/rest/query-token-price",
+                          "zh-TW/event-contracts/rest/query-token-ticker",
+                          "zh-TW/event-contracts/rest/query-order-book",
+                          "zh-TW/event-contracts/rest/query-price-history",
+                          "zh-TW/event-contracts/rest/query-token-prices",
+                          "zh-TW/event-contracts/rest/query-candlesticks",
+                          "zh-TW/event-contracts/rest/place-order",
+                          "zh-TW/event-contracts/rest/query-orders",
+                          "zh-TW/event-contracts/rest/query-order",
+                          "zh-TW/event-contracts/rest/cancel-order",
+                          "zh-TW/event-contracts/rest/cancel-orders-by-condition",
+                          "zh-TW/event-contracts/rest/query-positions",
+                          "zh-TW/event-contracts/rest/query-position",
+                          "zh-TW/event-contracts/rest/close-position",
+                          "zh-TW/event-contracts/rest/query-user-trades",
+                          "zh-TW/event-contracts/rest/query-assets",
+                          "zh-TW/event-contracts/rest/query-account-book",
+                          "zh-TW/event-contracts/rest/query-fee",
+                          "zh-TW/event-contracts/rest/query-available-claims",
+                          "zh-TW/event-contracts/rest/query-available-claim",
+                          "zh-TW/event-contracts/rest/create-claim",
+                          "zh-TW/event-contracts/rest/query-claim",
+                          "zh-TW/event-contracts/rest/query-tags",
+                          "zh-TW/event-contracts/rest/query-server-time"
+                        ]
+                      },
+                      {
+                        "group": "WebSocket",
+                        "pages": [
+                          "zh-TW/event-contracts/websocket/overview",
+                          "zh-TW/event-contracts/websocket/protocol",
+                          "zh-TW/event-contracts/websocket/public-channels",
+                          "zh-TW/event-contracts/websocket/private-channels",
+                          "zh-TW/event-contracts/websocket/authentication"
+                        ]
+                      },
+                      {
+                        "group": "行情與市場數據",
+                        "pages": [
+                          "zh-TW/event-contracts/market-data-overview",
+                          "zh-TW/event-contracts/discover-markets",
+                          "zh-TW/event-contracts/market-details",
+                          "zh-TW/event-contracts/market-prices-orderbooks",
+                          "zh-TW/event-contracts/analytics",
+                          "zh-TW/event-contracts/realtime-data",
+                          "zh-TW/event-contracts/chainlink-twap"
+                        ]
+                      },
+                      {
+                        "group": "交易與賬戶",
+                        "pages": [
+                          "zh-TW/event-contracts/place-orders",
+                          "zh-TW/event-contracts/manage-orders",
+                          "zh-TW/event-contracts/realtime-order-updates",
+                          "zh-TW/event-contracts/wallet-activity"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },

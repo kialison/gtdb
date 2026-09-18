@@ -1,0 +1,1617 @@
+# 使用 OpenAPI 3.0.3 標準格式，用於生成 Mintlify API Reference。
+# openapi      OpenAPI 版本
+# info         API 基礎信息
+# servers      API 服務地址
+# tags         接口分類
+# paths        所有接口定義
+# components   公共數據結構和認證方式
+#
+# 單個接口常用字段：
+# summary      接口名稱
+# description  接口說明
+# parameters   Path / Query 參數
+# requestBody  POST / PUT 請求參數
+# responses    返回結果
+#
+# 新增接口：
+# 1. 在 paths: 下新增接口 Path 和 Method
+# 2. 填寫 summary、parameters、requestBody、responses
+# 3. 在 Mintlify 新建對應 MDX 頁面
+# 4. 頁面通過下面格式綁定接口：
+#
+# openapi: "/openapi/perpdex.yaml GET /dex_futures/{settle}/contracts"
+# openapi: "/openapi/perpdex.yaml POST /dex_futures/{settle}/orders"
+#
+# ps ： MDX page 綁定時，Method 和 Path 必須與 YAML 完全一致
+
+openapi: 3.0.3
+info:
+  title: DexBuilder PerpDEX API
+  version: 1.0.0
+  description: DexBuilder PerpDEX REST API。
+servers:
+  - url: https://api.dexbuilder.com/api/v1
+    description: DexBuilder PerpDEX REST API
+tags:
+  - name: 行情
+    description: 永續合約公開行情與市場數據
+  - name: 風險數據
+    description: 風險限額與市場強平數據
+  - name: 賬戶
+    description: 賬戶與費率
+  - name: 持倉
+    description: 持倉查詢與管理
+  - name: 訂單
+    description: 訂單、成交與批量交易
+security:
+  - DexBuilderKey: []
+    DexBuilderTimestamp: []
+    DexBuilderSignature: []
+
+paths:
+  /dex_futures/{settle}/contracts:
+    get:
+      tags: [行情]
+      summary: 查詢全部永續合約
+      description: 查詢當前結算幣種下的全部永續合約信息。
+      operationId: listPerpContracts
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contract'
+
+  /dex_futures/{settle}/contracts/{contract}:
+    get:
+      tags: [行情]
+      summary: 查詢單個合約信息
+      description: 查詢指定永續合約的詳細信息。
+      operationId: getPerpContract
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contract'
+
+  /dex_futures/{settle}/order_book:
+    get:
+      tags: [行情]
+      summary: 查詢永續合約市場深度
+      description: 查詢指定永續合約的盤口深度。買盤按價格從高到低排序，賣盤相反。
+      operationId: listPerpOrderBook
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - name: interval
+          in: query
+          required: false
+          description: 深度聚合價格精度，0 表示不聚合
+          schema: { type: string, default: '0' }
+        - name: limit
+          in: query
+          required: false
+          description: 深度檔位數量
+          schema: { type: integer, default: 10 }
+        - name: with_id
+          in: query
+          required: false
+          description: 是否返回深度更新 ID
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+
+  /dex_futures/{settle}/trades:
+    get:
+      tags: [行情]
+      summary: 查詢永續合約市場成交記錄
+      description: 查詢指定永續合約的市場成交記錄。
+      operationId: listPerpTrades
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          deprecated: true
+          description: 從指定歷史記錄 ID 開始查詢，建議改用 from 和 to
+          schema: { type: string }
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trade'
+
+  /dex_futures/{settle}/candlesticks:
+    get:
+      tags: [行情]
+      summary: 查詢永續合約 K 線
+      description: 查詢指定合約的 K 線數據。單次最多返回 2000 個數據點。
+      operationId: listPerpCandlesticks
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: limit
+          in: query
+          required: false
+          description: 返回最近數據點數量
+          schema: { type: integer }
+        - name: interval
+          in: query
+          required: false
+          description: K 線週期
+          schema: { type: string, default: 5m }
+        - name: timezone
+          in: query
+          required: false
+          description: 時區，例如 utc0、utc8
+          schema: { type: string, default: utc0 }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candlestick'
+
+  /dex_futures/{settle}/premium_index:
+    get:
+      tags: [行情]
+      summary: 查詢溢價指數 K 線
+      description: 查詢指定合約的溢價指數 K 線。單次最多返回 1000 個數據點。
+      operationId: listPerpPremiumIndex
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: limit
+          in: query
+          required: false
+          description: 返回最近數據點數量
+          schema: { type: integer }
+        - name: interval
+          in: query
+          required: false
+          description: 數據週期
+          schema: { type: string, default: 5m }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PremiumIndex'
+
+  /dex_futures/{settle}/tickers:
+    get:
+      tags: [行情]
+      summary: 查詢全部永續合約行情統計
+      description: 查詢全部永續合約行情統計，可通過 contract 只返回指定合約。
+      operationId: listPerpTickers
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticker'
+
+  /dex_futures/{settle}/funding_rate:
+    get:
+      tags: [行情]
+      summary: 查詢歷史資金費率
+      description: 查詢指定永續合約的歷史資金費率。
+      operationId: listPerpFundingRateHistory
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FundingRate'
+
+  /dex_futures/{settle}/insurance:
+    get:
+      tags: [行情]
+      summary: 查詢保險基金歷史
+      description: 查詢永續合約保險基金歷史記錄。
+      operationId: listPerpInsurance
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InsuranceRecord'
+
+  /dex_futures/{settle}/contract_stats:
+    get:
+      tags: [行情]
+      summary: 查詢永續合約統計數據
+      description: 查詢指定永續合約的統計數據。
+      operationId: listPerpContractStats
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQueryRequired'
+        - $ref: '#/components/parameters/From'
+        - name: interval
+          in: query
+          required: false
+          description: 統計週期
+          schema: { type: string, default: 5m }
+        - name: limit
+          in: query
+          required: false
+          description: 返回記錄數量
+          schema: { type: integer }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractStat'
+
+  /dex_futures/{settle}/index_constituents/{index}:
+    get:
+      tags: [行情]
+      summary: 查詢指數成分
+      description: 查詢指定指數的成分交易所及交易對。
+      operationId: getPerpIndexConstituents
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: index
+          in: path
+          required: true
+          description: 指數名稱
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexConstituents'
+
+  /dex_futures/{settle}/liq_orders:
+    get:
+      tags: [風險數據]
+      summary: 查詢市場強平訂單歷史
+      description: 查詢市場強平訂單歷史。from 與 to 的時間跨度最大為 3600 秒。
+      operationId: listPerpLiquidatedOrders
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LiquidatedOrder'
+
+  /dex_futures/{settle}/risk_limit_tiers:
+    get:
+      tags: [風險數據]
+      summary: 查詢風險限額檔位
+      description: 查詢永續合約風險限額檔位。未傳 contract 時按市場分頁查詢。
+      operationId: listPerpRiskLimitTiers
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskLimitTier'
+
+  /dex_futures/{settle}/risk_limit_table:
+    get:
+      tags: [風險數據]
+      summary: 按表 ID 查詢風險限額表
+      description: 根據 table_id 查詢對應風險限額表。
+      operationId: getPerpRiskLimitTable
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: table_id
+          in: query
+          required: true
+          description: 風險限額表 ID
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskLimitTier'
+
+  /dex_futures/{settle}/accounts:
+    get:
+      tags: [賬戶]
+      summary: 查詢永續合約賬戶
+      description: 查詢永續合約賬戶信息。
+      operationId: getPerpAccount
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /dex_futures/{settle}/account_book:
+    get:
+      tags: [賬戶]
+      summary: 查詢永續合約賬戶變更歷史
+      description: 查詢永續合約賬戶資金變更歷史。
+      operationId: listPerpAccountBook
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: type
+          in: query
+          required: false
+          description: 變更類型
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountBook'
+
+  /dex_futures/{settle}/fee:
+    get:
+      tags: [賬戶]
+      summary: 查詢永續合約交易費率
+      description: 查詢永續合約市場 Taker / Maker 交易費率。
+      operationId: getPerpFee
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeeMap'
+
+  /dex_futures/{settle}/positions:
+    get:
+      tags: [持倉]
+      summary: 查詢用戶持倉列表
+      description: 查詢用戶永續合約持倉列表。
+      operationId: listPerpPositions
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: holding
+          in: query
+          required: false
+          description: true 僅返回實際持倉，false 返回全部
+          schema: { type: boolean }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}:
+    get:
+      tags: [持倉]
+      summary: 查詢單個持倉
+      description: 查詢指定合約的單向持倉信息。雙向持倉請使用 dual_comp 接口。
+      operationId: getPerpPosition
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/margin:
+    post:
+      tags: [持倉]
+      summary: 調整持倉保證金
+      description: 增加或減少指定持倉保證金。
+      operationId: updatePerpPositionMargin
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: change
+          in: query
+          required: true
+          description: 保證金調整數量；正數增加，負數減少
+          schema: { type: string }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/leverage:
+    post:
+      tags: [持倉]
+      summary: 調整持倉槓桿
+      description: leverage 非 0 表示逐倉；leverage=0 時通過 cross_leverage_limit 設置全倉槓桿。
+      operationId: updatePerpPositionLeverage
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: leverage
+          in: query
+          required: true
+          description: 逐倉槓桿；設置全倉時填 0
+          schema: { type: string }
+        - name: cross_leverage_limit
+          in: query
+          required: false
+          description: 全倉槓桿，僅 leverage=0 時生效
+          schema: { type: string }
+        - name: pid
+          in: query
+          required: false
+          description: Position ID
+          schema: { type: integer, format: int32 }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/cross_mode:
+    post:
+      tags: [持倉]
+      summary: 切換持倉保證金模式
+      description: 在全倉與逐倉保證金模式之間切換。
+      operationId: switchPerpPositionMarginMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrossModeRequest'
+      responses:
+        '200':
+          description: 切換成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/cross_mode:
+    post:
+      tags: [持倉]
+      summary: 雙向持倉切換保證金模式
+      description: 雙向持倉模式下，在全倉與逐倉保證金模式之間切換。
+      operationId: switchPerpHedgeMarginMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrossModeRequest'
+      responses:
+        '200':
+          description: 切換成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/positions/{contract}/risk_limit:
+    post:
+      tags: [持倉]
+      summary: 調整持倉風險限額
+      description: 設置指定持倉的風險限額。
+      operationId: updatePerpPositionRiskLimit
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: risk_limit
+          in: query
+          required: true
+          description: 新的風險限額值
+          schema: { type: string }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_mode:
+    post:
+      tags: [持倉]
+      summary: 設置持倉模式
+      description: 開啓或關閉雙向持倉模式。切換前需確保沒有持倉及掛單。
+      operationId: setPerpPositionMode
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: dual_mode
+          in: query
+          required: true
+          description: 是否開啓雙向持倉模式
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: 設置成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}:
+    get:
+      tags: [持倉]
+      summary: 查詢雙向持倉信息
+      description: 查詢指定合約在雙向持倉模式下的多空持倉信息。
+      operationId: getPerpHedgePositions
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/margin:
+    post:
+      tags: [持倉]
+      summary: 調整雙向持倉保證金
+      description: 調整雙向持倉模式下指定方向的持倉保證金。
+      operationId: updatePerpHedgePositionMargin
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: change
+          in: query
+          required: true
+          description: 保證金調整數量；正數增加，負數減少
+          schema: { type: string }
+        - name: dual_side
+          in: query
+          required: true
+          description: 持倉方向
+          schema: { type: string, enum: [dual_long, dual_short] }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/leverage:
+    post:
+      tags: [持倉]
+      summary: 調整雙向持倉槓桿
+      description: 調整雙向持倉模式下指定合約的槓桿。
+      operationId: updatePerpHedgePositionLeverage
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: leverage
+          in: query
+          required: true
+          description: 新的持倉槓桿
+          schema: { type: string }
+        - name: cross_leverage_limit
+          in: query
+          required: false
+          description: 全倉槓桿，僅 leverage=0 時生效
+          schema: { type: string }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/dual_comp/positions/{contract}/risk_limit:
+    post:
+      tags: [持倉]
+      summary: 調整雙向持倉風險限額
+      description: 設置雙向持倉模式下指定合約的風險限額。
+      operationId: updatePerpHedgePositionRiskLimit
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractPath'
+        - name: risk_limit
+          in: query
+          required: true
+          description: 新的風險限額值
+          schema: { type: string }
+      responses:
+        '200':
+          description: 調整成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+
+  /dex_futures/{settle}/position_close:
+    get:
+      tags: [持倉]
+      summary: 查詢平倉歷史
+      description: 查詢用戶永續合約平倉歷史。
+      operationId: listPerpPositionCloseHistory
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: side
+          in: query
+          required: false
+          description: 持倉方向
+          schema: { type: string, enum: [long, short] }
+        - name: pnl
+          in: query
+          required: false
+          description: 盈虧類型
+          schema: { type: string, enum: [profit, loss] }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PositionClose'
+
+  /dex_futures/{settle}/liquidates:
+    get:
+      tags: [持倉]
+      summary: 查詢用戶強平歷史
+      description: 查詢用戶永續合約強平歷史。
+      operationId: listPerpLiquidationHistory
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: at
+          in: query
+          required: false
+          description: 指定強平時間戳
+          schema: { type: integer }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Liquidate'
+
+  /dex_futures/{settle}/auto_deleverages:
+    get:
+      tags: [持倉]
+      summary: 查詢 ADL 自動減倉記錄
+      description: 查詢用戶 ADL 自動減倉訂單信息。
+      operationId: listPerpAutoDeleverages
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: at
+          in: query
+          required: false
+          description: 指定自動減倉時間戳
+          schema: { type: integer }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutoDeleverage'
+
+  /dex_futures/{settle}/orders:
+    get:
+      tags: [訂單]
+      summary: 查詢永續合約訂單列表
+      description: 按狀態查詢永續合約訂單列表。歷史訂單默認支持最近 6 個月。
+      operationId: listPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: status
+          in: query
+          required: true
+          description: 訂單狀態
+          schema: { type: string, enum: [open, finished] }
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          description: 上一頁最後一條記錄 ID
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+    post:
+      tags: [訂單]
+      summary: 創建永續合約訂單
+      description: size 為合約張數；price=0 且 tif=ioc 時表示市價單。
+      operationId: placePerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEXFuturesOrderRequest'
+      responses:
+        '201':
+          description: 創建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    delete:
+      tags: [訂單]
+      summary: 取消全部未完成訂單
+      description: 取消符合條件的全部 open 狀態訂單。
+      operationId: cancelAllOpenPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - name: contract
+          in: query
+          required: false
+          description: 指定合約，僅取消該合約訂單
+          schema: { type: string }
+        - name: side
+          in: query
+          required: false
+          description: 訂單方向
+          schema: { type: string, enum: [bid, ask] }
+        - name: exclude_reduce_only
+          in: query
+          required: false
+          description: 是否排除只減倉訂單
+          schema: { type: boolean, default: false }
+        - name: text
+          in: query
+          required: false
+          description: 撤單備注
+          schema: { type: string }
+      responses:
+        '200':
+          description: 取消完成
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/orders_timerange:
+    get:
+      tags: [訂單]
+      summary: 按時間範圍查詢訂單列表
+      description: 按時間範圍查詢永續合約訂單歷史。
+      operationId: listPerpOrdersByTimeRange
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/batch_orders:
+    post:
+      tags: [訂單]
+      summary: 批量創建永續合約訂單
+      description: 批量創建永續合約訂單。單次最多提交 10 筆訂單。
+      operationId: placeBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 10
+              items:
+                $ref: '#/components/schemas/DEXFuturesOrderRequest'
+      responses:
+        '200':
+          description: 創建完成
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/orders/{order_id}:
+    get:
+      tags: [訂單]
+      summary: 查詢單個訂單詳情
+      description: 根據訂單 ID 或自定義訂單 ID 查詢訂單詳情。
+      operationId: getPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    delete:
+      tags: [訂單]
+      summary: 取消單個訂單
+      description: 根據訂單 ID 或自定義訂單 ID 取消指定訂單。
+      operationId: cancelPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      responses:
+        '200':
+          description: 取消成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+    put:
+      tags: [訂單]
+      summary: 修改單個訂單
+      description: 修改指定訂單的數量或價格。
+      operationId: amendPerpOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/OrderIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderAmendment'
+      responses:
+        '200':
+          description: 修改成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/my_trades:
+    get:
+      tags: [訂單]
+      summary: 查詢個人成交記錄
+      description: 查詢個人永續合約成交記錄。默認支持最近 6 個月。
+      operationId: listPerpMyTrades
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - name: order
+          in: query
+          required: false
+          description: 訂單 ID
+          schema: { type: integer, format: int64 }
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: last_id
+          in: query
+          required: false
+          deprecated: true
+          description: 歷史記錄起始 ID
+          schema: { type: string }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyTrade'
+
+  /dex_futures/{settle}/my_trades_timerange:
+    get:
+      tags: [訂單]
+      summary: 按時間範圍查詢個人成交記錄
+      description: 按時間範圍查詢個人永續合約成交記錄。
+      operationId: listPerpMyTradesByTimeRange
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+        - $ref: '#/components/parameters/ContractQuery'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: role
+          in: query
+          required: false
+          description: 成交角色
+          schema: { type: string, enum: [maker, taker] }
+      responses:
+        '200':
+          description: 查詢成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyTrade'
+
+  /dex_futures/{settle}/countdown_cancel_all:
+    post:
+      tags: [訂單]
+      summary: 倒計時取消訂單
+      description: 設置訂單心跳倒計時；到期前未重新設置或取消時，將自動取消相關掛單。
+      operationId: countdownCancelPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CountdownRequest'
+      responses:
+        '200':
+          description: 設置成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CountdownResult'
+
+  /dex_futures/{settle}/batch_cancel_orders:
+    post:
+      tags: [訂單]
+      summary: 按 ID 批量取消訂單
+      description: 按訂單 ID 列表批量取消訂單，單次最多 20 筆。
+      operationId: cancelBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 20
+              items: { type: string }
+      responses:
+        '200':
+          description: 取消完成
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CancelOrderResult'
+
+  /dex_futures/{settle}/batch_amend_orders:
+    post:
+      tags: [訂單]
+      summary: 按 ID 批量修改訂單
+      description: 按訂單 ID 批量修改訂單，單次最多 10 筆。
+      operationId: amendBatchPerpOrders
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 10
+              items:
+                $ref: '#/components/schemas/BatchAmendOrderReq'
+      responses:
+        '200':
+          description: 修改完成
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DEXFuturesOrder'
+
+  /dex_futures/{settle}/bbo_orders:
+    post:
+      tags: [訂單]
+      summary: 按檔位創建 BBO 訂單
+      description: 按指定盤口檔位創建 BBO 永續合約訂單，支持 level 和 direction 參數。
+      operationId: placePerpBBOOrder
+      parameters:
+        - $ref: '#/components/parameters/Settle'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DEXFuturesBBOOrder'
+      responses:
+        '200':
+          description: 創建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DEXFuturesBBOOrder'
+
+components:
+  securitySchemes:
+    DexBuilderKey:
+      type: apiKey
+      in: header
+      name: KEY
+      description: DexBuilder API Key
+    DexBuilderTimestamp:
+      type: apiKey
+      in: header
+      name: Timestamp
+      description: Unix 時間戳（秒），與當前時間差不得超過 60 秒
+    DexBuilderSignature:
+      type: apiKey
+      in: header
+      name: SIGN
+      description: 使用 API Secret 對簽名字符串執行 HMAC-SHA512 後的十六進制簽名
+
+  parameters:
+    Settle:
+      name: settle
+      in: path
+      required: true
+      description: 結算幣種
+      schema: { type: string, enum: [usdt] }
+      example: usdt
+    ContractPath:
+      name: contract
+      in: path
+      required: true
+      description: 永續合約
+      schema: { type: string }
+      example: BTC_USDT
+    OrderIdPath:
+      name: order_id
+      in: path
+      required: true
+      description: 訂單 ID 或自定義訂單 ID
+      schema: { type: string }
+      example: '12345'
+    ContractQueryRequired:
+      name: contract
+      in: query
+      required: true
+      description: 永續合約
+      schema: { type: string }
+      example: BTC_USDT
+    ContractQuery:
+      name: contract
+      in: query
+      required: false
+      description: 永續合約，不傳則返回全部
+      schema: { type: string }
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: 單次返回的最大記錄數量
+      schema: { type: integer }
+    Offset:
+      name: offset
+      in: query
+      required: false
+      description: 列表偏移量，從 0 開始
+      schema: { type: integer }
+    From:
+      name: from
+      in: query
+      required: false
+      description: 開始時間，Unix 秒
+      schema: { type: integer, format: int64 }
+    To:
+      name: to
+      in: query
+      required: false
+      description: 結束時間，Unix 秒
+      schema: { type: integer, format: int64 }
+
+  schemas:
+    Contract:
+      type: object
+      description: 永續合約信息
+      properties:
+        name: { type: string, description: 合約名稱, example: BTC_USDT }
+        type: { type: string, description: 合約類型, enum: [inverse, direct] }
+        quanto_multiplier: { type: string, description: 合約乘數 }
+        leverage_min: { type: string, description: 最小槓桿 }
+        leverage_max: { type: string, description: 最大槓桿 }
+        maintenance_rate: { type: string, description: 維持保證金率 }
+        order_price_round: { type: string, description: 價格精度 }
+        order_size_min: { type: string, description: 最小下單張數 }
+        order_size_max: { type: string, description: 最大下單張數 }
+        status: { type: string, description: 合約狀態 }
+        mark_price: { type: string, description: 標記價格 }
+        index_price: { type: string, description: 指數價格 }
+        funding_rate: { type: string, description: 當前資金費率 }
+        funding_next_apply: { type: integer, format: int64, description: 下次資金費率結算時間 }
+        market_order_slip_ratio: { type: string, description: 市價單最大滑點比例 }
+      additionalProperties: true
+
+    OrderBookItem:
+      type: object
+      properties:
+        p: { type: string, description: 價格 }
+        s: { type: string, description: 數量 }
+      additionalProperties: true
+    OrderBook:
+      type: object
+      properties:
+        id: { type: integer, format: int64, description: 深度更新 ID }
+        current: { type: number, format: double, description: 響應生成時間 }
+        update: { type: number, format: double, description: 盤口更新時間 }
+        asks: { type: array, items: { $ref: '#/components/schemas/OrderBookItem' } }
+        bids: { type: array, items: { $ref: '#/components/schemas/OrderBookItem' } }
+      additionalProperties: true
+
+    Trade:
+      type: object
+      properties:
+        id: { type: integer, format: int64, description: 成交 ID }
+        create_time: { type: number, format: double, description: 成交時間 }
+        contract: { type: string, description: 合約名稱 }
+        size: { type: string, description: 成交數量 }
+        price: { type: string, description: 成交價格 }
+      additionalProperties: true
+
+    Candlestick:
+      type: object
+      properties:
+        t: { type: number, format: double, description: 時間戳 }
+        v: { type: string, description: 成交量 }
+        c: { type: string, description: 收盤價 }
+        h: { type: string, description: 最高價 }
+        l: { type: string, description: 最低價 }
+        o: { type: string, description: 開盤價 }
+        sum: { type: string, description: 成交額 }
+      additionalProperties: true
+
+    PremiumIndex:
+      type: object
+      properties:
+        t: { type: number, format: double, description: 時間戳 }
+        o: { type: string, description: 開盤值 }
+        h: { type: string, description: 最高值 }
+        l: { type: string, description: 最低值 }
+        c: { type: string, description: 收盤值 }
+      additionalProperties: true
+
+    Ticker:
+      type: object
+      properties:
+        contract: { type: string, description: 合約名稱 }
+        last: { type: string, description: 最新成交價 }
+        change_percentage: { type: string, description: 漲跌幅 }
+        total_size: { type: string, description: 成交量 }
+        volume_24h: { type: string, description: 24 小時成交額 }
+        volume_24h_usd: { type: string, description: 24 小時美元成交額 }
+        mark_price: { type: string, description: 標記價格 }
+        index_price: { type: string, description: 指數價格 }
+        funding_rate: { type: string, description: 資金費率 }
+      additionalProperties: true
+
+    FundingRate:
+      type: object
+      properties:
+        t: { type: integer, format: int64, description: 時間戳 }
+        r: { type: string, description: 資金費率 }
+      additionalProperties: true
+    InsuranceRecord:
+      type: object
+      properties:
+        t: { type: integer, format: int64, description: 時間戳 }
+        b: { type: string, description: 保險基金餘額 }
+      additionalProperties: true
+    ContractStat:
+      type: object
+      properties:
+        time: { type: integer, format: int64, description: 統計時間 }
+        lsr_taker: { type: number, description: 主動成交多空比 }
+        lsr_account: { type: number, description: 賬戶多空比 }
+        open_interest: { type: string, description: 持倉量 }
+        open_interest_usd: { type: number, description: 美元計價持倉量 }
+        mark_price: { type: string, description: 標記價格 }
+      additionalProperties: true
+
+    IndexConstituents:
+      type: object
+      properties:
+        index: { type: string, description: 指數名稱 }
+        constituents:
+          type: array
+          items:
+            type: object
+            properties:
+              exchange: { type: string, description: 交易所 }
+              symbols: { type: array, items: { type: string } }
+            additionalProperties: true
+      additionalProperties: true
+
+    LiquidatedOrder:
+      type: object
+      properties:
+        time: { type: integer, format: int64, description: 時間戳 }
+        contract: { type: string, description: 合約 }
+        size: { type: string, description: 強平數量 }
+        price: { type: string, description: 價格 }
+      additionalProperties: true
+    RiskLimitTier:
+      type: object
+      properties:
+        tier: { type: integer, description: 檔位 }
+        risk_limit: { type: string, description: 風險限額 }
+        initial_rate: { type: string, description: 初始保證金率 }
+        maintenance_rate: { type: string, description: 維持保證金率 }
+        leverage_max: { type: string, description: 最大槓桿 }
+        contract: { type: string, description: 合約 }
+        deduction: { type: string, description: 維持保證金速算扣除額 }
+      additionalProperties: true
+
+    Account:
+      type: object
+      properties:
+        user: { type: integer, format: int64, description: 用戶 ID }
+        currency: { type: string, description: 結算幣種 }
+        total: { type: string, description: 賬戶權益 }
+        unrealised_pnl: { type: string, description: 未實現盈虧 }
+        position_margin: { type: string, description: 持倉保證金 }
+        order_margin: { type: string, description: 委託保證金 }
+        available: { type: string, description: 可用餘額 }
+        in_dual_mode: { type: boolean, description: 是否為雙向持倉模式 }
+        cross_available: { type: string, description: 全倉可用餘額 }
+        cross_margin_balance: { type: string, description: 全倉保證金餘額 }
+      additionalProperties: true
+
+    AccountBook:
+      type: object
+      properties:
+        time: { type: number, format: double, description: 變更時間 }
+        change: { type: string, description: 變更數量 }
+        balance: { type: string, description: 變更後餘額 }
+        text: { type: string, description: 變更說明 }
+        type: { type: string, description: 變更類型 }
+        contract: { type: string, description: 關聯合約 }
+      additionalProperties: true
+
+    Position:
+      type: object
+      description: 永續合約持倉
+      properties:
+        user: { type: integer, format: int64, description: 用戶 ID }
+        contract: { type: string, description: 合約 }
+        size: { type: string, description: 持倉數量 }
+        leverage: { type: string, description: 逐倉槓桿；0 表示全倉 }
+        risk_limit: { type: string, description: 風險限額 }
+        leverage_max: { type: string, description: 最大槓桿 }
+        maintenance_rate: { type: string, description: 維持保證金率 }
+        value: { type: string, description: 持倉價值 }
+        margin: { type: string, description: 保證金 }
+        entry_price: { type: string, description: 開倉均價 }
+        liq_price: { type: string, description: 預估強平價 }
+        mark_price: { type: string, description: 標記價格 }
+        unrealised_pnl: { type: string, description: 未實現盈虧 }
+        realised_pnl: { type: string, description: 已實現盈虧 }
+        mode: { type: string, description: 持倉模式 }
+        cross_leverage_limit: { type: string, description: 全倉槓桿 }
+        pid: { type: integer, format: int64, description: Position ID }
+      additionalProperties: true
+
+    CrossModeRequest:
+      type: object
+      required: [mode, contract]
+      properties:
+        mode: { type: string, enum: [ISOLATED, CROSS], description: 保證金模式 }
+        contract: { type: string, description: 永續合約 }
+
+    DEXFuturesOrderRequest:
+      type: object
+      required: [contract, size, price]
+      properties:
+        contract: { type: string, description: 永續合約, example: BTC_USDT }
+        size: { type: string, description: 合約張數；正數買入、負數賣出，平倉可為 0 }
+        iceberg: { type: string, description: 冰山單顯示數量，0 表示非冰山單 }
+        price: { type: string, description: 委託價格；price=0 且 tif=ioc 時為市價單 }
+        close: { type: boolean, description: 是否平倉；為 true 時 size 需為 0 }
+        reduce_only: { type: boolean, description: 是否只減倉 }
+        tif: { type: string, description: 訂單有效方式, enum: [gtc, ioc, poc, fok] }
+        text: { type: string, description: 自定義訂單信息 }
+        auto_size: { type: string, description: 雙向持倉平倉方向, enum: [close_long, close_short] }
+        stp_act: { type: string, description: 自成交防護策略, enum: [co, cn, cb, '-'] }
+        bbo: { type: string, description: 對手價相關參數 }
+        default_leverage: { type: string, description: 默認槓桿 }
+        pid: { type: integer, format: int64, description: Position ID }
+        order_value: { type: string, description: 訂單價值 }
+        trade_value: { type: string, description: 成交價值 }
+        market_order_slip_ratio: { type: string, description: 市價單自定義最大滑點比例 }
+
+    DEXFuturesOrder:
+      allOf:
+        - $ref: '#/components/schemas/DEXFuturesOrderRequest'
+        - type: object
+          properties:
+            id: { type: integer, format: int64, description: 訂單 ID }
+            user: { type: integer, format: int64, description: 用戶 ID }
+            create_time: { type: number, format: double, description: 創建時間 }
+            update_time: { type: number, format: double, description: 更新時間 }
+            finish_time: { type: number, format: double, description: 完成時間 }
+            finish_as: { type: string, description: 訂單完成原因 }
+            status: { type: string, description: 訂單狀態, enum: [open, finished] }
+            left: { type: string, description: 未成交數量 }
+            fill_price: { type: string, description: 平均成交價 }
+            is_close: { type: boolean, description: 是否平倉單 }
+            is_reduce_only: { type: boolean, description: 是否只減倉 }
+            is_liq: { type: boolean, description: 是否強平單 }
+            tkfr: { type: string, description: Taker 費率 }
+            mkfr: { type: string, description: Maker 費率 }
+            stp_id: { type: integer, format: int64, description: STP 組字段 }
+            amend_text: { type: string, description: 改單自定義信息 }
+          additionalProperties: true
+
+    OrderAmendment:
+      type: object
+      properties:
+        size: { type: string, description: 新的訂單數量，包含已成交部分 }
+        price: { type: string, description: 新的訂單價格 }
+        amend_text: { type: string, description: 改單自定義信息 }
+        text: { type: string, description: 訂單自定義信息 }
+
+    MyTrade:
+      type: object
+      properties:
+        id: { type: integer, format: int64, description: 成交 ID }
+        create_time: { type: number, format: double, description: 成交時間 }
+        contract: { type: string, description: 合約 }
+        order_id: { type: string, description: 訂單 ID }
+        size: { type: string, description: 成交數量 }
+        price: { type: string, description: 成交價格 }
+        role: { type: string, description: Maker / Taker }
+        fee: { type: string, description: 手續費 }
+      additionalProperties: true
+
+    PositionClose:
+      type: object
+      properties:
+        time: { type: integer, format: int64, description: 平倉時間 }
+        contract: { type: string, description: 合約 }
+        side: { type: string, description: 方向 }
+        pnl: { type: string, description: 平倉盈虧 }
+        text: { type: string, description: 說明 }
+      additionalProperties: true
+    Liquidate:
+      type: object
+      properties:
+        time: { type: integer, format: int64, description: 強平時間 }
+        contract: { type: string, description: 合約 }
+        size: { type: string, description: 強平數量 }
+        leverage: { type: string, description: 槓桿 }
+        entry_price: { type: string, description: 開倉均價 }
+        fill_price: { type: string, description: 成交均價 }
+      additionalProperties: true
+    AutoDeleverage:
+      type: object
+      properties:
+        time: { type: integer, format: int64, description: ADL 時間 }
+        contract: { type: string, description: 合約 }
+        size: { type: string, description: 減倉數量 }
+        entry_price: { type: string, description: 開倉均價 }
+        fill_price: { type: string, description: 成交均價 }
+      additionalProperties: true
+
+    CountdownRequest:
+      type: object
+      required: [timeout]
+      properties:
+        timeout: { type: integer, format: int32, minimum: 0, description: 倒計時時間，單位秒；0 表示取消倒計時 }
+        contract: { type: string, description: 永續合約，不傳則作用於全部市場 }
+    CountdownResult:
+      type: object
+      properties:
+        triggerTime: { type: integer, format: int64, description: 倒計時觸發時間，毫秒 }
+      additionalProperties: true
+
+    FeeItem:
+      type: object
+      properties:
+        taker_fee: { type: string, description: Taker 費率 }
+        maker_fee: { type: string, description: Maker 費率 }
+    FeeMap:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/FeeItem'
+
+    CancelOrderResult:
+      type: object
+      properties:
+        id: { type: string, description: 訂單 ID }
+        user_id: { type: integer, format: int64, description: 用戶 ID }
+        succeeded: { type: boolean, description: 是否取消成功 }
+        message: { type: string, description: 失敗原因，成功時為空 }
+
+    BatchAmendOrderReq:
+      type: object
+      required: [order_id]
+      properties:
+        order_id: { type: integer, format: int64, description: 訂單 ID }
+        amend_text: { type: string, description: 改單自定義信息 }
+        size: { type: string, description: 新的訂單數量 }
+        price: { type: string, description: 新的訂單價格 }
+
+    DEXFuturesBBOOrder:
+      type: object
+      required: [contract, size, direction, level]
+      properties:
+        contract: { type: string, description: 永續合約 }
+        size: { type: integer, format: int64, description: 交易數量；正數買入、負數賣出 }
+        direction: { type: string, enum: [sell, buy], description: sell 獲取買盤檔位，buy 獲取賣盤檔位 }
+        iceberg: { type: integer, format: int64, description: 冰山單顯示數量 }
+        level: { type: integer, format: int64, minimum: 1, maximum: 20, description: 盤口檔位，最大 20 }
+        close: { type: boolean, description: 是否平倉 }
+        reduce_only: { type: boolean, description: 是否只減倉 }
+        tif: { type: string, enum: [gtc, ioc, poc, fok], description: 訂單有效方式 }
+        text: { type: string, description: 自定義訂單信息 }
+        auto_size: { type: string, enum: [close_long, close_short], description: 雙向持倉平倉方向 }
+        stp_act: { type: string, enum: [co, cn, cb, '-'], description: 自成交防護策略 }
+        default_leverage: { type: string, description: 默認槓桿 }
+        limit_vip: { type: integer, format: int64, description: 對手方 VIP 等級限制 }
+        pid: { type: integer, format: int64, description: Position ID }
+      additionalProperties: true

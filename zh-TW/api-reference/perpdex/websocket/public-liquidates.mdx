@@ -1,0 +1,28 @@
+---
+title: "公共強平訂單頻道"
+description: "訂閱市場公開強平訂單數據。"
+---
+
+訂閱市場公開強平訂單數據。
+
+**頻道：** `futures.public_liquidates`
+
+**認證：** 不需要
+
+## 訂閱
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.public_liquidates",
+  "event": "subscribe",
+  "payload": ["BTC_USDT"]
+}
+```
+
+服務端確認訂閱後，會通過同一 `channel` 持續推送 `event: "update"` 消息。
+
+## 取消訂閱
+
+將 `event` 改為 `unsubscribe`，並保持 `payload` 與訂閱時一致。
+

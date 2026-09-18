@@ -1,0 +1,28 @@
+---
+title: "Position"
+description: "永續合約持倉模型"
+---
+
+# Position
+
+永續合約持倉信息模型，對應 OpenAPI Schema：`Position`。
+
+| 字段 | 類型 | 說明 |
+| --- | --- | --- |
+| `user` | integer(int64) | 用戶 ID |
+| `contract` | string | 合約 |
+| `size` | string | 持倉數量 |
+| `leverage` | string | 逐倉槓桿；`0` 表示全倉 |
+| `risk_limit` | string | 風險限額 |
+| `leverage_max` | string | 最大槓桿 |
+| `maintenance_rate` | string | 維持保證金率 |
+| `value` | string | 持倉價值 |
+| `margin` | string | 保證金 |
+| `entry_price` | string | 開倉均價 |
+| `liq_price` | string | 預估強平價 |
+| `mark_price` | string | 標記價格 |
+| `unrealised_pnl` | string | 未實現盈虧 |
+| `realised_pnl` | string | 已實現盈虧 |
+| `mode` | string | 持倉模式 |
+| `cross_leverage_limit` | string | 全倉槓桿 |
+| `pid` | integer(int64) | Position ID |

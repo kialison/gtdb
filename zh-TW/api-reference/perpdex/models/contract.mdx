@@ -1,0 +1,26 @@
+---
+title: "Contract"
+description: "永續合約信息模型"
+---
+
+# Contract
+
+永續合約基礎信息模型，對應 OpenAPI Schema：`Contract`。
+
+| 字段 | 類型 | 說明 |
+| --- | --- | --- |
+| `name` | string | 合約名稱 |
+| `type` | string | 合約類型：`inverse` / `direct` |
+| `quanto_multiplier` | string | 合約乘數 |
+| `leverage_min` | string | 最小槓桿 |
+| `leverage_max` | string | 最大槓桿 |
+| `maintenance_rate` | string | 維持保證金率 |
+| `order_price_round` | string | 價格精度 |
+| `order_size_min` | string | 最小下單張數 |
+| `order_size_max` | string | 最大下單張數 |
+| `status` | string | 合約狀態 |
+| `mark_price` | string | 標記價格 |
+| `index_price` | string | 指數價格 |
+| `funding_rate` | string | 當前資金費率 |
+| `funding_next_apply` | integer(int64) | 下次資金費率結算時間 |
+| `market_order_slip_ratio` | string | 市價單最大滑點比例 |

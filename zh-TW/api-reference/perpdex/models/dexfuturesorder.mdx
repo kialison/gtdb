@@ -1,0 +1,50 @@
+---
+title: "DEXFuturesOrder"
+description: "永續合約訂單模型"
+---
+
+# DEXFuturesOrder
+
+永續合約訂單模型，對應 OpenAPI Schema：`DEXFuturesOrder`。
+
+## 下單字段
+
+| 字段 | 類型 | 說明 |
+| --- | --- | --- |
+| `contract` | string | 永續合約 |
+| `size` | string | 合約張數；正數買入、負數賣出，平倉可為 `0` |
+| `iceberg` | string | 冰山單顯示數量，`0` 表示非冰山單 |
+| `price` | string | 委託價格；`price=0` 且 `tif=ioc` 時為市價單 |
+| `close` | boolean | 是否平倉 |
+| `reduce_only` | boolean | 是否只減倉 |
+| `tif` | string | 訂單有效方式：`gtc` / `ioc` / `poc` / `fok` |
+| `text` | string | 自定義訂單信息 |
+| `auto_size` | string | 雙向持倉平倉方向：`close_long` / `close_short` |
+| `stp_act` | string | 自成交防護策略 |
+| `bbo` | string | 對手價相關參數 |
+| `default_leverage` | string | 默認槓桿 |
+| `pid` | integer(int64) | Position ID |
+| `order_value` | string | 訂單價值 |
+| `trade_value` | string | 成交價值 |
+| `market_order_slip_ratio` | string | 市價單自定義最大滑點比例 |
+
+## 返回字段
+
+| 字段 | 類型 | 說明 |
+| --- | --- | --- |
+| `id` | integer(int64) | 訂單 ID |
+| `user` | integer(int64) | 用戶 ID |
+| `create_time` | number(double) | 創建時間 |
+| `update_time` | number(double) | 更新時間 |
+| `finish_time` | number(double) | 完成時間 |
+| `finish_as` | string | 訂單完成原因 |
+| `status` | string | 訂單狀態：`open` / `finished` |
+| `left` | string | 未成交數量 |
+| `fill_price` | string | 平均成交價 |
+| `is_close` | boolean | 是否平倉單 |
+| `is_reduce_only` | boolean | 是否只減倉 |
+| `is_liq` | boolean | 是否強平單 |
+| `tkfr` | string | Taker 費率 |
+| `mkfr` | string | Maker 費率 |
+| `stp_id` | integer(int64) | STP 組字段 |
+| `amend_text` | string | 改單自定義信息 |

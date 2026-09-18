@@ -1,0 +1,95 @@
+---
+title: "Negative Risk 市場"
+sidebarTitle: "Negative Risk 市場"
+description: "瞭解多結果事件中的 Negative Risk 機制，以及如何通過結果轉換提升資金效率。"
+---
+
+Negative Risk 是面向多結果事件的一種機制，適用於最終只有一個結果能夠獲勝的場景。它通過結果之間的轉換關係，將同一 Event 下的多個 Market 連接起來，從而提高資金利用效率。
+
+## 工作方式
+
+在普通多結果事件中，各 Market 相互獨立。如果想表達“某個結果不會發生”，通常需要直接買入該 Market 的 No Token，但這個 No Token 與其他結果沒有資產轉換關係。
+
+Negative Risk 會建立這種關係：
+
+- 任意一個 Market 的 1 份 No，可以轉換為同一 Event 中其他每個 Market 的 1 份 Yes；
+- 轉換通過 Neg Risk Adapter 合約完成。
+
+### 示例
+
+假設 Event 為“誰將贏得總統選舉？”，包含三個結果：
+
+| 結果 | 當前持倉 |
+| --- | --- |
+| 候選人 A | — |
+| 候選人 B | — |
+| 其他 | 1 No |
+
+在 Negative Risk 機制下，“其他”的 1 No 可以轉換為：
+
+| 結果 | 轉換後 |
+| --- | --- |
+| 候選人 A | 1 Yes |
+| 候選人 B | 1 Yes |
+| 其他 | — |
+
+因此，“看空一個結果”在經濟意義上可以轉換為“看多所有其他結果”。
+
+## Augmented Negative Risk
+
+標準 Negative Risk 通常要求在市場創建時就確定完整結果集合。但實際場景中，交易開始後可能出現新的候選結果，例如新的候選人加入競選。
+
+Augmented Negative Risk 使用以下結果類型處理動態變化：
+
+| 結果類型 | 說明 |
+| --- | --- |
+| Named outcomes | 創建市場時已經明確的結果 |
+| Placeholder outcomes | 預留位置，後續可明確成具體結果 |
+| Other | 捕獲未被明確列出的其他結果 |
+
+### Placeholder 如何工作
+
+<Steps>
+  <Step title="事件上線">
+    Event 以已命名結果、Placeholder 和 Other 一起上線。
+  </Step>
+  <Step title="明確 Placeholder">
+    當出現新的有效結果時，可以將某個 Placeholder 明確為該結果。
+  </Step>
+  <Step title="Other 範圍收窄">
+    隨著 Placeholder 被分配，Other 所代表的剩餘結果集合會同步縮小。
+  </Step>
+</Steps>
+
+### 交易規則
+
+- 若最終正確結果沒有被單獨命名，則 Market 可按 Other 結果結算；
+- Other 的實際定義會隨著 Placeholder 的明確發生變化，因此直接交易 Other 時需要特別注意其覆蓋範圍。
+
+## 轉換機制
+
+轉換由 Neg Risk Adapter 原子執行：
+
+<Steps>
+  <Step title="持有 No Token">
+    用戶持有 Outcome A 的 1 份 No Token。
+  </Step>
+  <Step title="調用 convert">
+    調用 Adapter 的 `convert` 方法。
+  </Step>
+  <Step title="收到其他結果的 Yes Token">
+    用戶收到同一 Event 中其他每個結果各 1 份 Yes Token。
+  </Step>
+</Steps>
+
+## 下一步
+
+<CardGroup cols={2}>
+  <Card title="市場與事件" icon="chart-line" href="/zh-TW/event-markets/markets-events">
+    瞭解多 Market Event 的組織方式。
+  </Card>
+
+  <Card title="持倉與結果代幣" icon="coins" href="/zh-TW/event-markets/positions-tokens">
+    瞭解結果代幣與持倉關係。
+  </Card>
+</CardGroup>

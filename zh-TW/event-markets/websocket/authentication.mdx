@@ -1,0 +1,95 @@
+---
+title: "認證與連接可靠性"
+sidebarTitle: "認證"
+description: "完成預測市場私有 WebSocket 認證，並處理心跳、錯誤和斷線重連。"
+---
+
+公開頻道無需認證，私有頻道需要 API Key 認證。
+
+連接地址：
+
+```text
+wss://broker.dexbuilder.com/v4/ws/event_markets
+```
+
+## API Key 認證
+
+API Key 認證使用 API Key 與本地生成的 HMAC-SHA512 簽名。API Secret 只在客戶端本地使用，不通過 WebSocket 發送。
+
+首次私有訂閱可攜帶：
+
+```json
+{
+  "t": 1787026512123,
+  "id": "orders-1",
+  "op": "subscribe",
+  "ch": "em.orders",
+  "payload": {"all":true},
+  "auth": {
+    "method":"api_key",
+    "key":"<api_key>",
+    "sign":"<signature>"
+  }
+}
+```
+
+訂閱與取消訂閱的簽名原文：
+
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
+
+對該字符串執行 HMAC-SHA512，並轉為十六進制。
+
+## 預認證
+
+也可以先調用 `server.sign`：
+
+```json
+{
+  "t": 1787026512123,
+  "id": "auth-1",
+  "op": "auth",
+  "ch": "server.sign",
+  "payload": {
+    "method":"api_key",
+    "key":"<api_key>",
+    "sign":"<signature>"
+  }
+}
+```
+
+此時簽名原文為外層 `t` 的十進制字符串：
+
+```text
+HexEncode(HMAC-SHA512(api_secret, decimal(t)))
+```
+
+預認證成功後，同一連接後續的私有訂閱可以不再重復攜帶認證信息。
+
+## 心跳
+
+服務端會發送 WebSocket Ping 控制幀，標準客戶端通常會自動回復 Pong。也支持應用層 Ping：
+
+```json
+{"t":1787026512123,"id":"ping-1","op":"ping"}
+```
+
+## 常見錯誤碼
+
+| Code | 說明 |
+| --- | --- |
+| `1` | 請求格式無效 |
+| `2` | 參數、頻道或訂閱項無效 |
+| `3` | 服務端臨時異常 |
+| `4` | 認證失敗 |
+
+## 斷線重連
+
+斷線後服務端不會保留訂閱和未接收消息。建議：
+
+1. 使用指數退避重連；
+2. 重新認證；
+3. 恢復公共和私有訂閱；
+4. 通過 REST API 恢復斷線期間的狀態；
+5. 根據業務 ID 和時間戳進行去重。

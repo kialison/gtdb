@@ -1,0 +1,29 @@
+---
+title: "深度頻道 V2"
+description: "訂閱高效的訂單簿增量更新。"
+---
+
+訂閱高效的訂單簿增量更新。
+
+**頻道：** `futures.obu`
+
+**認證：** 不需要
+
+## 訂閱
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.obu",
+  "event": "subscribe",
+  "payload": ["BTC_USDT", "100ms", "20"]
+}
+```
+
+服務端確認訂閱後，會通過同一 `channel` 持續推送 `event: "update"` 消息。
+
+## 取消訂閱
+
+將 `event` 改為 `unsubscribe`，並保持 `payload` 與訂閱時一致。
+
+深度 V2 適合需要更低延遲維護本地訂單簿的場景。

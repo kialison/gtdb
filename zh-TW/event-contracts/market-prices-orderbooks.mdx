@@ -1,0 +1,133 @@
+---
+title: "價格與訂單簿數據"
+sidebarTitle: "價格與訂單簿"
+description: "通過 Event Contracts API 查詢公開訂單簿、Token 價格、Ticker、批量價格與價格歷史。"
+---
+
+每個 Market Outcome 都由一個 Token 表示。先通過「發現市場」或「市場詳情」獲取 `outcomes[].token_id`，再使用 Token ID 查詢價格和流動性數據。
+
+本頁接口均為公開市場數據接口，無需認證。生產環境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 訂單簿
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/order_book?depth=20"
+```
+
+`depth` 可選，默認 20，範圍 1–100。
+
+```json Example
+{
+  "token_id": "token-yes",
+  "condition_id": "0xabc...",
+  "timestamp": 1782753357257,
+  "hash": "a1b2c3d4",
+  "bids": [
+    { "price": "0.48", "size": "100.00" }
+  ],
+  "asks": [
+    { "price": "0.52", "size": "80.00" }
+  ],
+  "last_trade_price": "0.50",
+  "min_order_size": "5",
+  "tick_size": "0.01",
+  "neg_risk": false
+}
+```
+
+| 字段 | 說明 |
+| --- | --- |
+| `token_id` | Outcome Token ID |
+| `condition_id` | Market Condition ID |
+| `bids`, `asks` | 買賣深度，每檔包含 decimal string 格式的 `price` 與 `size` |
+| `timestamp` | 快照時間，Unix 毫秒 |
+| `hash` | 訂單簿快照 Hash |
+| `last_trade_price` | 最近成交價 |
+| `min_order_size`, `tick_size`, `neg_risk` | 交易限制與風險模式 |
+
+當前 API 沒有批量 Order Book 接口，如需多個 Token 的訂單簿，應分別請求。
+
+## 最新 Token 價格
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price"
+```
+
+```json
+{
+  "token_id": "token-yes",
+  "price": "0.50",
+  "side": "BUY",
+  "timestamp": 1782753357257
+}
+```
+
+沒有可用成交記錄時，`price` 可能為空字符串。
+
+## Token Ticker
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/ticker"
+```
+
+```json
+{
+  "token_id": "token-yes",
+  "last_price": "0.50",
+  "best_bid": "0.48",
+  "best_ask": "0.52",
+  "timestamp": 1782753357257
+}
+```
+
+數據源無法提供可靠值時，對應字段可能為 `null`。
+
+## 批量 Token 價格
+
+通過逗號分隔的 Token ID 查詢，單次最多支持 100 個不同 Token：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/prices?token_ids=token-yes,token-no"
+```
+
+```json
+{
+  "items": [
+    { "token_id": "token-yes", "price": "0.50", "timestamp": 1782753357257 },
+    { "token_id": "token-no", "price": "0.50", "timestamp": 1782753357257 }
+  ]
+}
+```
+
+不存在或當前不可見的 Token 會被忽略，返回順序保持與請求中的有效 Token 順序一致。
+
+## 價格歷史
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price_history?interval=1h&from=1782666000000&to=1782752400000"
+```
+
+| 參數 | 說明 |
+| --- | --- |
+| `interval` | `5m`、`15m`、`1h`、`4h`、`1d` |
+| `from` | 開始時間，Unix 毫秒 |
+| `to` | 結束時間，Unix 毫秒 |
+
+單次查詢時間範圍最多 14 天。
+
+```json
+{
+  "history": [
+    { "t": 1782666000, "p": 0.485 },
+    { "t": 1782669600, "p": 0.500 }
+  ]
+}
+```
+
+## 當前 API 能力範圍
+
+請使用本頁提供的 Order Book、Price、Ticker、Batch Price 和 Price History 接口。第三方 CLOB 中未納入 DexBuilder Event Contracts API 合同的專有接口不屬於當前正式能力範圍。

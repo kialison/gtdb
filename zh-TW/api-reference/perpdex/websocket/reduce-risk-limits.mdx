@@ -1,0 +1,33 @@
+---
+title: "降低風險率頻道"
+description: "接收賬戶降低風險率相關更新。"
+---
+
+接收賬戶降低風險率相關更新。
+
+**頻道：** `futures.reduce_risk_limits`
+
+**認證：** 需要 API Key
+
+## 訂閱
+
+```json
+{
+  "time": 1700000000,
+  "channel": "futures.reduce_risk_limits",
+  "event": "subscribe",
+  "payload": ["<user_id>", "BTC_USDT"],
+  "auth": {
+    "method": "api_key",
+    "KEY": "<API_KEY>",
+    "SIGN": "<SIGN>"
+  }
+}
+```
+
+如需訂閱全部合約，可在支持的頻道中使用 `!all`。簽名方式請參見「認證與簽名」。
+
+## 取消訂閱
+
+將 `event` 改為 `unsubscribe`，並保持認證信息與訂閱參數一致。
+
