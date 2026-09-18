@@ -582,23 +582,7 @@
       {
         "language": "zh-TW"
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "DexBuilder 官网",
-          "href": "https://www.dexbuilder.com/"
-        },
-        {
-          "anchor": "交易演示",
-          "href": "https://demo.dexbuilder.com/en/perps"
-        },
-        {
-          "anchor": "打开 Builder",
-          "href": "https://www.dexbuilder.com/en/dex"
-        }
-      ]
-    }
+    ]
   },
   "footer": {
     "socials": {
