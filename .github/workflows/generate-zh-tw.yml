@@ -41,6 +41,42 @@ jobs:
 
           zh = next(x for x in cfg["navigation"]["languages"] if x["language"] == "zh")
 
+          TW_TERMS = [
+              ("賬戶", "帳戶"),
+              ("用戶", "使用者"),
+              ("信息", "資訊"),
+              ("項目", "專案"),
+              ("配置", "設定"),
+              ("運營", "營運"),
+              ("數據", "資料"),
+              ("接口", "介面"),
+              ("調用", "呼叫"),
+              ("服務器", "伺服器"),
+              ("字符串", "字串"),
+              ("實時", "即時"),
+              ("網絡", "網路"),
+              ("鏈接", "連結"),
+              ("訪問", "存取"),
+              ("默認", "預設"),
+              ("組件", "元件"),
+              ("創建", "建立"),
+              ("登錄", "登入"),
+              ("返回", "回傳"),
+              ("文件", "檔案"),
+              ("字段", "欄位"),
+              ("列表", "清單"),
+              ("地址", "位址"),
+              ("支持", "支援"),
+              ("通過", "透過"),
+              ("獲取", "取得"),
+              ("查看", "檢視"),
+              ("設置", "設定"),
+              ("當前", "目前"),
+              ("密鑰", "金鑰"),
+              ("程序", "程式"),
+              ("代碼", "程式碼"),
+          ]
+
           def hant(text: str) -> str:
               p = subprocess.run(
                   ["uconv", "-x", "Simplified-Traditional"],
@@ -50,6 +86,12 @@ jobs:
                   check=True,
               )
               return p.stdout
+
+          def twize(text: str) -> str:
+              text = twize(text)
+              for src, dst in TW_TERMS:
+                  text = text.replace(src, dst)
+              return text
 
           def collect_pages(node, out=None):
               if out is None:
@@ -119,7 +161,7 @@ jobs:
           for src_name, dst_name in specs:
               src = ROOT / src_name
               dst = ROOT / dst_name
-              dst.write_text(hant(src.read_text(encoding="utf-8")), encoding="utf-8")
+              dst.write_text(twize(src.read_text(encoding="utf-8")), encoding="utf-8")
 
           # Mirror the Simplified Chinese navigation and convert labels + page paths.
           def clone_nav(node, parent_key=None):
@@ -132,7 +174,7 @@ jobs:
                       if k == "language":
                           out[k] = "zh-TW"
                       elif k in ("tab", "group", "item") and isinstance(v, str):
-                          out[k] = hant(v)
+                          out[k] = twize(v)
                       elif k in ("pages", "groups", "menu", "tabs"):
                           out[k] = clone_nav(v, k)
                       else:
@@ -142,7 +184,7 @@ jobs:
               if isinstance(node, str):
                   if parent_key == "pages":
                       return tw_path(node)
-                  return hant(node)
+                  return twize(node)
 
               return node
 
