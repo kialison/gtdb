@@ -1,63 +1,85 @@
 ---
-title: "DexBuilder 架构"
-description: "了解 Builder 项目方与 DexBuilder 基础设施之间的职责边界。"
+title: "了解 DexBuilder"
+description: "了解 DexBuilder 的整体架构、核心基础设施与 Broker 能力。"
 ---
 
-DexBuilder 的目标不是替项目方运营一个 DEX，而是提供构建交易产品所需的底层交易基础设施。Builder 在此基础上完成自己的品牌、前端、用户入口和运营体系。
+DexBuilder 是面向项目方的交易基础设施平台。项目可以基于统一的账户、资产、行情、交易、风控与结算能力，快速构建自己的 DEX，并通过 Builder / Broker 能力完成项目级用户归属、手续费和运营管理。
 
-## 职责边界
+## 整体架构
 
 ```text
-Builder 项目方
-  ├─ 品牌与域名
-  ├─ 前端产品与交互
-  ├─ 用户入口与增长
-  ├─ 运营策略
-  └─ 项目级配置
-          │
-          ▼
-      DexBuilder
-  ├─ 账户与认证能力
-  ├─ 充值 / 提现 / 资产
-  ├─ 行情与市场数据
-  ├─ 订单与撮合
-  ├─ 仓位与保证金
-  ├─ 风控与强平
-  ├─ 结算
-  └─ Builder 管理能力
+项目方 DEX / 自定义前端
+        │
+        ├─ 用户注册与账户
+        ├─ 充值 / 提现 / 资产
+        ├─ 行情与实时数据
+        ├─ 下单 / 撤单 / 持仓
+        └─ 项目级运营配置
+        │
+        ▼
+     DexBuilder
+        │
+        ├─ 账户与认证
+        ├─ 资产与结算
+        ├─ 行情与订单簿
+        ├─ 订单与撮合
+        ├─ 仓位与保证金
+        ├─ 风控与强平
+        └─ Builder / Broker 服务
 ```
 
-## Builder 需要负责什么
+项目方可以根据开发资源选择现有构建能力或 API / WebSocket 接入。具体交易接口、请求参数与返回字段统一在 **API Reference** 中维护。
 
-Builder 需要根据自己的产品定位完成用户可见的产品层，包括品牌、页面、交易入口、运营活动及用户服务等内容。
-
-如果采用自研前端，Builder 还需要负责：
-
-- API 与 WebSocket 的接入
-- 前端状态管理和异常处理
-- 交易确认与风险提示
-- 账户、资产、订单和仓位展示
-- 线上监控及用户问题排查
-
-## DexBuilder 提供什么
-
-DexBuilder 提供交易产品运行所需的核心底层能力，Builder 无需自行建设完整的撮合、账户和风险体系。
+## 核心基础设施
 
 <CardGroup cols={2}>
-  <Card title="账户与资产" icon="wallet">
-    账户、认证、资产、充提等基础能力。
+  <Card title="账户与认证" icon="user-shield">
+    提供用户注册、账户识别、认证及账户状态等基础能力。
   </Card>
-  <Card title="交易基础设施" icon="chart-line">
-    行情、订单、撮合、仓位、保证金及交易状态。
+  <Card title="资产与充提" icon="wallet">
+    提供充值、提现、资产查询、资金流水及结算相关能力。
+  </Card>
+  <Card title="市场与行情" icon="chart-candlestick">
+    提供市场信息、Ticker、订单簿、成交、K 线及其他实时市场数据。
+  </Card>
+  <Card title="交易与仓位" icon="arrow-right-arrow-left">
+    提供下单、撤单、改单、订单、成交、持仓、保证金与杠杆等交易能力。
   </Card>
   <Card title="风险与结算" icon="shield-halved">
-    风控、强平、保险基金及结算相关基础能力。
+    提供风险参数、强平、ADL、结算等交易基础设施能力。
   </Card>
-  <Card title="Builder 管理" icon="sliders">
-    项目配置、数据查看及运营后台能力。
+  <Card title="实时数据" icon="bolt">
+    通过 WebSocket 获取行情、订单、成交、仓位、余额等实时变化。
   </Card>
 </CardGroup>
 
-<Info>
-具体开放能力会根据项目接入方案有所差异。开发阶段应以双方最终确认的接入范围为准。
-</Info>
+## Broker 能力
+
+Builder 创建后，可获得项目级标识，用于在 DexBuilder 基础设施中识别项目及其用户、交易和运营数据。
+
+<CardGroup cols={2}>
+  <Card title="项目与用户归属" icon="users">
+    通过 Builder / Broker 标识区分项目来源，并关联项目下注册用户与交易数据。
+  </Card>
+  <Card title="手续费与收益" icon="coins">
+    支持项目级手续费配置、交易费率及 Builder 收益相关能力。
+  </Card>
+  <Card title="数据与运营" icon="chart-column">
+    查看项目级用户、交易及运营数据，并通过管理后台完成相关配置。
+  </Card>
+  <Card title="API 与 WebSocket" icon="code">
+    使用 REST API 与 WebSocket 接入账户、行情、交易及实时数据能力。
+  </Card>
+</CardGroup>
+
+## 支持的产品
+
+| 产品 | 说明 |
+| --- | --- |
+| PerpDEX | 永续合约交易、行情、订单、持仓与账户能力 |
+| 预测市场 | 事件结果市场、订单簿、交易与结算能力 |
+| 事件合约 | 事件类合约市场、交易与实时数据能力 |
+
+<Note>
+具体可用产品、接口与 Builder / Broker 管理能力，以当前 DexBuilder 开放范围及 API Reference 为准。
+</Note>
