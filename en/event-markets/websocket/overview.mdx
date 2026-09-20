@@ -5,6 +5,14 @@ description: "Prediction Markets API real-time data overview."
 
 WebSocket is used for live market and account updates.
 
+## Connection
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
+```
+
+The protocol uses JSON messages and the `pred.*` channel prefix.
+
 Typical use cases include:
 
 - market prices and order-book updates;
@@ -12,5 +20,19 @@ Typical use cases include:
 - order-state updates;
 - position updates;
 - account activity.
+
+Public channels do not require authentication. Private channels require API Key authentication.
+
+| Channel | Purpose |
+| --- | --- |
+| `pred.trades` | Public trades |
+| `pred.depth` | Order-book depth |
+| `pred.bbo` | Best bid and offer |
+| `pred.cpi` | CPI price updates |
+| `pred.candlestick` | Candlestick updates |
+| `pred.oc_price` | Open/close reference price |
+| `pred.status` | Market lifecycle and trading status |
+
+Private channels include `pred.orders`, `pred.usertrades`, `pred.positions`, and `pred.settlements`.
 
 Reconnect logic should restore the required subscriptions and refresh authoritative state when needed.

@@ -5,4 +5,12 @@ description: "Track Prediction Markets order changes through real-time data."
 
 Subscribe to authenticated order updates to keep the interface synchronized with server-side order state.
 
+Connect to:
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
+```
+
+Prediction Markets private channels use the `pred.*` prefix, including `pred.orders`, `pred.usertrades`, `pred.positions`, and `pred.settlements`. Private subscriptions require API Key authentication.
+
 On reconnect, refresh current open orders through REST before applying new updates.

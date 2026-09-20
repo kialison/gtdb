@@ -14,7 +14,7 @@ description: "訂閱目前認證使用者的訂單、成交、持倉和結算更
 
 訂閱目前帳戶全部相關更新。
 
-## 訂單 `em.orders`
+## 訂單 `pred.orders`
 
 訂單更新包含：
 
@@ -36,13 +36,13 @@ description: "訂閱目前認證使用者的訂單、成交、持倉和結算更
 
 訂單狀態包括 `PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 和 `FAILED`。
 
-## 使用者成交 `em.usertrades`
+## 使用者成交 `pred.usertrades`
 
 回傳目前使用者成交，包括 `trade_id`、`order_id`、`condition_id`、`token_id`、`side`、`role`、`px`、`qty`、`fee_rate`、`status` 和 `created_ts`。
 
 `role` 為 `MAKER` 或 `TAKER`；狀態通常為 `MATCHED` 或 `CONFIRMED`。
 
-## 持倉 `em.positions`
+## 持倉 `pred.positions`
 
 持倉推送可包含：
 
@@ -58,7 +58,7 @@ description: "訂閱目前認證使用者的訂單、成交、持倉和結算更
 - `claimable_amount`
 - `updated_ts`
 
-## 結算 `em.settlements`
+## 結算 `pred.settlements`
 
 結算更新包含 `position_id`、`event_id`、`condition_id`、`winning_outcome`、`is_winner`、`claimable_amount` 和 `created_ts`。
 

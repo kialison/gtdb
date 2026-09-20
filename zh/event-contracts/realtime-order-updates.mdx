@@ -9,7 +9,7 @@ description: "通过私有 WebSocket 频道实时接收订单、成交、持仓�
 ## 连接地址
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_contracts
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 ```
 
 客户端请求使用 `op`，服务端响应包含 `op`、`ch`、`result` 和 `err`。建议每个请求携带客户端生成的 `id`，用于关联 ACK 或错误响应。

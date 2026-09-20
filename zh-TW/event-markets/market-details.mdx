@@ -17,13 +17,13 @@ https://api.dexbuilder.com
 根據 Market ID：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
 ```
 
 根據 slug：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/slug/<market_slug>"
 ```
 
 ## 響應示例
@@ -86,9 +86,9 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>
 ```bash cURL
 TOKEN_ID="<token_id>"
 
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/order_book?depth=20"
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/price"
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/$TOKEN_ID/ticker"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/price"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/ticker"
 ```
 
 API 已直接在 `outcomes` 數組中回傳 Token ID，無需額外解析 JSON 字串形式的 Token 清單。
@@ -98,7 +98,7 @@ API 已直接在 `outcomes` 數組中回傳 Token ID，無需額外解析 JSON �
 使用響應中的 `event_id` 查詢父級 Event：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
+curl "https://api.dexbuilder.com/api/v4/prediction/events/<event_id>"
 ```
 
 Market 公開資料無需認證；下單、持倉、帳戶等私有介面需要認證。

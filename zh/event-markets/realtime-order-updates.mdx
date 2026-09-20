@@ -9,7 +9,7 @@ description: "通过私有 WebSocket 频道实时接收订单、成交、持仓�
 ## 连接地址
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_markets
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
 客户端请求使用 `op`，服务端响应包含 `op`、`ch`、`result` 和 `err`。建议每个请求携带客户端生成的 `id`，用于关联 ACK 或错误响应。
@@ -23,7 +23,7 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
   "t": 1787026512123,
   "id": "orders-1",
   "op": "subscribe",
-  "ch": "em.orders",
+  "ch": "pred.orders",
   "payload": {"all": true},
   "auth": {
     "method": "api_key",
@@ -47,10 +47,10 @@ channel=<channel>&event=<operation>&time=<timestamp_ms>
 
 | 频道 | 用途 |
 | --- | --- |
-| `em.orders` | 订单生命周期更新 |
-| `em.usertrades` | 当前用户成交更新 |
-| `em.positions` | 持仓变化 |
-| `em.settlements` | 结算与可领取状态变化 |
+| `pred.orders` | 订单生命周期更新 |
+| `pred.usertrades` | 当前用户成交更新 |
+| `pred.positions` | 持仓变化 |
+| `pred.settlements` | 结算与可领取状态变化 |
 
 私有订阅支持两种方式：按 `condition_id` 过滤，或使用 `payload.all=true` 订阅当前账户全部相关更新。两种方式不能同时使用。
 
@@ -62,7 +62,7 @@ channel=<channel>&event=<operation>&time=<timestamp_ms>
 
 ## 用户成交
 
-`em.usertrades` 用于推送当前认证用户的成交。常见字段包括：
+`pred.usertrades` 用于推送当前认证用户的成交。常见字段包括：
 
 - `trade_id`
 - `order_id`
@@ -79,9 +79,9 @@ channel=<channel>&event=<operation>&time=<timestamp_ms>
 
 ## 持仓与结算
 
-`em.positions` 会推送持仓数量、平均开仓价格、锁定数量、可用数量、可领取金额和结算状态。
+`pred.positions` 会推送持仓数量、平均开仓价格、锁定数量、可用数量、可领取金额和结算状态。
 
-`em.settlements` 会推送市场结算结果、是否获胜以及可领取金额。存在平局或特殊结算场景时，不应只依赖 `winning_outcome`，应同时判断 `is_winner` 与 `claimable_amount`。
+`pred.settlements` 会推送市场结算结果、是否获胜以及可领取金额。存在平局或特殊结算场景时，不应只依赖 `winning_outcome`，应同时判断 `is_winner` 与 `claimable_amount`。
 
 ## 断线恢复
 

@@ -5,6 +5,14 @@ description: "Event Contracts API real-time data overview."
 
 WebSocket is used for live market and account updates.
 
+## Connection
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+```
+
+The protocol uses JSON messages and the `ec.*` channel prefix.
+
 Typical use cases include:
 
 - market prices and order-book updates;
@@ -12,5 +20,19 @@ Typical use cases include:
 - order-state updates;
 - position updates;
 - account activity.
+
+Public channels do not require authentication. Private channels require API Key authentication.
+
+| Channel | Purpose |
+| --- | --- |
+| `ec.trades` | Public trades |
+| `ec.depth` | Order-book depth |
+| `ec.bbo` | Best bid and offer |
+| `ec.cpi` | CPI price updates |
+| `ec.candlestick` | Candlestick updates |
+| `ec.oc_price` | Open/close reference price |
+| `ec.status` | Market lifecycle and trading status |
+
+Private channels include `ec.orders`, `ec.usertrades`, `ec.positions`, and `ec.settlements`.
 
 Reconnect logic should restore the required subscriptions and refresh authoritative state when needed.

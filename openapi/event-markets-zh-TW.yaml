@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v4/event_markets/events": {
+    "/api/v4/prediction/events": {
       "get": {
         "summary": "查詢事件清單",
         "description": "查詢事件清單",
@@ -103,7 +103,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/{event_id}": {
+    "/api/v4/prediction/events/{event_id}": {
       "get": {
         "summary": "查詢事件詳情",
         "description": "查詢事件詳情",
@@ -131,7 +131,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/slug/{slug}": {
+    "/api/v4/prediction/events/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查詢事件",
         "description": "按 Slug 查詢事件",
@@ -159,7 +159,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets": {
+    "/api/v4/prediction/markets": {
       "get": {
         "summary": "查詢市場清單",
         "description": "查詢市場清單",
@@ -251,7 +251,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}": {
+    "/api/v4/prediction/markets/{market_id}": {
       "get": {
         "summary": "查詢市場詳情",
         "description": "查詢市場詳情",
@@ -279,7 +279,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/slug/{slug}": {
+    "/api/v4/prediction/markets/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查詢市場",
         "description": "按 Slug 查詢市場",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}/trades": {
+    "/api/v4/prediction/markets/{market_id}/trades": {
       "get": {
         "summary": "查詢市場成交記錄",
         "description": "查詢市場成交記錄",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/market": {
+    "/api/v4/prediction/tokens/{token_id}/market": {
       "get": {
         "summary": "查詢 Token 對應市場",
         "description": "查詢 Token 對應市場",
@@ -379,7 +379,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price": {
+    "/api/v4/prediction/tokens/{token_id}/price": {
       "get": {
         "summary": "查詢 Token 最新價格",
         "description": "查詢 Token 最新價格",
@@ -407,7 +407,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+    "/api/v4/prediction/tokens/{token_id}/ticker": {
       "get": {
         "summary": "查詢 Token Ticker",
         "description": "查詢 Token Ticker",
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+    "/api/v4/prediction/tokens/{token_id}/order_book": {
       "get": {
         "summary": "查詢訂單簿",
         "description": "查詢訂單簿",
@@ -471,7 +471,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+    "/api/v4/prediction/tokens/{token_id}/price_history": {
       "get": {
         "summary": "查詢價格歷史",
         "description": "查詢價格歷史",
@@ -523,7 +523,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/prices": {
+    "/api/v4/prediction/tokens/prices": {
       "get": {
         "summary": "批量查詢 Token 價格",
         "description": "批量查詢 Token 價格",
@@ -551,7 +551,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+    "/api/v4/prediction/tokens/{currency}/candlesticks": {
       "get": {
         "summary": "查詢 K 線",
         "description": "查詢 K 線",
@@ -611,7 +611,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders": {
+    "/api/v4/prediction/orders": {
       "post": {
         "summary": "提交訂單",
         "description": "提交訂單",
@@ -815,7 +815,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders/{order_id}": {
+    "/api/v4/prediction/orders/{order_id}": {
       "get": {
         "summary": "查詢單個訂單",
         "description": "查詢單個訂單",
@@ -875,7 +875,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions": {
+    "/api/v4/prediction/positions": {
       "get": {
         "summary": "查詢持倉清單",
         "description": "查詢持倉清單",
@@ -938,7 +938,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}": {
+    "/api/v4/prediction/positions/{position_id}": {
       "get": {
         "summary": "查詢持倉詳情",
         "description": "查詢持倉詳情",
@@ -969,7 +969,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}/close": {
+    "/api/v4/prediction/positions/{position_id}/close": {
       "post": {
         "summary": "平倉",
         "description": "平倉",
@@ -1000,7 +1000,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/usertrades": {
+    "/api/v4/prediction/usertrades": {
       "get": {
         "summary": "查詢個人成交",
         "description": "查詢個人成交",
@@ -1087,7 +1087,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/assets": {
+    "/api/v4/prediction/assets": {
       "get": {
         "summary": "查詢帳戶資產",
         "description": "查詢帳戶資產",
@@ -1108,7 +1108,7 @@
         }
       }
     },
-    "/api/v4/event_markets/account_book": {
+    "/api/v4/prediction/account_book": {
       "get": {
         "summary": "查詢資金流水",
         "description": "查詢資金流水",
@@ -1147,7 +1147,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/fee": {
+    "/api/v4/prediction/fee": {
       "get": {
         "summary": "查詢手續費",
         "description": "查詢手續費",
@@ -1178,7 +1178,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/claims/available": {
+    "/api/v4/prediction/claims/available": {
       "get": {
         "summary": "查詢全部可領取資產",
         "description": "查詢全部可領取資產",
@@ -1199,7 +1199,7 @@
         }
       }
     },
-    "/api/v4/event_markets/claims/available/{token_id}": {
+    "/api/v4/prediction/claims/available/{token_id}": {
       "get": {
         "summary": "查詢 Token 可領取資產",
         "description": "查詢 Token 可領取資產",
@@ -1230,7 +1230,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/claims": {
+    "/api/v4/prediction/claims": {
       "post": {
         "summary": "發起領取",
         "description": "發起領取",
@@ -1266,7 +1266,7 @@
         }
       }
     },
-    "/api/v4/event_markets/claims/{record_id}": {
+    "/api/v4/prediction/claims/{record_id}": {
       "get": {
         "summary": "查詢領取結果",
         "description": "查詢領取結果",
@@ -1297,7 +1297,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tags": {
+    "/api/v4/prediction/tags": {
       "get": {
         "summary": "查詢標籤",
         "description": "查詢標籤",
@@ -1333,7 +1333,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/time": {
+    "/api/v4/prediction/time": {
       "get": {
         "summary": "查詢伺服器時間",
         "description": "查詢伺服器時間",
@@ -1349,6 +1349,37 @@
             "description": "服務暫時不可用"
           }
         }
+      }
+    },
+    "/api/v4/prediction/events/price_to_beat_final_price/{slug}": {
+      "get": {
+        "summary": "查詢事件窗口目標價與最終價",
+        "description": "查詢事件窗口的目標價與最終價。",
+        "operationId": "query_event_reference_price",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "404": {
+            "description": "事件不存在或參考價格不可用"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   }

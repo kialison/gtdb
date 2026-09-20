@@ -12,7 +12,7 @@ description: "连接预测市场 WebSocket，接收实时公开行情和认证�
 ## 连接地址
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_markets
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
 当前协议版本为 **v2**，使用 JSON 消息。
@@ -21,22 +21,22 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 
 | 频道 | 用途 |
 | --- | --- |
-| `em.trades` | 公开成交 |
-| `em.depth` | 完整订单簿深度 |
-| `em.bbo` | 最优买卖价与最新价 |
-| `em.cpi` | CPI 价格更新 |
-| `em.candlestick` | K 线更新 |
-| `em.oc_price` | 开盘 / 收盘参考价 |
-| `em.status` | 市场生命周期与可交易状态 |
+| `pred.trades` | 公开成交 |
+| `pred.depth` | 完整订单簿深度 |
+| `pred.bbo` | 最优买卖价与最新价 |
+| `pred.cpi` | CPI 价格更新 |
+| `pred.candlestick` | K 线更新 |
+| `pred.oc_price` | 开盘 / 收盘参考价 |
+| `pred.status` | 市场生命周期与可交易状态 |
 
 ## 私有频道
 
 | 频道 | 用途 |
 | --- | --- |
-| `em.orders` | 订单状态更新 |
-| `em.usertrades` | 当前用户成交 |
-| `em.positions` | 持仓更新 |
-| `em.settlements` | 结算更新 |
+| `pred.orders` | 订单状态更新 |
+| `pred.usertrades` | 当前用户成交 |
+| `pred.positions` | 持仓更新 |
+| `pred.settlements` | 结算更新 |
 
 ## 首次订阅示例
 
@@ -45,7 +45,7 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
   "t": 1787026512123,
   "id": "depth-1",
   "op": "subscribe",
-  "ch": "em.depth",
+  "ch": "pred.depth",
   "payload": {
     "items": [{"token_id":"gate_token_id","level":20}]
   }

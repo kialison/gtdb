@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v4/event_markets/events": {
+    "/api/v4/event_contracts/events": {
       "get": {
         "summary": "List Events",
         "description": "List Events.",
@@ -103,7 +103,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/{event_id}": {
+    "/api/v4/event_contracts/events/{event_id}": {
       "get": {
         "summary": "Get Event",
         "description": "Get Event.",
@@ -131,7 +131,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/slug/{slug}": {
+    "/api/v4/event_contracts/events/slug/{slug}": {
       "get": {
         "summary": "Get Event by Slug",
         "description": "Get Event by Slug.",
@@ -159,7 +159,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets": {
+    "/api/v4/event_contracts/markets": {
       "get": {
         "summary": "List Markets",
         "description": "List Markets.",
@@ -251,7 +251,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}": {
+    "/api/v4/event_contracts/markets/{market_id}": {
       "get": {
         "summary": "Get Market",
         "description": "Get Market.",
@@ -279,7 +279,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/slug/{slug}": {
+    "/api/v4/event_contracts/markets/slug/{slug}": {
       "get": {
         "summary": "Get Market by Slug",
         "description": "Get Market by Slug.",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}/trades": {
+    "/api/v4/event_contracts/markets/{market_id}/trades": {
       "get": {
         "summary": "Get Market Trades",
         "description": "Get Market Trades.",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/market": {
+    "/api/v4/event_contracts/tokens/{token_id}/market": {
       "get": {
         "summary": "Get Market for Token",
         "description": "Get Market for Token.",
@@ -379,7 +379,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price": {
+    "/api/v4/event_contracts/tokens/{token_id}/price": {
       "get": {
         "summary": "Get Latest Token Price",
         "description": "Get Latest Token Price.",
@@ -407,7 +407,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+    "/api/v4/event_contracts/tokens/{token_id}/ticker": {
       "get": {
         "summary": "Get Token Ticker",
         "description": "Get Token Ticker.",
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+    "/api/v4/event_contracts/tokens/{token_id}/order_book": {
       "get": {
         "summary": "Get Order Book",
         "description": "Get Order Book.",
@@ -471,7 +471,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+    "/api/v4/event_contracts/tokens/{token_id}/price_history": {
       "get": {
         "summary": "Get Price History",
         "description": "Get Price History.",
@@ -523,7 +523,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/prices": {
+    "/api/v4/event_contracts/tokens/prices": {
       "get": {
         "summary": "Get Token Prices",
         "description": "Get Token Prices.",
@@ -551,7 +551,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+    "/api/v4/event_contracts/tokens/{currency}/candlesticks": {
       "get": {
         "summary": "Get Candlesticks",
         "description": "Get Candlesticks.",
@@ -611,7 +611,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders": {
+    "/api/v4/event_contracts/orders": {
       "post": {
         "summary": "Place Order",
         "description": "Place Order.",
@@ -815,7 +815,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders/{order_id}": {
+    "/api/v4/event_contracts/orders/{order_id}": {
       "get": {
         "summary": "Get Order",
         "description": "Get Order.",
@@ -875,7 +875,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions": {
+    "/api/v4/event_contracts/positions": {
       "get": {
         "summary": "List Positions",
         "description": "List Positions.",
@@ -938,69 +938,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}": {
-      "get": {
-        "summary": "Get Position",
-        "description": "Get Position.",
-        "operationId": "query_position",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/positions/{position_id}/close": {
-      "post": {
-        "summary": "Close Position",
-        "description": "Close Position.",
-        "operationId": "close_position",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/usertrades": {
+    "/api/v4/event_contracts/usertrades": {
       "get": {
         "summary": "List User Trades",
         "description": "List User Trades.",
@@ -1087,7 +1025,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/assets": {
+    "/api/v4/event_contracts/assets": {
       "get": {
         "summary": "Get Account Assets",
         "description": "Get Account Assets.",
@@ -1108,7 +1046,7 @@
         }
       }
     },
-    "/api/v4/event_markets/account_book": {
+    "/api/v4/event_contracts/account_book": {
       "get": {
         "summary": "Get Account Book",
         "description": "Get Account Book.",
@@ -1147,157 +1085,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/fee": {
-      "get": {
-        "summary": "Get Trading Fee",
-        "description": "Get Trading Fee.",
-        "operationId": "query_fee",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "parameters": [
-          {
-            "name": "fee_type",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims/available": {
-      "get": {
-        "summary": "List Available Claims",
-        "description": "List Available Claims.",
-        "operationId": "query_available_claims",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/available/{token_id}": {
-      "get": {
-        "summary": "Get Available Claim for Token",
-        "description": "Get Available Claim for Token.",
-        "operationId": "query_available_claim",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "parameters": [
-          {
-            "name": "token_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims": {
-      "post": {
-        "summary": "Create Claim",
-        "description": "Create Claim.",
-        "operationId": "create_claim",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "event_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/{record_id}": {
-      "get": {
-        "summary": "Get Claim Result",
-        "description": "Get Claim Result.",
-        "operationId": "query_claim",
-        "responses": {
-          "200": {
-            "description": "Request succeeded"
-          },
-          "400": {
-            "description": "Invalid request or parameters"
-          },
-          "401": {
-            "description": "Authentication failed"
-          },
-          "503": {
-            "description": "Service temporarily unavailable"
-          }
-        },
-        "parameters": [
-          {
-            "name": "record_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/tags": {
+    "/api/v4/event_contracts/tags": {
       "get": {
         "summary": "List Tags",
         "description": "List Tags.",
@@ -1333,7 +1121,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/time": {
+    "/api/v4/event_contracts/time": {
       "get": {
         "summary": "Get Server Time",
         "description": "Get Server Time.",
@@ -1347,6 +1135,280 @@
           },
           "503": {
             "description": "Service temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/events/price_to_beat_final_price/{slug}": {
+      "get": {
+        "summary": "Get Event Reference Price",
+        "description": "Get the target and final prices for an event window.",
+        "operationId": "query_event_reference_price",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "404": {
+            "description": "Event not found or reference price unavailable"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/positions/settled": {
+      "get": {
+        "summary": "List Settled Positions",
+        "description": "List settled Event Contract positions.",
+        "operationId": "query_settled_positions",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/balance": {
+      "get": {
+        "summary": "Get Account Balance",
+        "description": "Get the Event Contract account balance for the current user.",
+        "operationId": "query_balance",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/fund_flows": {
+      "get": {
+        "summary": "List Fund Flows",
+        "description": "List fund flows with type, time-range, and cursor filters.",
+        "operationId": "query_fund_flows",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/fee/current": {
+      "get": {
+        "summary": "Get Current Fee",
+        "description": "Get the current fee configuration.",
+        "operationId": "query_current_fee",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fee_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/transfer": {
+      "post": {
+        "summary": "Transfer Event Contract Funds",
+        "description": "Transfer USDT between the spot account and the Event Contract sub-account.",
+        "operationId": "transfer",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "401": {
+            "description": "Authentication failed"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "from_account",
+                  "to_account",
+                  "currency",
+                  "amount",
+                  "client_oid"
+                ],
+                "properties": {
+                  "from_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "to_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "USDT"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string"
+                  },
+                  "client_oid": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }

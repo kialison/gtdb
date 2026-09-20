@@ -5,4 +5,18 @@ description: "Authenticate private Event Contracts API WebSocket subscriptions."
 
 Private subscriptions require API credentials and a valid signature.
 
+Connect to:
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+```
+
+Use API Key authentication for private subscriptions. The API Secret is used locally to generate the signature and must never be sent over the WebSocket connection.
+
+The subscription signature payload is:
+
+```text
+channel=<channel>&event=<operation>&time=<timestamp_ms>
+```
+
 Never expose the API Secret in frontend code or transmit it as a plaintext credential. Generate signatures according to the documented signing rules and rotate compromised credentials immediately.

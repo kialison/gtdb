@@ -21,13 +21,13 @@ Event 用於將一個或多個相關 Market 組織在一起。
 ### 根據 ID 查詢 Event
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/<event_id>"
+curl "https://api.dexbuilder.com/api/v4/prediction/events/<event_id>"
 ```
 
 ### 根據 slug 查詢 Event
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events/slug/<event_slug>"
+curl "https://api.dexbuilder.com/api/v4/prediction/events/slug/<event_slug>"
 ```
 
 Event 詳情常用欄位：
@@ -60,7 +60,7 @@ Event 詳情常用欄位：
 ### Event 清單
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
 ```
 
 支援的主要 Query 參數：
@@ -102,7 +102,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&active=tru
 當 `next_cursor` 非空時，將它原樣作為下一次請求的 `cursor`：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/events?limit=20&cursor=<next_cursor>"
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&cursor=<next_cursor>"
 ```
 
 ## Markets
@@ -112,13 +112,13 @@ Market 是實際可交易的問題，每個 Market 包含一個或多個 Outcome
 ### 根據 Market ID 查詢
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
 ```
 
 ### 根據 slug 查詢
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/slug/<market_slug>"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/slug/<market_slug>"
 ```
 
 Market 詳情中的 `outcomes` 數組直接回傳訂單簿與價格介面所需的 `token_id`。
@@ -160,7 +160,7 @@ Market 詳情中的 `outcomes` 數組直接回傳訂單簿與價格介面所需�
 ### Market 清單
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets?limit=20&active=true&closed=false&tag_slug=sports"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets?limit=20&active=true&closed=false&tag_slug=sports"
 ```
 
 主要參數：
@@ -181,7 +181,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/markets?limit=20&active=tr
 Tag 可用於構建分類篩選：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tags?limit=20&cursor=<cursor>"
+curl "https://api.dexbuilder.com/api/v4/prediction/tags?limit=20&cursor=<cursor>"
 ```
 
 ```json

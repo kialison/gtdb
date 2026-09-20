@@ -15,7 +15,7 @@ https://api.dexbuilder.com
 ## 查询持仓
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "event_id=<event_id>" \
   --data-urlencode "condition_id=<condition_id>" \
@@ -25,17 +25,19 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
 
 常见返回字段包括：`position_id`、`event_id`、`token_id`、`outcome`、`size`、`available_size`、`locked_size`、`avg_open_price`、`position_value`、`settlement_status`、`won` 和 `updated_at`。
 
-## 查询单个持仓
+## 查询已结算持仓
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/positions/<position_id>" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions/settled" \
   -H "<authentication-header>: <authentication-value>"
 ```
+
+该接口返回已结算的事件合约持仓。
 
 ## 查询个人成交
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/usertrades" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "condition_id=<condition_id>" \
   --data-urlencode "token_id=<token_id>" \

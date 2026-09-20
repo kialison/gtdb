@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v4/event_markets/events": {
+    "/api/v4/prediction/events": {
       "get": {
         "summary": "List Events",
         "description": "List Events.",
@@ -103,7 +103,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/{event_id}": {
+    "/api/v4/prediction/events/{event_id}": {
       "get": {
         "summary": "Get Event",
         "description": "Get Event.",
@@ -131,7 +131,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/slug/{slug}": {
+    "/api/v4/prediction/events/slug/{slug}": {
       "get": {
         "summary": "Get Event by Slug",
         "description": "Get Event by Slug.",
@@ -159,7 +159,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets": {
+    "/api/v4/prediction/markets": {
       "get": {
         "summary": "List Markets",
         "description": "List Markets.",
@@ -251,7 +251,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}": {
+    "/api/v4/prediction/markets/{market_id}": {
       "get": {
         "summary": "Get Market",
         "description": "Get Market.",
@@ -279,7 +279,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/slug/{slug}": {
+    "/api/v4/prediction/markets/slug/{slug}": {
       "get": {
         "summary": "Get Market by Slug",
         "description": "Get Market by Slug.",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}/trades": {
+    "/api/v4/prediction/markets/{market_id}/trades": {
       "get": {
         "summary": "Get Market Trades",
         "description": "Get Market Trades.",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/market": {
+    "/api/v4/prediction/tokens/{token_id}/market": {
       "get": {
         "summary": "Get Market for Token",
         "description": "Get Market for Token.",
@@ -379,7 +379,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price": {
+    "/api/v4/prediction/tokens/{token_id}/price": {
       "get": {
         "summary": "Get Latest Token Price",
         "description": "Get Latest Token Price.",
@@ -407,7 +407,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+    "/api/v4/prediction/tokens/{token_id}/ticker": {
       "get": {
         "summary": "Get Token Ticker",
         "description": "Get Token Ticker.",
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+    "/api/v4/prediction/tokens/{token_id}/order_book": {
       "get": {
         "summary": "Get Order Book",
         "description": "Get Order Book.",
@@ -471,7 +471,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+    "/api/v4/prediction/tokens/{token_id}/price_history": {
       "get": {
         "summary": "Get Price History",
         "description": "Get Price History.",
@@ -523,7 +523,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/prices": {
+    "/api/v4/prediction/tokens/prices": {
       "get": {
         "summary": "Get Token Prices",
         "description": "Get Token Prices.",
@@ -551,7 +551,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+    "/api/v4/prediction/tokens/{currency}/candlesticks": {
       "get": {
         "summary": "Get Candlesticks",
         "description": "Get Candlesticks.",
@@ -611,7 +611,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders": {
+    "/api/v4/prediction/orders": {
       "post": {
         "summary": "Place Order",
         "description": "Place Order.",
@@ -815,7 +815,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders/{order_id}": {
+    "/api/v4/prediction/orders/{order_id}": {
       "get": {
         "summary": "Get Order",
         "description": "Get Order.",
@@ -875,7 +875,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions": {
+    "/api/v4/prediction/positions": {
       "get": {
         "summary": "List Positions",
         "description": "List Positions.",
@@ -938,7 +938,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}": {
+    "/api/v4/prediction/positions/{position_id}": {
       "get": {
         "summary": "Get Position",
         "description": "Get Position.",
@@ -969,7 +969,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}/close": {
+    "/api/v4/prediction/positions/{position_id}/close": {
       "post": {
         "summary": "Close Position",
         "description": "Close Position.",
@@ -1000,7 +1000,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/usertrades": {
+    "/api/v4/prediction/usertrades": {
       "get": {
         "summary": "List User Trades",
         "description": "List User Trades.",
@@ -1087,7 +1087,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/assets": {
+    "/api/v4/prediction/assets": {
       "get": {
         "summary": "Get Account Assets",
         "description": "Get Account Assets.",
@@ -1108,7 +1108,7 @@
         }
       }
     },
-    "/api/v4/event_markets/account_book": {
+    "/api/v4/prediction/account_book": {
       "get": {
         "summary": "Get Account Book",
         "description": "Get Account Book.",
@@ -1147,7 +1147,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/fee": {
+    "/api/v4/prediction/fee": {
       "get": {
         "summary": "Get Trading Fee",
         "description": "Get Trading Fee.",
@@ -1178,7 +1178,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/claims/available": {
+    "/api/v4/prediction/claims/available": {
       "get": {
         "summary": "List Available Claims",
         "description": "List Available Claims.",
@@ -1199,7 +1199,7 @@
         }
       }
     },
-    "/api/v4/event_markets/claims/available/{token_id}": {
+    "/api/v4/prediction/claims/available/{token_id}": {
       "get": {
         "summary": "Get Available Claim for Token",
         "description": "Get Available Claim for Token.",
@@ -1230,7 +1230,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/claims": {
+    "/api/v4/prediction/claims": {
       "post": {
         "summary": "Create Claim",
         "description": "Create Claim.",
@@ -1266,7 +1266,7 @@
         }
       }
     },
-    "/api/v4/event_markets/claims/{record_id}": {
+    "/api/v4/prediction/claims/{record_id}": {
       "get": {
         "summary": "Get Claim Result",
         "description": "Get Claim Result.",
@@ -1297,7 +1297,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tags": {
+    "/api/v4/prediction/tags": {
       "get": {
         "summary": "List Tags",
         "description": "List Tags.",
@@ -1333,7 +1333,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/time": {
+    "/api/v4/prediction/time": {
       "get": {
         "summary": "Get Server Time",
         "description": "Get Server Time.",
@@ -1349,6 +1349,37 @@
             "description": "Service temporarily unavailable"
           }
         }
+      }
+    },
+    "/api/v4/prediction/events/price_to_beat_final_price/{slug}": {
+      "get": {
+        "summary": "Get Event Reference Price",
+        "description": "Get the target and final prices for an event window.",
+        "operationId": "query_event_reference_price",
+        "responses": {
+          "200": {
+            "description": "Request succeeded"
+          },
+          "400": {
+            "description": "Invalid request or parameters"
+          },
+          "404": {
+            "description": "Event not found or reference price unavailable"
+          },
+          "503": {
+            "description": "Service temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   }

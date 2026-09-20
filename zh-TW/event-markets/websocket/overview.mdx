@@ -12,7 +12,7 @@ description: "連接預測市場 WebSocket，接收即時公開行情和認證�
 ## 連接位址
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_markets
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
 目前協議版本為 **v2**，使用 JSON 消息。
@@ -21,22 +21,22 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
 
 | 頻道 | 用途 |
 | --- | --- |
-| `em.trades` | 公開成交 |
-| `em.depth` | 完整訂單簿深度 |
-| `em.bbo` | 最優買賣價與最新價 |
-| `em.cpi` | CPI 價格更新 |
-| `em.candlestick` | K 線更新 |
-| `em.oc_price` | 開盤 / 收盤參考價 |
-| `em.status` | 市場生命週期與可交易狀態 |
+| `pred.trades` | 公開成交 |
+| `pred.depth` | 完整訂單簿深度 |
+| `pred.bbo` | 最優買賣價與最新價 |
+| `pred.cpi` | CPI 價格更新 |
+| `pred.candlestick` | K 線更新 |
+| `pred.oc_price` | 開盤 / 收盤參考價 |
+| `pred.status` | 市場生命週期與可交易狀態 |
 
 ## 私有頻道
 
 | 頻道 | 用途 |
 | --- | --- |
-| `em.orders` | 訂單狀態更新 |
-| `em.usertrades` | 目前使用者成交 |
-| `em.positions` | 持倉更新 |
-| `em.settlements` | 結算更新 |
+| `pred.orders` | 訂單狀態更新 |
+| `pred.usertrades` | 目前使用者成交 |
+| `pred.positions` | 持倉更新 |
+| `pred.settlements` | 結算更新 |
 
 ## 首次訂閱示例
 
@@ -45,7 +45,7 @@ wss://broker.dexbuilder.com/v4/ws/event_markets
   "t": 1787026512123,
   "id": "depth-1",
   "op": "subscribe",
-  "ch": "em.depth",
+  "ch": "pred.depth",
   "payload": {
     "items": [{"token_id":"gate_token_id","level":20}]
   }

@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v4/event_markets/events": {
+    "/api/v4/event_contracts/events": {
       "get": {
         "summary": "查詢事件清單",
         "description": "查詢事件清單",
@@ -103,7 +103,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/{event_id}": {
+    "/api/v4/event_contracts/events/{event_id}": {
       "get": {
         "summary": "查詢事件詳情",
         "description": "查詢事件詳情",
@@ -131,7 +131,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/slug/{slug}": {
+    "/api/v4/event_contracts/events/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查詢事件",
         "description": "按 Slug 查詢事件",
@@ -159,7 +159,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets": {
+    "/api/v4/event_contracts/markets": {
       "get": {
         "summary": "查詢市場清單",
         "description": "查詢市場清單",
@@ -251,7 +251,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}": {
+    "/api/v4/event_contracts/markets/{market_id}": {
       "get": {
         "summary": "查詢市場詳情",
         "description": "查詢市場詳情",
@@ -279,7 +279,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/slug/{slug}": {
+    "/api/v4/event_contracts/markets/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查詢市場",
         "description": "按 Slug 查詢市場",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}/trades": {
+    "/api/v4/event_contracts/markets/{market_id}/trades": {
       "get": {
         "summary": "查詢市場成交記錄",
         "description": "查詢市場成交記錄",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/market": {
+    "/api/v4/event_contracts/tokens/{token_id}/market": {
       "get": {
         "summary": "查詢 Token 對應市場",
         "description": "查詢 Token 對應市場",
@@ -379,7 +379,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price": {
+    "/api/v4/event_contracts/tokens/{token_id}/price": {
       "get": {
         "summary": "查詢 Token 最新價格",
         "description": "查詢 Token 最新價格",
@@ -407,7 +407,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+    "/api/v4/event_contracts/tokens/{token_id}/ticker": {
       "get": {
         "summary": "查詢 Token Ticker",
         "description": "查詢 Token Ticker",
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+    "/api/v4/event_contracts/tokens/{token_id}/order_book": {
       "get": {
         "summary": "查詢訂單簿",
         "description": "查詢訂單簿",
@@ -471,7 +471,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+    "/api/v4/event_contracts/tokens/{token_id}/price_history": {
       "get": {
         "summary": "查詢價格歷史",
         "description": "查詢價格歷史",
@@ -523,7 +523,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/prices": {
+    "/api/v4/event_contracts/tokens/prices": {
       "get": {
         "summary": "批量查詢 Token 價格",
         "description": "批量查詢 Token 價格",
@@ -551,7 +551,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+    "/api/v4/event_contracts/tokens/{currency}/candlesticks": {
       "get": {
         "summary": "查詢 K 線",
         "description": "查詢 K 線",
@@ -611,7 +611,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders": {
+    "/api/v4/event_contracts/orders": {
       "post": {
         "summary": "提交訂單",
         "description": "提交訂單",
@@ -815,7 +815,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders/{order_id}": {
+    "/api/v4/event_contracts/orders/{order_id}": {
       "get": {
         "summary": "查詢單個訂單",
         "description": "查詢單個訂單",
@@ -875,7 +875,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions": {
+    "/api/v4/event_contracts/positions": {
       "get": {
         "summary": "查詢持倉清單",
         "description": "查詢持倉清單",
@@ -938,69 +938,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}": {
-      "get": {
-        "summary": "查詢持倉詳情",
-        "description": "查詢持倉詳情",
-        "operationId": "query_position",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/positions/{position_id}/close": {
-      "post": {
-        "summary": "平倉",
-        "description": "平倉",
-        "operationId": "close_position",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/usertrades": {
+    "/api/v4/event_contracts/usertrades": {
       "get": {
         "summary": "查詢個人成交",
         "description": "查詢個人成交",
@@ -1087,7 +1025,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/assets": {
+    "/api/v4/event_contracts/assets": {
       "get": {
         "summary": "查詢帳戶資產",
         "description": "查詢帳戶資產",
@@ -1108,7 +1046,7 @@
         }
       }
     },
-    "/api/v4/event_markets/account_book": {
+    "/api/v4/event_contracts/account_book": {
       "get": {
         "summary": "查詢資金流水",
         "description": "查詢資金流水",
@@ -1147,157 +1085,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/fee": {
-      "get": {
-        "summary": "查詢手續費",
-        "description": "查詢手續費",
-        "operationId": "query_fee",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "fee_type",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims/available": {
-      "get": {
-        "summary": "查詢全部可領取資產",
-        "description": "查詢全部可領取資產",
-        "operationId": "query_available_claims",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/available/{token_id}": {
-      "get": {
-        "summary": "查詢 Token 可領取資產",
-        "description": "查詢 Token 可領取資產",
-        "operationId": "query_available_claim",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "token_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims": {
-      "post": {
-        "summary": "發起領取",
-        "description": "發起領取",
-        "operationId": "create_claim",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "event_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/{record_id}": {
-      "get": {
-        "summary": "查詢領取結果",
-        "description": "查詢領取結果",
-        "operationId": "query_claim",
-        "responses": {
-          "200": {
-            "description": "請求成功"
-          },
-          "400": {
-            "description": "請求參數錯誤"
-          },
-          "401": {
-            "description": "認證失敗"
-          },
-          "503": {
-            "description": "服務暫時不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "record_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/tags": {
+    "/api/v4/event_contracts/tags": {
       "get": {
         "summary": "查詢標籤",
         "description": "查詢標籤",
@@ -1333,7 +1121,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/time": {
+    "/api/v4/event_contracts/time": {
       "get": {
         "summary": "查詢伺服器時間",
         "description": "查詢伺服器時間",
@@ -1347,6 +1135,280 @@
           },
           "503": {
             "description": "服務暫時不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/events/price_to_beat_final_price/{slug}": {
+      "get": {
+        "summary": "查詢事件窗口目標價與最終價",
+        "description": "查詢事件窗口的目標價與最終價。",
+        "operationId": "query_event_reference_price",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "404": {
+            "description": "事件不存在或參考價格不可用"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/positions/settled": {
+      "get": {
+        "summary": "查詢已結算持倉",
+        "description": "查詢已結算的事件合約持倉。",
+        "operationId": "query_settled_positions",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "401": {
+            "description": "認證失敗"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/balance": {
+      "get": {
+        "summary": "查詢帳戶餘額",
+        "description": "查詢目前使用者的事件合約帳戶餘額。",
+        "operationId": "query_balance",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "401": {
+            "description": "驗證失敗"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/fund_flows": {
+      "get": {
+        "summary": "查詢資金流水",
+        "description": "查詢目前使用者資金流水，支援類型、時間範圍與游標分頁。",
+        "operationId": "query_fund_flows",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "401": {
+            "description": "驗證失敗"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/fee/current": {
+      "get": {
+        "summary": "查詢目前手續費",
+        "description": "查詢目前手續費設定。",
+        "operationId": "query_current_fee",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "401": {
+            "description": "認證失敗"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fee_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/transfer": {
+      "post": {
+        "summary": "事件合約轉帳",
+        "description": "在現貨帳戶與事件合約子帳戶之間發起 USDT 劃轉。",
+        "operationId": "transfer",
+        "responses": {
+          "200": {
+            "description": "請求成功"
+          },
+          "400": {
+            "description": "請求參數錯誤"
+          },
+          "401": {
+            "description": "驗證失敗"
+          },
+          "503": {
+            "description": "服務暫時不可用"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "from_account",
+                  "to_account",
+                  "currency",
+                  "amount",
+                  "client_oid"
+                ],
+                "properties": {
+                  "from_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "to_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "USDT"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string"
+                  },
+                  "client_oid": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }

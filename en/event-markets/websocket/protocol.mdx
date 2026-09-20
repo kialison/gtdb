@@ -3,7 +3,21 @@ title: "WebSocket Protocol"
 description: "Prediction Markets API WebSocket message format and subscription flow."
 ---
 
-WebSocket messages use JSON. A subscription normally identifies the channel, operation, and subscription payload.
+WebSocket messages use JSON. A subscription identifies the channel, operation, and subscription payload.
+
+For Prediction Markets, public and private channels use the `pred.*` prefix. For example:
+
+```json
+{
+  "t": 1787026512123,
+  "id": "depth-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "payload": {
+    "items": [{"token_id": "gate_token_id", "level": 20}]
+  }
+}
+```
 
 Clients should:
 

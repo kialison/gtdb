@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/api/v4/event_markets/events": {
+    "/api/v4/event_contracts/events": {
       "get": {
         "summary": "查询事件列表",
         "description": "查询事件列表",
@@ -103,7 +103,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/{event_id}": {
+    "/api/v4/event_contracts/events/{event_id}": {
       "get": {
         "summary": "查询事件详情",
         "description": "查询事件详情",
@@ -131,7 +131,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/events/slug/{slug}": {
+    "/api/v4/event_contracts/events/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查询事件",
         "description": "按 Slug 查询事件",
@@ -159,7 +159,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets": {
+    "/api/v4/event_contracts/markets": {
       "get": {
         "summary": "查询市场列表",
         "description": "查询市场列表",
@@ -251,7 +251,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}": {
+    "/api/v4/event_contracts/markets/{market_id}": {
       "get": {
         "summary": "查询市场详情",
         "description": "查询市场详情",
@@ -279,7 +279,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/slug/{slug}": {
+    "/api/v4/event_contracts/markets/slug/{slug}": {
       "get": {
         "summary": "按 Slug 查询市场",
         "description": "按 Slug 查询市场",
@@ -307,7 +307,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/markets/{market_id}/trades": {
+    "/api/v4/event_contracts/markets/{market_id}/trades": {
       "get": {
         "summary": "查询市场成交记录",
         "description": "查询市场成交记录",
@@ -351,7 +351,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/market": {
+    "/api/v4/event_contracts/tokens/{token_id}/market": {
       "get": {
         "summary": "查询 Token 对应市场",
         "description": "查询 Token 对应市场",
@@ -379,7 +379,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price": {
+    "/api/v4/event_contracts/tokens/{token_id}/price": {
       "get": {
         "summary": "查询 Token 最新价格",
         "description": "查询 Token 最新价格",
@@ -407,7 +407,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/ticker": {
+    "/api/v4/event_contracts/tokens/{token_id}/ticker": {
       "get": {
         "summary": "查询 Token Ticker",
         "description": "查询 Token Ticker",
@@ -435,7 +435,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/order_book": {
+    "/api/v4/event_contracts/tokens/{token_id}/order_book": {
       "get": {
         "summary": "查询订单簿",
         "description": "查询订单簿",
@@ -471,7 +471,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{token_id}/price_history": {
+    "/api/v4/event_contracts/tokens/{token_id}/price_history": {
       "get": {
         "summary": "查询价格历史",
         "description": "查询价格历史",
@@ -523,7 +523,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/prices": {
+    "/api/v4/event_contracts/tokens/prices": {
       "get": {
         "summary": "批量查询 Token 价格",
         "description": "批量查询 Token 价格",
@@ -551,7 +551,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/tokens/{currency}/candlesticks": {
+    "/api/v4/event_contracts/tokens/{currency}/candlesticks": {
       "get": {
         "summary": "查询 K 线",
         "description": "查询 K 线",
@@ -611,7 +611,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders": {
+    "/api/v4/event_contracts/orders": {
       "post": {
         "summary": "提交订单",
         "description": "提交订单",
@@ -815,7 +815,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/orders/{order_id}": {
+    "/api/v4/event_contracts/orders/{order_id}": {
       "get": {
         "summary": "查询单个订单",
         "description": "查询单个订单",
@@ -875,7 +875,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions": {
+    "/api/v4/event_contracts/positions": {
       "get": {
         "summary": "查询持仓列表",
         "description": "查询持仓列表",
@@ -938,69 +938,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/positions/{position_id}": {
-      "get": {
-        "summary": "查询持仓详情",
-        "description": "查询持仓详情",
-        "operationId": "query_position",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/positions/{position_id}/close": {
-      "post": {
-        "summary": "平仓",
-        "description": "平仓",
-        "operationId": "close_position",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "position_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/usertrades": {
+    "/api/v4/event_contracts/usertrades": {
       "get": {
         "summary": "查询个人成交",
         "description": "查询个人成交",
@@ -1087,7 +1025,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/assets": {
+    "/api/v4/event_contracts/assets": {
       "get": {
         "summary": "查询账户资产",
         "description": "查询账户资产",
@@ -1108,7 +1046,7 @@
         }
       }
     },
-    "/api/v4/event_markets/account_book": {
+    "/api/v4/event_contracts/account_book": {
       "get": {
         "summary": "查询资金流水",
         "description": "查询资金流水",
@@ -1147,157 +1085,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/fee": {
-      "get": {
-        "summary": "查询手续费",
-        "description": "查询手续费",
-        "operationId": "query_fee",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "fee_type",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims/available": {
-      "get": {
-        "summary": "查询全部可领取资产",
-        "description": "查询全部可领取资产",
-        "operationId": "query_available_claims",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/available/{token_id}": {
-      "get": {
-        "summary": "查询 Token 可领取资产",
-        "description": "查询 Token 可领取资产",
-        "operationId": "query_available_claim",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "token_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/claims": {
-      "post": {
-        "summary": "发起领取",
-        "description": "发起领取",
-        "operationId": "create_claim",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "event_id": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v4/event_markets/claims/{record_id}": {
-      "get": {
-        "summary": "查询领取结果",
-        "description": "查询领取结果",
-        "operationId": "query_claim",
-        "responses": {
-          "200": {
-            "description": "请求成功"
-          },
-          "400": {
-            "description": "请求参数错误"
-          },
-          "401": {
-            "description": "认证失败"
-          },
-          "503": {
-            "description": "服务暂时不可用"
-          }
-        },
-        "parameters": [
-          {
-            "name": "record_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      }
-    },
-    "/api/v4/event_markets/tags": {
+    "/api/v4/event_contracts/tags": {
       "get": {
         "summary": "查询标签",
         "description": "查询标签",
@@ -1333,7 +1121,7 @@
         ]
       }
     },
-    "/api/v4/event_markets/time": {
+    "/api/v4/event_contracts/time": {
       "get": {
         "summary": "查询服务器时间",
         "description": "查询服务器时间",
@@ -1347,6 +1135,280 @@
           },
           "503": {
             "description": "服务暂时不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/events/price_to_beat_final_price/{slug}": {
+      "get": {
+        "summary": "查询事件窗口目标价与最终价",
+        "description": "查询事件窗口的目标价与最终价。",
+        "operationId": "query_event_reference_price",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "404": {
+            "description": "事件不存在或参考价格不可用"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/positions/settled": {
+      "get": {
+        "summary": "查询已结算持仓",
+        "description": "查询已结算的事件合约持仓。",
+        "operationId": "query_settled_positions",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/balance": {
+      "get": {
+        "summary": "查询账户余额",
+        "description": "查询当前用户的事件合约账户余额。",
+        "operationId": "query_balance",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        }
+      }
+    },
+    "/api/v4/event_contracts/fund_flows": {
+      "get": {
+        "summary": "查询资金流水",
+        "description": "查询当前用户资金流水，支持类型、时间范围和游标分页。",
+        "operationId": "query_fund_flows",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "time_period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "to_time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/fee/current": {
+      "get": {
+        "summary": "查询当前手续费",
+        "description": "查询当前手续费配置。",
+        "operationId": "query_current_fee",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "parameters": [
+          {
+            "name": "fee_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v4/event_contracts/transfer": {
+      "post": {
+        "summary": "事件合约转账",
+        "description": "在现货账户与事件合约子账户之间发起 USDT 划转。",
+        "operationId": "transfer",
+        "responses": {
+          "200": {
+            "description": "请求成功"
+          },
+          "400": {
+            "description": "请求参数错误"
+          },
+          "401": {
+            "description": "认证失败"
+          },
+          "503": {
+            "description": "服务暂时不可用"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "from_account",
+                  "to_account",
+                  "currency",
+                  "amount",
+                  "client_oid"
+                ],
+                "properties": {
+                  "from_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "to_account": {
+                    "type": "string",
+                    "enum": [
+                      "spot",
+                      "sub_spot",
+                      "event_contract"
+                    ]
+                  },
+                  "currency": {
+                    "type": "string",
+                    "enum": [
+                      "USDT"
+                    ]
+                  },
+                  "amount": {
+                    "type": "string"
+                  },
+                  "client_oid": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         }
       }

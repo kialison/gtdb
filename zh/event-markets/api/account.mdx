@@ -9,7 +9,7 @@ description: "查询预测市场账户资产、资金流水、手续费以及结
 ## 账户资产
 
 ```text
-GET /api/v4/event_markets/assets
+GET /api/v4/prediction/assets
 ```
 
 常见字段：
@@ -25,7 +25,7 @@ GET /api/v4/event_markets/assets
 ## 资金流水
 
 ```text
-GET /api/v4/event_markets/account_book
+GET /api/v4/prediction/account_book
 ```
 
 支持 `limit` 与 `cursor`。记录通常包含 `amount`、`condition_id`、`created_at`、`currency`、`direction` 和 `related_order_id`。
@@ -33,7 +33,7 @@ GET /api/v4/event_markets/account_book
 ## 手续费
 
 ```text
-GET /api/v4/event_markets/fee
+GET /api/v4/prediction/fee
 ```
 
 可通过 `fee_type` 查询 `fixed` 或 `dynamic` 费率。返回项通常包含 `category`、`fee_mode`、`maker_fee_rate` 和 `taker_fee_rate`。
@@ -41,8 +41,8 @@ GET /api/v4/event_markets/fee
 ## 可领取金额
 
 ```text
-GET /api/v4/event_markets/claims/available
-GET /api/v4/event_markets/claims/available/{token_id}
+GET /api/v4/prediction/claims/available
+GET /api/v4/prediction/claims/available/{token_id}
 ```
 
 用于查询当前账户已结算且可领取的预测市场资产。
@@ -50,7 +50,7 @@ GET /api/v4/event_markets/claims/available/{token_id}
 ## 发起领取
 
 ```text
-POST /api/v4/event_markets/claims
+POST /api/v4/prediction/claims
 ```
 
 请求示例：
@@ -64,7 +64,7 @@ POST /api/v4/event_markets/claims
 ## 查询领取结果
 
 ```text
-GET /api/v4/event_markets/claims/{record_id}
+GET /api/v4/prediction/claims/{record_id}
 ```
 
 返回 `record_id`、`status`、`total_count`、`success_count`、`failed_count`、`initiated_at` 和 `completed_at` 等字段。
