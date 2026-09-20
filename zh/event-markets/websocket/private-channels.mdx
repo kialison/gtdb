@@ -14,7 +14,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 
 订阅当前账户全部相关更新。
 
-## 订单 `em.orders`
+## 订单 `pred.orders`
 
 订单更新包含：
 
@@ -36,13 +36,13 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 
 订单状态包括 `PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 和 `FAILED`。
 
-## 用户成交 `em.usertrades`
+## 用户成交 `pred.usertrades`
 
 返回当前用户成交，包括 `trade_id`、`order_id`、`condition_id`、`token_id`、`side`、`role`、`px`、`qty`、`fee_rate`、`status` 和 `created_ts`。
 
 `role` 为 `MAKER` 或 `TAKER`；状态通常为 `MATCHED` 或 `CONFIRMED`。
 
-## 持仓 `em.positions`
+## 持仓 `pred.positions`
 
 持仓推送可包含：
 
@@ -58,7 +58,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 - `claimable_amount`
 - `updated_ts`
 
-## 结算 `em.settlements`
+## 结算 `pred.settlements`
 
 结算更新包含 `position_id`、`event_id`、`condition_id`、`winning_outcome`、`is_winner`、`claimable_amount` 和 `created_ts`。
 

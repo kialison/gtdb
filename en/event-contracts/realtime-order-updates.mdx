@@ -5,4 +5,12 @@ description: "Track Event Contracts order changes through real-time data."
 
 Subscribe to authenticated order updates to keep the interface synchronized with server-side order state.
 
+Connect to:
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+```
+
+Event Contracts private channels use the `ec.*` prefix, including `ec.orders`, `ec.usertrades`, `ec.positions`, and `ec.settlements`. Private subscriptions require API Key authentication.
+
 On reconnect, refresh current open orders through REST before applying new updates.

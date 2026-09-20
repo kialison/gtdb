@@ -15,7 +15,7 @@ https://api.dexbuilder.com
 ## 查詢持倉
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "event_id=<event_id>" \
   --data-urlencode "condition_id=<condition_id>" \
@@ -25,17 +25,19 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
 
 常見回傳欄位包括：`position_id`、`event_id`、`token_id`、`outcome`、`size`、`available_size`、`locked_size`、`avg_open_price`、`position_value`、`settlement_status`、`won` 和 `updated_at`。
 
-## 查詢單個持倉
+## 查詢已結算持倉
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/positions/<position_id>" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions/settled" \
   -H "<authentication-header>: <authentication-value>"
 ```
+
+此介面會回傳已結算的事件合約持倉。
 
 ## 查詢個人成交
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/usertrades" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "condition_id=<condition_id>" \
   --data-urlencode "token_id=<token_id>" \

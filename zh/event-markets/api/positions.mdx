@@ -9,7 +9,7 @@ description: "查询预测市场持仓、个人成交和相关私有账户数据
 ## 查询持仓列表
 
 ```text
-GET /api/v4/event_markets/positions
+GET /api/v4/prediction/positions
 ```
 
 支持 `event_id`、`condition_id`、`settlement_status`、`limit` 和 `cursor`。
@@ -34,14 +34,14 @@ GET /api/v4/event_markets/positions
 ## 查询持仓详情与平仓
 
 ```text
-GET /api/v4/event_markets/positions/{position_id}
-POST /api/v4/event_markets/positions/{position_id}/close
+GET /api/v4/prediction/positions/{position_id}
+POST /api/v4/prediction/positions/{position_id}/close
 ```
 
 ## 查询个人成交
 
 ```text
-GET /api/v4/event_markets/usertrades
+GET /api/v4/prediction/usertrades
 ```
 
 支持 `condition_id`、`from`、`to`、`sort_type`、`order_id`、`token_id`、`limit` 和 `cursor`。

@@ -9,7 +9,7 @@ description: "完成預測市場私有 WebSocket 認證，並處理心跳、錯�
 連接位址：
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_markets
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
 ## API Key 認證
@@ -23,7 +23,7 @@ API Key 認證使用 API Key 與本地生成的 HMAC-SHA512 簽名。API Secret 
   "t": 1787026512123,
   "id": "orders-1",
   "op": "subscribe",
-  "ch": "em.orders",
+  "ch": "pred.orders",
   "payload": {"all":true},
   "auth": {
     "method":"api_key",

@@ -9,7 +9,7 @@ description: "创建、查询和取消预测市场私有订单。"
 ## 创建订单
 
 ```text
-POST /api/v4/event_markets/orders
+POST /api/v4/prediction/orders
 ```
 
 ### 请求字段
@@ -29,7 +29,7 @@ POST /api/v4/event_markets/orders
 | `expire_time` | integer | 到期时间 |
 
 ```bash
-curl -X POST 'https://api.dexbuilder.com/api/v4/event_markets/orders' \
+curl -X POST 'https://api.dexbuilder.com/api/v4/prediction/orders' \
   -H 'Content-Type: application/json' \
   -d '{"token_id":"token-yes","side":"BUY","price":"0.4200","size":"10","order_type":"LIMIT","order_mode":"GTC","client_order_id":"client-123","post_only":false,"expire_time":0}'
 ```
@@ -39,7 +39,7 @@ curl -X POST 'https://api.dexbuilder.com/api/v4/event_markets/orders' \
 ## 查询订单列表
 
 ```text
-GET /api/v4/event_markets/orders
+GET /api/v4/prediction/orders
 ```
 
 支持按 `status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 和 `cursor` 筛选。
@@ -60,14 +60,14 @@ GET /api/v4/event_markets/orders
 ## 查询单个订单
 
 ```text
-GET /api/v4/event_markets/orders/{order_id}
+GET /api/v4/prediction/orders/{order_id}
 ```
 
 ## 取消订单
 
 ```text
-DELETE /api/v4/event_markets/orders/{order_id}
-DELETE /api/v4/event_markets/orders?condition_id={condition_id}
+DELETE /api/v4/prediction/orders/{order_id}
+DELETE /api/v4/prediction/orders?condition_id={condition_id}
 ```
 
 单笔撤单返回订单 ID 和撤单状态；按 `condition_id` 批量撤单时返回 `batch_id`、`status` 和 `total_orders`。

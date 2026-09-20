@@ -13,7 +13,7 @@ https://api.dexbuilder.com
 ## 查询订单列表
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/orders" \
+curl -G "https://api.dexbuilder.com/api/v4/prediction/orders" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "status=OPEN" \
   --data-urlencode "condition_id=<condition_id>" \
@@ -57,7 +57,7 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/orders" \
 ## 查询单个订单
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/orders/<order_id>" \
+curl "https://api.dexbuilder.com/api/v4/prediction/orders/<order_id>" \
   -H "<authentication-header>: <authentication-value>"
 ```
 
@@ -66,7 +66,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/orders/<order_id>" \
 ## 取消单个订单
 
 ```bash cURL
-curl -X DELETE "https://api.dexbuilder.com/api/v4/event_markets/orders/<order_id>" \
+curl -X DELETE "https://api.dexbuilder.com/api/v4/prediction/orders/<order_id>" \
   -H "<authentication-header>: <authentication-value>"
 ```
 
@@ -81,7 +81,7 @@ curl -X DELETE "https://api.dexbuilder.com/api/v4/event_markets/orders/<order_id
 ## 按 Condition 取消订单
 
 ```bash cURL
-curl -X DELETE "https://api.dexbuilder.com/api/v4/event_markets/orders?condition_id=<condition_id>" \
+curl -X DELETE "https://api.dexbuilder.com/api/v4/prediction/orders?condition_id=<condition_id>" \
   -H "<authentication-header>: <authentication-value>"
 ```
 

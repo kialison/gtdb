@@ -7,7 +7,7 @@ description: "查询标签、K 线和服务器时间等事件合约公共辅助�
 ## 标签
 
 ```text
-GET /api/v4/event_markets/tags
+GET /api/v4/event_contracts/tags
 ```
 
 公开接口，支持 `limit` 和 `cursor`。
@@ -15,7 +15,7 @@ GET /api/v4/event_markets/tags
 ## K 线
 
 ```text
-GET /api/v4/event_markets/tokens/{currency}/candlesticks
+GET /api/v4/event_contracts/tokens/{currency}/candlesticks
 ```
 
 参数包括 `currency`、`interval`、可选的 `from` / `to` 和 `limit`。每根 K 线包含 `t`、`o`、`h`、`l`、`c`、`v`。
@@ -23,7 +23,7 @@ GET /api/v4/event_markets/tokens/{currency}/candlesticks
 ## 服务器时间
 
 ```text
-GET /api/v4/event_markets/time
+GET /api/v4/event_contracts/time
 ```
 
 返回 `server_time`，单位为 Unix 毫秒。

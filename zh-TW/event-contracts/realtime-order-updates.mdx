@@ -9,7 +9,7 @@ description: "透過私有 WebSocket 頻道即時接收訂單、成交、持倉�
 ## 連接位址
 
 ```text
-wss://broker.dexbuilder.com/v4/ws/event_contracts
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 ```
 
 客戶端請求使用 `op`，服務端響應包含 `op`、`ch`、`result` 和 `err`。建議每個請求攜帶客戶端生成的 `id`，用於關聯 ACK 或錯誤響應。

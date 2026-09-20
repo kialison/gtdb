@@ -15,7 +15,7 @@ https://api.dexbuilder.com
 ## 訂單簿
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/order_book?depth=20"
 ```
 
 `depth` 可選，預設 20，範圍 1–100。
@@ -54,7 +54,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_bo
 ## 最新 Token 價格
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/price"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/price"
 ```
 
 ```json
@@ -71,7 +71,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/price"
 ## Token Ticker
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/ticker"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/ticker"
 ```
 
 ```json
@@ -91,7 +91,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/ticker"
 透過逗號分隔的 Token ID 查詢，單次最多支援 100 個不同 Token：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/prices?token_ids=token-yes,token-no"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/prices?token_ids=token-yes,token-no"
 ```
 
 ```json
@@ -108,7 +108,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/prices?token_ids=to
 ## 價格歷史
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/price_history?interval=1h&from=1782666000000&to=1782752400000"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/price_history?interval=1h&from=1782666000000&to=1782752400000"
 ```
 
 | 參數 | 說明 |

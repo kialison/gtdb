@@ -15,7 +15,7 @@ https://api.dexbuilder.com
 ## 查询持仓
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
+curl -G "https://api.dexbuilder.com/api/v4/prediction/positions" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "event_id=<event_id>" \
   --data-urlencode "condition_id=<condition_id>" \
@@ -45,14 +45,14 @@ curl -G "https://api.dexbuilder.com/api/v4/event_markets/positions" \
 ## 查询单个持仓
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/positions/<position_id>" \
+curl "https://api.dexbuilder.com/api/v4/prediction/positions/<position_id>" \
   -H "<authentication-header>: <authentication-value>"
 ```
 
 ## 查询个人成交
 
 ```bash cURL
-curl -G "https://api.dexbuilder.com/api/v4/event_markets/usertrades" \
+curl -G "https://api.dexbuilder.com/api/v4/prediction/usertrades" \
   -H "<authentication-header>: <authentication-value>" \
   --data-urlencode "condition_id=<condition_id>" \
   --data-urlencode "token_id=<token_id>" \

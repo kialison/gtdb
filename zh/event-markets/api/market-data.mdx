@@ -10,18 +10,18 @@ description: "查询预测市场公开价格、Ticker、订单簿、价格历史
 
 | 能力 | 接口 |
 | --- | --- |
-| Token 对应市场 | `GET /api/v4/event_markets/tokens/{token_id}/market` |
-| 最新价格 | `GET /api/v4/event_markets/tokens/{token_id}/price` |
-| Ticker | `GET /api/v4/event_markets/tokens/{token_id}/ticker` |
-| 订单簿 | `GET /api/v4/event_markets/tokens/{token_id}/order_book` |
-| 价格历史 | `GET /api/v4/event_markets/tokens/{token_id}/price_history` |
-| 批量价格 | `GET /api/v4/event_markets/tokens/prices` |
-| K 线 | `GET /api/v4/event_markets/tokens/{currency}/candlesticks` |
+| Token 对应市场 | `GET /api/v4/prediction/tokens/{token_id}/market` |
+| 最新价格 | `GET /api/v4/prediction/tokens/{token_id}/price` |
+| Ticker | `GET /api/v4/prediction/tokens/{token_id}/ticker` |
+| 订单簿 | `GET /api/v4/prediction/tokens/{token_id}/order_book` |
+| 价格历史 | `GET /api/v4/prediction/tokens/{token_id}/price_history` |
+| 批量价格 | `GET /api/v4/prediction/tokens/prices` |
+| K 线 | `GET /api/v4/prediction/tokens/{currency}/candlesticks` |
 
 ## 订单簿
 
 ```text
-GET /api/v4/event_markets/tokens/{token_id}/order_book
+GET /api/v4/prediction/tokens/{token_id}/order_book
 ```
 
 `depth` 可选，默认 20，支持 1–100。
@@ -49,7 +49,7 @@ Ticker 接口返回 `token_id`、`last_price`、`best_bid`、`best_ask` 和 `tim
 ## 价格历史
 
 ```text
-GET /api/v4/event_markets/tokens/{token_id}/price_history
+GET /api/v4/prediction/tokens/{token_id}/price_history
 ```
 
 必填参数包括 `interval`、`from`、`to`。`interval` 支持如 `5m`、`15m`、`1h`、`4h`、`1d`。
@@ -57,7 +57,7 @@ GET /api/v4/event_markets/tokens/{token_id}/price_history
 ## 批量价格
 
 ```text
-GET /api/v4/event_markets/tokens/prices?token_ids=token-yes,token-no
+GET /api/v4/prediction/tokens/prices?token_ids=token-yes,token-no
 ```
 
 一次最多支持 100 个 Token ID。

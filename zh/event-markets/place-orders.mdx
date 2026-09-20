@@ -17,13 +17,13 @@ https://api.dexbuilder.com
 先查询 Market，并从 `outcomes[].token_id` 中选择要交易的 Token：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/markets/<market_id>"
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
 ```
 
 再读取公开订单簿：
 
 ```bash cURL
-curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/order_book?depth=20"
 ```
 
 提交订单前应根据响应中的 `min_order_size` 和 `tick_size` 做数量和价格校验。
@@ -31,7 +31,7 @@ curl "https://api.dexbuilder.com/api/v4/event_markets/tokens/<token_id>/order_bo
 ## 2. 提交订单
 
 ```bash cURL
-curl -X POST "https://api.dexbuilder.com/api/v4/event_markets/orders" \
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/orders" \
   -H "Content-Type: application/json" \
   -H "<authentication-header>: <authentication-value>" \
   --data '{

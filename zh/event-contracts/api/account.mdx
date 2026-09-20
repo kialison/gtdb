@@ -9,7 +9,7 @@ description: "查询事件合约账户资产、资金流水、手续费以及结
 ## 账户资产
 
 ```text
-GET /api/v4/event_markets/assets
+GET /api/v4/event_contracts/assets
 ```
 
 常见字段包括 `fund_total`、`prediction_market_asset`、`prediction_position_value`、`spot_usdt_balance` 和 `unclaimed_amount`。
@@ -17,7 +17,7 @@ GET /api/v4/event_markets/assets
 ## 资金流水
 
 ```text
-GET /api/v4/event_markets/account_book
+GET /api/v4/event_contracts/account_book
 ```
 
 支持 `limit` 与 `cursor`。
@@ -25,26 +25,25 @@ GET /api/v4/event_markets/account_book
 ## 手续费
 
 ```text
-GET /api/v4/event_markets/fee
+GET /api/v4/event_contracts/fee/current
 ```
 
-可通过 `fee_type` 查询 `fixed` 或 `dynamic` 费率。
+查询当前事件合约交易费率。
 
-## 可领取金额
+## 账户余额
 
 ```text
-GET /api/v4/event_markets/claims/available
-GET /api/v4/event_markets/claims/available/{token_id}
+GET /api/v4/event_contracts/balance
 ```
 
-## 发起领取
+## 资金流水
 
 ```text
-POST /api/v4/event_markets/claims
+GET /api/v4/event_contracts/fund_flows
 ```
 
-## 查询领取结果
+## 资产划转
 
 ```text
-GET /api/v4/event_markets/claims/{record_id}
+POST /api/v4/event_contracts/transfer
 ```

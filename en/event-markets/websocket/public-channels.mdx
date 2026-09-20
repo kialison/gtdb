@@ -5,4 +5,14 @@ description: "Public Prediction Markets API WebSocket channels."
 
 Public channels do not require user authentication and are intended for market-facing data.
 
-They can include market prices, ticker data, order-book changes, and public trades. Use the channel definitions returned by the current API documentation when building subscriptions.
+Use the `pred.*` channel prefix:
+
+| Channel | Purpose |
+| --- | --- |
+| `pred.trades` | Public trades |
+| `pred.depth` | Order-book depth |
+| `pred.bbo` | Best bid and offer |
+| `pred.cpi` | CPI price updates |
+| `pred.candlestick` | Candlestick updates |
+| `pred.oc_price` | Open/close reference price |
+| `pred.status` | Market lifecycle and trading status |

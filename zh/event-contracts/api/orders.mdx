@@ -9,7 +9,7 @@ description: "创建、查询和取消事件合约私有订单。"
 ## 创建订单
 
 ```text
-POST /api/v4/event_markets/orders
+POST /api/v4/event_contracts/orders
 ```
 
 主要请求字段包括 `token_id`、`side`、`price`、`size`、`total_cost`、`order_type`、`order_mode`、`client_order_id`、`post_only`、`sell_all` 和 `expire_time`。
@@ -19,7 +19,7 @@ POST /api/v4/event_markets/orders
 ## 查询订单列表
 
 ```text
-GET /api/v4/event_markets/orders
+GET /api/v4/event_contracts/orders
 ```
 
 支持按 `status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 和 `cursor` 筛选。
@@ -27,12 +27,12 @@ GET /api/v4/event_markets/orders
 ## 查询单个订单
 
 ```text
-GET /api/v4/event_markets/orders/{order_id}
+GET /api/v4/event_contracts/orders/{order_id}
 ```
 
 ## 取消订单
 
 ```text
-DELETE /api/v4/event_markets/orders/{order_id}
-DELETE /api/v4/event_markets/orders?condition_id={condition_id}
+DELETE /api/v4/event_contracts/orders/{order_id}
+DELETE /api/v4/event_contracts/orders?condition_id={condition_id}
 ```

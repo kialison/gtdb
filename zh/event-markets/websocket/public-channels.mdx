@@ -6,53 +6,53 @@ description: "订阅预测市场公开成交、深度、BBO、价格和市场状
 
 本页频道均为公开频道，无需认证。
 
-## 公开成交 `em.trades`
+## 公开成交 `pred.trades`
 
 按 `condition_id` 订阅：
 
 ```json
 {
   "op":"subscribe",
-  "ch":"em.trades",
+  "ch":"pred.trades",
   "payload":{"items":[{"condition_id":"gate_0xcondition"}]}
 }
 ```
 
 每条更新包含 `condition_id`、`token_id`、`outcome`、`side`、`px`、`qty` 和 `ts`。
 
-## 订单簿深度 `em.depth`
+## 订单簿深度 `pred.depth`
 
 按 `token_id` 和深度等级订阅。支持 `5`、`10`、`20`、`50` 档。
 
 ```json
 {
   "op":"subscribe",
-  "ch":"em.depth",
+  "ch":"pred.depth",
   "payload":{"items":[{"token_id":"gate_token_id","level":20}]}
 }
 ```
 
 服务端推送的是完整快照，不是增量 Delta。
 
-## 最优买卖价 `em.bbo`
+## 最优买卖价 `pred.bbo`
 
 返回 `bid_px`、`ask_px`、`last_px` 和时间戳。
 
-## CPI 价格 `em.cpi`
+## CPI 价格 `pred.cpi`
 
 按 `symbol` 和 `interval` 订阅，例如：
 
 ```json
 {
   "op":"subscribe",
-  "ch":"em.cpi",
+  "ch":"pred.cpi",
   "payload":{"items":[{"symbol":"btcusdt","interval":"1m"}]}
 }
 ```
 
 返回标准化后的 Symbol、周期、价格和价格时间。
 
-## K 线 `em.candlestick`
+## K 线 `pred.candlestick`
 
 按 Symbol 和周期订阅。推送字段包括：
 
@@ -64,11 +64,11 @@ description: "订阅预测市场公开成交、深度、BBO、价格和市场状
 - `v`：成交量；
 - `closed`：K 线是否已结束。
 
-## 开收盘参考价 `em.oc_price`
+## 开收盘参考价 `pred.oc_price`
 
 可按市场 `slug`、`market_id`，或 Symbol + Interval 订阅。返回 `price_to_beat` 与 `final_price`。
 
-## 市场状态 `em.status`
+## 市场状态 `pred.status`
 
 按 `market_id` 订阅市场状态。常见状态：
 

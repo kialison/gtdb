@@ -5,4 +5,13 @@ description: "Authenticated Event Contracts API WebSocket channels."
 
 Private channels deliver user-specific updates such as orders, trades, positions, and account activity.
 
-Authentication is required. The client should keep private subscriptions separate from public market-data subscriptions and handle credential errors explicitly.
+Authentication is required. Use the `ec.*` channel prefix:
+
+| Channel | Purpose |
+| --- | --- |
+| `ec.orders` | Order status updates |
+| `ec.usertrades` | User trade updates |
+| `ec.positions` | Position updates |
+| `ec.settlements` | Settlement updates |
+
+Keep private subscriptions separate from public market-data subscriptions and handle credential errors explicitly.

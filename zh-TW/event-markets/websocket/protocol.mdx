@@ -13,7 +13,7 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
   "t": 1787026512123,
   "id": 1001,
   "op": "subscribe",
-  "ch": "em.trades",
+  "ch": "pred.trades",
   "payload": {
     "items": [{"condition_id":"gate_0xcondition"}]
   }
@@ -37,7 +37,7 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
   "id": 1001,
   "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
   "op": "subscribe",
-  "ch": "em.trades",
+  "ch": "pred.trades",
   "err": null,
   "result": {"status":"success"}
 }
@@ -49,7 +49,7 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
 {
   "id": 1001,
   "op": "subscribe",
-  "ch": "em.depth",
+  "ch": "pred.depth",
   "err": {"code":2,"msg":"invalid depth level"},
   "result": {"status":"fail"}
 }
@@ -63,7 +63,7 @@ description: "瞭解預測市場 WebSocket 的請求、ACK、推送和訂閱格�
 {
   "t": 1787026512150,
   "type": "update",
-  "ch": "em.trades",
+  "ch": "pred.trades",
   "err": null,
   "result": {
     "condition_id":"gate_0xcondition",
