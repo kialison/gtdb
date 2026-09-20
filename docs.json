@@ -57,7 +57,7 @@
                 ]
               },
               {
-                "group": "预测市场",
+                "group": "事件市场",
                 "pages": [
                   {
                     "group": "快速开始",
@@ -258,10 +258,10 @@
                 ]
               },
               {
-                "item": "预测市场",
+                "item": "事件市场",
                 "pages": [
                   {
-                    "group": "预测市场 API",
+                    "group": "事件市场 API",
                     "pages": [
                       "zh/event-markets/api/overview",
                       "zh/event-markets/apis",
