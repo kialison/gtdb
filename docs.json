@@ -1086,10 +1086,10 @@
                 ]
               },
               {
-                "item": "預測市場",
+                "item": "事件市場",
                 "pages": [
                   {
-                    "group": "預測市場 API",
+                    "group": "事件市場 API",
                     "pages": [
                       "zh-TW/event-markets/api/overview",
                       "zh-TW/event-markets/apis",
