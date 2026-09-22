@@ -1,0 +1,96 @@
+---
+title: "市場結算"
+sidebarTitle: "市場結算"
+description: "瞭解預測市場如何透過 UMA Optimistic Oracle 確認結果，以及獲勝持倉如何完成贖回。"
+---
+
+當事件結果已經明確後，Market 進入結算流程。結算用於確定最終獲勝結果，使對應結果代幣可以按每份 `1 USDT` 贖回，失敗結果代幣則價值歸零。
+
+預測市場可透過 UMA Optimistic Oracle 進行去中心化結果確認。任何符合條件的參與者都可以提出結果，也可以在認為結果錯誤時提出異議。
+
+![Image](/images/image-5.png "Image")
+
+## 結算規則
+
+每個 Market 在交易前應預先定義結算規則，包括：
+
+- **Resolution Source**：判斷結果所依據的資料來源，例如官方公告或指定網站；
+- **End Date**：何時滿足進入結算的時間條件；
+- **Edge Cases**：異常、模糊或特殊情形如何處理。
+
+<Note>
+  交易前應閱讀完整結算規則。市場標題只是問題的簡要表達，真正決定如何結算的是具體 Resolution Rules。
+</Note>
+
+<Steps>
+  <Step title="提交結果 Proposal">
+    提議者選擇最終結果、提交保證金，並向 UMA Oracle 提交 Proposal。
+
+    如果結果正確且無人提出異議，提議者可取回保證金並獲得相應獎勵。
+
+    <Warning>
+      若提交錯誤結果或過早提交，可能損失保證金。只有在確認結果並理解結算規則後再發起 Proposal。
+    </Warning>
+  </Step>
+  <Step title="挑戰期">
+    Proposal 提交後進入挑戰期，其他參與者可對該結果提出異議。
+
+    - **無人挑戰**：Proposal 被接受，Market 完成結算；
+    - **發生挑戰**：進入下一輪 Proposal；如果後續繼續發生爭議，可升級至 UMA DVM 投票。
+
+    常見流程包括：
+
+    1. 無爭議：Proposal → Resolve；
+    2. 一次爭議：Proposal → Challenge → 第二次 Proposal → Resolve；
+    3. 多次爭議：進一步升級至 UMA 投票決定最終結果。
+  </Step>
+  <Step title="Dispute">
+    發起異議通常需要提交與提議者對應的 Counter Bond。若爭議升級，可進入證據與討論階段。
+  </Step>
+  <Step title="UMA 投票">
+    當爭議進入 DVM 後，由 UMA Token 持有人對最終結果進行投票。
+
+    | 結果 | 處理方式 |
+    | --- | --- |
+    | Proposal 正確 | 原 Proposal 被接受 |
+    | Disputer 正確 | 原 Proposal 被拒絕，需要重新確認結果 |
+    | Too Early | 事件尚未滿足結算條件 |
+    | Unknown / 50-50 | 極少數無法明確判斷的場景，可按規則進行特殊結算 |
+  </Step>
+</Steps>
+
+## 結算完成後
+
+Market 完成結算後：
+
+- 市場停止繼續交易；
+- 獲勝結果代幣每份可兌換 `1 USDT`；
+- 失敗結果代幣價值為 `0`。
+
+### 贖回結果代幣
+
+使用者可以透過對應 CTF / Collateral Adapter 將獲勝的 ERC-1155 結果代幣銷毀，並領取釋放的 USDT 抵押資產。
+
+## 結算時間
+
+實際結算時間取決於是否發生爭議：
+
+| 階段 | 典型耗時 |
+| --- | --- |
+| Challenge Period | 約 2 小時 |
+| Debate Period（發生爭議時） | 約 24–48 小時 |
+| UMA Voting（升級投票時） | 約 48 小時 |
+
+無人提出異議時，結算通常更快；出現多輪爭議時，完整流程可能持續數天。
+
+## 下一步
+
+<CardGroup cols={2}>
+  <Card title="持倉與結果代幣" icon="coins" href="/zh-TW/prediction-markets/positions-tokens">
+    瞭解獲勝 Token 如何形成可贖回持倉。
+  </Card>
+
+  <Card title="市場與事件" icon="chart-line" href="/zh-TW/prediction-markets/markets-events">
+    回顧 Market 與 Event 的組織關係。
+  </Card>
+</CardGroup>

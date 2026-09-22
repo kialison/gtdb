@@ -784,7 +784,32 @@
                           "en/prediction-markets/rest/query-event",
                           "en/prediction-markets/rest/query-event-by-slug",
                           "en/prediction-markets/rest/query-markets",
-                          "en/prediction-markets/rest/query-market-trades"
+                          "en/prediction-markets/rest/query-market-trades",
+                          "en/prediction-markets/rest/query-market-by-slug",
+                          "en/prediction-markets/rest/query-token-ticker",
+                          "en/prediction-markets/rest/query-token-market",
+                          "en/prediction-markets/rest/query-token-price",
+                          "en/prediction-markets/rest/query-order-book",
+                          "en/prediction-markets/rest/query-price-history",
+                          "en/prediction-markets/rest/query-token-prices",
+                          "en/prediction-markets/rest/query-candlesticks",
+                          "en/prediction-markets/rest/cancel-order",
+                          "en/prediction-markets/rest/query-orders",
+                          "en/prediction-markets/rest/place-order",
+                          "en/prediction-markets/rest/cancel-orders-by-condition",
+                          "en/prediction-markets/rest/query-order",
+                          "en/prediction-markets/rest/query-account-book",
+                          "en/prediction-markets/rest/query-user-trades",
+                          "en/prediction-markets/rest/close-position",
+                          "en/prediction-markets/rest/query-tags",
+                          "en/prediction-markets/rest/create-claim",
+                          "en/prediction-markets/rest/query-positions",
+                          "en/prediction-markets/rest/query-available-claim",
+                          "en/prediction-markets/rest/query-position",
+                          "en/prediction-markets/rest/query-assets",
+                          "en/prediction-markets/rest/query-server-time",
+                          "en/prediction-markets/rest/query-fee",
+                          "en/prediction-markets/rest/query-available-claims"
                         ]
                       },
                       {
@@ -794,7 +819,12 @@
                           "en/event-markets/websocket/protocol",
                           "en/event-markets/websocket/public-channels",
                           "en/event-markets/websocket/private-channels",
-                          "en/event-markets/websocket/authentication"
+                          "en/event-markets/websocket/authentication",
+                          "en/prediction-markets/websocket/private-channels",
+                          "en/prediction-markets/websocket/overview",
+                          "en/prediction-markets/websocket/authentication",
+                          "en/prediction-markets/websocket/protocol",
+                          "en/prediction-markets/websocket/public-channels"
                         ]
                       },
                       {
@@ -806,7 +836,14 @@
                           "en/event-markets/market-prices-orderbooks",
                           "en/event-markets/analytics",
                           "en/event-markets/realtime-data",
-                          "en/event-markets/chainlink-twap"
+                          "en/event-markets/chainlink-twap",
+                          "en/prediction-markets/chainlink-twap",
+                          "en/prediction-markets/analytics",
+                          "en/prediction-markets/market-data-overview",
+                          "en/prediction-markets/market-prices-orderbooks",
+                          "en/prediction-markets/realtime-data",
+                          "en/prediction-markets/discover-markets",
+                          "en/prediction-markets/market-details"
                         ]
                       },
                       {
@@ -815,7 +852,10 @@
                           "en/event-markets/place-orders",
                           "en/event-markets/manage-orders",
                           "en/event-markets/realtime-order-updates",
-                          "en/event-markets/wallet-activity"
+                          "en/event-markets/wallet-activity",
+                          "en/prediction-markets/realtime-order-updates",
+                          "en/prediction-markets/place-orders",
+                          "en/prediction-markets/manage-orders"
                         ]
                       },
                       "en/prediction-markets/api/overview",
@@ -964,7 +1004,10 @@
                     "pages": [
                       "zh-TW/event-markets/overview",
                       "zh-TW/event-markets/event-markets",
-                      "zh-TW/event-markets/place-first-order"
+                      "zh-TW/event-markets/place-first-order",
+                      "zh-TW/prediction-markets/event-markets",
+                      "zh-TW/prediction-markets/place-first-order",
+                      "zh-TW/prediction-markets/overview"
                     ]
                   },
                   {
@@ -975,7 +1018,13 @@
                       "zh-TW/event-markets/prices-orderbook",
                       "zh-TW/event-markets/positions-tokens",
                       "zh-TW/event-markets/order-lifecycle",
-                      "zh-TW/event-markets/resolution"
+                      "zh-TW/event-markets/resolution",
+                      "zh-TW/prediction-markets/order-lifecycle",
+                      "zh-TW/prediction-markets/positions-tokens",
+                      "zh-TW/prediction-markets/resolution",
+                      "zh-TW/prediction-markets/markets-events",
+                      "zh-TW/prediction-markets/negative-risk",
+                      "zh-TW/prediction-markets/prices-orderbook"
                     ]
                   },
                   {
@@ -983,7 +1032,10 @@
                     "pages": [
                       "zh-TW/event-markets/trading-overview",
                       "zh-TW/event-markets/how-positions-work",
-                      "zh-TW/event-markets/fees"
+                      "zh-TW/event-markets/fees",
+                      "zh-TW/prediction-markets/how-positions-work",
+                      "zh-TW/prediction-markets/trading-overview",
+                      "zh-TW/prediction-markets/fees"
                     ]
                   }
                 ]
@@ -1200,7 +1252,25 @@
                           "zh-TW/event-markets/rest/create-claim",
                           "zh-TW/event-markets/rest/query-claim",
                           "zh-TW/event-markets/rest/query-tags",
-                          "zh-TW/event-markets/rest/query-server-time"
+                          "zh-TW/event-markets/rest/query-server-time",
+                          "zh-TW/prediction-markets/rest/query-order-book",
+                          "zh-TW/prediction-markets/rest/query-events",
+                          "zh-TW/prediction-markets/rest/query-market",
+                          "zh-TW/prediction-markets/rest/query-market-trades",
+                          "zh-TW/prediction-markets/rest/query-orders",
+                          "zh-TW/prediction-markets/rest/query-price-history",
+                          "zh-TW/prediction-markets/rest/query-token-price",
+                          "zh-TW/prediction-markets/rest/query-assets",
+                          "zh-TW/prediction-markets/rest/query-event-by-slug",
+                          "zh-TW/prediction-markets/rest/query-claim",
+                          "zh-TW/prediction-markets/rest/query-markets",
+                          "zh-TW/prediction-markets/rest/query-event",
+                          "zh-TW/prediction-markets/rest/query-order",
+                          "zh-TW/prediction-markets/rest/query-token-market",
+                          "zh-TW/prediction-markets/rest/place-order",
+                          "zh-TW/prediction-markets/rest/query-positions",
+                          "zh-TW/prediction-markets/rest/query-tags",
+                          "zh-TW/prediction-markets/rest/query-account-book"
                         ]
                       },
                       {
@@ -1210,7 +1280,9 @@
                           "zh-TW/event-markets/websocket/protocol",
                           "zh-TW/event-markets/websocket/public-channels",
                           "zh-TW/event-markets/websocket/private-channels",
-                          "zh-TW/event-markets/websocket/authentication"
+                          "zh-TW/event-markets/websocket/authentication",
+                          "zh-TW/prediction-markets/websocket/protocol",
+                          "zh-TW/prediction-markets/websocket/overview"
                         ]
                       },
                       {
@@ -1222,7 +1294,10 @@
                           "zh-TW/event-markets/market-prices-orderbooks",
                           "zh-TW/event-markets/analytics",
                           "zh-TW/event-markets/realtime-data",
-                          "zh-TW/event-markets/chainlink-twap"
+                          "zh-TW/event-markets/chainlink-twap",
+                          "zh-TW/prediction-markets/market-data-overview",
+                          "zh-TW/prediction-markets/market-prices-orderbooks",
+                          "zh-TW/prediction-markets/chainlink-twap"
                         ]
                       },
                       {
@@ -1231,9 +1306,13 @@
                           "zh-TW/event-markets/place-orders",
                           "zh-TW/event-markets/manage-orders",
                           "zh-TW/event-markets/realtime-order-updates",
-                          "zh-TW/event-markets/wallet-activity"
+                          "zh-TW/event-markets/wallet-activity",
+                          "zh-TW/prediction-markets/manage-orders"
                         ]
-                      }
+                      },
+                      "zh-TW/prediction-markets/api/overview",
+                      "zh-TW/prediction-markets/error-codes",
+                      "zh-TW/prediction-markets/apis"
                     ]
                   }
                 ]

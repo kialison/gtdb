@@ -1,0 +1,98 @@
+---
+title: "管理訂單"
+sidebarTitle: "管理訂單"
+description: "透過 Prediction API 查詢和取消預測市場私有訂單。"
+---
+
+訂單查詢與撤單都屬於私有操作，需要認證。生產環境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查詢訂單清單
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/prediction/orders" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "status=OPEN" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "limit=20"
+```
+
+常用篩選參數包括：`status`、`condition_id`、`event_id`、`order_id`、`client_order_id`、`from`、`to`、`sort_type`、`limit` 與 `cursor`。
+
+`from`、`to` 使用 Unix 毫秒；`sort_type` 可按 `created_at` 或 `updated_at` 排序。
+
+響應：
+
+```json
+{
+  "items": [
+    {
+      "order_id": "order-123",
+      "client_order_id": "client-order-001",
+      "event_id": "event-123",
+      "condition_id": "0xabc...",
+      "token_id": "token-yes",
+      "outcome": "Yes",
+      "side": "BUY",
+      "price": "0.52",
+      "size": "10",
+      "size_matched": "4",
+      "size_left": "6",
+      "order_type": "LIMIT",
+      "order_mode": "GTC",
+      "status": "OPEN",
+      "created_at": 1782753357,
+      "updated_at": 1782753357
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+將 `next_cursor` 原樣作為下一頁請求的 `cursor`。
+
+## 查詢單個訂單
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+詳情響應包含清單中的訂單標識、價格、數量、成交進度與狀態等欄位，並可能包含訂單服務回傳的 `error_code`。
+
+## 取消單個訂單
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/prediction/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "order_id": "order-123",
+  "status": "ACCEPTED",
+  "cancel_status": "PENDING"
+}
+```
+
+## 按 Condition 取消訂單
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/prediction/orders?condition_id=<condition_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "batch_id": "batch-123",
+  "status": "ACCEPTED",
+  "total_orders": 3
+}
+```
+
+<Note>
+  文檔中的認證 Header 為佔位寫法，正式接入應使用最終對外認證方案。內部網關注入的身份欄位不屬於外部客戶端請求參數。
+</Note>

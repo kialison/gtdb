@@ -1,28 +1,28 @@
 ---
-title: "Get Market Trades"
-description: "Get Market Trades."
-openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/markets/{market_id}/trades"
+title: "Get Order"
+description: "Get Order."
+openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/orders/{order_id}"
 ---
 
-Returns one market selected by its market ID.
+Returns one authenticated order.
 
 **Base URL:** `https://api.dexbuilder.com`
 
-**Authentication:** This is a public market-data endpoint and does not require authentication.
+**Authentication:** This is a private endpoint and requires API authentication. The authenticated account is inferred from the request credentials; do not send internal user headers.
 
 ## Request
 
 ```bash
-curl -G "https://api.dexbuilder.com/api/v4/prediction/markets/{market_id}/trades"
+curl -G "https://api.dexbuilder.com/api/v4/prediction/orders/{order_id}"
 ```
 
-`market_id` identifies the market.
+`order_id` identifies the order.
 
 The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
 
 ## Response
 
-Returns the market definition, including condition ID, event ID, outcomes, token IDs, prices, status, resolution data, and trading constraints.
+Returns the order's identifiers, side, order mode/type, price, original/fill/remaining quantities, status, error information, and timestamps.
 
 A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
 

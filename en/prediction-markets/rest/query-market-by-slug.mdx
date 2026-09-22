@@ -1,10 +1,10 @@
 ---
-title: "Get Market Trades"
-description: "Get Market Trades."
-openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/markets/{market_id}/trades"
+title: "Get Market by Slug"
+description: "Get Market by Slug."
+openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/markets/slug/{slug}"
 ---
 
-Returns one market selected by its market ID.
+Returns one market selected by its slug.
 
 **Base URL:** `https://api.dexbuilder.com`
 
@@ -13,10 +13,10 @@ Returns one market selected by its market ID.
 ## Request
 
 ```bash
-curl -G "https://api.dexbuilder.com/api/v4/prediction/markets/{market_id}/trades"
+curl -G "https://api.dexbuilder.com/api/v4/prediction/markets/slug/{slug}"
 ```
 
-`market_id` identifies the market.
+`slug` is the URL-safe market identifier.
 
 The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
 

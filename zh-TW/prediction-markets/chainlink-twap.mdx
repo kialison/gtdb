@@ -1,0 +1,179 @@
+---
+title: "Chainlink TWAP 價格"
+sidebarTitle: "Chainlink TWAP"
+description: "透過預測市場 RTDS 或 Chainlink Data Streams 取得 30 秒與 60 秒時間加權平均價格。"
+---
+
+TWAP（Time-Weighted Average Price）表示資產在指定回看窗口中的時間加權平均價格。本頁介紹 Chainlink 計算的 30 秒與 60 秒 TWAP。
+
+## 使用 RTDS
+
+生產環境優先推薦透過 RTDS 取得 Chainlink TWAP。RTDS 會轉發 Chainlink 主網計算後的 TWAP 更新，不需要 Chainlink 憑證。
+
+Symbol 使用小寫、斜槓分隔格式，例如 `btc/usd`。不傳 symbol 過濾條件時，可接收該 Topic 下全部可用交易對。
+
+```text API
+wss://ws-live-data.polymarket.com
+```
+
+<Note>
+  RTDS 使用應用層心跳。每 5 秒發送文本幀 `PING` 以保持連接。
+</Note>
+
+訂閱 30 秒與 60 秒窗口：
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "crypto_prices_twap_thirty",
+      "type": "update",
+      "filters": "{\"symbol\":\"btc/usd\"}"
+    },
+    {
+      "topic": "crypto_prices_twap_sixty",
+      "type": "update",
+      "filters": "{\"symbol\":\"btc/usd\"}"
+    }
+  ]
+}
+```
+
+| 回看窗口 | RTDS Topic |
+| --- | --- |
+| 30 秒 | `crypto_prices_twap_thirty` |
+| 60 秒 | `crypto_prices_twap_sixty` |
+
+`filters` 使用緊湊 JSON 字串，例如 `{"symbol":"btc/usd"}`。如果同一窗口需要多個 symbol，也可以省略 `filters`，然後由客戶端根據 `payload.symbol` 自行過濾。
+
+```json
+{
+  "topic": "crypto_prices_twap_thirty",
+  "type": "update",
+  "timestamp": 1785178800123,
+  "payload": {
+    "symbol": "btc/usd",
+    "value": 65000.5,
+    "full_accuracy_value": "65000500000000000000000",
+    "timestamp": 1785178800009,
+    "window_s": 30
+  }
+}
+```
+
+`full_accuracy_value` 為精確的 E18 定點數，應使用整數或 Decimal 除以 `10^18`。`value` 更適合展示，不建議在高精度業務計算中直接使用。
+
+使用 `payload.timestamp` 作為 Chainlink 觀測時間；外層 `timestamp` 表示資料提交到 RTDS 的時間。連接斷開後需要重新連接並重新訂閱。
+
+### 選擇窗口
+
+每個訂閱選擇 30 秒或 60 秒；如需兩個窗口，需要分別訂閱。
+
+### 資料流行為
+
+訂閱後從下一條更新開始接收，不提供 Snapshot、History 或斷線後的 Replay。
+
+## 直接使用 Chainlink Data Streams
+
+如果需要直接存取 Chainlink 主網資料、取得最新 Report 或保留原始簽名 Report，可以使用 Chainlink Data Streams。
+
+在 [Chainlink Data Streams catalog](https://docs.chain.link/data-streams/crypto-streams) 中查找所需資產對應的 `TWAP: 30s` 或 `TWAP: 60s` Feed，並複製 Feed ID。
+
+<Warning>
+  Chainlink Client ID、Secret 等憑證必須保存在可信後端，不要暴露在瀏覽器、H5 或移動客戶端程式碼中。
+</Warning>
+
+### 安裝 SDK
+
+Node.js 20+、TypeScript 5.3+：
+
+```bash
+npm install --save-exact @chainlink/data-streams-sdk@1.2.1
+```
+
+建立客戶端：
+
+```typescript
+import {
+  createClient,
+  decodeReport,
+  type Report,
+} from "@chainlink/data-streams-sdk";
+
+const client = createClient({
+  apiKey: process.env.CHAINLINK_CLIENT_ID!,
+  userSecret: process.env.CHAINLINK_CLIENT_SECRET!,
+  endpoint: "https://api.dataengine.chain.link",
+  wsEndpoint: "wss://ws.dataengine.chain.link",
+  haMode: false,
+});
+```
+
+SDK 會為請求完成認證簽名。伺服器時間應與 Chainlink 服務保持同步。
+
+### Feed ID 與窗口映射
+
+Report 不直接包含業務 Symbol 或窗口名稱，接入方應維護 Feed ID → Symbol / Window 的映射，不能透過更新頻率推斷窗口。
+
+```typescript
+const feeds = new Map([
+  [process.env.CHAINLINK_TWAP_30S_FEED_ID!.toLowerCase(), { symbol: "btc/usd", windowSeconds: 30 }],
+  [process.env.CHAINLINK_TWAP_60S_FEED_ID!.toLowerCase(), { symbol: "btc/usd", windowSeconds: 60 }],
+]);
+```
+
+### 取得最新 Report
+
+```typescript
+const latestReports = await Promise.all(
+  [...feeds.keys()].map((feedID) => client.getLatestReport(feedID)),
+);
+```
+
+### 訂閱即時更新
+
+```typescript
+const stream = client.createStream([...feeds.keys()]);
+
+stream.on("report", (report) => {
+  console.log(report);
+});
+
+stream.on("disconnected", () => {
+  console.warn("Chainlink stream disconnected");
+});
+
+stream.on("reconnecting", ({ attempt, delayMs }) => {
+  console.warn(`Reconnecting: attempt ${attempt} in ${delayMs}ms`);
+});
+
+stream.on("error", (error) => {
+  console.error("Chainlink stream error:", error);
+});
+
+await stream.connect();
+```
+
+SDK 會自動處理認證與重連。業務側仍應監控 `error`、`disconnected` 與 `reconnecting` 狀態。
+
+## 讀取 Chainlink Report
+
+TWAP Feed 使用 Chainlink Report Schema V2。`decodeReport()` 可解析報告中的價格欄位。
+
+| 欄位 | 用途 |
+| --- | --- |
+| `report.feedID` | 映射到資產和 30s / 60s 窗口 |
+| `decoded.price` | 精確 E18 價格，建議以 `bigint` 或 Decimal String 保存 |
+| `report.validFromTimestamp` | Report 最早有效時間 |
+| `report.observationsTimestamp` | Chainlink 觀測時間 |
+| `decoded.expiresAt` | Report 過期時間 |
+| `report.fullReport` | 原始簽名 Report |
+
+`decodeReport()` 負責解析欄位，但並不等同於完成 DON 簽名驗證。如果資料被用於結算或其他高信任場景，應按照 Chainlink 官方要求完成完整驗證。
+
+| REST URL | WebSocket URL |
+| --- | --- |
+| `https://api.dataengine.chain.link` | `wss://ws.dataengine.chain.link` |
+
+30 秒與 60 秒代表 TWAP 回看窗口，而不是推送頻率。接入方應自行定義資料 Freshness 閾值及資料中斷時的回退策略。

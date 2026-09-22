@@ -1,0 +1,22 @@
+---
+title: "WebSocket 概覽"
+sidebarTitle: "概覽"
+description: "連接預測市場 WebSocket，接收即時公開行情和認證帳戶事件。"
+---
+
+事件市場 WebSocket API 提供公共行情数据和需要认证的账户更新。
+
+## 连接
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
+```
+
+在同一产品的频道中复用一个连接。事件市场使用 `pred.*` 前缀。
+
+## 频道分组
+
+- 公共频道：`pred.trades`、`pred.depth`、`pred.bbo`、`pred.status`、`pred.cpi`、`pred.candlestick`、`pred.oc_price`
+- 私有频道：`pred.orders`、`pred.usertrades`、`pred.positions`、`pred.settlements`
+
+公共频道不需要认证，私有频道需要 API Key 签名。请参阅[WebSocket 协议](./protocol)、[公共频道](./public-channels)和[私有频道](./private-channels)。
