@@ -16,7 +16,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
   "id": "private-1",
   "op": "subscribe",
   "ch": "pred.orders",
-  "payload": {"items": [{"condition_id": "gate_condition-1"}]},
+  "payload": {"items": [{"condition_id": "ge_condition-1"}]},
   "auth": {"method": "api_key", "key": "YOUR_API_KEY", "sign": "SIGNATURE"}
 }
 ```
@@ -28,7 +28,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 账户订单状态变化。返回字段包括 `order_id`、`client_order_id`、`event_id`、`condition_id`、`token_id`、`outcome`、`side`、`order_mode`、`order_type`、`px`、`qty`、`filled_qty`、`left_qty`、`status`、`created_ts` 和 `updated_ts`。
 
 ```json
-{"type":"update","ch":"pred.orders","err":null,"result":{"order_id":"order-1","condition_id":"gate_condition-1","token_id":"gate_token-yes","side":"BUY","px":"0.45","qty":"10","filled_qty":"4","left_qty":"6","status":"OPEN","updated_ts":1720000001123}}
+{"type":"update","ch":"pred.orders","err":null,"result":{"order_id":"order-1","condition_id":"ge_condition-1","token_id":"ge_token-yes","side":"BUY","px":"0.45","qty":"10","filled_qty":"4","left_qty":"6","status":"OPEN","updated_ts":1720000001123}}
 ```
 
 状态可能为 `PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 或 `FAILED`。
@@ -38,7 +38,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 账户成交推送。返回 `trade_id`、`order_id`、`condition_id`、`token_id`、`side`、`role`、`px`、`qty`、`fee_rate`、`status` 和 `created_ts`。
 
 ```json
-{"type":"update","ch":"pred.usertrades","err":null,"result":{"trade_id":"trade-1","order_id":"order-1","condition_id":"gate_condition-1","token_id":"gate_token-yes","side":"BUY","role":"MAKER","px":"0.45","qty":"4","fee_rate":"0.001","status":"CONFIRMED","created_ts":1720000000123}}
+{"type":"update","ch":"pred.usertrades","err":null,"result":{"trade_id":"trade-1","order_id":"order-1","condition_id":"ge_condition-1","token_id":"ge_token-yes","side":"BUY","role":"MAKER","px":"0.45","qty":"4","fee_rate":"0.001","status":"CONFIRMED","created_ts":1720000000123}}
 ```
 
 仅推送已确认的账户成交；具体是否推送 MATCHED 事件取决于服务配置。
@@ -48,7 +48,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 账户仓位变化。返回 `position_id`、`event_id`、`token_id`、`outcome`、`qty`、`avg_px`、`settle_status`、`locked_qty`、`available_qty`、`claimable_amount` 和 `updated_ts`。
 
 ```json
-{"type":"update","ch":"pred.positions","err":null,"result":{"position_id":"12345","event_id":"event-1","token_id":"gate_token-yes","outcome":"Yes","qty":"10","avg_px":"0.45","settle_status":"UNSETTLED","locked_qty":"0","available_qty":"10","claimable_amount":"0","updated_ts":1720000001123}}
+{"type":"update","ch":"pred.positions","err":null,"result":{"position_id":"12345","event_id":"event-1","token_id":"ge_token-yes","outcome":"Yes","qty":"10","avg_px":"0.45","settle_status":"UNSETTLED","locked_qty":"0","available_qty":"10","claimable_amount":"0","updated_ts":1720000001123}}
 ```
 
 仓位文档不描述标记价格字段。
@@ -58,7 +58,7 @@ description: "订阅当前认证用户的订单、成交、持仓和结算更新
 结算和可领取金额变化。
 
 ```json
-{"type":"update","ch":"pred.settlements","err":null,"result":{"position_id":"12345","condition_id":"gate_condition-1","event_id":"event-1","winning_outcome":"Yes","is_winner":true,"claimable_amount":"10.00","created_ts":1720000002123}}
+{"type":"update","ch":"pred.settlements","err":null,"result":{"position_id":"12345","condition_id":"ge_condition-1","event_id":"event-1","winning_outcome":"Yes","is_winner":true,"claimable_amount":"10.00","created_ts":1720000002123}}
 ```
 
 私有频道是事件驱动的。重连后应通过对应 REST 接口恢复当前状态；订阅私有频道不会自动返回完整账户快照。
