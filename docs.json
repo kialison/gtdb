@@ -65,7 +65,9 @@
                       "zh/prediction-markets/overview",
                       "zh/event-markets/overview",
                       "zh/event-markets/event-markets",
-                      "zh/event-markets/place-first-order"
+                      "zh/event-markets/place-first-order",
+                      "zh/prediction-markets/place-first-order",
+                      "zh/prediction-markets/event-markets"
                     ]
                   },
                   {
@@ -76,7 +78,13 @@
                       "zh/event-markets/prices-orderbook",
                       "zh/event-markets/positions-tokens",
                       "zh/event-markets/order-lifecycle",
-                      "zh/event-markets/resolution"
+                      "zh/event-markets/resolution",
+                      "zh/prediction-markets/negative-risk",
+                      "zh/prediction-markets/markets-events",
+                      "zh/prediction-markets/prices-orderbook",
+                      "zh/prediction-markets/positions-tokens",
+                      "zh/prediction-markets/order-lifecycle",
+                      "zh/prediction-markets/resolution"
                     ]
                   },
                   {
@@ -84,7 +92,10 @@
                     "pages": [
                       "zh/event-markets/trading-overview",
                       "zh/event-markets/how-positions-work",
-                      "zh/event-markets/fees"
+                      "zh/event-markets/fees",
+                      "zh/prediction-markets/trading-overview",
+                      "zh/prediction-markets/how-positions-work",
+                      "zh/prediction-markets/fees"
                     ]
                   }
                 ]
@@ -301,7 +312,14 @@
                           "zh/event-markets/rest/create-claim",
                           "zh/event-markets/rest/query-claim",
                           "zh/event-markets/rest/query-tags",
-                          "zh/event-markets/rest/query-server-time"
+                          "zh/event-markets/rest/query-server-time",
+                          "zh/prediction-markets/rest/query-event",
+                          "zh/prediction-markets/rest/query-markets",
+                          "zh/prediction-markets/rest/query-events",
+                          "zh/prediction-markets/rest/query-market-trades",
+                          "zh/prediction-markets/rest/query-event-by-slug",
+                          "zh/prediction-markets/rest/query-market",
+                          "zh/prediction-markets/rest/query-market-by-slug"
                         ]
                       },
                       {
@@ -334,7 +352,9 @@
                           "zh/event-markets/realtime-order-updates",
                           "zh/event-markets/wallet-activity"
                         ]
-                      }
+                      },
+                      "zh/prediction-markets/api/overview",
+                      "zh/prediction-markets/error-codes"
                     ]
                   }
                 ]
