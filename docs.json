@@ -350,7 +350,10 @@
                           "zh/event-markets/websocket/public-channels",
                           "zh/event-markets/websocket/private-channels",
                           "zh/event-markets/websocket/authentication",
-                          "zh/prediction-markets/websocket/overview"
+                          "zh/prediction-markets/websocket/overview",
+                          "zh/prediction-markets/websocket/public-channels",
+                          "zh/prediction-markets/websocket/authentication",
+                          "zh/prediction-markets/websocket/private-channels"
                         ]
                       },
                       {
@@ -362,7 +365,14 @@
                           "zh/event-markets/market-prices-orderbooks",
                           "zh/event-markets/analytics",
                           "zh/event-markets/realtime-data",
-                          "zh/event-markets/chainlink-twap"
+                          "zh/event-markets/chainlink-twap",
+                          "zh/prediction-markets/market-data-overview",
+                          "zh/prediction-markets/market-prices-orderbooks",
+                          "zh/prediction-markets/discover-markets",
+                          "zh/prediction-markets/market-details",
+                          "zh/prediction-markets/realtime-data",
+                          "zh/prediction-markets/chainlink-twap",
+                          "zh/prediction-markets/analytics"
                         ]
                       },
                       {
@@ -371,7 +381,11 @@
                           "zh/event-markets/place-orders",
                           "zh/event-markets/manage-orders",
                           "zh/event-markets/realtime-order-updates",
-                          "zh/event-markets/wallet-activity"
+                          "zh/event-markets/wallet-activity",
+                          "zh/prediction-markets/place-orders",
+                          "zh/prediction-markets/manage-orders",
+                          "zh/prediction-markets/realtime-order-updates",
+                          "zh/prediction-markets/wallet-activity"
                         ]
                       },
                       "zh/prediction-markets/api/overview",
@@ -520,7 +534,10 @@
                     "pages": [
                       "en/event-markets/overview",
                       "en/event-markets/event-markets",
-                      "en/event-markets/place-first-order"
+                      "en/event-markets/place-first-order",
+                      "en/prediction-markets/place-first-order",
+                      "en/prediction-markets/event-markets",
+                      "en/prediction-markets/overview"
                     ]
                   },
                   {
@@ -531,7 +548,10 @@
                       "en/event-markets/prices-orderbook",
                       "en/event-markets/positions-tokens",
                       "en/event-markets/order-lifecycle",
-                      "en/event-markets/resolution"
+                      "en/event-markets/resolution",
+                      "en/prediction-markets/prices-orderbook",
+                      "en/prediction-markets/negative-risk",
+                      "en/prediction-markets/markets-events"
                     ]
                   },
                   {
@@ -539,7 +559,8 @@
                     "pages": [
                       "en/event-markets/trading-overview",
                       "en/event-markets/how-positions-work",
-                      "en/event-markets/fees"
+                      "en/event-markets/fees",
+                      "en/prediction-markets/trading-overview"
                     ]
                   }
                 ]
