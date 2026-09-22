@@ -15,7 +15,13 @@ Use the channel prefix `pred`. A single item can be subscribed with `items`, or 
   "id": "private-1",
   "op": "subscribe",
   "ch": "pred.orders",
-  "payload": { "items": [{ "condition_id": "ge_condition-1" }] },
+  "payload": {
+    "items": [
+      {
+        "condition_id": "ge_condition-1"
+      }
+    ]
+  },
   "auth": {
     "method": "api_key",
     "key": "YOUR_API_KEY",
