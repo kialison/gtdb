@@ -819,7 +819,9 @@
                           "en/prediction-markets/rest/query-assets",
                           "en/prediction-markets/rest/query-server-time",
                           "en/prediction-markets/rest/query-fee",
-                          "en/prediction-markets/rest/query-available-claims"
+                          "en/prediction-markets/rest/query-available-claims",
+                          "en/prediction-markets/rest/query-market",
+                          "en/prediction-markets/rest/query-claim"
                         ]
                       },
                       {
@@ -865,7 +867,8 @@
                           "en/event-markets/wallet-activity",
                           "en/prediction-markets/realtime-order-updates",
                           "en/prediction-markets/place-orders",
-                          "en/prediction-markets/manage-orders"
+                          "en/prediction-markets/manage-orders",
+                          "en/prediction-markets/wallet-activity"
                         ]
                       },
                       "en/prediction-markets/api/overview",
@@ -1017,7 +1020,8 @@
                       "zh-TW/event-markets/place-first-order",
                       "zh-TW/prediction-markets/event-markets",
                       "zh-TW/prediction-markets/place-first-order",
-                      "zh-TW/prediction-markets/overview"
+                      "zh-TW/prediction-markets/overview",
+                      "zh-TW/prediction-markets/prediction-markets"
                     ]
                   },
                   {
@@ -1277,10 +1281,21 @@
                           "zh-TW/prediction-markets/rest/query-event",
                           "zh-TW/prediction-markets/rest/query-order",
                           "zh-TW/prediction-markets/rest/query-token-market",
+                          "zh-TW/prediction-markets/rest/query-token-ticker",
                           "zh-TW/prediction-markets/rest/place-order",
                           "zh-TW/prediction-markets/rest/query-positions",
                           "zh-TW/prediction-markets/rest/query-tags",
-                          "zh-TW/prediction-markets/rest/query-account-book"
+                          "zh-TW/prediction-markets/rest/query-account-book",
+                          "zh-TW/prediction-markets/rest/query-token-prices",
+                          "zh-TW/prediction-markets/rest/cancel-order",
+                          "zh-TW/prediction-markets/rest/cancel-orders-by-condition",
+                          "zh-TW/prediction-markets/rest/query-position",
+                          "zh-TW/prediction-markets/rest/close-position",
+                          "zh-TW/prediction-markets/rest/query-fee",
+                          "zh-TW/prediction-markets/rest/query-available-claims",
+                          "zh-TW/prediction-markets/rest/query-available-claim",
+                          "zh-TW/prediction-markets/rest/create-claim",
+                          "zh-TW/prediction-markets/rest/query-server-time"
                         ]
                       },
                       {
@@ -1292,7 +1307,10 @@
                           "zh-TW/event-markets/websocket/private-channels",
                           "zh-TW/event-markets/websocket/authentication",
                           "zh-TW/prediction-markets/websocket/protocol",
-                          "zh-TW/prediction-markets/websocket/overview"
+                          "zh-TW/prediction-markets/websocket/overview",
+                          "zh-TW/prediction-markets/websocket/public-channels",
+                          "zh-TW/prediction-markets/websocket/private-channels",
+                          "zh-TW/prediction-markets/websocket/authentication"
                         ]
                       },
                       {
@@ -1307,7 +1325,11 @@
                           "zh-TW/event-markets/chainlink-twap",
                           "zh-TW/prediction-markets/market-data-overview",
                           "zh-TW/prediction-markets/market-prices-orderbooks",
-                          "zh-TW/prediction-markets/chainlink-twap"
+                          "zh-TW/prediction-markets/chainlink-twap",
+                          "zh-TW/prediction-markets/discover-markets",
+                          "zh-TW/prediction-markets/market-details",
+                          "zh-TW/prediction-markets/analytics",
+                          "zh-TW/prediction-markets/realtime-data"
                         ]
                       },
                       {
@@ -1317,7 +1339,10 @@
                           "zh-TW/event-markets/manage-orders",
                           "zh-TW/event-markets/realtime-order-updates",
                           "zh-TW/event-markets/wallet-activity",
-                          "zh-TW/prediction-markets/manage-orders"
+                          "zh-TW/prediction-markets/manage-orders",
+                          "zh-TW/prediction-markets/place-orders",
+                          "zh-TW/prediction-markets/realtime-order-updates",
+                          "zh-TW/prediction-markets/wallet-activity"
                         ]
                       },
                       "zh-TW/prediction-markets/api/overview",
