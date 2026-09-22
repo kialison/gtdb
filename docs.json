@@ -779,7 +779,8 @@
                           "en/event-markets/rest/create-claim",
                           "en/event-markets/rest/query-claim",
                           "en/event-markets/rest/query-tags",
-                          "en/event-markets/rest/query-server-time"
+                          "en/event-markets/rest/query-server-time",
+                          "en/prediction-markets/rest/query-events"
                         ]
                       },
                       {
@@ -812,7 +813,10 @@
                           "en/event-markets/realtime-order-updates",
                           "en/event-markets/wallet-activity"
                         ]
-                      }
+                      },
+                      "en/prediction-markets/api/overview",
+                      "en/prediction-markets/apis",
+                      "en/prediction-markets/error-codes"
                     ]
                   }
                 ]
