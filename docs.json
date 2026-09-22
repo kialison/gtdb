@@ -561,7 +561,8 @@
                       "en/prediction-markets/negative-risk",
                       "en/prediction-markets/markets-events",
                       "en/prediction-markets/positions-tokens",
-                      "en/prediction-markets/resolution"
+                      "en/prediction-markets/resolution",
+                      "en/prediction-markets/order-lifecycle"
                     ]
                   },
                   {
@@ -1295,7 +1296,10 @@
                           "zh-TW/prediction-markets/rest/query-available-claims",
                           "zh-TW/prediction-markets/rest/query-available-claim",
                           "zh-TW/prediction-markets/rest/create-claim",
-                          "zh-TW/prediction-markets/rest/query-server-time"
+                          "zh-TW/prediction-markets/rest/query-server-time",
+                          "zh-TW/prediction-markets/rest/query-market-by-slug",
+                          "zh-TW/prediction-markets/rest/query-candlesticks",
+                          "zh-TW/prediction-markets/rest/query-user-trades"
                         ]
                       },
                       {
