@@ -39,23 +39,3 @@ Compute the hexadecimal HMAC-SHA512 digest with the API Secret as the key. Never
 ```
 
 The same API Key authentication is used for `ec.usertrades`, `ec.positions`, and `ec.settlements`.
-
-## Connection-level authentication
-
-You can also authenticate the connection once with the `server.sign` operation, then subscribe to private channels without repeating the `auth` object:
-
-```json
-{
-  "t": 1720000000123,
-  "id": "auth-1",
-  "op": "auth",
-  "ch": "server.sign",
-  "payload": {
-    "method": "api_key",
-    "key": "YOUR_API_KEY",
-    "sign": "HEX_SIGNATURE"
-  }
-}
-```
-
-After a successful acknowledgement, use the same connection for private subscriptions. The signature is generated locally with the API Secret; the secret is never sent.

@@ -36,23 +36,3 @@ channel=ec.orders&event=subscribe&time=1720000000123
 ```
 
 `ec.usertrades`、`ec.positions` 和 `ec.settlements` 使用相同的 API Key 认证方式。
-
-## 連線級認證
-
-也可以先使用 `server.sign` 一次性認證連線，之後訂閱私有頻道時不需要重複傳入 `auth`：
-
-```json
-{
-  "t": 1720000000123,
-  "id": "auth-1",
-  "op": "auth",
-  "ch": "server.sign",
-  "payload": {
-    "method": "api_key",
-    "key": "YOUR_API_KEY",
-    "sign": "HEX_SIGNATURE"
-  }
-}
-```
-
-收到成功 ACK 後，可以在同一連線上訂閱私有頻道。簽名在本地使用 API Secret 生成，API Secret 不會傳送到伺服器。

@@ -36,23 +36,3 @@ channel=pred.orders&event=subscribe&time=1720000000123
 ```
 
 `pred.usertrades`、`pred.positions` 和 `pred.settlements` 使用相同的 API Key 认证方式。
-
-## 连接级认证
-
-也可以先使用 `server.sign` 一次性认证连接，之后订阅私有频道时不需要重复传入 `auth`：
-
-```json
-{
-  "t": 1720000000123,
-  "id": "auth-1",
-  "op": "auth",
-  "ch": "server.sign",
-  "payload": {
-    "method": "api_key",
-    "key": "YOUR_API_KEY",
-    "sign": "HEX_SIGNATURE"
-  }
-}
-```
-
-收到成功 ACK 后，可以在同一连接上订阅私有频道。签名在本地使用 API Secret 生成，API Secret 不会发送到服务端。
