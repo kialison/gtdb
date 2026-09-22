@@ -319,7 +319,17 @@
                           "zh/prediction-markets/rest/query-market-trades",
                           "zh/prediction-markets/rest/query-event-by-slug",
                           "zh/prediction-markets/rest/query-market",
-                          "zh/prediction-markets/rest/query-market-by-slug"
+                          "zh/prediction-markets/rest/query-market-by-slug",
+                          "zh/prediction-markets/rest/query-token-market",
+                          "zh/prediction-markets/rest/query-token-ticker",
+                          "zh/prediction-markets/rest/close-position",
+                          "zh/prediction-markets/rest/query-order",
+                          "zh/prediction-markets/rest/cancel-order",
+                          "zh/prediction-markets/rest/query-positions",
+                          "zh/prediction-markets/rest/query-price-history",
+                          "zh/prediction-markets/rest/query-token-prices",
+                          "zh/prediction-markets/rest/query-order-book",
+                          "zh/prediction-markets/rest/query-orders"
                         ]
                       },
                       {
@@ -354,7 +364,8 @@
                         ]
                       },
                       "zh/prediction-markets/api/overview",
-                      "zh/prediction-markets/error-codes"
+                      "zh/prediction-markets/error-codes",
+                      "zh/prediction-markets/apis"
                     ]
                   }
                 ]
