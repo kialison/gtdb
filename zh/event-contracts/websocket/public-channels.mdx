@@ -23,14 +23,14 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "payload": {
     "items": [
       {
-        "condition_id": "gate_condition-1"
+        "condition_id": "ge_condition-1"
       }
     ]
   }
 }
 ```
 
-服务端会先返回 ACK。如果已有缓存，会返回 `snapshot`；后续消息使用 `type: "update"`。
+服务端会先返回 ACK。具有缓存状态的频道可能返回 `snapshot`；`trades` 频道只推送 `update`。后续消息使用 `type: "update"`。
 
 ## `ec.trades`
 
@@ -46,8 +46,8 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "ch": "ec.trades",
   "err": null,
   "result": {
-    "condition_id": "gate_condition-1",
-    "token_id": "gate_token-yes",
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
     "outcome": "Yes",
     "side": "BUY",
     "px": "0.45",
@@ -71,7 +71,7 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "ch": "ec.depth",
   "err": null,
   "result": {
-    "token_id": "gate_token-yes",
+    "token_id": "ge_token-yes",
     "level": 20,
     "full": true,
     "bids": [
@@ -100,8 +100,8 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "ch": "ec.bbo",
   "err": null,
   "result": {
-    "condition_id": "gate_condition-1",
-    "token_id": "gate_token-yes",
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
     "bid_px": "0.44",
     "ask_px": "0.46",
     "last_px": "0.45",
@@ -124,8 +124,8 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "ch": "ec.status",
   "err": null,
   "result": {
-    "market_id": "gate_market-1",
-    "condition_id": "gate_condition-1",
+    "market_id": "ge_market-1",
+    "condition_id": "ge_condition-1",
     "slug": "example-market",
     "status": "ACTIVE",
     "closed": false,
@@ -133,12 +133,12 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
     "outcomes": [
       {
         "name": "Yes",
-        "token_id": "gate_token-yes",
+        "token_id": "ge_token-yes",
         "px": "0.45"
       },
       {
         "name": "No",
-        "token_id": "gate_token-no",
+        "token_id": "ge_token-no",
         "px": "0.55"
       }
     ],
