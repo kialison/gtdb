@@ -329,7 +329,17 @@
                           "zh/prediction-markets/rest/query-price-history",
                           "zh/prediction-markets/rest/query-token-prices",
                           "zh/prediction-markets/rest/query-order-book",
-                          "zh/prediction-markets/rest/query-orders"
+                          "zh/prediction-markets/rest/query-orders",
+                          "zh/prediction-markets/rest/create-claim",
+                          "zh/prediction-markets/rest/query-available-claim",
+                          "zh/prediction-markets/rest/query-server-time",
+                          "zh/prediction-markets/rest/query-fee",
+                          "zh/prediction-markets/rest/query-assets",
+                          "zh/prediction-markets/rest/query-available-claims",
+                          "zh/prediction-markets/rest/query-claim",
+                          "zh/prediction-markets/rest/query-user-trades",
+                          "zh/prediction-markets/rest/query-account-book",
+                          "zh/prediction-markets/rest/query-tags"
                         ]
                       },
                       {
@@ -339,7 +349,8 @@
                           "zh/event-markets/websocket/protocol",
                           "zh/event-markets/websocket/public-channels",
                           "zh/event-markets/websocket/private-channels",
-                          "zh/event-markets/websocket/authentication"
+                          "zh/event-markets/websocket/authentication",
+                          "zh/prediction-markets/websocket/overview"
                         ]
                       },
                       {
