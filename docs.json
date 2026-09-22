@@ -62,6 +62,7 @@
                   {
                     "group": "快速开始",
                     "pages": [
+                      "zh/prediction-markets/overview",
                       "zh/event-markets/overview",
                       "zh/event-markets/event-markets",
                       "zh/event-markets/place-first-order"
