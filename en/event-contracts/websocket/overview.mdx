@@ -3,7 +3,7 @@ title: "WebSocket Overview"
 description: "Event Contracts API real-time data overview."
 ---
 
-WebSocket is used for live market and account updates.
+The Event Contracts WebSocket API provides public market data and authenticated account updates.
 
 ## Connection
 
@@ -11,28 +11,11 @@ WebSocket is used for live market and account updates.
 wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 ```
 
-The protocol uses JSON messages and the `ec.*` channel prefix.
+Use one connection for the channels of the selected product. Prediction Markets uses `ec.*`; Event Contracts uses `ec.*`.
 
-Typical use cases include:
+## Channel groups
 
-- market prices and order-book updates;
-- trade updates;
-- order-state updates;
-- position updates;
-- account activity.
+- Public channels: `ec.trades`, `ec.depth`, `ec.bbo`, `ec.status`, `ec.cpi`, `ec.candlestick`, and `ec.oc_price`
+- Private channels: `ec.orders`, `ec.usertrades`, `ec.positions`, and `ec.settlements`
 
-Public channels do not require authentication. Private channels require API Key authentication.
-
-| Channel | Purpose |
-| --- | --- |
-| `ec.trades` | Public trades |
-| `ec.depth` | Order-book depth |
-| `ec.bbo` | Best bid and offer |
-| `ec.cpi` | CPI price updates |
-| `ec.candlestick` | Candlestick updates |
-| `ec.oc_price` | Open/close reference price |
-| `ec.status` | Market lifecycle and trading status |
-
-Private channels include `ec.orders`, `ec.usertrades`, `ec.positions`, and `ec.settlements`.
-
-Reconnect logic should restore the required subscriptions and refresh authoritative state when needed.
+Public channels do not require authentication. Private channels require an API Key signature. See [WebSocket Protocol](./protocol), [Public Channels](./public-channels), and [Private Channels](./private-channels).

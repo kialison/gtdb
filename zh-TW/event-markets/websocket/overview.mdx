@@ -4,60 +4,19 @@ sidebarTitle: "概覽"
 description: "連接預測市場 WebSocket，接收即時公開行情和認證帳戶事件。"
 ---
 
-預測市場 WebSocket 用於即時市場資料和帳戶事件，通常與 REST API 配合使用：
+事件市場 WebSocket API 提供公共行情数据和需要认证的账户更新。
 
-- WebSocket：即時行情、訂單、成交、持倉和結算推送；
-- REST：歷史查詢、分頁、訂單管理以及斷線後的狀態恢復。
-
-## 連接位址
+## 连接
 
 ```text
 wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
-目前協議版本為 **v2**，使用 JSON 消息。
+在同一产品的频道中复用一个连接。事件市场使用 `pred.*` 前缀。
 
-## 公開頻道
+## 频道分组
 
-| 頻道 | 用途 |
-| --- | --- |
-| `pred.trades` | 公開成交 |
-| `pred.depth` | 完整訂單簿深度 |
-| `pred.bbo` | 最優買賣價與最新價 |
-| `pred.cpi` | CPI 價格更新 |
-| `pred.candlestick` | K 線更新 |
-| `pred.oc_price` | 開盤 / 收盤參考價 |
-| `pred.status` | 市場生命週期與可交易狀態 |
+- 公共频道：`pred.trades`、`pred.depth`、`pred.bbo`、`pred.status`、`pred.cpi`、`pred.candlestick`、`pred.oc_price`
+- 私有频道：`pred.orders`、`pred.usertrades`、`pred.positions`、`pred.settlements`
 
-## 私有頻道
-
-| 頻道 | 用途 |
-| --- | --- |
-| `pred.orders` | 訂單狀態更新 |
-| `pred.usertrades` | 目前使用者成交 |
-| `pred.positions` | 持倉更新 |
-| `pred.settlements` | 結算更新 |
-
-## 首次訂閱示例
-
-```json
-{
-  "t": 1787026512123,
-  "id": "depth-1",
-  "op": "subscribe",
-  "ch": "pred.depth",
-  "payload": {
-    "items": [{"token_id":"gate_token_id","level":20}]
-  }
-}
-```
-
-## 重要約定
-
-- `t` 為 Unix 毫秒時間戳；
-- ID 應作為不透明字串處理；
-- 價格、數量、金額和費率使用字串；
-- 公開頻道無需認證；
-- 私有頻道需要認證；
-- 斷線重連後需要重新認證並恢復訂閱；
-- WebSocket 不補發斷線期間的資料，應使用 REST 進行恢復。
+公共频道不需要认证，私有频道需要 API Key 签名。请参阅[WebSocket 协议](./protocol)、[公共频道](./public-channels)和[私有频道](./private-channels)。

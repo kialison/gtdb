@@ -3,7 +3,7 @@ title: "WebSocket Overview"
 description: "Prediction Markets API real-time data overview."
 ---
 
-WebSocket is used for live market and account updates.
+The Prediction Markets WebSocket API provides public market data and authenticated account updates.
 
 ## Connection
 
@@ -11,28 +11,11 @@ WebSocket is used for live market and account updates.
 wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
-The protocol uses JSON messages and the `pred.*` channel prefix.
+Use one connection for the channels of the selected product. Prediction Markets uses `pred.*`; Event Contracts uses `pred.*`.
 
-Typical use cases include:
+## Channel groups
 
-- market prices and order-book updates;
-- trade updates;
-- order-state updates;
-- position updates;
-- account activity.
+- Public channels: `pred.trades`, `pred.depth`, `pred.bbo`, `pred.status`, `pred.cpi`, `pred.candlestick`, and `pred.oc_price`
+- Private channels: `pred.orders`, `pred.usertrades`, `pred.positions`, and `pred.settlements`
 
-Public channels do not require authentication. Private channels require API Key authentication.
-
-| Channel | Purpose |
-| --- | --- |
-| `pred.trades` | Public trades |
-| `pred.depth` | Order-book depth |
-| `pred.bbo` | Best bid and offer |
-| `pred.cpi` | CPI price updates |
-| `pred.candlestick` | Candlestick updates |
-| `pred.oc_price` | Open/close reference price |
-| `pred.status` | Market lifecycle and trading status |
-
-Private channels include `pred.orders`, `pred.usertrades`, `pred.positions`, and `pred.settlements`.
-
-Reconnect logic should restore the required subscriptions and refresh authoritative state when needed.
+Public channels do not require authentication. Private channels require an API Key signature. See [WebSocket Protocol](./protocol), [Public Channels](./public-channels), and [Private Channels](./private-channels).

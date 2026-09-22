@@ -4,76 +4,220 @@ sidebarTitle: "公共頻道"
 description: "訂閱事件合約公開成交、深度、BBO、價格和市場狀態。"
 ---
 
-本頁頻道均為公開頻道，無需認證。
+公共频道不需要认证。
 
-## 公開成交 `ec.trades`
+**连接地址**
 
-按 `condition_id` 訂閱：
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+```
+
+## 订阅
 
 ```json
 {
-  "op":"subscribe",
-  "ch":"ec.trades",
-  "payload":{"items":[{"condition_id":"gate_0xcondition"}]}
+  "t": 1720000000123,
+  "id": "sub-1",
+  "op": "subscribe",
+  "ch": "ec.trades",
+  "payload": {
+    "items": [
+      {
+        "condition_id": "ge_condition-1"
+      }
+    ]
+  }
 }
 ```
 
-每條更新包含 `condition_id`、`token_id`、`outcome`、`side`、`px`、`qty` 和 `ts`。
+服务端会先返回 ACK。具有缓存状态的频道可能返回 `snapshot`；`trades` 频道只推送 `update`。后续消息使用 `type: "update"`。
 
-## 訂單簿深度 `ec.depth`
+## `ec.trades`
 
-按 `token_id` 和深度等級訂閱。支援 `5`、`10`、`20`、`50` 檔。
+使用 `condition_id` 订阅。
+
+**返回示例**
 
 ```json
 {
-  "op":"subscribe",
-  "ch":"ec.depth",
-  "payload":{"items":[{"token_id":"gate_token_id","level":20}]}
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.trades",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "px": "0.45",
+    "qty": "10",
+    "ts": 1720000000123
+  }
 }
 ```
 
-服務端推送的是完整快照，不是增量 Delta。
+## `ec.depth`
 
-## 最優買賣價 `ec.bbo`
+使用 `token_id` 和 `level` 订阅，支持 5、10、20、50。返回的是完整订单簿，不是增量。
 
-回傳 `bid_px`、`ask_px`、`last_px` 和時間戳。
-
-## CPI 價格 `ec.cpi`
-
-按 `symbol` 和 `interval` 訂閱，例如：
+**返回示例**
 
 ```json
 {
-  "op":"subscribe",
-  "ch":"ec.cpi",
-  "payload":{"items":[{"symbol":"btcusdt","interval":"1m"}]}
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "snapshot",
+  "ch": "ec.depth",
+  "err": null,
+  "result": {
+    "token_id": "ge_token-yes",
+    "level": 20,
+    "full": true,
+    "bids": [
+      ["0.44", "100"]
+    ],
+    "asks": [
+      ["0.46", "80"]
+    ],
+    "hash": "book-hash",
+    "ts": 1720000000123
+  }
 }
 ```
 
-回傳標準化後的 Symbol、週期、價格和價格時間。
+## `ec.bbo`
 
-## K 線 `ec.candlestick`
+使用 `token_id` 订阅。
 
-按 Symbol 和週期訂閱。推送欄位包括：
+**返回示例**
 
-- `t`：K 線開始時間；
-- `o`：開盤價；
-- `h`：最高價；
-- `l`：最低價；
-- `c`：收盤價；
-- `v`：成交量；
-- `closed`：K 線是否已結束。
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.bbo",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "bid_px": "0.44",
+    "ask_px": "0.46",
+    "last_px": "0.45",
+    "ts": 1720000000123
+  }
+}
+```
 
-## 開收盤參考價 `ec.oc_price`
+## `ec.status`
 
-可按市場 `slug`、`market_id`，或 Symbol + Interval 訂閱。回傳 `price_to_beat` 與 `final_price`。
+使用 `market_id` 订阅。
 
-## 市場狀態 `ec.status`
+**返回示例**
 
-按 `market_id` 訂閱市場狀態。常見狀態：
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.status",
+  "err": null,
+  "result": {
+    "market_id": "ge_market-1",
+    "condition_id": "ge_condition-1",
+    "slug": "example-market",
+    "status": "ACTIVE",
+    "closed": false,
+    "accepting_orders": true,
+    "outcomes": [
+      {
+        "name": "Yes",
+        "token_id": "ge_token-yes",
+        "px": "0.45"
+      },
+      {
+        "name": "No",
+        "token_id": "ge_token-no",
+        "px": "0.55"
+      }
+    ],
+    "ts": 1720000000123
+  }
+}
+```
 
-- `ACTIVE`
-- `CLOSED`
-- `RESOLVED`
+## `ec.cpi`
 
-推送還可包含 `closed`、`accepting_orders`、各結果 Token 及目前價格。
+使用 `symbol` 和 `interval` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.cpi",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "price": "100000.10",
+    "price_timestamp": "1720000000123",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.candlestick`
+
+使用 `symbol` 和 `interval` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.candlestick",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "t": 1720000000,
+    "o": "100000.00",
+    "h": "100010.00",
+    "l": "99990.00",
+    "c": "100005.00",
+    "v": "0",
+    "closed": false
+  }
+}
+```
+
+缓存的 K 线快照包含 `symbol`、`interval` 和 `history`。
+
+## `ec.oc_price`
+
+使用 `slug` 或 `market_id` 订阅。配置好的币价窗口也可以使用 `symbol` 和 `interval`。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.oc_price",
+  "err": null,
+  "result": {
+    "slug": "bitcoin-up-or-down",
+    "price_to_beat": "100000.00",
+    "final_price": "100120.00"
+  }
+}
+```
+
+除非字段明确标注为秒，否则时间戳均为 Unix 毫秒时间戳。

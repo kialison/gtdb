@@ -3,16 +3,226 @@ title: "Public Channels"
 description: "Public Event Contracts API WebSocket channels."
 ---
 
-Public channels do not require user authentication and are intended for market-facing data.
+Public channels do not require authentication.
 
-Use the `ec.*` channel prefix:
+**Endpoint**
 
-| Channel | Purpose |
-| --- | --- |
-| `ec.trades` | Public trades |
-| `ec.depth` | Order-book depth |
-| `ec.bbo` | Best bid and offer |
-| `ec.cpi` | CPI price updates |
-| `ec.candlestick` | Candlestick updates |
-| `ec.oc_price` | Open/close reference price |
-| `ec.status` | Market lifecycle and trading status |
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+```
+
+## Subscribe
+
+```json
+{
+  "t": 1720000000123,
+  "id": "sub-1",
+  "op": "subscribe",
+  "ch": "ec.trades",
+  "payload": {
+    "items": [
+      {
+        "condition_id": "ge_condition-1"
+      }
+    ]
+  }
+}
+```
+
+The server returns an acknowledgement first. Channels with cached state may send a `snapshot`; `trades` is delivered as `update` events. Subsequent messages use `type: "update"`.
+
+## `ec.trades`
+
+Subscribe with `condition_id`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.trades",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "px": "0.45",
+    "qty": "10",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.depth`
+
+Subscribe with `token_id` and `level`. Supported levels are 5, 10, 20, and 50. The response is a full book, not a delta.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "snapshot",
+  "ch": "ec.depth",
+  "err": null,
+  "result": {
+    "token_id": "ge_token-yes",
+    "level": 20,
+    "full": true,
+    "bids": [
+      [
+        "0.44",
+        "100"
+      ]
+    ],
+    "asks": [
+      [
+        "0.46",
+        "80"
+      ]
+    ],
+    "hash": "book-hash",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.bbo`
+
+Subscribe with `token_id`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.bbo",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "bid_px": "0.44",
+    "ask_px": "0.46",
+    "last_px": "0.45",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.status`
+
+Subscribe with `market_id`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.status",
+  "err": null,
+  "result": {
+    "market_id": "ge_market-1",
+    "condition_id": "ge_condition-1",
+    "slug": "example-market",
+    "status": "ACTIVE",
+    "closed": false,
+    "accepting_orders": true,
+    "outcomes": [
+      {
+        "name": "Yes",
+        "token_id": "ge_token-yes",
+        "px": "0.45"
+      },
+      {
+        "name": "No",
+        "token_id": "ge_token-no",
+        "px": "0.55"
+      }
+    ],
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.cpi`
+
+Subscribe with `symbol` and `interval`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.cpi",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "price": "100000.10",
+    "price_timestamp": "1720000000123",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `ec.candlestick`
+
+Subscribe with `symbol` and `interval`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.candlestick",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "t": 1720000000,
+    "o": "100000.00",
+    "h": "100010.00",
+    "l": "99990.00",
+    "c": "100005.00",
+    "v": "0",
+    "closed": false
+  }
+}
+```
+
+A cached candlestick snapshot contains `symbol`, `interval`, and `history`.
+
+## `ec.oc_price`
+
+Subscribe with `slug` or `market_id`. Configured crypto windows can also use `symbol` and `interval`.
+
+**Response example**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.oc_price",
+  "err": null,
+  "result": {
+    "slug": "bitcoin-up-or-down",
+    "price_to_beat": "100000.00",
+    "final_price": "100120.00"
+  }
+}
+```
+
+Unless a field is explicitly documented as seconds, timestamps are Unix timestamps in milliseconds.

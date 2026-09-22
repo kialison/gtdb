@@ -4,8 +4,28 @@ description: "Transfer USDT between supported accounts and the Event Contracts a
 openapi: "/openapi/event-contracts-en.yaml POST /api/v4/event_contracts/transfer"
 ---
 
-Transfer USDT between supported account types and the Event Contracts account.
+Transfers USDT between a supported account and the product account.
 
-<Note>
-This is a private endpoint and requires Event Contracts API authentication.
-</Note>
+**Base URL:** `https://api.dexbuilder.com`
+
+**Authentication:** This is a private endpoint and requires API authentication. The authenticated account is inferred from the request credentials; do not send internal user headers.
+
+## Request
+
+```bash
+curl -X POST "https://api.dexbuilder.com/api/v4/event_contracts/transfer" \\
+  -H "Content-Type: application/json" \\
+  -d '<request-body>'
+```
+
+The request body specifies the transfer direction and amount. Review the OpenAPI schema for required fields.
+
+The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
+
+## Response
+
+Returns the transfer request status and identifiers. Verify the resulting balance and fund-flow record.
+
+A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
+
+For order, position, claim, transfer, and account operations, treat the response as the current server result and query the resource again when the operation is asynchronous.
