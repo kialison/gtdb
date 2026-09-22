@@ -1,0 +1,46 @@
+---
+title: "預測市場開發文檔"
+sidebarTitle: "概覽"
+description: "面向預測市場開發者的 API 與工具文檔，用於取得資料、下單和贖回持倉。"
+---
+
+## 開發者快速開始
+
+幾分鐘內完成第一次 API 請求。瞭解預測市場平台基礎能力，取得市場資料、提交訂單，並在市場結算後贖回獲勝持倉。
+
+<CodeGroup>
+
+```bash API
+curl -G "https://api.dexbuilder.com/api/v4/prediction/markets" \
+  --data-urlencode "active=true" \
+  --data-urlencode "closed=false" \
+  --data-urlencode "limit=5"
+```
+
+</CodeGroup>
+
+## 瞭解預測市場
+
+先瞭解預測市場如何運作、市場與交易的核心概念，再選擇適合自己的接入方式。
+
+<CardGroup cols={3}>
+  <Card title="預測市場" icon="chart-line" href="/zh-TW/prediction-markets/event-markets">
+    瞭解預測市場的運作方式和基本使用方法。
+  </Card>
+
+  <Card title="核心概念" icon="book" href="/zh-TW/prediction-markets/markets-events">
+    瞭解事件、市場、價格、訂單簿、持倉、訂單與結算機制。
+  </Card>
+
+  <Card title="API" icon="code" href="/zh-TW/prediction-markets/api/overview">
+    快速瞭解 API，並開始構建自己的產品。
+  </Card>
+</CardGroup>
+
+## DexBuilder Grants
+
+DexBuilder 為生態專案提供開發支援與激勵資源。專案方可根據實際業務場景提交申請。
+
+<Card title="申請支援" icon="rocket" href="mailto:grants@example.com">
+  提交專案資料，申請預測市場相關開發支援。
+</Card>

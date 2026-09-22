@@ -1,0 +1,58 @@
+---
+title: "市场数据概览"
+sidebarTitle: "概览"
+description: "了解预测市场的数据结构，以及如何从 Event、Market 和 Outcome 开始获取应用所需数据。"
+---
+
+预测市场的数据接入通常从确定应用关注的 Event、Market 或 Outcome 开始。本节将介绍如何完成市场发现、读取市场详情、获取价格与订单簿、查看统计数据，以及订阅实时数据。
+
+## 数据模型
+
+在预测市场中，一个 Event 可以包含一个或多个 Market。每个 Market 是一个可交易问题，并包含 YES / NO 等结果。每个 Outcome 都有对应的 Token ID。
+
+当应用需要读取某个结果的价格、订单簿或提交订单时，需要使用该 Outcome 的 `token_id`。
+
+![Image](/images/image-6.png "Image")
+
+<Steps>
+  <Step title="发现 Event">
+    浏览当前 Event、按分类筛选，或根据 slug / ID 直接查询指定 Event。
+  </Step>
+  <Step title="选择 Market">
+    查看 Event 下的 Market，并选择应用需要处理的具体问题。
+  </Step>
+  <Step title="选择 Outcome">
+    选择 YES、NO 或其他结果，并保存对应的 Token ID。
+  </Step>
+  <Step title="读取或订阅数据">
+    使用已获取的标识查询 REST API，或通过 WebSocket 订阅实时更新。
+  </Step>
+</Steps>
+
+## 选择接入流程
+
+<CardGroup cols={2}>
+  <Card title="发现市场" icon="compass" href="/zh/prediction-markets/discover-markets">
+    查找应用关注的 Event 与 Market。
+  </Card>
+
+  <Card title="市场详情" icon="circle-info" href="/zh/prediction-markets/market-details">
+    查看结果、状态、交易限制、费率和其他 Market 属性。
+  </Card>
+
+  <Card title="价格与订单簿" icon="chart-line" href="/zh/prediction-markets/market-prices-orderbooks">
+    获取当前价格、流动性和历史价格数据。
+  </Card>
+
+  <Card title="数据分析" icon="chart-bar" href="/zh/prediction-markets/analytics">
+    查看成交、持仓量、持有人与 Event 成交量等数据。
+  </Card>
+
+  <Card title="实时数据" icon="bolt" href="/zh/prediction-markets/realtime-data">
+    通过实时数据流保持市场状态同步。
+  </Card>
+
+  <Card title="Chainlink TWAP" icon="link" href="/zh/prediction-markets/chainlink-twap">
+    获取 30 秒与 60 秒时间加权平均价格。
+  </Card>
+</CardGroup>

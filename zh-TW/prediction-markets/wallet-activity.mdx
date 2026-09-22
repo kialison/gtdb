@@ -1,0 +1,76 @@
+---
+title: "帳戶活動"
+sidebarTitle: "帳戶活動"
+description: "查詢目前認證帳戶的預測市場持倉、成交和相關帳戶活動。"
+---
+
+預測市場 API 提供目前認證帳戶的持倉和成交記錄。相關介面屬於私有介面，需要完成認證後呼叫。
+
+生產環境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 查詢持倉
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/prediction/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+常見回傳欄位包括：
+
+| 欄位 | 說明 |
+| --- | --- |
+| `position_id` | 持倉 ID |
+| `event_id` | 事件 ID |
+| `token_id` | 結果代幣 ID |
+| `outcome` | 對應結果 |
+| `size` | 總持倉數量 |
+| `available_size` | 可用數量 |
+| `locked_size` | 鎖定數量 |
+| `avg_open_price` | 平均開倉價格 |
+| `position_value` | 目前持倉價值 |
+| `settlement_status` | 結算狀態 |
+| `won` | 市場結算後是否獲勝 |
+| `updated_at` | 最後更新時間 |
+
+使用回傳的 `next_cursor` 作為下一頁請求的 `cursor`。
+
+## 查詢單個持倉
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/positions/<position_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+## 查詢個人成交
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/prediction/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+個人成交記錄通常包含 `trade_id`、`order_id`、`condition_id`、`token_id`、`price`、`size`、`side`、`role` 和 `fee_rate` 等欄位。
+
+## 查詢範圍
+
+目前介面主要圍繞已認證帳戶提供資料，包括：
+
+- 持倉；
+- 個人成交；
+- 訂單；
+- 帳戶資產和資金流水；
+- 結算與領取記錄。
+
+<Note>
+  帳戶類介面用於查詢目前認證使用者的資料，不建議將其理解為任意錢包位址的公開鏈上查詢介面。
+</Note>

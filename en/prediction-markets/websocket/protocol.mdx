@@ -1,0 +1,70 @@
+---
+title: "WebSocket Protocol"
+description: "Prediction Markets API WebSocket message format and subscription flow."
+---
+
+Messages are JSON objects. The request timestamp `t` must be within 60 seconds of server time, and `id` must be a string or integer.
+
+## Subscribe
+
+```json
+{
+  "t": 1720000000123,
+  "id": "req-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "payload": {
+    "items": [
+      {
+        "token_id": "ge_token-yes",
+        "level": 20
+      }
+    ]
+  }
+}
+```
+
+Use `op: "unsubscribe"` with the same channel and payload to remove a subscription. Private channels also include an `auth` object. Private channels support `{"all": true}`; public channels require `items`.
+
+## Acknowledgements
+
+Success:
+
+```json
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "err": null,
+  "result": {
+    "status": "success"
+  }
+}
+```
+
+Failure:
+
+```json
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "err": {
+    "code": 2,
+    "msg": "invalid depth item"
+  },
+  "result": {
+    "status": "fail"
+  }
+}
+```
+
+## Updates and snapshots
+
+Data messages use `type: "snapshot"` for cached initial state and `type: "update"` for later events. They contain `ch`, `err: null`, and a channel-specific `result`.
+
+A connection supports up to 100 subscription items per request and up to 10,000 active subscriptions. On reconnect, resubscribe and use REST endpoints to recover account state for private channels.

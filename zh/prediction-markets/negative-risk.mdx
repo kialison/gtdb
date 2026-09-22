@@ -1,0 +1,95 @@
+---
+title: "Negative Risk 市场"
+sidebarTitle: "Negative Risk 市场"
+description: "了解多结果事件中的 Negative Risk 机制，以及如何通过结果转换提升资金效率。"
+---
+
+Negative Risk 是面向多结果事件的一种机制，适用于最终只有一个结果能够获胜的场景。它通过结果之间的转换关系，将同一 Event 下的多个 Market 连接起来，从而提高资金利用效率。
+
+## 工作方式
+
+在普通多结果事件中，各 Market 相互独立。如果想表达“某个结果不会发生”，通常需要直接买入该 Market 的 No Token，但这个 No Token 与其他结果没有资产转换关系。
+
+Negative Risk 会建立这种关系：
+
+- 任意一个 Market 的 1 份 No，可以转换为同一 Event 中其他每个 Market 的 1 份 Yes；
+- 转换通过 Neg Risk Adapter 合约完成。
+
+### 示例
+
+假设 Event 为“谁将赢得总统选举？”，包含三个结果：
+
+| 结果 | 当前持仓 |
+| --- | --- |
+| 候选人 A | — |
+| 候选人 B | — |
+| 其他 | 1 No |
+
+在 Negative Risk 机制下，“其他”的 1 No 可以转换为：
+
+| 结果 | 转换后 |
+| --- | --- |
+| 候选人 A | 1 Yes |
+| 候选人 B | 1 Yes |
+| 其他 | — |
+
+因此，“看空一个结果”在经济意义上可以转换为“看多所有其他结果”。
+
+## Augmented Negative Risk
+
+标准 Negative Risk 通常要求在市场创建时就确定完整结果集合。但实际场景中，交易开始后可能出现新的候选结果，例如新的候选人加入竞选。
+
+Augmented Negative Risk 使用以下结果类型处理动态变化：
+
+| 结果类型 | 说明 |
+| --- | --- |
+| Named outcomes | 创建市场时已经明确的结果 |
+| Placeholder outcomes | 预留位置，后续可明确成具体结果 |
+| Other | 捕获未被明确列出的其他结果 |
+
+### Placeholder 如何工作
+
+<Steps>
+  <Step title="事件上线">
+    Event 以已命名结果、Placeholder 和 Other 一起上线。
+  </Step>
+  <Step title="明确 Placeholder">
+    当出现新的有效结果时，可以将某个 Placeholder 明确为该结果。
+  </Step>
+  <Step title="Other 范围收窄">
+    随着 Placeholder 被分配，Other 所代表的剩余结果集合会同步缩小。
+  </Step>
+</Steps>
+
+### 交易规则
+
+- 若最终正确结果没有被单独命名，则 Market 可按 Other 结果结算；
+- Other 的实际定义会随着 Placeholder 的明确发生变化，因此直接交易 Other 时需要特别注意其覆盖范围。
+
+## 转换机制
+
+转换由 Neg Risk Adapter 原子执行：
+
+<Steps>
+  <Step title="持有 No Token">
+    用户持有 Outcome A 的 1 份 No Token。
+  </Step>
+  <Step title="调用 convert">
+    调用 Adapter 的 `convert` 方法。
+  </Step>
+  <Step title="收到其他结果的 Yes Token">
+    用户收到同一 Event 中其他每个结果各 1 份 Yes Token。
+  </Step>
+</Steps>
+
+## 下一步
+
+<CardGroup cols={2}>
+  <Card title="市场与事件" icon="chart-line" href="/zh/prediction-markets/markets-events">
+    了解多 Market Event 的组织方式。
+  </Card>
+
+  <Card title="持仓与结果代币" icon="coins" href="/zh/prediction-markets/positions-tokens">
+    了解结果代币与持仓关系。
+  </Card>
+</CardGroup>

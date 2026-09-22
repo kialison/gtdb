@@ -1,0 +1,92 @@
+---
+title: "提交訂單"
+sidebarTitle: "提交訂單"
+description: "透過 Prediction API 建立預測市場私有訂單。"
+---
+
+在確認 Market 目前接受訂單後，可以針對指定 Outcome Token 提交交易。公開市場資料無需認證；下單屬於私有操作，需要完成認證。
+
+生產環境 Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+## 1. 讀取 Market 交易限制
+
+先查詢 Market，並從 `outcomes[].token_id` 中選擇要交易的 Token：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
+```
+
+再讀取公開訂單簿：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/order_book?depth=20"
+```
+
+提交訂單前應根據響應中的 `min_order_size` 和 `tick_size` 做數量和價格校驗。
+
+## 2. 提交訂單
+
+```bash cURL
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/orders" \
+  -H "Content-Type: application/json" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data '{
+    "token_id": "<token_id>",
+    "side": "BUY",
+    "price": "0.52",
+    "size": "10",
+    "total_cost": "5.20",
+    "order_type": "LIMIT",
+    "order_mode": "GTC",
+    "client_order_id": "client-order-001",
+    "post_only": false,
+    "sell_all": false,
+    "expire_time": 0
+  }'
+```
+
+<Note>
+  上例認證 Header 僅用於表示介面需要認證，實際公開認證方案以正式認證文檔為準。不要把內部網關身份 Header 用作客戶端認證參數。
+</Note>
+
+## 請求欄位
+
+| 欄位 | 說明 |
+| --- | --- |
+| `token_id` | 要交易的 Outcome Token |
+| `side` | 訂單方向，例如 `BUY` / `SELL` |
+| `price` | 限價，decimal string |
+| `size` | 下單數量，decimal string |
+| `total_cost` | 某些訂單模式下使用的訂單總成本 |
+| `order_type` | 交易服務定義的訂單類型 |
+| `order_mode` | Time-in-force / 執行模式 |
+| `client_order_id` | 可選的客戶端冪等 / 跟蹤 ID |
+| `post_only` | 是否只作為 Maker 提供流動性 |
+| `sell_all` | 賣出時是否使用全部可用持倉 |
+| `expire_time` | 適用時的過期時間，Unix 秒 |
+
+## 接受響應
+
+```json
+{
+  "order_id": "order-123",
+  "client_order_id": "client-order-001",
+  "status": "ACCEPTED",
+  "created_at": 1782753357
+}
+```
+
+`ACCEPTED` 只表示訂單請求已被系統接受，並不代表已經全部成交。後續應透過訂單查詢介面讀取實際狀態。
+
+## 下單前檢查
+
+- Market 必須滿足 `accepting_orders: true`；
+- `token_id` 應來自 Market 的 `outcomes` 數組；
+- `size` 必須滿足 `min_order_size`；
+- `price` 必須符合 `tick_size`；
+- 價格、數量、金額建議始終使用字串，避免浮點精度誤差；
+- 私有請求必須使用正式認證方案。

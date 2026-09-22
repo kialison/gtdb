@@ -1,0 +1,35 @@
+---
+title: "提交第一筆訂單"
+sidebarTitle: "第一筆訂單"
+description: "使用已有預測市場帳戶完成認證，並提交第一筆訂單。"
+---
+
+本頁演示如何使用已有預測市場帳戶提交第一筆訂單。建議帳戶至少準備 10 USDT 可用資金。
+
+<Steps>
+  <Step title="完成認證">
+    首先按照私有介面認證要求準備 API Key 與簽名資訊。
+  </Step>
+  <Step title="選擇 Outcome">
+    查詢 Market，並從 `outcomes[]` 中選擇要交易的 Outcome。訂單透過 `token_id` 標識具體結果。
+  </Step>
+  <Step title="提交訂單">
+    根據訂單簿流動性設定價格與數量，然後向訂單介面提交交易請求。
+  </Step>
+  <Step title="等待結算">
+    訂單撮合後，相關成交仍可能需要異步完成鏈上結算。確認結算完成後再讀取最終資產狀態。
+  </Step>
+  <Step title="檢查持倉">
+    查詢對應 Market 的持倉，確認買入的 Outcome Token 數量、可用數量與結算狀態。
+  </Step>
+</Steps>
+
+<CardGroup cols={2}>
+  <Card title="市場詳情" icon="circle-info" href="/zh-TW/prediction-markets/market-details">
+    取得 Market 的 Token ID、Tick Size 與最小下單數量。
+  </Card>
+
+  <Card title="提交訂單" icon="arrow-up-right" href="/zh-TW/prediction-markets/place-orders">
+    檢視完整下單介面與參數說明。
+  </Card>
+</CardGroup>

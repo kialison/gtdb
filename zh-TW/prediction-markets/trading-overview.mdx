@@ -1,0 +1,42 @@
+---
+title: "交易概覽"
+sidebarTitle: "概覽"
+description: "瞭解預測市場中的訂單、結算與持倉如何協同工作。"
+---
+
+預測市場交易將 CLOB 上的簽名訂單與鏈上結算連接起來。使用者選擇 Outcome Token，透過簽名授權訂單並提交到訂單簿；訂單撮合後，結算流程在帳戶之間交割 USDT 與結果代幣。
+
+## 交易流程
+
+帳戶初始化通常只需完成一次，後續每筆訂單重復執行選擇結果、下單和管理訂單即可。
+
+<Steps>
+  <Step title="準備帳戶">
+    將簽名錢包連接到帳戶，準備交易資金，並完成所需的合約授權。
+  </Step>
+  <Step title="選擇 Outcome">
+    選擇要買入或賣出的 Outcome Token，並確認 Market 目前交易限制。
+  </Step>
+  <Step title="提交訂單">
+    設定價格和數量，簽名後將訂單提交至 CLOB。
+  </Step>
+  <Step title="管理訂單">
+    監控成交並撤銷剩餘未成交數量。訂單撮合後完成鏈上結算，隨後帳戶餘額和持倉更新。
+  </Step>
+</Steps>
+
+## 開始交易
+
+<CardGroup cols={3}>
+  <Card title="第一筆訂單" icon="circle-play" href="/zh-TW/prediction-markets/place-first-order">
+    完成第一筆需要認證的預測市場交易。
+  </Card>
+
+  <Card title="提交訂單" icon="arrow-up-right" href="/zh-TW/prediction-markets/place-orders">
+    檢視下單請求參數和交易限制。
+  </Card>
+
+  <Card title="訂單生命週期" icon="arrows-rotate" href="/zh-TW/prediction-markets/order-lifecycle">
+    瞭解訂單從提交到成交、撤銷或過期的狀態變化。
+  </Card>
+</CardGroup>

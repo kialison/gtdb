@@ -1,0 +1,42 @@
+---
+title: "交易概览"
+sidebarTitle: "概览"
+description: "了解预测市场中的订单、结算与持仓如何协同工作。"
+---
+
+预测市场交易将 CLOB 上的签名订单与链上结算连接起来。用户选择 Outcome Token，通过签名授权订单并提交到订单簿；订单撮合后，结算流程在账户之间交割 USDT 与结果代币。
+
+## 交易流程
+
+账户初始化通常只需完成一次，后续每笔订单重复执行选择结果、下单和管理订单即可。
+
+<Steps>
+  <Step title="准备账户">
+    将签名钱包连接到账户，准备交易资金，并完成所需的合约授权。
+  </Step>
+  <Step title="选择 Outcome">
+    选择要买入或卖出的 Outcome Token，并确认 Market 当前交易限制。
+  </Step>
+  <Step title="提交订单">
+    设置价格和数量，签名后将订单提交至 CLOB。
+  </Step>
+  <Step title="管理订单">
+    监控成交并撤销剩余未成交数量。订单撮合后完成链上结算，随后账户余额和持仓更新。
+  </Step>
+</Steps>
+
+## 开始交易
+
+<CardGroup cols={3}>
+  <Card title="第一笔订单" icon="circle-play" href="/zh/prediction-markets/place-first-order">
+    完成第一笔需要认证的预测市场交易。
+  </Card>
+
+  <Card title="提交订单" icon="arrow-up-right" href="/zh/prediction-markets/place-orders">
+    查看下单请求参数和交易限制。
+  </Card>
+
+  <Card title="订单生命周期" icon="arrows-rotate" href="/zh/prediction-markets/order-lifecycle">
+    了解订单从提交到成交、撤销或过期的状态变化。
+  </Card>
+</CardGroup>

@@ -1,0 +1,145 @@
+---
+title: "Private Channels"
+description: "Authenticated Prediction Markets API WebSocket channels."
+---
+
+Private channels require an API Key signature. Do not send the API Secret over the network. See [WebSocket Authentication](./authentication).
+
+## Subscribe
+
+Use the channel prefix `pred`. A single item can be subscribed with `items`, or all private updates can be selected with `all: true`.
+
+```json
+{
+  "t": 1720000000123,
+  "id": "private-1",
+  "op": "subscribe",
+  "ch": "pred.orders",
+  "payload": {
+    "items": [
+      {
+        "condition_id": "ge_condition-1"
+      }
+    ]
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "YOUR_API_KEY",
+    "sign": "SIGNATURE"
+  }
+}
+```
+
+Use the same payload shape with `op: "unsubscribe"`. Private subscriptions do not expose internal user headers or broker identifiers.
+
+## `pred.orders`
+
+Order state changes for the authenticated account.
+
+```json
+{
+  "type": "update",
+  "ch": "pred.orders",
+  "err": null,
+  "result": {
+    "order_id": "order-1",
+    "client_order_id": "client-1",
+    "event_id": "event-1",
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "order_mode": "GTC",
+    "order_type": "LIMIT",
+    "px": "0.45",
+    "qty": "10",
+    "filled_qty": "4",
+    "left_qty": "6",
+    "status": "OPEN",
+    "created_ts": 1720000000123,
+    "updated_ts": 1720000001123
+  }
+}
+```
+
+The `status` value reflects the public order state, such as `PROCESSING`, `OPEN`, `CANCELLING`, `MATCHED`, `CANCELED`, or `FAILED`.
+
+## `pred.usertrades`
+
+Trades belonging to the authenticated account.
+
+```json
+{
+  "type": "update",
+  "ch": "pred.usertrades",
+  "err": null,
+  "result": {
+    "trade_id": "trade-1",
+    "order_id": "order-1",
+    "client_order_id": "client-1",
+    "condition_id": "ge_condition-1",
+    "event_id": "event-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "role": "MAKER",
+    "px": "0.45",
+    "qty": "4",
+    "fee_rate": "0.001",
+    "status": "CONFIRMED",
+    "created_ts": 1720000000123
+  }
+}
+```
+
+Only confirmed account trades are delivered. Depending on configuration, matched events may also be delivered.
+
+## `pred.positions`
+
+Position changes for the authenticated account.
+
+```json
+{
+  "type": "update",
+  "ch": "pred.positions",
+  "err": null,
+  "result": {
+    "position_id": "12345",
+    "event_id": "event-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "qty": "10",
+    "avg_px": "0.45",
+    "settle_status": "UNSETTLED",
+    "locked_qty": "0",
+    "available_qty": "10",
+    "claimable_amount": "0",
+    "updated_ts": 1720000001123
+  }
+}
+```
+
+For security and product-surface reasons, mark-price fields are not documented or exposed here.
+
+## `pred.settlements`
+
+Settlement and claimability updates.
+
+```json
+{
+  "type": "update",
+  "ch": "pred.settlements",
+  "err": null,
+  "result": {
+    "position_id": "12345",
+    "condition_id": "ge_condition-1",
+    "event_id": "event-1",
+    "winning_outcome": "Yes",
+    "is_winner": true,
+    "claimable_amount": "10.00",
+    "created_ts": 1720000002123
+  }
+}
+```
+
+Private subscriptions are event-driven. Query the corresponding REST endpoint after reconnecting to recover the current state; a private subscription does not imply a full initial account snapshot.

@@ -1,0 +1,229 @@
+---
+title: "公共频道"
+sidebarTitle: "公共频道"
+description: "订阅预测市场公开成交、深度、BBO、价格和市场状态。"
+---
+
+公共频道不需要认证。
+
+**连接地址**
+
+```text
+wss://broker.dexbuilder.com/ws/dex-builder/prediction
+```
+
+## 订阅
+
+```json
+{
+  "t": 1720000000123,
+  "id": "sub-1",
+  "op": "subscribe",
+  "ch": "pred.trades",
+  "payload": {
+    "items": [
+      {
+        "condition_id": "ge_condition-1"
+      }
+    ]
+  }
+}
+```
+
+服务端会先返回 ACK。具有缓存状态的频道可能返回 `snapshot`；`trades` 频道只推送 `update`。后续消息使用 `type: "update"`。
+
+## `pred.trades`
+
+使用 `condition_id` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.trades",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "px": "0.45",
+    "qty": "10",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `pred.depth`
+
+使用 `token_id` 和 `level` 订阅，支持 5、10、20、50。返回的是完整订单簿，不是增量。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "snapshot",
+  "ch": "pred.depth",
+  "err": null,
+  "result": {
+    "token_id": "ge_token-yes",
+    "level": 20,
+    "full": true,
+    "bids": [
+      [
+        "0.44",
+        "100"
+      ]
+    ],
+    "asks": [
+      [
+        "0.46",
+        "80"
+      ]
+    ],
+    "hash": "book-hash",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `pred.bbo`
+
+使用 `token_id` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.bbo",
+  "err": null,
+  "result": {
+    "condition_id": "ge_condition-1",
+    "token_id": "ge_token-yes",
+    "bid_px": "0.44",
+    "ask_px": "0.46",
+    "last_px": "0.45",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `pred.status`
+
+使用 `market_id` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.status",
+  "err": null,
+  "result": {
+    "market_id": "ge_market-1",
+    "condition_id": "ge_condition-1",
+    "slug": "example-market",
+    "status": "ACTIVE",
+    "closed": false,
+    "accepting_orders": true,
+    "outcomes": [
+      {
+        "name": "Yes",
+        "token_id": "ge_token-yes",
+        "px": "0.45"
+      },
+      {
+        "name": "No",
+        "token_id": "ge_token-no",
+        "px": "0.55"
+      }
+    ],
+    "ts": 1720000000123
+  }
+}
+```
+
+## `pred.cpi`
+
+使用 `symbol` 和 `interval` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.cpi",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "price": "100000.10",
+    "price_timestamp": "1720000000123",
+    "ts": 1720000000123
+  }
+}
+```
+
+## `pred.candlestick`
+
+使用 `symbol` 和 `interval` 订阅。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.candlestick",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "t": 1720000000,
+    "o": "100000.00",
+    "h": "100010.00",
+    "l": "99990.00",
+    "c": "100005.00",
+    "v": "0",
+    "closed": false
+  }
+}
+```
+
+缓存的 K 线快照包含 `symbol`、`interval` 和 `history`。
+
+## `pred.oc_price`
+
+使用 `slug` 或 `market_id` 订阅。配置好的币价窗口也可以使用 `symbol` 和 `interval`。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "pred.oc_price",
+  "err": null,
+  "result": {
+    "slug": "bitcoin-up-or-down",
+    "price_to_beat": "100000.00",
+    "final_price": "100120.00"
+  }
+}
+```
+
+除非字段明确标注为秒，否则时间戳均为 Unix 毫秒时间戳。

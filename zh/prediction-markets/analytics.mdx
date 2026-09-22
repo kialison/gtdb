@@ -1,0 +1,111 @@
+---
+title: "数据分析"
+sidebarTitle: "数据分析"
+description: "通过成交、Open Interest、持有人与 Event 实时成交量等数据分析预测市场活动。"
+---
+
+本页介绍如何观察预测市场的交易活跃度、资金分布和持仓情况。开始前，先通过「发现市场」获取 Market 的 `condition_id` 与 `event_id`。
+
+```bash
+CONDITION_ID="<condition_id>"
+EVENT_ID="<event_id>"
+```
+
+## 最近成交
+
+用于查看最近撮合的交易，包括方向、价格、数量、结果、钱包和时间戳等信息。
+
+```bash API
+curl "https://data-api.polymarket.com/trades?market=$CONDITION_ID&limit=1"
+```
+
+<Accordion title="响应示例">
+  ```json
+  [
+    {
+      "proxyWallet": "0x50A0cebecFb81DbCbFA6d38F82040343F1E3D95F",
+      "side": "SELL",
+      "asset": "73056302498040856354963998699057693722943027161590344473262285090686949523925",
+      "conditionId": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "size": 42.62,
+      "price": 0.91,
+      "timestamp": 1782752879,
+      "title": "Will the US confirm that aliens exist before 2027?",
+      "outcome": "No"
+    }
+  ]
+  ```
+</Accordion>
+
+## Open Interest
+
+用于查看一个或多个 Market 当前未平仓持仓的价值。
+
+```bash API
+curl "https://data-api.polymarket.com/oi?market=$CONDITION_ID"
+```
+
+<Accordion title="响应示例">
+  ```json
+  [
+    {
+      "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f741f7",
+      "value": 7484304.679057
+    }
+  ]
+  ```
+</Accordion>
+
+## Market 持有人
+
+查看不同 Outcome Token 的主要公开持有人。
+
+```bash API
+curl "https://data-api.polymarket.com/holders?market=$CONDITION_ID&limit=1"
+```
+
+<Accordion title="响应示例">
+  ```json
+  [
+    {
+      "token": "107505882767731489358349912513945399560393482969656700824895970500",
+      "holders": [
+        {
+          "proxyWallet": "0xaf23273e03A924A257e0D6bEae7133CF9D32377f",
+          "amount": 894254.445452,
+          "outcomeIndex": 0,
+          "name": "5Cssss"
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
+
+## Event 实时成交量
+
+按 Event 汇总成交量，并查看各 Market 的成交量拆分。
+
+```bash API
+curl "https://data-api.polymarket.com/live-volume?id=$EVENT_ID"
+```
+
+<Accordion title="响应示例">
+  ```json
+  [
+    {
+      "total": 60773073.437817,
+      "markets": [
+        {
+          "market": "0x747dc809fb79e1b05be09c42d6179459a58de2ef3e40f02484a4e1260f7",
+          "value": 34909514.911729
+        }
+      ]
+    }
+  ]
+  ```
+</Accordion>
+
+<Note>
+  部分分析接口来自外部数据服务。正式集成时应区分 DexBuilder Prediction API 与外部数据源，避免将外部接口当作 DexBuilder API 合同的一部分。
+</Note>

@@ -1,0 +1,198 @@
+---
+title: "發現市場"
+sidebarTitle: "發現市場"
+description: "透過 Prediction API 查詢公開 Event、Market 與 Tag，支援按 ID、slug、篩選條件和 cursor 分頁。"
+---
+
+本頁介紹如何查找和篩選公開 Event 與 Market。市場發現和公開市場資料介面無需認證。
+
+生產環境 API Base URL：
+
+```text
+https://api.dexbuilder.com
+```
+
+除介面另有說明外，Event 和 Market 響應中的時間欄位使用 Unix 秒級時間戳。`title`、`question`、`outcome`、Tag `label` 等文本欄位以多語言對象回傳，實際包含哪些語言取決於源資料。
+
+## Events
+
+Event 用於將一個或多個相關 Market 組織在一起。
+
+### 根據 ID 查詢 Event
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events/<event_id>"
+```
+
+### 根據 slug 查詢 Event
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events/slug/<event_slug>"
+```
+
+Event 詳情常用欄位：
+
+| 欄位 | 說明 |
+| --- | --- |
+| `event_id` | Event 唯一標識 |
+| `slug` | URL 友好的 Event 標識 |
+| `title` | 多語言 Event 標題對象 |
+| `description` | 多語言 Event 描述對象 |
+| `markets` | Event 下的 Market 摘要 |
+| `markets_has_more` | 內嵌 Market 是否還有更多資料 |
+| `active`, `closed` | Event 生命週期狀態 |
+| `start_date`, `start_time`, `end_date`, `closed_time` | Event 時間欄位 |
+| `volume` | Event 成交量，使用 decimal string |
+| `tags` | Tag 摘要 |
+
+```json Example
+{
+  "event_id": "event-123",
+  "slug": "example-event",
+  "title": { "en": "Example event" },
+  "active": true,
+  "closed": false,
+  "markets": [],
+  "markets_has_more": false
+}
+```
+
+### Event 清單
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+```
+
+支援的主要 Query 參數：
+
+| 參數 | 說明 |
+| --- | --- |
+| `limit` | 回傳數量，範圍 1–100 |
+| `cursor` | 上一頁回傳的 `next_cursor` |
+| `sort` | `start_date`、`start_time`、`end_date` 或 `closed_time` |
+| `ascending` | 是否升序 |
+| `event_id` | 按 Event ID 篩選 |
+| `slug` | 按 Event slug 篩選 |
+| `tag_slug` | 按 Tag slug 篩選 |
+| `active`, `closed` | 按生命週期狀態篩選 |
+| `start_date_min`, `start_date_max` | 開始時間範圍，Unix 毫秒 |
+| `end_date_min`, `end_date_max` | 結束時間範圍，Unix 毫秒 |
+
+響應：
+
+```json Example
+{
+  "items": [
+    {
+      "event_id": "event-123",
+      "slug": "example-event",
+      "title": { "en": "Example event" },
+      "active": true,
+      "closed": false,
+      "volume": "12500.50",
+      "tags": [
+        { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+      ]
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+當 `next_cursor` 非空時，將它原樣作為下一次請求的 `cursor`：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&cursor=<next_cursor>"
+```
+
+## Markets
+
+Market 是實際可交易的問題，每個 Market 包含一個或多個 Outcome Token。
+
+### 根據 Market ID 查詢
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
+```
+
+### 根據 slug 查詢
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/slug/<market_slug>"
+```
+
+Market 詳情中的 `outcomes` 數組直接回傳訂單簿與價格介面所需的 `token_id`。
+
+| 欄位 | 說明 |
+| --- | --- |
+| `market_id` | Market 唯一標識 |
+| `event_id` | 所屬 Event ID |
+| `slug` | Market slug |
+| `question` | 多語言市場問題 |
+| `condition_id` | Condition ID |
+| `outcomes` | Outcome 清單，包含 `token_id` 與多語言 `outcome` |
+| `status`, `closed` | Market 狀態 |
+| `accepting_orders` | 目前是否接受訂單 |
+| `enable_order_book` | 是否啓用訂單簿 |
+| `best_bid`, `best_ask`, `last_trade_price` | 目前盤口與最近成交摘要 |
+| `min_order_size`, `tick_size`, `neg_risk` | 交易限制與 Negative Risk 標記 |
+| `start_date`, `end_date`, `resolved_at` | 生命週期時間 |
+| `winning_outcome`, `winning_token_id` | 已結算後的獲勝結果 |
+
+```json Example
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes" } },
+    { "token_id": "token-no", "outcome": { "en": "No" } }
+  ]
+}
+```
+
+### Market 清單
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets?limit=20&active=true&closed=false&tag_slug=sports"
+```
+
+主要參數：
+
+| 參數 | 說明 |
+| --- | --- |
+| `limit` | 回傳數量，範圍 1–100 |
+| `cursor` | 上一頁回傳的 `next_cursor` |
+| `market_id` | Market ID |
+| `event_id` | 所屬 Event ID |
+| `slug` | Market slug |
+| `condition_id` | Condition ID |
+| `tag_slug` | 所屬 Event 的 Tag slug |
+| `active`, `closed` | Market 生命週期狀態 |
+
+## Tags
+
+Tag 可用於構建分類篩選：
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/tags?limit=20&cursor=<cursor>"
+```
+
+```json
+{
+  "items": [
+    { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+## 目前 API 範圍
+
+目前 Prediction API 提供 Event、Market、Tag、公開市場成交和 Token 市場資料等能力。未在 DexBuilder API 合同中定義的第三方專用介面不應作為正式集成依賴。
