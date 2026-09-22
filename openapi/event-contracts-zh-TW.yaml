@@ -18,13 +18,34 @@
         "operationId": "query_events",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventsPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -110,13 +131,34 @@
         "operationId": "query_event",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -138,13 +180,34 @@
         "operationId": "query_event_by_slug",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -166,13 +229,34 @@
         "operationId": "query_markets",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketsPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -258,13 +342,34 @@
         "operationId": "query_market",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -286,13 +391,34 @@
         "operationId": "query_market_by_slug",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -314,13 +440,34 @@
         "operationId": "query_market_trades",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TradesPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -358,13 +505,34 @@
         "operationId": "query_token_market",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketSummary"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -386,13 +554,34 @@
         "operationId": "query_token_price",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPriceResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -414,13 +603,34 @@
         "operationId": "query_token_ticker",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenTickerResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -442,13 +652,34 @@
         "operationId": "query_order_book",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderBookResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -478,13 +709,34 @@
         "operationId": "query_price_history",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPriceHistoryResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -530,13 +782,34 @@
         "operationId": "query_token_prices",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPricesResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -558,13 +831,34 @@
         "operationId": "query_candlesticks",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyCandlestickList"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -618,16 +912,44 @@
         "operationId": "place_order",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaceOrderAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -690,16 +1012,44 @@
         "operationId": "query_orders",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventContractOrderListResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -791,16 +1141,44 @@
         "operationId": "cancel_orders_by_condition",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBatchAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -822,16 +1200,44 @@
         "operationId": "query_order",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetailResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -851,16 +1257,44 @@
         "operationId": "cancel_order",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelOrderAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -882,16 +1316,44 @@
         "operationId": "query_positions",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventContractPositionListResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -945,16 +1407,44 @@
         "operationId": "query_user_trades",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventContractUserTradesResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1032,16 +1522,44 @@
         "operationId": "query_assets",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1053,16 +1571,44 @@
         "operationId": "query_account_book",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventMarketsAccountBookResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1092,13 +1638,34 @@
         "operationId": "query_tags",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagsPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1128,13 +1695,34 @@
         "operationId": "query_server_time",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerTimeResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1146,16 +1734,44 @@
         "operationId": "query_event_reference_price",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventReferencePrice"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "404": {
-            "description": "事件不存在或參考價格不可用"
+            "description": "事件不存在或參考價格不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1177,16 +1793,44 @@
         "operationId": "query_settled_positions",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventContractPositionListResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1232,13 +1876,34 @@
         "operationId": "query_balance",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceResp"
+                }
+              }
+            }
           },
           "401": {
-            "description": "驗證失敗"
+            "description": "驗證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1250,16 +1915,44 @@
         "operationId": "query_fund_flows",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventContractFundFlowsResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "驗證失敗"
+            "description": "驗證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1321,16 +2014,44 @@
         "operationId": "query_current_fee",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeeResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "認證失敗"
+            "description": "認證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1352,16 +2073,44 @@
         "operationId": "transfer",
         "responses": {
           "200": {
-            "description": "請求成功"
+            "description": "請求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferData"
+                }
+              }
+            }
           },
           "400": {
-            "description": "請求參數錯誤"
+            "description": "請求參數錯誤",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "驗證失敗"
+            "description": "驗證失敗",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服務暫時不可用"
+            "description": "服務暫時不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -1410,6 +2159,1155 @@
               }
             }
           }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "description": "錯誤回應。",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "INVALID_ARGUMENT"
+          },
+          "message": {
+            "type": "string",
+            "example": "invalid request"
+          }
+        }
+      },
+      "CurrencyCandlestick": {
+        "type": "object",
+        "properties": {
+          "c": {
+            "type": "string"
+          },
+          "h": {
+            "type": "string"
+          },
+          "l": {
+            "type": "string"
+          },
+          "o": {
+            "type": "string"
+          },
+          "t": {
+            "type": "integer"
+          },
+          "v": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventDetail": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "closed_time": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "object"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketSummary"
+            }
+          },
+          "markets_has_more": {
+            "type": "boolean"
+          },
+          "resolution_source": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "title": {
+            "type": "object"
+          },
+          "volume": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventSummary": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "closed_time": {
+            "type": "integer"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "title": {
+            "type": "object"
+          },
+          "volume": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventSummary"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "MarketDetail": {
+        "type": "object",
+        "properties": {
+          "accepting_orders": {
+            "type": "boolean"
+          },
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "object"
+          },
+          "enable_order_book": {
+            "type": "boolean"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "limit_buy_min_shares": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "min_order_size": {
+            "type": "string"
+          },
+          "neg_risk": {
+            "type": "boolean"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeRef"
+            }
+          },
+          "question": {
+            "type": "object"
+          },
+          "resolution_source": {
+            "type": "string"
+          },
+          "resolved_at": {
+            "type": "integer"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "tick_size": {
+            "type": "string"
+          },
+          "uma_end_date": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_end_date_iso": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_status": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_statuses": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "volume": {
+            "type": "string"
+          },
+          "volume_24hr": {
+            "type": "string"
+          },
+          "winning_outcome": {
+            "type": "string"
+          },
+          "winning_token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "MarketSummary": {
+        "type": "object",
+        "properties": {
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "limit_buy_min_shares": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeRef"
+            }
+          },
+          "question": {
+            "type": "object"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "uma_end_date": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_end_date_iso": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_status": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_statuses": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "volume": {
+            "type": "string"
+          },
+          "volume_24hr": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "MarketsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketSummary"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "OrderBookResponse": {
+        "type": "object",
+        "properties": {
+          "asks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderBookLevel"
+            }
+          },
+          "bids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderBookLevel"
+            }
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "min_order_size": {
+            "type": "string"
+          },
+          "neg_risk": {
+            "type": "boolean"
+          },
+          "tick_size": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "OutcomeRef": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "object"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "ServerTimeResponse": {
+        "type": "object",
+        "properties": {
+          "server_time": {
+            "type": "integer"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TagSummary": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "object"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TagsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenBatchPriceItem": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenPriceHistoryResponse": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenPricePoint"
+            }
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenPriceResponse": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenPricesResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenBatchPriceItem"
+            }
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenTickerResponse": {
+        "type": "object",
+        "properties": {
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "last_price": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "Trade": {
+        "type": "object",
+        "properties": {
+          "condition_id": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "trade_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TradesPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Trade"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "OrderBookLevel": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TokenPricePoint": {
+        "type": "object",
+        "properties": {
+          "p": {
+            "type": "string"
+          },
+          "t": {
+            "type": "integer"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "BalanceResp": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "locked": {
+            "type": "string"
+          },
+          "total": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "CancelBatchAcceptResp": {
+        "type": "object",
+        "properties": {
+          "batch_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "total_orders": {
+            "type": "integer"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "CancelOrderAcceptResp": {
+        "type": "object",
+        "properties": {
+          "cancel_status": {
+            "type": "string"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "FeeQueryItem": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "fee_mode": {
+            "type": "string"
+          },
+          "maker_fee_rate": {
+            "type": "string"
+          },
+          "taker_fee_rate": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "FeeResp": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeeQueryItem"
+            }
+          }
+        },
+        "description": "回應物件。"
+      },
+      "FundFlowItem": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "record_type": {
+            "type": "string"
+          },
+          "related_order_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "OrderDetailResp": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "expire_time": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "order_mode": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "size_left": {
+            "type": "string"
+          },
+          "size_matched": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "OrderListItem": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "expire_time": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "order_mode": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "size_left": {
+            "type": "string"
+          },
+          "size_matched": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "PlaceOrderAcceptResp": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "PositionItem": {
+        "type": "object",
+        "properties": {
+          "available_size": {
+            "type": "string"
+          },
+          "avg_open_price": {
+            "type": "string"
+          },
+          "claimable_amount": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "locked_size": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "position_id": {
+            "type": "string"
+          },
+          "position_value": {
+            "type": "string"
+          },
+          "settlement_status": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          },
+          "won": {
+            "type": "boolean"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "TransferData": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "example": "1.2"
+          },
+          "currency": {
+            "type": "string",
+            "enum": [
+              "USDT"
+            ],
+            "example": "USDT"
+          },
+          "from_account": {
+            "type": "string",
+            "enum": [
+              "spot",
+              "sub_spot"
+            ],
+            "example": "spot"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCESS"
+            ],
+            "example": "SUCCESS"
+          },
+          "to_account": {
+            "type": "string",
+            "enum": [
+              "spot",
+              "sub_spot"
+            ],
+            "example": "sub_spot"
+          },
+          "transfer_id": {
+            "type": "string",
+            "example": "123"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "UserTradeItem": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "fee_rate": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "AccountBookItem": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "related_order_id": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "AssetsResp": {
+        "type": "object",
+        "properties": {
+          "daily_pnl": {
+            "type": "string"
+          },
+          "daily_pnl_rate": {
+            "type": "string"
+          },
+          "fund_total": {
+            "type": "string"
+          },
+          "prediction_market_asset": {
+            "type": "string"
+          },
+          "prediction_position_value": {
+            "type": "string"
+          },
+          "spot_usdt_balance": {
+            "type": "string"
+          },
+          "unclaimed_amount": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventContractFundFlowsResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundFlowItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventContractOrderListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderListItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventContractPositionListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventContractUserTradesResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTradeItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventMarketsAccountBookResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountBookItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "回應物件。"
+      },
+      "EventReferencePrice": {
+        "type": "object",
+        "properties": {
+          "final_price": {
+            "type": "string"
+          },
+          "price_to_beat": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_ready",
+              "unsupported"
+            ]
+          }
+        },
+        "description": "回應物件。"
+      },
+      "CurrencyCandlestickList": {
+        "type": "array",
+        "description": "列表回應。",
+        "items": {
+          "$ref": "#/components/schemas/CurrencyCandlestick"
         }
       }
     }
