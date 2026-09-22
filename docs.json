@@ -67,7 +67,8 @@
                       "zh/event-markets/event-markets",
                       "zh/event-markets/place-first-order",
                       "zh/prediction-markets/place-first-order",
-                      "zh/prediction-markets/event-markets"
+                      "zh/prediction-markets/event-markets",
+                      "zh/prediction-markets/prediction-markets"
                     ]
                   },
                   {
@@ -339,7 +340,12 @@
                           "zh/prediction-markets/rest/query-claim",
                           "zh/prediction-markets/rest/query-user-trades",
                           "zh/prediction-markets/rest/query-account-book",
-                          "zh/prediction-markets/rest/query-tags"
+                          "zh/prediction-markets/rest/query-tags",
+                          "zh/prediction-markets/rest/query-token-price",
+                          "zh/prediction-markets/rest/query-candlesticks",
+                          "zh/prediction-markets/rest/place-order",
+                          "zh/prediction-markets/rest/cancel-orders-by-condition",
+                          "zh/prediction-markets/rest/query-position"
                         ]
                       },
                       {
@@ -353,7 +359,8 @@
                           "zh/prediction-markets/websocket/overview",
                           "zh/prediction-markets/websocket/public-channels",
                           "zh/prediction-markets/websocket/authentication",
-                          "zh/prediction-markets/websocket/private-channels"
+                          "zh/prediction-markets/websocket/private-channels",
+                          "zh/prediction-markets/websocket/protocol"
                         ]
                       },
                       {
@@ -537,7 +544,8 @@
                       "en/event-markets/place-first-order",
                       "en/prediction-markets/place-first-order",
                       "en/prediction-markets/event-markets",
-                      "en/prediction-markets/overview"
+                      "en/prediction-markets/overview",
+                      "en/prediction-markets/prediction-markets"
                     ]
                   },
                   {
@@ -551,7 +559,9 @@
                       "en/event-markets/resolution",
                       "en/prediction-markets/prices-orderbook",
                       "en/prediction-markets/negative-risk",
-                      "en/prediction-markets/markets-events"
+                      "en/prediction-markets/markets-events",
+                      "en/prediction-markets/positions-tokens",
+                      "en/prediction-markets/resolution"
                     ]
                   },
                   {
