@@ -11,7 +11,11 @@ description: "完成事件合约私有 WebSocket 认证，并处理心跳、错�
 在 `auth` 中传入 API Key 和本地生成的 HMAC-SHA512 签名：
 
 ```json
-{"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+{
+  "method": "api_key",
+  "key": "YOUR_API_KEY",
+  "sign": "HEX_SIGNATURE"
+}
 ```
 
 直接订阅私有频道时，签名原文为：
@@ -30,8 +34,14 @@ channel=ec.orders&event=subscribe&time=1720000000123
   "id": "private-1",
   "op": "subscribe",
   "ch": "ec.orders",
-  "payload": {"all": true},
-  "auth": {"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "YOUR_API_KEY",
+    "sign": "HEX_SIGNATURE"
+  }
 }
 ```
 

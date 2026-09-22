@@ -21,8 +21,14 @@ Authenticate the subscription with an API Key signature:
   "id": "orders-1",
   "op": "subscribe",
   "ch": "pred.orders",
-  "payload": {"all": true},
-  "auth": {"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "YOUR_API_KEY",
+    "sign": "HEX_SIGNATURE"
+  }
 }
 ```
 

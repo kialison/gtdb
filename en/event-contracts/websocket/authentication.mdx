@@ -33,8 +33,14 @@ Compute the hexadecimal HMAC-SHA512 digest with the API Secret as the key. Never
   "id": "private-1",
   "op": "subscribe",
   "ch": "ec.orders",
-  "payload": {"all": true},
-  "auth": {"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "YOUR_API_KEY",
+    "sign": "HEX_SIGNATURE"
+  }
 }
 ```
 

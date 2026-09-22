@@ -17,7 +17,20 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 使用 API Key 签名认证：
 
 ```json
-{"t":1720000000123,"id":"orders-1","op":"subscribe","ch":"ec.orders","payload":{"all":true},"auth":{"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}}
+{
+  "t": 1720000000123,
+  "id": "orders-1",
+  "op": "subscribe",
+  "ch": "ec.orders",
+  "payload": {
+    "all": true
+  },
+  "auth": {
+    "method": "api_key",
+    "key": "YOUR_API_KEY",
+    "sign": "HEX_SIGNATURE"
+  }
+}
 ```
 
 ## 推送内容

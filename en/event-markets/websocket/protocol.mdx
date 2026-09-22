@@ -14,7 +14,12 @@ Messages are JSON objects. The request timestamp `t` must be within 60 seconds o
   "op": "subscribe",
   "ch": "pred.depth",
   "payload": {
-    "items": [{ "token_id": "ge_token-yes", "level": 20 }]
+    "items": [
+      {
+        "token_id": "ge_token-yes",
+        "level": 20
+      }
+    ]
   }
 }
 ```
@@ -26,13 +31,36 @@ Use `op: "unsubscribe"` with the same channel and payload to remove a subscripti
 Success:
 
 ```json
-{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"pred.depth","err":null,"result":{"status":"success"}}
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "err": null,
+  "result": {
+    "status": "success"
+  }
+}
 ```
 
 Failure:
 
 ```json
-{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"pred.depth","err":{"code":2,"msg":"invalid depth item"},"result":{"status":"fail"}}
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "pred.depth",
+  "err": {
+    "code": 2,
+    "msg": "invalid depth item"
+  },
+  "result": {
+    "status": "fail"
+  }
+}
 ```
 
 ## Updates and snapshots
