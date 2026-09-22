@@ -14,7 +14,14 @@ description: "了解事件合约 WebSocket 的请求、ACK、推送和订阅格�
   "id": "req-1",
   "op": "subscribe",
   "ch": "ec.depth",
-  "payload": {"items": [{"token_id": "ge_token-yes", "level": 20}]}
+  "payload": {
+    "items": [
+      {
+        "token_id": "ge_token-yes",
+        "level": 20
+      }
+    ]
+  }
 }
 ```
 
@@ -25,13 +32,36 @@ description: "了解事件合约 WebSocket 的请求、ACK、推送和订阅格�
 成功：
 
 ```json
-{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"ec.depth","err":null,"result":{"status":"success"}}
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "ec.depth",
+  "err": null,
+  "result": {
+    "status": "success"
+  }
+}
 ```
 
 失败：
 
 ```json
-{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"ec.depth","err":{"code":2,"msg":"invalid depth item"},"result":{"status":"fail"}}
+{
+  "t": 1720000000124,
+  "id": "req-1",
+  "trace_id": "trace-1",
+  "op": "subscribe",
+  "ch": "ec.depth",
+  "err": {
+    "code": 2,
+    "msg": "invalid depth item"
+  },
+  "result": {
+    "status": "fail"
+  }
+}
 ```
 
 ## 快照和更新
