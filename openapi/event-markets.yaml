@@ -18,13 +18,34 @@
         "operationId": "query_events",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventsPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -110,13 +131,34 @@
         "operationId": "query_event",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -138,13 +180,34 @@
         "operationId": "query_event_by_slug",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -166,13 +229,34 @@
         "operationId": "query_markets",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegacyMarketsResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -258,13 +342,34 @@
         "operationId": "query_market",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegacyMarket"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -286,13 +391,34 @@
         "operationId": "query_market_by_slug",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketDetail"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -314,13 +440,34 @@
         "operationId": "query_market_trades",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegacyTradeList"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -358,13 +505,34 @@
         "operationId": "query_token_market",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketSummary"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -386,13 +554,34 @@
         "operationId": "query_token_price",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPriceResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -414,13 +603,34 @@
         "operationId": "query_token_ticker",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenTickerResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -442,13 +652,34 @@
         "operationId": "query_order_book",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegacyOrderBook"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -478,13 +709,34 @@
         "operationId": "query_price_history",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPriceHistoryResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -530,13 +782,34 @@
         "operationId": "query_token_prices",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPricesResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -558,13 +831,34 @@
         "operationId": "query_candlesticks",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyCandlestickList"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -618,16 +912,44 @@
         "operationId": "place_order",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaceOrderAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -690,16 +1012,44 @@
         "operationId": "query_orders",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventMarketsOrderListResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -791,16 +1141,44 @@
         "operationId": "cancel_orders_by_condition",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBatchAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -822,16 +1200,44 @@
         "operationId": "query_order",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderDetailResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -851,16 +1257,44 @@
         "operationId": "cancel_order",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelOrderAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -882,16 +1316,44 @@
         "operationId": "query_positions",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventMarketsPositionListResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -945,16 +1407,44 @@
         "operationId": "query_position",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PositionItem"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -976,16 +1466,44 @@
         "operationId": "close_position",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClosePositionAcceptResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1007,16 +1525,44 @@
         "operationId": "query_user_trades",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventMarketsUserTradesResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1094,16 +1640,44 @@
         "operationId": "query_assets",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetsResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1115,16 +1689,44 @@
         "operationId": "query_account_book",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventMarketsAccountBookResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1154,16 +1756,44 @@
         "operationId": "query_fee",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeeResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1185,16 +1815,44 @@
         "operationId": "query_available_claims",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimsAvailableResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1206,16 +1864,44 @@
         "operationId": "query_available_claim",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimsAvailableByTokenResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1237,16 +1923,44 @@
         "operationId": "create_claim",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitClaimResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -1273,16 +1987,44 @@
         "operationId": "query_claim",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClaimRecordResp"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "401": {
-            "description": "认证失败"
+            "description": "认证失败",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1304,13 +2046,34 @@
         "operationId": "query_tags",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagsPage"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1340,13 +2103,34 @@
         "operationId": "query_server_time",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerTimeResponse"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1358,16 +2142,44 @@
         "operationId": "query_event_reference_price",
         "responses": {
           "200": {
-            "description": "请求成功"
+            "description": "请求成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventReferencePrice"
+                }
+              }
+            }
           },
           "400": {
-            "description": "请求参数错误"
+            "description": "请求参数错误",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "404": {
-            "description": "事件不存在或参考价格不可用"
+            "description": "事件不存在或参考价格不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "503": {
-            "description": "服务暂时不可用"
+            "description": "服务暂时不可用",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "parameters": [
@@ -1380,6 +2192,1266 @@
             }
           }
         ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "description": "错误响应。",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "INVALID_ARGUMENT"
+          },
+          "message": {
+            "type": "string",
+            "example": "invalid request"
+          }
+        }
+      },
+      "CurrencyCandlestick": {
+        "type": "object",
+        "properties": {
+          "c": {
+            "type": "string"
+          },
+          "h": {
+            "type": "string"
+          },
+          "l": {
+            "type": "string"
+          },
+          "o": {
+            "type": "string"
+          },
+          "t": {
+            "type": "integer"
+          },
+          "v": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventDetail": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "closed_time": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "object"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketSummary"
+            }
+          },
+          "markets_has_more": {
+            "type": "boolean"
+          },
+          "resolution_source": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "title": {
+            "type": "object"
+          },
+          "volume": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventSummary": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "closed_time": {
+            "type": "integer"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "title": {
+            "type": "object"
+          },
+          "volume": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventSummary"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "MarketDetail": {
+        "type": "object",
+        "properties": {
+          "accepting_orders": {
+            "type": "boolean"
+          },
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "object"
+          },
+          "enable_order_book": {
+            "type": "boolean"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "limit_buy_min_shares": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "min_order_size": {
+            "type": "string"
+          },
+          "neg_risk": {
+            "type": "boolean"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeRef"
+            }
+          },
+          "question": {
+            "type": "object"
+          },
+          "resolution_source": {
+            "type": "string"
+          },
+          "resolved_at": {
+            "type": "integer"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "tick_size": {
+            "type": "string"
+          },
+          "uma_end_date": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_end_date_iso": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_status": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_statuses": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "volume": {
+            "type": "string"
+          },
+          "volume_24hr": {
+            "type": "string"
+          },
+          "winning_outcome": {
+            "type": "string"
+          },
+          "winning_token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "MarketSummary": {
+        "type": "object",
+        "properties": {
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "integer"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "limit_buy_min_shares": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OutcomeRef"
+            }
+          },
+          "question": {
+            "type": "object"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "uma_end_date": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_end_date_iso": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_status": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "uma_resolution_statuses": {
+            "type": "string",
+            "x-nullable": true
+          },
+          "volume": {
+            "type": "string"
+          },
+          "volume_24hr": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "OutcomeRef": {
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "object"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ServerTimeResponse": {
+        "type": "object",
+        "properties": {
+          "server_time": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TagSummary": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "object"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "tag_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TagsPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummary"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenBatchPriceItem": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenPriceHistoryResponse": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenPricePoint"
+            }
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenPriceResponse": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenPricesResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TokenBatchPriceItem"
+            }
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenTickerResponse": {
+        "type": "object",
+        "properties": {
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "last_price": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "integer"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "TokenPricePoint": {
+        "type": "object",
+        "properties": {
+          "p": {
+            "type": "string"
+          },
+          "t": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "AccountBookItem": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "related_order_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "AssetsResp": {
+        "type": "object",
+        "properties": {
+          "daily_pnl": {
+            "type": "string"
+          },
+          "daily_pnl_rate": {
+            "type": "string"
+          },
+          "fund_total": {
+            "type": "string"
+          },
+          "prediction_market_asset": {
+            "type": "string"
+          },
+          "prediction_position_value": {
+            "type": "string"
+          },
+          "spot_usdt_balance": {
+            "type": "string"
+          },
+          "unclaimed_amount": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "CancelBatchAcceptResp": {
+        "type": "object",
+        "properties": {
+          "batch_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "total_orders": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "CancelOrderAcceptResp": {
+        "type": "object",
+        "properties": {
+          "cancel_status": {
+            "type": "string"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ClaimRecordResp": {
+        "type": "object",
+        "properties": {
+          "completed_at": {
+            "type": "integer"
+          },
+          "failed_count": {
+            "type": "integer"
+          },
+          "initiated_at": {
+            "type": "integer"
+          },
+          "record_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "success_count": {
+            "type": "integer"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ClaimsAvailableByTokenResp": {
+        "type": "object",
+        "properties": {
+          "claimable_amount": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "position_count": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ClaimsAvailableEvent": {
+        "type": "object",
+        "properties": {
+          "claimable_amount": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "position_count": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ClaimsAvailableResp": {
+        "type": "object",
+        "properties": {
+          "event_count": {
+            "type": "integer"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClaimsAvailableEvent"
+            }
+          },
+          "total_claimable_amount": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "ClosePositionAcceptResp": {
+        "type": "object",
+        "properties": {
+          "position_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "FeeQueryItem": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "fee_mode": {
+            "type": "string"
+          },
+          "maker_fee_rate": {
+            "type": "string"
+          },
+          "taker_fee_rate": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "FeeResp": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeeQueryItem"
+            }
+          }
+        },
+        "description": "响应对象。"
+      },
+      "OrderDetailResp": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "expire_time": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "order_mode": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "size_left": {
+            "type": "string"
+          },
+          "size_matched": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "OrderListItem": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "expire_time": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "order_mode": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "size_left": {
+            "type": "string"
+          },
+          "size_matched": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "PlaceOrderAcceptResp": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "PositionItem": {
+        "type": "object",
+        "properties": {
+          "available_size": {
+            "type": "string"
+          },
+          "avg_open_price": {
+            "type": "string"
+          },
+          "claimable_amount": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "locked_size": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "position_id": {
+            "type": "string"
+          },
+          "position_value": {
+            "type": "string"
+          },
+          "settlement_status": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          },
+          "won": {
+            "type": "boolean"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "PositionListItem": {
+        "type": "object",
+        "properties": {
+          "available_size": {
+            "type": "string"
+          },
+          "avg_open_price": {
+            "type": "string"
+          },
+          "claimable_amount": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "locked_size": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "position_id": {
+            "type": "string"
+          },
+          "position_value": {
+            "type": "string"
+          },
+          "settlement_status": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer"
+          },
+          "won": {
+            "type": "boolean"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "SubmitClaimResp": {
+        "type": "object",
+        "properties": {
+          "record_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "total_count": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "UserTradeItem": {
+        "type": "object",
+        "properties": {
+          "client_order_id": {
+            "type": "string"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "fee_rate": {
+            "type": "string"
+          },
+          "order_id": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          },
+          "trade_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventMarketsAccountBookResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountBookItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventMarketsOrderListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderListItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventMarketsPositionListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionListItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventMarketsUserTradesResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTradeItem"
+            }
+          },
+          "next_cursor": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyMarket": {
+        "type": "object",
+        "properties": {
+          "accepting_orders": {
+            "type": "boolean"
+          },
+          "best_ask": {
+            "type": "string"
+          },
+          "best_bid": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "enable_order_book": {
+            "type": "boolean"
+          },
+          "end_time": {
+            "type": "integer"
+          },
+          "event_icon_url": {
+            "type": "string"
+          },
+          "event_id": {
+            "type": "string"
+          },
+          "event_title": {
+            "type": "string"
+          },
+          "last_trade_price": {
+            "type": "string"
+          },
+          "liquidity": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegacyOutcome"
+            }
+          },
+          "slug": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tags": {},
+          "title": {
+            "type": "string"
+          },
+          "volume": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyMarketsResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegacyMarket"
+            }
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyOrderBook": {
+        "type": "object",
+        "properties": {
+          "asks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegacyPriceSize"
+            }
+          },
+          "bids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegacyPriceSize"
+            }
+          },
+          "condition_id": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyOutcome": {
+        "type": "object",
+        "properties": {
+          "clob_token_id": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyPriceSize": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "LegacyTrade": {
+        "type": "object",
+        "properties": {
+          "condition_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "market_id": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "side": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "token_id": {
+            "type": "string"
+          }
+        },
+        "description": "响应对象。"
+      },
+      "EventReferencePrice": {
+        "type": "object",
+        "properties": {
+          "final_price": {
+            "type": "string"
+          },
+          "price_to_beat": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not_ready",
+              "unsupported"
+            ]
+          }
+        },
+        "description": "响应对象。"
+      },
+      "CurrencyCandlestickList": {
+        "type": "array",
+        "description": "列表响应。",
+        "items": {
+          "$ref": "#/components/schemas/CurrencyCandlestick"
+        }
+      },
+      "LegacyTradeList": {
+        "type": "array",
+        "description": "列表响应。",
+        "items": {
+          "$ref": "#/components/schemas/LegacyTrade"
+        }
       }
     }
   }
