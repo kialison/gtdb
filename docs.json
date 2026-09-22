@@ -780,7 +780,11 @@
                           "en/event-markets/rest/query-claim",
                           "en/event-markets/rest/query-tags",
                           "en/event-markets/rest/query-server-time",
-                          "en/prediction-markets/rest/query-events"
+                          "en/prediction-markets/rest/query-events",
+                          "en/prediction-markets/rest/query-event",
+                          "en/prediction-markets/rest/query-event-by-slug",
+                          "en/prediction-markets/rest/query-markets",
+                          "en/prediction-markets/rest/query-market-trades"
                         ]
                       },
                       {

@@ -1,10 +1,10 @@
 ---
-title: "List Events"
-description: "List Events."
-openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/events"
+title: "Get Event by Slug"
+description: "Get Event by Slug."
+openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/events/slug/{slug}"
 ---
 
-Returns a cursor-paginated list of events.
+Returns one event selected by its slug.
 
 **Base URL:** `https://api.dexbuilder.com`
 
@@ -13,16 +13,16 @@ Returns a cursor-paginated list of events.
 ## Request
 
 ```bash
-curl -G "https://api.dexbuilder.com/api/v4/prediction/events"
+curl -G "https://api.dexbuilder.com/api/v4/prediction/events/slug/{slug}"
 ```
 
-Use `limit` and `cursor` for pagination. Optional filters include event ID, slug, tag, active, and closed state.
+`slug` is the URL-safe event identifier.
 
 The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
 
 ## Response
 
-The response contains `items` and `next_cursor`. Each event includes identifiers, title/description, lifecycle flags, dates, tags, volume, and (where available) a market summary.
+Returns one event object with identifiers, localized title/description, lifecycle state, dates, tags, volume, and related markets.
 
 A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
 
