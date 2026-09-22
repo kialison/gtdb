@@ -4,4 +4,26 @@ description: "Get Account Assets."
 openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/assets"
 ---
 
-Get Account Assets through the DexBuilder Prediction Markets API.
+Returns the authenticated account asset summary.
+
+**Base URL:** `https://api.dexbuilder.com`
+
+**Authentication:** This is a private endpoint and requires API authentication. The authenticated account is inferred from the request credentials; do not send internal user headers.
+
+## Request
+
+```bash
+curl -G "https://api.dexbuilder.com/api/v4/prediction/assets"
+```
+
+No public user identifier is required; the account is determined by authentication.
+
+The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
+
+## Response
+
+Returns account balances and valuation fields defined by the OpenAPI schema.
+
+A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
+
+For order, position, claim, transfer, and account operations, treat the response as the current server result and query the resource again when the operation is asynchronous.

@@ -4,4 +4,26 @@ description: "Get Token Prices."
 openapi: "/openapi/event-markets-en.yaml GET /api/v4/prediction/tokens/prices"
 ---
 
-Get Token Prices through the DexBuilder Prediction Markets API.
+Returns the latest price for a token.
+
+**Base URL:** `https://api.dexbuilder.com`
+
+**Authentication:** This is a public market-data endpoint and does not require authentication.
+
+## Request
+
+```bash
+curl -G "https://api.dexbuilder.com/api/v4/prediction/tokens/prices"
+```
+
+`token_id` identifies the token. Use the optional side parameter when supported.
+
+The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
+
+## Response
+
+Returns `token_id`, `price`, `side`, and `timestamp`.
+
+A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
+
+For order, position, claim, transfer, and account operations, treat the response as the current server result and query the resource again when the operation is asynchronous.

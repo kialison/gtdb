@@ -4,4 +4,26 @@ description: "Cancel Order."
 openapi: "/openapi/event-contracts-en.yaml DELETE /api/v4/event_contracts/orders/{order_id}"
 ---
 
-Cancel Order through the DexBuilder Event Contracts API.
+Requests cancellation of one order.
+
+**Base URL:** `https://api.dexbuilder.com`
+
+**Authentication:** This is a private endpoint and requires API authentication. The authenticated account is inferred from the request credentials; do not send internal user headers.
+
+## Request
+
+```bash
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/orders/{order_id}"
+```
+
+`order_id` identifies the order.
+
+The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
+
+## Response
+
+Returns the order ID, cancellation status, and current processing status. An order may have executed before cancellation completes.
+
+A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
+
+For order, position, claim, transfer, and account operations, treat the response as the current server result and query the resource again when the operation is asynchronous.

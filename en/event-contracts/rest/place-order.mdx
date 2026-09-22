@@ -4,4 +4,26 @@ description: "Place Order."
 openapi: "/openapi/event-contracts-en.yaml POST /api/v4/event_contracts/orders"
 ---
 
-Place Order through the DexBuilder Event Contracts API.
+Submits an order.
+
+**Base URL:** `https://api.dexbuilder.com`
+
+**Authentication:** This is a private endpoint and requires API authentication. The authenticated account is inferred from the request credentials; do not send internal user headers.
+
+## Request
+
+```bash
+curl "https://api.dexbuilder.com/api/v4/event_contracts/orders"
+```
+
+The request body contains only the public token, side, price/size or total cost, order type/mode, and optional client order and expiry fields shown in the OpenAPI definition.
+
+The OpenAPI panel below is the source of truth for required parameters, types, enum values, and request-body fields. Timestamps are Unix timestamps unless the field description states otherwise.
+
+## Response
+
+Returns an acceptance object containing the order identifier and processing status. Query the order or subscribe to the private order channel for subsequent state changes.
+
+A successful response uses HTTP 200. Invalid parameters or request bodies return HTTP 400. Private endpoints can return HTTP 401 when authentication fails, and temporary upstream failures can return HTTP 503. The error response contains a machine-readable label and message.
+
+For order, position, claim, transfer, and account operations, treat the response as the current server result and query the resource again when the operation is asynchronous.

@@ -4,98 +4,38 @@ sidebarTitle: "消息协议"
 description: "了解预测市场 WebSocket 的请求、ACK、推送和订阅格式。"
 ---
 
-预测市场 WebSocket 使用 v2 JSON 消息结构。客户端操作使用 `op`，服务端主动推送使用 `type`。
+消息使用 JSON。请求中的 `t` 必须与服务端时间相差不超过 60 秒，`id` 必须是字符串或整数。
 
-## 客户端请求
-
-```json
-{
-  "t": 1787026512123,
-  "id": 1001,
-  "op": "subscribe",
-  "ch": "pred.trades",
-  "payload": {
-    "items": [{"condition_id":"gate_0xcondition"}]
-  }
-}
-```
-
-| 字段 | 说明 |
-| --- | --- |
-| `t` | 客户端 Unix 毫秒时间戳 |
-| `id` | 客户端请求 ID，用于关联响应 |
-| `op` | `subscribe`、`unsubscribe`、`auth` 或 `ping` |
-| `ch` | 频道名称 |
-| `payload` | 操作参数 |
-| `auth` | 首次私有操作时携带的认证信息 |
-
-## 成功 ACK
+## 订阅
 
 ```json
 {
-  "t": 1787026512150,
-  "id": 1001,
-  "trace_id": "7906cdf3f7dd1ef35f8ef5808cf58da8",
-  "op": "subscribe",
-  "ch": "pred.trades",
-  "err": null,
-  "result": {"status":"success"}
-}
-```
-
-## 错误 ACK
-
-```json
-{
-  "id": 1001,
+  "t": 1720000000123,
+  "id": "req-1",
   "op": "subscribe",
   "ch": "pred.depth",
-  "err": {"code":2,"msg":"invalid depth level"},
-  "result": {"status":"fail"}
+  "payload": {"items": [{"token_id": "gate_token-yes", "level": 20}]}
 }
 ```
 
-客户端应优先根据 `err.code` 处理错误，不要依赖完整错误文本。
+取消订阅时使用相同的频道和 payload，并将 `op` 设置为 `unsubscribe`。私有频道还需要 `auth`；私有频道支持 `{"all": true}`，公共频道必须使用 `items`。
 
-## 服务端推送
+## ACK
 
-```json
-{
-  "t": 1787026512150,
-  "type": "update",
-  "ch": "pred.trades",
-  "err": null,
-  "result": {
-    "condition_id":"gate_0xcondition",
-    "token_id":"gate_token_id",
-    "side":"BUY",
-    "px":"0.45",
-    "qty":"10",
-    "ts":1787026512027
-  }
-}
-```
-
-`type` 常见值为 `snapshot` 或 `update`。
-
-## 订阅参数
-
-支持：
+成功：
 
 ```json
-{"items":[{"token_id":"gate_token_id"}]}
+{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"pred.depth","err":null,"result":{"status":"success"}}
 ```
 
-私有频道也可使用：
+失败：
 
 ```json
-{"all":true}
+{"t":1720000000124,"id":"req-1","trace_id":"trace-1","op":"subscribe","ch":"pred.depth","err":{"code":2,"msg":"invalid depth item"},"result":{"status":"fail"}}
 ```
 
-规则：
+## 快照和更新
 
-- `items` 与 `all` 不能同时出现；
-- 单次最多提交 100 个订阅项；
-- 单连接最多支持 10,000 个有效订阅；
-- 公共频道不支持 `all=true`；
-- 取消订阅使用与订阅相同的 item 结构。
+缓存的初始数据使用 `type: "snapshot"`，后续事件使用 `type: "update"`。消息包含 `ch`、`err: null` 和频道对应的 `result`。
+
+单次请求最多 100 个订阅项，单连接最多 10,000 个订阅。重连后需要重新订阅；私有频道应通过 REST 接口恢复账户当前状态。

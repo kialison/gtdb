@@ -3,20 +3,39 @@ title: "WebSocket Authentication"
 description: "Authenticate private Event Contracts API WebSocket subscriptions."
 ---
 
-Private subscriptions require API credentials and a valid signature.
+Only private channels require authentication. Public market-data channels can be subscribed to without credentials.
 
-Connect to:
+## API Key signature
 
-```text
-wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
+Include the API Key and a locally generated HMAC-SHA512 signature in the `auth` object:
+
+```json
+{
+  "method": "api_key",
+  "key": "YOUR_API_KEY",
+  "sign": "HEX_SIGNATURE"
+}
 ```
 
-Use API Key authentication for private subscriptions. The API Secret is used locally to generate the signature and must never be sent over the WebSocket connection.
-
-The subscription signature payload is:
+The signature input for a direct private subscription is:
 
 ```text
-channel=<channel>&event=<operation>&time=<timestamp_ms>
+channel=ec.orders&event=subscribe&time=1720000000123
 ```
 
-Never expose the API Secret in frontend code or transmit it as a plaintext credential. Generate signatures according to the documented signing rules and rotate compromised credentials immediately.
+Compute the hexadecimal HMAC-SHA512 digest with the API Secret as the key. Never send the API Secret.
+
+## Private subscription
+
+```json
+{
+  "t": 1720000000123,
+  "id": "private-1",
+  "op": "subscribe",
+  "ch": "ec.orders",
+  "payload": {"all": true},
+  "auth": {"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+}
+```
+
+The same API Key authentication is used for `ec.usertrades`, `ec.positions`, and `ec.settlements`.

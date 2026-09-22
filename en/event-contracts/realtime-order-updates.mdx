@@ -3,14 +3,39 @@ title: "Real-Time Order Updates"
 description: "Track Event Contracts order changes through real-time data."
 ---
 
-Subscribe to authenticated order updates to keep the interface synchronized with server-side order state.
+Use the private `ec.orders` and `ec.usertrades` channels to track order lifecycle and fills. Use `ec.positions` and `ec.settlements` for account state changes.
 
-Connect to:
+## Endpoint
 
 ```text
 wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 ```
 
-Event Contracts private channels use the `ec.*` prefix, including `ec.orders`, `ec.usertrades`, `ec.positions`, and `ec.settlements`. Private subscriptions require API Key authentication.
+## Subscription
 
-On reconnect, refresh current open orders through REST before applying new updates.
+Authenticate the subscription with an API Key signature:
+
+```json
+{
+  "t": 1720000000123,
+  "id": "orders-1",
+  "op": "subscribe",
+  "ch": "ec.orders",
+  "payload": {"all": true},
+  "auth": {"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}
+}
+```
+
+## Delivery
+
+Order events include identifiers, side, price, quantities, status, and timestamps. User-trade events include the trade, order, role, fee rate, execution price, quantity, and confirmation status. Position events include quantity, average price, settlement status, available quantity, locked quantity, and claimable amount. Mark-price fields are intentionally not documented.
+
+## Recovery
+
+WebSocket delivery is event-driven and is not a replacement for REST reads. After connecting or reconnecting:
+
+1. Subscribe to the required private channels.
+2. Query the corresponding REST endpoints for current orders, trades, positions, and account state.
+3. Apply subsequent WebSocket updates using the identifiers and timestamps.
+
+Do not expose internal user headers or broker account identifiers in client requests.

@@ -4,7 +4,7 @@ sidebarTitle: "实时订单更新"
 description: "通过私有 WebSocket 频道实时接收订单、成交、持仓和结算状态变化。"
 ---
 
-预测市场 WebSocket 可实时推送账户侧的订单、成交、持仓和结算变化。公开行情频道无需认证，本页涉及的私有频道需要完成 API Key 认证。
+使用私有 `pred.orders` 和 `pred.usertrades` 跟踪订单生命周期和成交，使用 `pred.positions` 和 `pred.settlements` 跟踪账户状态。
 
 ## 连接地址
 
@@ -12,86 +12,24 @@ description: "通过私有 WebSocket 频道实时接收订单、成交、持仓�
 wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
-客户端请求使用 `op`，服务端响应包含 `op`、`ch`、`result` 和 `err`。建议每个请求携带客户端生成的 `id`，用于关联 ACK 或错误响应。
+## 订阅
 
-## 私有订阅认证
-
-首次订阅私有频道时可以直接携带认证信息：
+使用 API Key 签名认证：
 
 ```json
-{
-  "t": 1787026512123,
-  "id": "orders-1",
-  "op": "subscribe",
-  "ch": "pred.orders",
-  "payload": {"all": true},
-  "auth": {
-    "method": "api_key",
-    "key": "<api_key>",
-    "sign": "<signature>"
-  }
-}
+{"t":1720000000123,"id":"orders-1","op":"subscribe","ch":"pred.orders","payload":{"all":true},"auth":{"method":"api_key","key":"YOUR_API_KEY","sign":"HEX_SIGNATURE"}}
 ```
 
-订阅和取消订阅的签名原文为：
+## 推送内容
 
-```text
-channel=<channel>&event=<operation>&time=<timestamp_ms>
-```
+订单包含标识、方向、价格、数量、状态和时间戳；用户成交包含成交、订单、角色、费率、成交价格、数量和确认状态；仓位包含数量、平均价格、结算状态、可用数量、锁定数量和可领取金额。文档不描述标记价格字段。
 
-使用 API Secret 对上述字符串执行 HMAC-SHA512，并将结果转为十六进制。API Secret 只在本地参与签名，不通过 WebSocket 发送。
+## 状态恢复
 
-也可以先通过 `server.sign` 完成一次预认证，后续同一连接中的私有订阅可不再重复携带 `auth`。
+WebSocket 是事件推送，不能替代 REST 查询。连接或重连后：
 
-## 私有频道
+1. 订阅需要的私有频道。
+2. 通过对应 REST 接口查询订单、成交、仓位和账户当前状态。
+3. 使用标识和时间戳应用后续 WebSocket 更新。
 
-| 频道 | 用途 |
-| --- | --- |
-| `pred.orders` | 订单生命周期更新 |
-| `pred.usertrades` | 当前用户成交更新 |
-| `pred.positions` | 持仓变化 |
-| `pred.settlements` | 结算与可领取状态变化 |
-
-私有订阅支持两种方式：按 `condition_id` 过滤，或使用 `payload.all=true` 订阅当前账户全部相关更新。两种方式不能同时使用。
-
-## 订单更新
-
-订单更新包含 `order_id`、`client_order_id`、`condition_id`、`token_id`、方向、价格、数量、已成交数量、剩余数量和订单状态等字段。
-
-常见状态包括：`PROCESSING`、`OPEN`、`CANCELLING`、`MATCHED`、`CANCELED` 和 `FAILED`。部分成交后订单通常仍保持 `OPEN`，应结合 `filled_qty` 与 `left_qty` 判断成交进度。
-
-## 用户成交
-
-`pred.usertrades` 用于推送当前认证用户的成交。常见字段包括：
-
-- `trade_id`
-- `order_id`
-- `condition_id`
-- `token_id`
-- `side`
-- `role`
-- `px`
-- `qty`
-- `fee_rate`
-- `status`
-
-其中 `role` 为 `MAKER` 或 `TAKER`，成交状态通常为 `MATCHED` 或 `CONFIRMED`。
-
-## 持仓与结算
-
-`pred.positions` 会推送持仓数量、平均开仓价格、锁定数量、可用数量、可领取金额和结算状态。
-
-`pred.settlements` 会推送市场结算结果、是否获胜以及可领取金额。存在平局或特殊结算场景时，不应只依赖 `winning_outcome`，应同时判断 `is_winner` 与 `claimable_amount`。
-
-## 断线恢复
-
-WebSocket 不保存断线期间的消息。重新连接后建议：
-
-1. 重新认证；
-2. 恢复原有订阅；
-3. 使用 REST 接口查询订单、成交和持仓当前状态；
-4. 再继续消费新的 WebSocket 推送。
-
-<Note>
-WebSocket 适合实时增量数据，REST 接口适合查询完整状态、历史记录和断线后的数据恢复。
-</Note>
+客户端请求中不要暴露内部用户 Header 或 broker 账户标识。
