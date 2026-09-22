@@ -560,7 +560,9 @@
                       "en/event-markets/trading-overview",
                       "en/event-markets/how-positions-work",
                       "en/event-markets/fees",
-                      "en/prediction-markets/trading-overview"
+                      "en/prediction-markets/trading-overview",
+                      "en/prediction-markets/fees",
+                      "en/prediction-markets/how-positions-work"
                     ]
                   }
                 ]
