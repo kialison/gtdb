@@ -4,15 +4,15 @@ sidebarTitle: "公共频道"
 description: "订阅事件合约公开成交、深度、BBO、价格和市场状态。"
 ---
 
-公共频道不需要认证。连接地址：
+公共频道不需要认证。
+
+**连接地址**
 
 ```text
 wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
 ```
 
-使用前缀 `ec` 订阅。每个订阅项对应一个事件、市场、Token 或价格序列。
-
-## 订阅示例
+## 订阅
 
 ```json
 {
@@ -20,72 +20,204 @@ wss://broker.dexbuilder.com/ws/dex-builder/event-contracts
   "id": "sub-1",
   "op": "subscribe",
   "ch": "ec.trades",
-  "payload": {"items": [{"condition_id": "gate_condition-1"}]}
+  "payload": {
+    "items": [
+      {
+        "condition_id": "gate_condition-1"
+      }
+    ]
+  }
 }
 ```
 
-服务端会先返回 ACK；如果已有缓存，会返回 `snapshot`，之后通过 `update` 推送变化。
+服务端会先返回 ACK。如果已有缓存，会返回 `snapshot`；后续消息使用 `type: "update"`。
 
-## 频道与返回
+## `ec.trades`
 
-### `ec.trades`
+使用 `condition_id` 订阅。
 
-市场成交推送。订阅字段为 `condition_id`。
-
-```json
-{"type":"update","ch":"ec.trades","err":null,"result":{"condition_id":"gate_condition-1","token_id":"gate_token-yes","outcome":"Yes","side":"BUY","px":"0.45","qty":"10","ts":1720000000123}}
-```
-
-### `ec.depth`
-
-Token 的完整订单簿快照，支持 level 5、10、20、50。订阅字段为 `token_id` 和 `level`。
+**返回示例**
 
 ```json
-{"type":"snapshot","ch":"ec.depth","err":null,"result":{"token_id":"gate_token-yes","level":20,"full":true,"bids":[["0.44","100"]],"asks":[["0.46","80"]],"hash":"book-hash","ts":1720000000123}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.trades",
+  "err": null,
+  "result": {
+    "condition_id": "gate_condition-1",
+    "token_id": "gate_token-yes",
+    "outcome": "Yes",
+    "side": "BUY",
+    "px": "0.45",
+    "qty": "10",
+    "ts": 1720000000123
+  }
+}
 ```
 
-`bids` 和 `asks` 是完整深度，不是增量变更。
+## `ec.depth`
 
-### `ec.bbo`
+使用 `token_id` 和 `level` 订阅，支持 5、10、20、50。返回的是完整订单簿，不是增量。
 
-Token 的最优买卖价。订阅字段为 `token_id`。
+**返回示例**
 
 ```json
-{"type":"update","ch":"ec.bbo","err":null,"result":{"condition_id":"gate_condition-1","token_id":"gate_token-yes","bid_px":"0.44","ask_px":"0.46","last_px":"0.45","ts":1720000000123}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "snapshot",
+  "ch": "ec.depth",
+  "err": null,
+  "result": {
+    "token_id": "gate_token-yes",
+    "level": 20,
+    "full": true,
+    "bids": [
+      ["0.44", "100"]
+    ],
+    "asks": [
+      ["0.46", "80"]
+    ],
+    "hash": "book-hash",
+    "ts": 1720000000123
+  }
+}
 ```
 
-### `ec.status`
+## `ec.bbo`
 
-市场状态和结果。订阅字段为 `market_id`。
+使用 `token_id` 订阅。
+
+**返回示例**
 
 ```json
-{"type":"update","ch":"ec.status","err":null,"result":{"market_id":"gate_market-1","condition_id":"gate_condition-1","slug":"example-market","status":"ACTIVE","closed":false,"accepting_orders":true,"outcomes":[{"name":"Yes","token_id":"gate_token-yes","px":"0.45"}],"ts":1720000000123}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.bbo",
+  "err": null,
+  "result": {
+    "condition_id": "gate_condition-1",
+    "token_id": "gate_token-yes",
+    "bid_px": "0.44",
+    "ask_px": "0.46",
+    "last_px": "0.45",
+    "ts": 1720000000123
+  }
+}
 ```
 
-### `ec.cpi`
+## `ec.status`
 
-指数价格推送。订阅字段为 `symbol` 和 `interval`。
+使用 `market_id` 订阅。
+
+**返回示例**
 
 ```json
-{"type":"update","ch":"ec.cpi","err":null,"result":{"symbol":"btcusdt","interval":"1m","price":"100000.10","price_timestamp":"1720000000123","ts":1720000000123}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.status",
+  "err": null,
+  "result": {
+    "market_id": "gate_market-1",
+    "condition_id": "gate_condition-1",
+    "slug": "example-market",
+    "status": "ACTIVE",
+    "closed": false,
+    "accepting_orders": true,
+    "outcomes": [
+      {
+        "name": "Yes",
+        "token_id": "gate_token-yes",
+        "px": "0.45"
+      },
+      {
+        "name": "No",
+        "token_id": "gate_token-no",
+        "px": "0.55"
+      }
+    ],
+    "ts": 1720000000123
+  }
+}
 ```
 
-### `ec.candlestick`
+## `ec.cpi`
 
-基于价格源生成的 OHLC 推送。订阅字段为 `symbol` 和 `interval`。
+使用 `symbol` 和 `interval` 订阅。
+
+**返回示例**
 
 ```json
-{"type":"update","ch":"ec.candlestick","err":null,"result":{"symbol":"btcusdt","interval":"1m","t":1720000000,"o":"100000.00","h":"100010.00","l":"99990.00","c":"100005.00","v":"0","closed":false}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.cpi",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "price": "100000.10",
+    "price_timestamp": "1720000000123",
+    "ts": 1720000000123
+  }
+}
 ```
 
-可用快照包含 `symbol`、`interval` 和 `history`。
+## `ec.candlestick`
 
-### `ec.oc_price`
+使用 `symbol` 和 `interval` 订阅。
 
-事件窗口的开盘参考价和最终价。可以使用 `slug` 或 `market_id` 订阅，也可以对配置好的币价窗口使用 `symbol` 和 `interval`。
+**返回示例**
 
 ```json
-{"type":"update","ch":"ec.oc_price","err":null,"result":{"slug":"bitcoin-up-or-down","price_to_beat":"100000.00","final_price":"100120.00"}}
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.candlestick",
+  "err": null,
+  "result": {
+    "symbol": "btcusdt",
+    "interval": "1m",
+    "t": 1720000000,
+    "o": "100000.00",
+    "h": "100010.00",
+    "l": "99990.00",
+    "c": "100005.00",
+    "v": "0",
+    "closed": false
+  }
+}
 ```
 
-除非字段明确标注为秒级时间，否则时间戳均为 Unix 毫秒时间戳。
+缓存的 K 线快照包含 `symbol`、`interval` 和 `history`。
+
+## `ec.oc_price`
+
+使用 `slug` 或 `market_id` 订阅。配置好的币价窗口也可以使用 `symbol` 和 `interval`。
+
+**返回示例**
+
+```json
+{
+  "t": 1720000000124,
+  "trace_id": "trace-1",
+  "type": "update",
+  "ch": "ec.oc_price",
+  "err": null,
+  "result": {
+    "slug": "bitcoin-up-or-down",
+    "price_to_beat": "100000.00",
+    "final_price": "100120.00"
+  }
+}
+```
+
+除非字段明确标注为秒，否则时间戳均为 Unix 毫秒时间戳。

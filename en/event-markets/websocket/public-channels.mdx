@@ -3,15 +3,15 @@ title: "Public Channels"
 description: "Public Prediction Markets API WebSocket channels."
 ---
 
-Public channels do not require authentication. Connect to:
+Public channels do not require authentication.
+
+**Endpoint**
 
 ```text
 wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
-Subscribe with the channel prefix `pred`. Each subscription item identifies one event, market, token, or price series.
-
-## Subscription
+## Subscribe
 
 ```json
 {
@@ -20,21 +20,27 @@ Subscribe with the channel prefix `pred`. Each subscription item identifies one 
   "op": "subscribe",
   "ch": "pred.trades",
   "payload": {
-    "items": [{ "condition_id": "gate_condition-1" }]
+    "items": [
+      {
+        "condition_id": "gate_condition-1"
+      }
+    ]
   }
 }
 ```
 
-The server first returns an acknowledgement. When cached data is available, it can send a `snapshot`; subsequent messages are `update` events.
+The server returns an acknowledgement first. If cached data exists, a `snapshot` is sent; subsequent messages use `type: "update"`.
 
-## Channels
+## `pred.trades`
 
-### `pred.trades`
+Subscribe with `condition_id`.
 
-Public trades for a condition.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.trades",
   "err": null,
@@ -50,14 +56,16 @@ Public trades for a condition.
 }
 ```
 
-Subscribe with `condition_id`.
+## `pred.depth`
 
-### `pred.depth`
+Subscribe with `token_id` and `level`. Supported levels are 5, 10, 20, and 50. The response is a full book, not a delta.
 
-Full order-book snapshot for a token at a requested level. Supported levels are 5, 10, 20, and 50.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "snapshot",
   "ch": "pred.depth",
   "err": null,
@@ -65,22 +73,28 @@ Full order-book snapshot for a token at a requested level. Supported levels are 
     "token_id": "gate_token-yes",
     "level": 20,
     "full": true,
-    "bids": [["0.44", "100"]],
-    "asks": [["0.46", "80"]],
+    "bids": [
+      ["0.44", "100"]
+    ],
+    "asks": [
+      ["0.46", "80"]
+    ],
     "hash": "book-hash",
     "ts": 1720000000123
   }
 }
 ```
 
-Subscribe with `token_id` and `level`. The payload represents the complete book at that level, not a delta.
+## `pred.bbo`
 
-### `pred.bbo`
+Subscribe with `token_id`.
 
-Best bid and offer for a token.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.bbo",
   "err": null,
@@ -95,14 +109,16 @@ Best bid and offer for a token.
 }
 ```
 
-Subscribe with `token_id`.
+## `pred.status`
 
-### `pred.status`
+Subscribe with `market_id`.
 
-Market lifecycle and outcome status.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.status",
   "err": null,
@@ -114,22 +130,32 @@ Market lifecycle and outcome status.
     "closed": false,
     "accepting_orders": true,
     "outcomes": [
-      {"name": "Yes", "token_id": "gate_token-yes", "px": "0.45"},
-      {"name": "No", "token_id": "gate_token-no", "px": "0.55"}
+      {
+        "name": "Yes",
+        "token_id": "gate_token-yes",
+        "px": "0.45"
+      },
+      {
+        "name": "No",
+        "token_id": "gate_token-no",
+        "px": "0.55"
+      }
     ],
     "ts": 1720000000123
   }
 }
 ```
 
-Subscribe with `market_id`.
+## `pred.cpi`
 
-### `pred.cpi`
+Subscribe with `symbol` and `interval`.
 
-Crypto price index updates for a symbol and interval.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.cpi",
   "err": null,
@@ -143,14 +169,16 @@ Crypto price index updates for a symbol and interval.
 }
 ```
 
-Subscribe with `symbol` and `interval`, for example `btcusdt` and `1m`.
+## `pred.candlestick`
 
-### `pred.candlestick`
+Subscribe with `symbol` and `interval`.
 
-OHLC updates built from the configured price source.
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.candlestick",
   "err": null,
@@ -168,14 +196,18 @@ OHLC updates built from the configured price source.
 }
 ```
 
-Subscribe with `symbol` and `interval`. A snapshot, when available, contains `symbol`, `interval`, and a `history` array.
+A cached candlestick snapshot contains `symbol`, `interval`, and `history`.
 
-### `pred.oc_price`
+## `pred.oc_price`
 
-Opening/closing reference prices for an event window. Subscribe using `slug` or `market_id`. For configured crypto windows, `symbol` and `interval` can also be used.
+Subscribe with `slug` or `market_id`. Configured crypto windows can also use `symbol` and `interval`.
+
+**Response example**
 
 ```json
 {
+  "t": 1720000000124,
+  "trace_id": "trace-1",
   "type": "update",
   "ch": "pred.oc_price",
   "err": null,
@@ -187,4 +219,4 @@ Opening/closing reference prices for an event window. Subscribe using `slug` or 
 }
 ```
 
-All timestamps are Unix timestamps in milliseconds unless a field is explicitly documented as seconds.
+Unless a field is explicitly documented as seconds, timestamps are Unix timestamps in milliseconds.
