@@ -13,7 +13,9 @@ Submits an order.
 ## Request
 
 ```bash
-curl "https://api.dexbuilder.com/api/v4/prediction/orders"
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/orders" \\
+  -H "Content-Type: application/json" \\
+  -d '<request-body>'
 ```
 
 The request body contains only the public token, side, price/size or total cost, order type/mode, and optional client order and expiry fields shown in the OpenAPI definition.

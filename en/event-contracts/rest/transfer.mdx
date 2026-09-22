@@ -13,7 +13,9 @@ Transfers USDT between a supported account and the product account.
 ## Request
 
 ```bash
-curl "https://api.dexbuilder.com/api/v4/event_contracts/transfer"
+curl -X POST "https://api.dexbuilder.com/api/v4/event_contracts/transfer" \\
+  -H "Content-Type: application/json" \\
+  -d '<request-body>'
 ```
 
 The request body specifies the transfer direction and amount. Review the OpenAPI schema for required fields.

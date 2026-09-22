@@ -13,7 +13,9 @@ Creates a claim request for eligible settled positions.
 ## Request
 
 ```bash
-curl "https://api.dexbuilder.com/api/v4/prediction/claims"
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/claims" \\
+  -H "Content-Type: application/json" \\
+  -d '<request-body>'
 ```
 
 The request body follows the OpenAPI schema. Only eligible settled positions can be claimed.

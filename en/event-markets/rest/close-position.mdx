@@ -13,7 +13,9 @@ Requests closing an authenticated position.
 ## Request
 
 ```bash
-curl "https://api.dexbuilder.com/api/v4/prediction/positions/{position_id}/close"
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/positions/{position_id}/close" \\
+  -H "Content-Type: application/json" \\
+  -d '<request-body>'
 ```
 
 `position_id` identifies the position. The request body follows the OpenAPI schema.
