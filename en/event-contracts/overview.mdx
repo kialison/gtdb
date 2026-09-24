@@ -1,17 +1,46 @@
 ---
-title: "Overview"
-description: "Overview of DexBuilder Event Contracts."
+title: "Event Contracts Developer Documentation"
+sidebarTitle: "Overview"
+description: "API and tooling documentation for Event Contracts developers, covering market data, order placement, and position redemption."
 ---
 
-DexBuilder Event Contracts provides an order-book trading experience for event-driven outcome markets.
+## Developer Quickstart
 
-This documentation explains how markets are structured, how users trade outcome tokens, how positions and settlement work, and how applications can integrate through REST API and WebSocket.
+Make your first API request in just a few minutes. Learn the core capabilities of Event Contracts, retrieve market data, place orders, and redeem winning positions after market settlement.
 
-## What you can build
+<CodeGroup>
 
-- Discover active events and markets
-- Display market rules, outcomes, prices, liquidity, and trading status
-- Place and manage orders
-- Track positions, trades, and account activity
-- Follow market resolution and settlement
-- Subscribe to real-time updates
+```bash API
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/markets" \
+  --data-urlencode "active=true" \
+  --data-urlencode "closed=false" \
+  --data-urlencode "limit=5"
+```
+
+</CodeGroup>
+
+## Learn About Event Contracts
+
+Start by understanding how Event Contracts work and the core concepts behind markets and trading, then choose the integration path that fits your product.
+
+<CardGroup cols={3}>
+  <Card title="Event Contracts" icon="chart-line" href="/en/event-contracts/event-markets">
+    Learn how Event Contracts work and how they are used.
+  </Card>
+
+  <Card title="Core Concepts" icon="book" href="/en/event-contracts/markets-events">
+    Learn about events, markets, prices, order books, positions, orders, and settlement.
+  </Card>
+
+  <Card title="API" icon="code" href="/en/event-contracts/api/overview">
+    Get a quick overview of the API and start building your product.
+  </Card>
+</CardGroup>
+
+## DexBuilder Grants
+
+DexBuilder provides development support and incentive resources for ecosystem projects. Projects can apply based on their actual business use case.
+
+<Card title="Apply for Support" icon="rocket" href="mailto:grants@example.com">
+  Submit your project information to apply for Event Contracts development support.
+</Card>

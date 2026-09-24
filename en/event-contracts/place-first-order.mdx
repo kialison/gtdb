@@ -1,19 +1,34 @@
 ---
 title: "Place Your First Order"
-description: "A first-trade walkthrough for Event Contracts."
+sidebarTitle: "First Order"
+description: "Authenticate with an existing Event Contracts account and place your first order."
 ---
 
-## Before trading
+This page shows how to place your first order using an existing Event Contracts account. We recommend having at least 10 USDT of available balance.
 
-Confirm the market rules, outcome token, current price, order-book depth, fees, and settlement conditions.
+<Steps>
+  <Step title="Complete Authentication">
+    Prepare your API Key and signature information according to the private API authentication requirements.
+  </Step>
+  <Step title="Select an Outcome">
+    Query the Market and choose the Outcome you want to trade from `outcomes[]`. Orders identify the specific outcome using `token_id`.
+  </Step>
+  <Step title="Place the Order">
+    Set the price and quantity based on order-book liquidity, then submit the trading request to the order endpoint.
+  </Step>
+  <Step title="Wait for Settlement">
+    After an order is matched, the resulting trade may still require asynchronous on-chain settlement. Confirm settlement completion before reading the final asset state.
+  </Step>
+  <Step title="Check the Position">
+    Query the position for the corresponding Market and confirm the purchased Outcome Token amount, available quantity, and settlement status.
+  </Step>
+</Steps>
 
-## Place an order
-
-1. Open a market.
-2. Select an outcome.
-3. Choose Buy or Sell.
-4. Enter price and size, or use the available market-order flow.
-5. Review the order.
-6. Submit and wait for the order status to update.
-
-After execution, review the position and trade history.
+<CardGroup cols={2}>
+  <Card title="Market Details" icon="circle-info" href="/en/event-contracts/market-details">
+    Get the Market's Token ID, Tick Size, and minimum order size.
+  </Card>
+  <Card title="Place Orders" icon="arrow-up-right" href="/en/event-contracts/place-orders">
+    View the complete order endpoint and parameter documentation.
+  </Card>
+</CardGroup>

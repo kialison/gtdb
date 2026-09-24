@@ -1,8 +1,55 @@
 ---
 title: "Fees"
-description: "Trading fee concepts for Event Contracts."
+sidebarTitle: "Fees"
+description: "Understand Event Contracts trading-fee calculations, fee-rate structure, and precision rules."
 ---
 
-Trading fees are applied according to the current project and market configuration.
+Event Contracts fees are calculated per fill. The effective rate can vary by market category and business configuration.
 
-Applications should use the fee data returned by DexBuilder for account display and order calculations. Fee settings can vary by project, user, market, or campaign configuration.
+## Fee Calculation
+
+Under the dynamic-fee model, fees can be calculated using:
+
+```text
+fee = C × feeRate × p × (1 - p)
+```
+
+Where:
+
+- `C`: number of shares filled;
+- `feeRate`: fee parameter for the relevant market category;
+- `p`: execution price of the outcome share.
+
+Because the formula contains `p × (1 - p)`, the fee is higher when the price is close to `0.5` and gradually decreases as the price approaches `0` or `1`.
+
+## Default Category Fee Rates
+
+| Market Category | Maker / Taker Fee Rate |
+| --- | ---: |
+| Crypto | `0.07` |
+| Sports | `0.05` |
+| Finance | `0.04` |
+| Politics | `0.04` |
+| Economics | `0.05` |
+| Culture | `0.05` |
+| Weather | `0.05` |
+| Other / General | `0.05` |
+| Mentions | `0.04` |
+| Tech | `0.04` |
+| Geopolitics | `0` |
+
+The effective fee rate is determined by the value returned by the relevant market API or account fee API.
+
+## Precision
+
+Fee amounts are kept to 5 decimal places. The minimum fee precision is:
+
+```text
+0.00001 USDT
+```
+
+Fees below the minimum precision may round to `0`.
+
+<Note>
+The actual Builder or Broker fee structure may be configured according to the business partnership. Public-facing applications should use the current values returned for the relevant market and account.
+</Note>

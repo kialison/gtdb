@@ -1,8 +1,95 @@
 ---
 title: "Negative Risk Markets"
-description: "How related outcome markets can be structured together."
+sidebarTitle: "Negative Risk Markets"
+description: "Understand the Negative Risk mechanism for multi-outcome events and how outcome conversion can improve capital efficiency."
 ---
 
-Some event structures contain multiple mutually exclusive outcomes. In these cases, the combined outcome set can be treated as a coordinated market group.
+Negative Risk is a mechanism for multi-outcome events where only one outcome can ultimately win. It connects multiple Markets under the same Event through conversion relationships between outcomes, improving capital efficiency.
 
-Applications should always rely on the market metadata returned by DexBuilder rather than assuming that independently listed markets are interchangeable or mutually exclusive.
+## How It Works
+
+In a standard multi-outcome event, each Market is independent. If you want to express that a specific outcome will not happen, you would normally buy that Market's No Token, but that No Token has no asset-conversion relationship with the other outcomes.
+
+Negative Risk creates that relationship:
+
+- 1 No share from any Market can be converted into 1 Yes share in every other Market under the same Event.
+- The conversion is performed through the Neg Risk Adapter contract.
+
+### Example
+
+Assume the Event is "Who will win the presidential election?" and it contains three outcomes:
+
+| Outcome | Current Position |
+| --- | --- |
+| Candidate A | — |
+| Candidate B | — |
+| Other | 1 No |
+
+Under Negative Risk, 1 No share of "Other" can be converted into:
+
+| Outcome | After Conversion |
+| --- | --- |
+| Candidate A | 1 Yes |
+| Candidate B | 1 Yes |
+| Other | — |
+
+Economically, being short one outcome can therefore be converted into being long all other outcomes.
+
+## Augmented Negative Risk
+
+Standard Negative Risk generally requires the complete set of outcomes to be known when the market is created. In real-world scenarios, however, new candidate outcomes may appear after trading begins, such as a new candidate entering an election.
+
+Augmented Negative Risk handles these dynamic changes with the following outcome types:
+
+| Outcome Type | Description |
+| --- | --- |
+| Named outcomes | Outcomes explicitly defined when the market is created |
+| Placeholder outcomes | Reserved slots that can later be assigned to specific outcomes |
+| Other | Captures outcomes that are not explicitly listed |
+
+### How Placeholders Work
+
+<Steps>
+  <Step title="Event Launches">
+    The Event launches with named outcomes, Placeholder outcomes, and Other.
+  </Step>
+  <Step title="Assign a Placeholder">
+    When a new valid outcome appears, a Placeholder can be assigned to that outcome.
+  </Step>
+  <Step title="Other Narrows">
+    As Placeholders are assigned, the remaining set represented by Other becomes narrower.
+  </Step>
+</Steps>
+
+### Trading Rules
+
+- If the final correct outcome was never explicitly named, the Market can settle to Other.
+- The practical definition of Other changes as Placeholders are assigned, so traders should pay particular attention to its current scope when trading Other directly.
+
+## Conversion Mechanism
+
+The Neg Risk Adapter performs conversion atomically:
+
+<Steps>
+  <Step title="Hold a No Token">
+    The user holds 1 No Token for Outcome A.
+  </Step>
+  <Step title="Call convert">
+    Call the Adapter's `convert` method.
+  </Step>
+  <Step title="Receive Yes Tokens for Other Outcomes">
+    The user receives 1 Yes Token for every other outcome under the same Event.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Markets & Events" icon="chart-line" href="/en/event-contracts/markets-events">
+    Learn how multi-Market Events are organized.
+  </Card>
+
+  <Card title="Positions & Outcome Tokens" icon="coins" href="/en/event-contracts/positions-tokens">
+    Learn how outcome tokens relate to positions.
+  </Card>
+</CardGroup>

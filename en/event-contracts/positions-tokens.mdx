@@ -1,10 +1,72 @@
 ---
 title: "Positions & Outcome Tokens"
-description: "How positions and outcome tokens are represented in Event Contracts."
+sidebarTitle: "Positions & Outcome Tokens"
+description: "Understand outcome tokens, Event Contracts positions, position value, and PnL calculations."
 ---
 
-Each tradable outcome is represented by a token or outcome identifier.
+Every outcome in a Event Contract is represented by an outcome token. Trading essentially means buying or selling these outcome tokens; a position in a Market is the user's balance of the corresponding outcome token.
 
-A user's position reflects exposure to an outcome. Position data should be displayed together with market state, average entry information, current valuation, and settlement status where available.
+![Image](/images/image-3.png "Image")
 
-After final resolution, eligible positions can move into the claim or settlement flow.
+## Outcome Tokens
+
+A binary Market typically contains two outcome tokens:
+
+| Token | Redeemable for 1 USDT When | If the Outcome Loses |
+| --- | --- | --- |
+| Yes | The event occurs | Becomes worthless |
+| No | The event does not occur | Becomes worthless |
+
+Outcome tokens use the [Gnosis Conditional Token Framework](https://docs.gnosis.io/conditionaltokens/) (CTF) and exist as ERC-1155 assets.
+
+Each Yes / No outcome pair is fully collateralized. One Yes + No pair in the system corresponds to 1 USDT of collateral.
+
+## Trading
+
+Most users build or reduce positions by buying and selling outcome tokens through the order book.
+
+- Buy 1 Yes at `$0.60`: pay `$0.60` and receive 1 Yes Token.
+- Sell 1 Yes at `$0.60`: transfer 1 Yes Token and receive `$0.60`.
+- Before settlement, a position can be exited by selling whenever liquidity is available.
+
+## Redemption
+
+After a Market settles, winning outcome tokens can be redeemed for USDT:
+
+| Settlement Result | Yes Token | No Token |
+| --- | --- | --- |
+| Event occurs | Worth `$1` each | `$0` |
+| Event does not occur | `$0` | Worth `$1` each |
+
+## Position Value
+
+The current value of a position depends on the token balance and market price:
+
+```text
+Position Value = Token Quantity × Current Price
+```
+
+For example, if you hold 100 Yes shares and the current price is `$0.75`:
+
+```text
+Position Value = 100 × $0.75 = $75
+```
+
+## Profit and Loss
+
+Final PnL depends on the entry cost, exit price, or the Market's final settlement result.
+
+### Example: Buy Yes at 0.40
+
+| Scenario | Result | Value Recovered per Share | PnL per Share |
+| --- | --- | --- | --- |
+| Event occurs | Yes wins | `$1.00` | `+$0.60` (150%) |
+| Event does not occur | No wins | `$0.00` | `-$0.40` (-100%) |
+
+### Sell Before Settlement
+
+You can also exit before settlement:
+
+- buy Yes at `$0.40`;
+- the market price rises to `$0.70`;
+- sell at `$0.70`, realizing `$0.30` profit per share.

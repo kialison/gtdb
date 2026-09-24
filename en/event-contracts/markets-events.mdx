@@ -1,17 +1,86 @@
 ---
 title: "Markets & Events"
-description: "How events and markets are organized in Event Contracts."
+sidebarTitle: "Markets & Events"
+description: "Understand the core Event Contracts data model: the relationship between Markets and Events, their identifiers, and how to query them through the API."
 ---
 
-Events group one or more related markets. A market defines a tradable question or contract with one or more outcome tokens.
+Event Contracts are organized around two core concepts: **Market** and **Event**. Understanding their relationship is fundamental to querying data, trading, and presenting markets in a product.
 
-Applications should display:
+![Image](/images/image-1.png "Image")
 
-- event title and description;
-- market rules and resolution source;
-- market status;
-- outcome tokens;
-- opening and closing times;
-- settlement or resolution state.
+## Market
 
-Use the REST API to discover events and markets, then use WebSocket for real-time updates where available.
+A Market is the smallest tradable unit. Each Market represents a question with an objectively determinable outcome and typically contains two outcomes: Yes and No.
+
+Each Market usually includes:
+
+| Identifier | Description |
+| --- | --- |
+| Condition ID | Unique identifier for the market condition in the CTF contract |
+| Question ID | Hash of the market question used for outcome settlement |
+| Token IDs | ERC-1155 outcome-token IDs used for CLOB trading, typically one for Yes and one for No |
+
+### Example
+
+For example:
+
+> _"Will Bitcoin reach $100,000 before December 2026?"_
+
+This creates two outcome tokens:
+
+- **Yes Token**: if the condition is met, it can be redeemed for 1 USDT after settlement.
+- **No Token**: if the condition is not met, it can be redeemed for 1 USDT after settlement.
+
+## Event
+
+An Event is a container used to organize one or more related Markets. It can contain a single Market or multiple related outcome markets.
+
+### Single-Market Event
+
+When an Event contains only one Market, the Event and Market are effectively the same concept from a product perspective:
+
+```text
+Event: Will Bitcoin reach $100,000 before December 2026?
+   └── Market: Will Bitcoin reach $100,000 before December 2026? (Yes/No)
+```
+
+### Multi-Market Event
+
+When an Event contains multiple Markets, several related questions can be grouped under one Event. In some multi-outcome Events, the Market outcomes are mutually exclusive. These Markets can form a Negative Risk Group: only one Market ultimately settles to Yes, while the others settle to No.
+
+```text
+Event: Who will win the presidential election?
+   ├── Market: Candidate A? (Yes/No)
+   ├── Market: Candidate B? (Yes/No)
+   ├── Market: Candidate C? (Yes/No)
+   └── Market: Other? (Yes/No)
+```
+
+## Identifying Markets and Events
+
+Both Markets and Events have unique slugs that can be used to query a specific resource.
+
+```text
+https://example.com/event/fed-decision-in-october
+                          └── slug: fed-decision-in-october
+```
+
+```bash
+curl "https://api.dexbuilder.com/api/v4/event_contracts/events/slug/fed-decision-in-october"
+```
+
+## Sports Market Considerations
+
+For sports markets, unfilled limit orders may be automatically cancelled once the event officially starts in order to clear the order book. Because actual start times may be earlier or later than scheduled, integrations should actively monitor order status around the event start rather than relying only on the scheduled start time.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Prices & Order Book" icon="chart-line" href="/en/event-contracts/prices-orderbook">
+    Learn how prices are formed and how the order book works.
+  </Card>
+
+  <Card title="Discover Markets" icon="database" href="/en/event-contracts/discover-markets">
+    Start querying Events and Markets through the API.
+  </Card>
+</CardGroup>
