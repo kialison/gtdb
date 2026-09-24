@@ -1,17 +1,46 @@
 ---
-title: "Overview"
-description: "Overview of DexBuilder Prediction Markets."
+title: "Prediction Markets Developer Documentation"
+sidebarTitle: "Overview"
+description: "API and tooling documentation for Prediction Markets developers, covering market data, order placement, and position redemption."
 ---
 
-DexBuilder Prediction Markets provides an order-book trading experience for event-driven outcome markets.
+## Developer Quickstart
 
-This documentation explains how markets are structured, how users trade outcome tokens, how positions and settlement work, and how applications can integrate through REST API and WebSocket.
+Make your first API request in just a few minutes. Learn the core capabilities of Prediction Markets, retrieve market data, place orders, and redeem winning positions after market settlement.
 
-## What you can build
+<CodeGroup>
 
-- Discover active events and markets
-- Display market rules, outcomes, prices, liquidity, and trading status
-- Place and manage orders
-- Track positions, trades, and account activity
-- Follow market resolution and settlement
-- Subscribe to real-time updates
+```bash API
+curl -G "https://api.dexbuilder.com/api/v4/prediction/markets" \
+  --data-urlencode "active=true" \
+  --data-urlencode "closed=false" \
+  --data-urlencode "limit=5"
+```
+
+</CodeGroup>
+
+## Learn About Prediction Markets
+
+Start by understanding how Prediction Markets work and the core concepts behind markets and trading, then choose the integration path that fits your product.
+
+<CardGroup cols={3}>
+  <Card title="Prediction Markets" icon="chart-line" href="/en/event-markets/event-markets">
+    Learn how Prediction Markets work and how they are used.
+  </Card>
+
+  <Card title="Core Concepts" icon="book" href="/en/event-markets/markets-events">
+    Learn about events, markets, prices, order books, positions, orders, and settlement.
+  </Card>
+
+  <Card title="API" icon="code" href="/en/event-markets/api/overview">
+    Get a quick overview of the API and start building your product.
+  </Card>
+</CardGroup>
+
+## DexBuilder Grants
+
+DexBuilder provides development support and incentive resources for ecosystem projects. Projects can apply based on their actual business use case.
+
+<Card title="Apply for Support" icon="rocket" href="mailto:grants@example.com">
+  Submit your project information to apply for Prediction Markets development support.
+</Card>

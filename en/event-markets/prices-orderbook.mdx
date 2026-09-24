@@ -1,10 +1,79 @@
 ---
 title: "Prices & Order Book"
-description: "How prices and order-book liquidity work in Prediction Markets."
+sidebarTitle: "Prices & Order Book"
+description: "Understand how prices are formed in Prediction Markets and how the CLOB supports peer-to-peer trading."
 ---
 
-Outcome prices are formed from active buy and sell orders.
+Prediction Markets use a Central Limit Order Book (CLOB). Prices are not set directly by the platform; they are formed by supply and demand between users placing buy and sell orders.
 
-The order book shows available liquidity by price level. Applications can use the best bid, best ask, spread, and depth to present current market conditions.
+![Image](/images/image-2.png "Image")
 
-Historical price data and candlesticks can be used for charts, while live order-book updates should be consumed through the available real-time channels.
+## Price Represents Probability
+
+Each outcome share is priced between `$0.00` and `$1.00`, which can be interpreted directly as the market's estimated probability of that outcome.
+
+The displayed price is typically the midpoint between the best bid and best ask. When the bid-ask spread is too wide, the most recent trade price may be used instead.
+
+| Price | Implied Probability |
+| --- | --- |
+| `$0.25` | 25% |
+| `$0.50` | 50% |
+| `$0.75` | 75% |
+
+### Example
+
+If the best bid for Yes is `$0.34` and the best ask is `$0.40`:
+
+```text
+Displayed Price = ($0.34 + $0.40) / 2 = $0.37
+Implied probability ≈ 37%
+```
+
+## Order Book
+
+The order book contains all currently unfilled buy and sell orders for the Market:
+
+| Side | Description |
+| --- | --- |
+| Bids | Buy orders showing the prices buyers are willing to pay, with the highest bid first |
+| Asks | Sell orders showing the prices sellers are willing to accept, with the lowest ask first |
+
+The difference between the best bid and best ask is called the Spread. A narrower spread generally indicates better market liquidity.
+
+## Order Types
+
+### Market-Style Trading
+
+When you want immediate execution, you can submit an order that directly consumes available order-book liquidity:
+
+- Buy: begins filling against the lowest available ask.
+- Sell: begins filling against the highest available bid.
+
+### Limit Orders
+
+A limit order only executes at the specified price or a better price:
+
+- the unfilled portion remains on the order book;
+- a single order can be partially filled multiple times;
+- the unfilled remainder can be cancelled when cancellation is allowed.
+
+## Matching and Settlement
+
+The Prediction Markets CLOB uses a hybrid architecture:
+
+1. **Off-chain matching**: the matching service matches orders whose prices and quantities satisfy execution conditions.
+2. **On-chain settlement**: matched trades settle asset delivery through smart contracts.
+
+This model combines the efficiency of off-chain matching with the verifiability of on-chain asset settlement.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Order Lifecycle" icon="arrows-rotate" href="/en/event-markets/order-lifecycle">
+    Learn the complete flow from order submission and matching through settlement.
+  </Card>
+
+  <Card title="Positions & Outcome Tokens" icon="coins" href="/en/event-markets/positions-tokens">
+    Learn how outcome tokens represent user positions.
+  </Card>
+</CardGroup>

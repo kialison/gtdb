@@ -1,13 +1,106 @@
 ---
 title: "Order Lifecycle"
-description: "Order states from submission to completion in Prediction Markets."
+sidebarTitle: "Order Lifecycle"
+description: "Understand the complete order flow from creation and submission through matching and on-chain settlement, including order and trade states."
 ---
 
-An order can move through several states:
+The Prediction Markets CLOB uses a hybrid model: order matching happens off-chain for efficiency, while final asset delivery is executed on-chain. This page explains the complete lifecycle from order creation through settlement.
 
-1. Submitted
-2. Accepted
-3. Open or partially filled
-4. Filled, cancelled, or expired
+![Image](/images/image-4.png "Image")
 
-Applications should use returned order IDs and query or real-time updates to confirm final state. Do not assume that submission alone means execution.
+## How Orders Work
+
+At the protocol level, all CLOB orders can be treated as limit orders. What is commonly called a "market order" is effectively a sufficiently aggressive limit order that immediately crosses the order book.
+
+Matching follows price priority, then time priority: better prices execute first, and at the same price, earlier orders execute first.
+
+## Time-in-Force Options
+
+| Type | Behavior | Typical Use |
+| --- | --- | --- |
+| `GTC` | Good-Til-Cancelled; remains active until filled or manually cancelled | Resting orders, market making |
+| `GTD` | Good-Til-Date; expires automatically at the specified time | Time-limited quotes |
+| `FOK` | Fill-Or-Kill; must fill completely immediately or be fully cancelled | All-or-nothing execution |
+| `FAK` | Fill-And-Kill; immediately fills what is available and cancels the rest | Fast liquidity taking |
+
+### Post Only
+
+A Post Only order is guaranteed to act only as a Maker. If it would immediately execute against an existing order when submitted, it is rejected rather than consuming liquidity.
+
+## Full Lifecycle
+
+<Steps>
+  <Step title="Create and Sign">
+    Construct the order parameters, including Token ID, side (`BUY` / `SELL`), price, quantity, expiration time, and timestamp, then sign the order with the trading wallet.
+  </Step>
+  <Step title="Submit to the CLOB">
+    The CLOB verifies the signature, balance, and allowance, and validates trading rules such as tick size and minimum order size. Invalid orders do not enter the order book.
+  </Step>
+  <Step title="Match or Rest on the Order Book">
+    Orders that can execute immediately are matched against existing liquidity. Orders that cannot execute immediately remain on the order book until filled, cancelled, or expired. Some markets may apply a Taker matching delay to protect Makers.
+  </Step>
+  <Step title="Settle On-Chain">
+    After matching, the settlement contract validates the orders and atomically transfers outcome tokens and USDT.
+  </Step>
+  <Step title="Confirm Completion">
+    After the on-chain transaction is confirmed, account balances, trade records, and positions are updated.
+  </Step>
+</Steps>
+
+## Order States
+
+| State | Meaning |
+| --- | --- |
+| `live` | The order is on the order book and can continue matching |
+| `matched` | The order has matched with a counterparty and is entering settlement |
+| `delayed` | The order is within a Taker delay window |
+| `unmatched` | The order left the order book without execution, for example due to cancellation or expiry |
+
+## Trade States
+
+| State | Meaning | Final State |
+| --- | --- | --- |
+| `MATCHED` | Off-chain matching confirmed; awaiting on-chain settlement | No |
+| `MINED` | Settlement transaction has been mined | No |
+| `CONFIRMED` | Settlement is final and balances are updated | Yes |
+| `RETRYING` | On-chain submission failed and the system is retrying | No |
+| `FAILED` | Settlement ultimately failed | Yes |
+
+## Maker and Taker
+
+| Role | Description |
+| --- | --- |
+| Maker | Places resting orders and provides liquidity |
+| Taker | Crosses the order book and consumes existing liquidity |
+
+A Taker's actual execution price is the resting counterparty price on the order book. For example, if a buy order has a limit of `$0.55` and matches a sell order at `$0.52`, the execution price is `$0.52`.
+
+## Cancelling Orders
+
+Unfilled orders can usually be cancelled. Any portion that has already matched cannot be reversed; even if the remaining quantity is cancelled, the matched portion continues through settlement.
+
+## Order Requirements
+
+| Requirement | Description |
+| --- | --- |
+| Balance | Buying requires sufficient USDT; selling requires sufficient outcome tokens |
+| Allowance | The relevant contract must be authorized to transfer the asset |
+| API credentials | Private trading endpoints require valid authentication credentials |
+
+The maximum size available for a new order must subtract the balance already reserved by existing open orders:
+
+```text
+maxOrderSize = balance − ∑(openOrderSize − filledAmount)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Market Resolution" icon="flag-checkered" href="/en/event-markets/resolution">
+    Learn how markets determine outcomes and how winning Tokens are redeemed.
+  </Card>
+
+  <Card title="Place Orders" icon="chart-line" href="/en/event-markets/place-orders">
+    View the trading API and order-placement flow.
+  </Card>
+</CardGroup>

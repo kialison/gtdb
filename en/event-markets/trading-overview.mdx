@@ -1,22 +1,42 @@
 ---
 title: "Trading Overview"
-description: "Trading flows available in Prediction Markets."
+sidebarTitle: "Overview"
+description: "Understand how orders, settlement, and positions work together in Prediction Markets."
 ---
 
-The trading flow combines market discovery, order-book data, order entry, order management, trades, positions, and settlement.
+Prediction Markets trading connects signed CLOB orders with on-chain settlement. Users select an Outcome Token, authorize and sign the order, and submit it to the order book. After matching, settlement transfers USDT and outcome tokens between accounts.
 
-## Main flow
+## Trading Flow
 
-```text
-Discover market
-   ↓
-Review outcomes and order book
-   ↓
-Place order
-   ↓
-Track order and trades
-   ↓
-Track position
-   ↓
-Resolution and settlement
-```
+Account initialization usually only needs to be completed once. For subsequent orders, users repeat the process of selecting an outcome, placing an order, and managing that order.
+
+<Steps>
+  <Step title="Prepare the Account">
+    Connect the signing wallet to the account, prepare trading funds, and complete the required contract allowances.
+  </Step>
+  <Step title="Select an Outcome">
+    Choose the Outcome Token to buy or sell and confirm the Market's current trading restrictions.
+  </Step>
+  <Step title="Place the Order">
+    Set the price and quantity, sign the order, and submit it to the CLOB.
+  </Step>
+  <Step title="Manage the Order">
+    Monitor fills and cancel any remaining unfilled quantity. After matching, the trade settles on-chain, and account balances and positions are then updated.
+  </Step>
+</Steps>
+
+## Start Trading
+
+<CardGroup cols={3}>
+  <Card title="First Order" icon="circle-play" href="/en/event-markets/place-first-order">
+    Complete your first authenticated Prediction Markets trade.
+  </Card>
+
+  <Card title="Place Orders" icon="arrow-up-right" href="/en/event-markets/place-orders">
+    Review order request parameters and trading restrictions.
+  </Card>
+
+  <Card title="Order Lifecycle" icon="arrows-rotate" href="/en/event-markets/order-lifecycle">
+    Learn how an order changes state from submission through fill, cancellation, or expiry.
+  </Card>
+</CardGroup>

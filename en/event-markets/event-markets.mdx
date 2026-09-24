@@ -1,21 +1,60 @@
 ---
 title: "Prediction Markets"
-description: "Understand how Prediction Markets work on DexBuilder."
+sidebarTitle: "Event Markets"
+description: "Learn how Prediction Markets work: users trade peer-to-peer on real-world event outcomes, and prices reflect the market's estimate of outcome probabilities."
 ---
 
-## Product model
+Prediction Markets allow users to trade on the outcomes of real-world events. Users do not bet against the platform; instead, they buy and sell outcome shares with other users in an open peer-to-peer market. Prices reflect the market participants' collective estimate of the probability that an outcome will occur.
 
-A prediction market represents a defined event or outcome set. Each market exposes clear rules, available outcomes, trading state, important times, and the conditions used for final settlement.
+## Price as Probability
 
-Users trade outcome tokens through the order book. Prices reflect the market's current view of each outcome.
+Each outcome share in a Prediction Market is priced between `0.00` and `1.00`. The price can be interpreted as the market's estimated probability of that outcome occurring.
 
-## Lifecycle
+For example, if a market's "Yes" share trades at `$0.65`, the market is currently estimating roughly a 65% probability that the event will occur.
 
-A typical lifecycle is:
+## Collateral and Outcome Tokens
 
-1. Market published
-2. Trading opens
-3. Orders and trades update the order book
-4. Trading closes when required
-5. The event is resolved
-6. Eligible positions are settled or claimed
+Prediction Markets use USDT as collateral. Each Yes / No outcome pair is fully collateralized:
+
+- `1 USDT` can correspond to 1 Yes share and 1 No share;
+- the winning outcome share can be redeemed for `$1.00`;
+- the losing outcome share becomes worthless.
+
+Outcome shares are represented using the [Gnosis Conditional Token Framework](https://docs.gnosis.io/conditionaltokens/) (ERC-1155), enabling on-chain trading and settlement.
+
+## Trading
+
+Prediction Markets use a peer-to-peer Central Limit Order Book (CLOB). Users trade directly with other users rather than with the platform as a counterparty.
+
+- If you believe the market is underestimating an outcome's probability, you can buy shares of that outcome.
+- If you believe the market is overestimating an outcome's probability, you can sell shares of that outcome.
+- Before final settlement, you can sell a position at any time to lock in profit or limit losses.
+
+| Action | When to Use It | Profitable When |
+| --- | --- | --- |
+| Buy Yes | You believe the current probability is too low | The event occurs |
+| Buy No | You believe the current probability is too high | The event does not occur |
+| Sell | Lock in profit or limit losses | Price moves in your favor |
+
+## Settlement
+
+After the event ends, the market confirms the result through the UMA Optimistic Oracle:
+
+1. A proposer submits the result and posts a bond.
+2. A challenge period begins, during which other participants can dispute the result.
+3. If a dispute occurs, the process can escalate to UMA voting.
+4. The final winning outcome token can be redeemed for `1 USDT`.
+
+This mechanism confirms market outcomes without requiring a single centralized adjudicator.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Trading Quickstart" icon="circle-play" href="/en/event-markets/place-first-order">
+    Prepare your account and place your first order.
+  </Card>
+
+  <Card title="Discover Markets" icon="compass" href="/en/event-markets/discover-markets">
+    Query currently available Prediction Markets on DexBuilder.
+  </Card>
+</CardGroup>

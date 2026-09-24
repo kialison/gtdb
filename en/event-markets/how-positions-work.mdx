@@ -1,8 +1,62 @@
 ---
 title: "How Positions Work"
-description: "Understand position state in Prediction Markets."
+sidebarTitle: "How Positions Work"
+description: "Understand Prediction Markets positions, outcome tokens, Position IDs, and redemption after market settlement."
 ---
 
-Positions represent the user's executed exposure to an outcome.
+A Prediction Markets position is fundamentally an outcome token. Each market outcome corresponds to an identifiable Token. Buying that Token creates a position, which can later be redeemed according to the final market result.
 
-Position state can change through additional buys, sells, partial exits, full exits, and final settlement. Applications should query the latest position state rather than calculating the authoritative balance only from local order history.
+## Outcome Tokens
+
+Prediction Markets use the Conditional Token Framework (CTF) to represent different outcomes. A binary market typically contains two outcomes, such as `Yes` and `No`.
+
+Each outcome token has a unique Position ID, which is also used as its on-chain Token ID. Most integrations do not need to calculate Position IDs themselves; they can use the `token_id` returned by the market API.
+
+## Position ID Generation
+
+The underlying Position ID calculation includes:
+
+1. calculating `conditionId` from the Oracle, Question ID, and number of outcomes;
+2. calculating the corresponding `collectionId` from `conditionId` and `indexSet`;
+3. calculating the final `positionId` from the collateral asset and `collectionId`.
+
+```solidity
+getConditionId(oracle, questionId, outcomeSlotCount)
+getCollectionId(parentCollectionId, conditionId, indexSet)
+getPositionId(collateralToken, collectionId)
+```
+
+For normal API integrations, these on-chain calculations are usually handled by the underlying system.
+
+## Position Quantity
+
+The account position API returns the current outcome-token quantity and distinguishes between:
+
+- total position quantity;
+- quantity locked by orders or the settlement process;
+- quantity currently available to sell or use for other operations;
+- average entry price;
+- current position value;
+- claimable amount after settlement.
+
+## Market Settlement
+
+After the market outcome is confirmed:
+
+- winning outcome tokens can be exchanged for the corresponding collateral asset according to the settlement rules;
+- losing outcome tokens become worthless;
+- account fields such as `settlement_status`, `won`, and `claimable_amount` are updated.
+
+## Redeeming Settled Positions
+
+Before redemption, confirm that:
+
+1. the Market has reached final settlement;
+2. the current account holds the corresponding outcome token;
+3. the position has a claimable amount.
+
+We recommend using the Prediction Markets account and Claim-related APIs for the redemption flow rather than having a normal API integration construct the underlying contract transactions itself.
+
+<Note>
+If you are using the DexBuilder API only to build a frontend or trading application, rely directly on the market's `token_id`, account positions, and Claim APIs. You do not need to implement CTF Position ID calculation yourself.
+</Note>

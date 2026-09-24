@@ -1,10 +1,99 @@
 ---
 title: "Market Resolution"
-description: "How Prediction Markets move from trading to final settlement."
+sidebarTitle: "Market Resolution"
+description: "Learn how Prediction Markets use the UMA Optimistic Oracle to confirm outcomes and how winning positions are redeemed."
 ---
 
-Resolution determines the final outcome of an event or market.
+Once an event outcome is known, the Market enters the resolution process. Resolution determines the final winning outcome so that the corresponding outcome token can be redeemed for `1 USDT` per share, while losing outcome tokens become worthless.
 
-Before trading, users should be able to review the resolution rules and source. After the event is resolved, DexBuilder updates the market state and the eligible outcome.
+Prediction Markets can use the UMA Optimistic Oracle for decentralized outcome confirmation. Any eligible participant can propose an outcome and can dispute a result they believe is incorrect.
 
-Applications should display the final result and use the account/claim flow for eligible settlement.
+![Image](/images/image-5.png "Image")
+
+## Resolution Rules
+
+Before trading begins, each Market should define its resolution rules, including:
+
+- **Resolution Source**: the data source used to determine the outcome, such as an official announcement or specified website;
+- **End Date**: when the time condition for resolution is satisfied;
+- **Edge Cases**: how exceptional, ambiguous, or special situations are handled.
+
+<Note>
+Read the complete resolution rules before trading. The market title is only a short summary of the question; the specific Resolution Rules determine how the market is actually settled.
+</Note>
+
+<Steps>
+  <Step title="Submit a Proposal">
+    The proposer selects the final outcome, posts a bond, and submits the Proposal to the UMA Oracle.
+
+    If the result is correct and no one disputes it, the proposer can recover the bond and receive the applicable reward.
+
+    <Warning>
+    Submitting an incorrect outcome or proposing too early can result in loss of the bond. Only submit a Proposal after confirming the result and understanding the resolution rules.
+    </Warning>
+  </Step>
+
+  <Step title="Challenge Period">
+    After the Proposal is submitted, a challenge period begins and other participants can dispute the result.
+
+    - **No challenge**: the Proposal is accepted and the Market resolves.
+    - **Challenge occurs**: another Proposal round begins; if disputes continue, the process can escalate to UMA DVM voting.
+
+    Common flows include:
+
+    1. No dispute: Proposal → Resolve.
+    2. One dispute: Proposal → Challenge → Second Proposal → Resolve.
+    3. Multiple disputes: further escalation to UMA voting for the final result.
+  </Step>
+
+  <Step title="Dispute">
+    Raising a dispute generally requires posting a Counter Bond corresponding to the proposer's bond. If the dispute escalates, the process can enter an evidence and discussion stage.
+  </Step>
+
+  <Step title="UMA Voting">
+    When a dispute reaches the DVM, UMA Token holders vote on the final result.
+
+    | Result | Handling |
+    | --- | --- |
+    | Proposal is correct | Original Proposal is accepted |
+    | Disputer is correct | Original Proposal is rejected and the result must be determined again |
+    | Too Early | The event has not yet met the resolution conditions |
+    | Unknown / 50-50 | Rare cases that cannot be determined clearly may use special settlement rules |
+  </Step>
+</Steps>
+
+## After Resolution
+
+Once the Market is resolved:
+
+- trading stops;
+- each winning outcome token can be redeemed for `1 USDT`;
+- each losing outcome token is worth `0`.
+
+### Redeeming Outcome Tokens
+
+Users can burn winning ERC-1155 outcome tokens through the relevant CTF / Collateral Adapter and receive the released USDT collateral.
+
+## Resolution Timing
+
+Actual resolution time depends on whether disputes occur:
+
+| Stage | Typical Duration |
+| --- | --- |
+| Challenge Period | About 2 hours |
+| Debate Period (if disputed) | About 24–48 hours |
+| UMA Voting (if escalated) | About 48 hours |
+
+Resolution is generally faster when no dispute occurs. With multiple dispute rounds, the full process may take several days.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Positions & Outcome Tokens" icon="coins" href="/en/event-markets/positions-tokens">
+    Learn how winning Tokens become redeemable positions.
+  </Card>
+
+  <Card title="Markets & Events" icon="chart-line" href="/en/event-markets/markets-events">
+    Review how Markets and Events are organized.
+  </Card>
+</CardGroup>
