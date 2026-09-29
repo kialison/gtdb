@@ -1,8 +1,104 @@
 ---
 title: "Market Details"
-description: "Read the complete definition of a prediction market."
+sidebarTitle: "Market Details"
+description: "Understand the structure, status, outcome tokens, and trading limits of a Prediction Market."
 ---
 
-Market detail responses should be used to display the current rules, outcomes, identifiers, status, and related event information.
+After selecting a Market through Discover Markets, use the Market Detail endpoint to read its full properties. This is public market data and does not require authentication.
 
-Refresh market details when a market changes state or approaches resolution.
+Production Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+## Query a Market
+
+By Market ID:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
+```
+
+By slug:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/slug/<market_slug>"
+```
+
+## Example Response
+
+```json Example
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes", "cn": "是", "tw": "是" } },
+    { "token_id": "token-no", "outcome": { "en": "No", "cn": "否", "tw": "否" } }
+  ],
+  "best_bid": "0.48",
+  "best_ask": "0.52",
+  "last_trade_price": "0.50",
+  "min_order_size": "5",
+  "tick_size": "0.01",
+  "neg_risk": false,
+  "volume": "12500.50",
+  "volume_24hr": "850.25",
+  "resolution_source": "https://example.com/source"
+}
+```
+
+## Field Reference
+
+| Field | Description |
+| --- | --- |
+| `market_id` | Unique Market identifier |
+| `event_id` | Parent Event ID |
+| `slug` | Market slug |
+| `question` | Multilingual question object |
+| `condition_id` | Settlement Condition ID |
+| `outcomes` | Outcome array; each item contains `token_id` and `outcome` |
+| `status` | Current Market status |
+| `closed` | Whether the Market is closed |
+| `accepting_orders` | Whether the Market currently accepts orders |
+| `enable_order_book` | Whether the order book is enabled |
+| `best_bid`, `best_ask` | Current best bid and ask |
+| `last_trade_price` | Latest trade price |
+| `min_order_size` | Minimum order size |
+| `tick_size` | Minimum price increment |
+| `neg_risk` | Whether Negative Risk settlement is used |
+| `start_date`, `end_date` | Market time fields, Unix seconds |
+| `resolved_at` | Resolution time after settlement |
+| `winning_outcome`, `winning_token_id` | Winning outcome and corresponding Token ID |
+| `tags` | Tags associated with the Market |
+
+## Using Outcome Tokens
+
+After obtaining a Token ID from `outcomes[].token_id`, you can call the price, Ticker, and order-book endpoints:
+
+```bash cURL
+TOKEN_ID="<token_id>"
+
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/order_book?depth=20"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/price"
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/$TOKEN_ID/ticker"
+```
+
+The API returns Token IDs directly in the `outcomes` array, so no additional parsing of JSON-string Token lists is required.
+
+## Query the Parent Event
+
+Use the returned `event_id` to query the parent Event:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events/<event_id>"
+```
+
+Public Market data does not require authentication. Private order, position, and account endpoints do require authentication.

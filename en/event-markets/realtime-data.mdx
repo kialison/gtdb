@@ -1,8 +1,234 @@
 ---
 title: "Real-Time Data"
-description: "Keep Prediction Markets interfaces synchronized in real time."
+sidebarTitle: "Real-Time Data"
+description: "Subscribe to real-time Market, sports, crypto, equity, and related data streams to reduce polling and keep Prediction Markets data synchronized."
 ---
 
-Use WebSocket for changing market and user state. REST remains useful for the initial snapshot and recovery after reconnects.
+Prediction Markets provide multiple real-time data streams so applications can update promptly when Market status, prices, or related data changes. For private order and trade updates, see Real-Time Order Updates.
 
-A resilient client should be able to rebuild state after losing messages or reconnecting.
+## Market Stream
+
+The Market Stream synchronizes order-book and trading-state changes.
+
+```text API
+wss://ws-subscriptions-clob.polymarket.com/ws/market
+```
+
+<Note>
+The Market WebSocket uses an application-level heartbeat. Send a text-frame `PING` every 10 seconds; the server returns `PONG`.
+</Note>
+
+After connecting, send a `market` subscription message:
+
+```json
+{
+  "assets_ids": ["<token_id>"],
+  "type": "market"
+}
+```
+
+### Standard Market Events
+
+Main events include:
+
+| `event_type` | Description |
+| --- | --- |
+| `book` | Full order-book snapshot |
+| `price_change` | Price and best bid/ask changes |
+| `last_trade_price` | Latest trade price |
+| `tick_size_change` | Minimum price-increment change |
+
+Order-book example:
+
+```json
+{
+  "event_type": "book",
+  "market": "0x747dc809...",
+  "asset_id": "1075058827...",
+  "timestamp": "1782753357257",
+  "hash": "0xabc123…",
+  "bids": [
+    { "price": "0.08", "size": "33343.4" }
+  ],
+  "asks": [
+    { "price": "0.09", "size": "163939.58" }
+  ]
+}
+```
+
+When `custom_feature_enabled` is enabled, additional events can be received, including best bid/ask, new Markets, and Market resolution:
+
+```json
+{
+  "assets_ids": ["<token_id>"],
+  "type": "market",
+  "custom_feature_enabled": true
+}
+```
+
+Tokens can be added or removed dynamically without rebuilding the connection:
+
+<Tabs>
+  <Tab title="Subscribe">
+    ```json
+    {
+      "assets_ids": ["<new_token_id>"],
+      "operation": "subscribe"
+    }
+    ```
+  </Tab>
+  <Tab title="Unsubscribe">
+    ```json
+    {
+      "assets_ids": ["<token_id>"],
+      "operation": "unsubscribe"
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Sports Stream
+
+The sports real-time stream synchronizes game state, scores, periods, and completion status.
+
+```text API
+wss://sports-api.polymarket.com/ws
+```
+
+<Note>
+The server sends text `ping` messages every 5 seconds. The client should reply with `pong` within 10 seconds.
+</Note>
+
+No subscription message is required after the connection succeeds; the server directly pushes game updates.
+
+```json
+{
+  "gameId": "5127839",
+  "leagueAbbreviation": "NBA",
+  "homeTeam": "Los Angeles Lakers",
+  "awayTeam": "Boston Celtics",
+  "status": "InProgress",
+  "live": true,
+  "ended": false,
+  "score": "98-94",
+  "period": "Q4",
+  "elapsed": "05:12"
+}
+```
+
+<Warning>
+Sports data is for informational display only. It may be delayed, missing, or incorrect and should not be used as the sole basis for trading decisions.
+</Warning>
+
+### Common Game Phases
+
+| Value | Meaning |
+| --- | --- |
+| `1H`, `2H` | First half / second half |
+| `1Q`–`4Q` | Quarters 1–4 |
+| `HT` | Halftime |
+| `FT` | End of regulation |
+| `FT OT` | End after overtime |
+| `FT NR` | Ended with no result |
+
+`status` values vary by sport and should be handled according to the server response, for example `Scheduled`, `InProgress`, `Final`, `Postponed`, and `Canceled`.
+
+## RTDS Real-Time Data Service
+
+RTDS (Real-Time Data Service) provides reference prices and other data through a unified real-time connection.
+
+```text API
+wss://ws-live-data.polymarket.com
+```
+
+RTDS uses an application-level heartbeat. Send `PING` every 5 seconds to keep the connection alive.
+
+### Crypto Prices
+
+Different data sources use different symbol formats:
+
+| Source | Example |
+| --- | --- |
+| Binance | `btcusdt`, `ethusdt`, `solusdt`, `xrpusdt` |
+| Chainlink | `btc/usd`, `eth/usd`, `sol/usd`, `xrp/usd` |
+
+Subscription example:
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "crypto_prices",
+      "type": "update",
+      "filters": "btcusdt,ethusdt"
+    },
+    {
+      "topic": "crypto_prices_chainlink",
+      "type": "*",
+      "filters": "[{\"symbol\":\"eth/usd\"}]"
+    }
+  ]
+}
+```
+
+Example response:
+
+```json
+{
+  "topic": "crypto_prices",
+  "type": "update",
+  "timestamp": 1782753357257,
+  "payload": {
+    "symbol": "btcusdt",
+    "timestamp": 1782753357213,
+    "value": 67334.5
+  }
+}
+```
+
+### Equities and Other Asset Prices
+
+`equity_prices` can provide reference prices for equities, ETFs, FX, precious metals, and commodities based on Pyth Network.
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "equity_prices",
+      "type": "*",
+      "filters": "[{\"symbol\":\"AAPL\"}]"
+    }
+  ]
+}
+```
+
+Price events may provide both `value` and `full_accuracy_value`. When `full_accuracy_value` is present, prefer that string to avoid precision loss.
+
+```json
+{
+  "topic": "equity_prices",
+  "type": "update",
+  "timestamp": 1782753357257,
+  "payload": {
+    "symbol": "aapl",
+    "timestamp": 1782753357213,
+    "value": 189.42,
+    "full_accuracy_value": "189.4217",
+    "received_at": 1782753357220,
+    "is_earliest_forward": false
+  }
+}
+```
+
+After subscribing to a symbol, the service may first send a historical Snapshot and then continue with real-time updates. Integrations can use the Snapshot to initialize local state.
+
+## Connection Recovery Recommendations
+
+After a real-time connection is interrupted:
+
+1. reconnect with a backoff strategy;
+2. restore all subscriptions;
+3. refresh a complete snapshot through REST API for workflows that require authoritative state;
+4. deduplicate replayed or duplicate messages using business IDs and timestamps.

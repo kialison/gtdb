@@ -1,8 +1,198 @@
 ---
 title: "Discover Markets"
-description: "Find events and markets available in Prediction Markets."
+sidebarTitle: "Discover Markets"
+description: "Query public Events, Markets, and Tags through the Prediction API, with support for ID, slug, filters, and cursor pagination."
 ---
 
-Start with the event and market list endpoints. Filter by identifiers, slugs, tags, status, or other supported query parameters.
+This page explains how to find and filter public Events and Markets. Market discovery and public market-data endpoints do not require authentication.
 
-Store stable IDs returned by the API rather than relying only on display titles.
+Production API Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+Unless otherwise specified, time fields in Event and Market responses use Unix timestamps in seconds. Text fields such as `title`, `question`, `outcome`, and Tag `label` are returned as multilingual objects; the languages actually present depend on the source data.
+
+## Events
+
+An Event groups one or more related Markets.
+
+### Get an Event by ID
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events/<event_id>"
+```
+
+### Get an Event by slug
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events/slug/<event_slug>"
+```
+
+Common Event detail fields:
+
+| Field | Description |
+| --- | --- |
+| `event_id` | Unique Event identifier |
+| `slug` | URL-friendly Event identifier |
+| `title` | Multilingual Event title object |
+| `description` | Multilingual Event description object |
+| `markets` | Market summaries under the Event |
+| `markets_has_more` | Whether more embedded Market data is available |
+| `active`, `closed` | Event lifecycle state |
+| `start_date`, `start_time`, `end_date`, `closed_time` | Event time fields |
+| `volume` | Event trading volume, returned as a decimal string |
+| `tags` | Tag summaries |
+
+```json Example
+{
+  "event_id": "event-123",
+  "slug": "example-event",
+  "title": { "en": "Example event" },
+  "active": true,
+  "closed": false,
+  "markets": [],
+  "markets_has_more": false
+}
+```
+
+### List Events
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&active=true&closed=false&sort=start_date&ascending=true"
+```
+
+Main supported query parameters:
+
+| Parameter | Description |
+| --- | --- |
+| `limit` | Number of results, from 1–100 |
+| `cursor` | The `next_cursor` returned by the previous page |
+| `sort` | `start_date`, `start_time`, `end_date`, or `closed_time` |
+| `ascending` | Whether to sort ascending |
+| `event_id` | Filter by Event ID |
+| `slug` | Filter by Event slug |
+| `tag_slug` | Filter by Tag slug |
+| `active`, `closed` | Filter by lifecycle state |
+| `start_date_min`, `start_date_max` | Start-time range, Unix milliseconds |
+| `end_date_min`, `end_date_max` | End-time range, Unix milliseconds |
+
+Response:
+
+```json Example
+{
+  "items": [
+    {
+      "event_id": "event-123",
+      "slug": "example-event",
+      "title": { "en": "Example event" },
+      "active": true,
+      "closed": false,
+      "volume": "12500.50",
+      "tags": [
+        { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+      ]
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+When `next_cursor` is non-empty, pass it unchanged as `cursor` in the next request:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/events?limit=20&cursor=<next_cursor>"
+```
+
+## Markets
+
+A Market is the actual tradable question. Each Market contains one or more Outcome Tokens.
+
+### Get by Market ID
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
+```
+
+### Get by slug
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/slug/<market_slug>"
+```
+
+The `outcomes` array in Market details directly returns the `token_id` values required by order-book and price endpoints.
+
+| Field | Description |
+| --- | --- |
+| `market_id` | Unique Market identifier |
+| `event_id` | Parent Event ID |
+| `slug` | Market slug |
+| `question` | Multilingual market question |
+| `condition_id` | Condition ID |
+| `outcomes` | Outcome list containing `token_id` and multilingual `outcome` |
+| `status`, `closed` | Market state |
+| `accepting_orders` | Whether the Market currently accepts orders |
+| `enable_order_book` | Whether the order book is enabled |
+| `best_bid`, `best_ask`, `last_trade_price` | Current market and latest-trade summary |
+| `min_order_size`, `tick_size`, `neg_risk` | Trading limits and Negative Risk flag |
+| `start_date`, `end_date`, `resolved_at` | Lifecycle times |
+| `winning_outcome`, `winning_token_id` | Winning result after resolution |
+
+```json Example
+{
+  "market_id": "market-123",
+  "event_id": "event-123",
+  "slug": "example-market",
+  "question": { "en": "Will the outcome occur?" },
+  "condition_id": "0xabc...",
+  "status": "active",
+  "closed": false,
+  "accepting_orders": true,
+  "enable_order_book": true,
+  "outcomes": [
+    { "token_id": "token-yes", "outcome": { "en": "Yes" } },
+    { "token_id": "token-no", "outcome": { "en": "No" } }
+  ]
+}
+```
+
+### List Markets
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets?limit=20&active=true&closed=false&tag_slug=sports"
+```
+
+Main parameters:
+
+| Parameter | Description |
+| --- | --- |
+| `limit` | Number of results, from 1–100 |
+| `cursor` | The `next_cursor` returned by the previous page |
+| `market_id` | Market ID |
+| `event_id` | Parent Event ID |
+| `slug` | Market slug |
+| `condition_id` | Condition ID |
+| `tag_slug` | Tag slug of the parent Event |
+| `active`, `closed` | Market lifecycle state |
+
+## Tags
+
+Tags can be used to build category filters:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/tags?limit=20&cursor=<cursor>"
+```
+
+```json
+{
+  "items": [
+    { "tag_id": "sports", "slug": "sports", "label": { "en": "Sports" } }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+## Current API Scope
+
+The current Prediction API provides Events, Markets, Tags, public market trades, and Token market-data capabilities. Third-party-specific endpoints that are not defined in the DexBuilder API contract should not be treated as formal integration dependencies.
