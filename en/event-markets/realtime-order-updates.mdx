@@ -1,19 +1,20 @@
 ---
 title: "Real-Time Order Updates"
-description: "Track Prediction Markets order changes through real-time data."
+sidebarTitle: "Real-Time Order Updates"
+description: "Receive real-time order, trade, position, and settlement-state changes through private WebSocket channels."
 ---
 
-Use the private `pred.orders` and `pred.usertrades` channels to track order lifecycle and fills. Use `pred.positions` and `pred.settlements` for account state changes.
+Use private `pred.orders` and `pred.usertrades` channels to track the order lifecycle and fills, and use `pred.positions` and `pred.settlements` to track account state.
 
-## Endpoint
+## Connection
 
 ```text
 wss://broker.dexbuilder.com/ws/dex-builder/prediction
 ```
 
-## Subscription
+## Subscribe
 
-Authenticate the subscription with an API Key signature:
+Use API Key signature authentication:
 
 ```json
 {
@@ -32,16 +33,16 @@ Authenticate the subscription with an API Key signature:
 }
 ```
 
-## Delivery
+## Update Payloads
 
-Order events include identifiers, side, price, quantities, status, and timestamps. User-trade events include the trade, order, role, fee rate, execution price, quantity, and confirmation status. Position events include quantity, average price, settlement status, available quantity, locked quantity, and claimable amount. Mark-price fields are intentionally not documented.
+Order updates include identifiers, side, price, quantity, status, and timestamps. User trade updates include trade and order identifiers, role, fee rate, execution price, size, and confirmation status. Position updates include quantity, average price, settlement status, available quantity, locked quantity, and claimable amount. This documentation does not define mark-price fields.
 
-## Recovery
+## State Recovery
 
-WebSocket delivery is event-driven and is not a replacement for REST reads. After connecting or reconnecting:
+WebSocket provides event updates and does not replace REST queries. After connecting or reconnecting:
 
 1. Subscribe to the required private channels.
-2. Query the corresponding REST endpoints for current orders, trades, positions, and account state.
-3. Apply subsequent WebSocket updates using the identifiers and timestamps.
+2. Query current orders, trades, positions, and account state through the corresponding REST endpoints.
+3. Apply subsequent WebSocket updates using identifiers and timestamps.
 
-Do not expose internal user headers or broker account identifiers in client requests.
+Do not expose internal user Headers or broker account identifiers in client requests.

@@ -1,8 +1,92 @@
 ---
 title: "Place Orders"
-description: "Submit orders in Prediction Markets."
+sidebarTitle: "Place Orders"
+description: "Create private Prediction Markets orders through the Prediction API."
 ---
 
-Use the authenticated order endpoint to submit an order.
+After confirming that the Market currently accepts orders, you can submit a trade for a specific Outcome Token. Public market data does not require authentication; placing an order is a private operation and requires authentication.
 
-Provide the required outcome token, side, size or cost, price when applicable, order type, and optional client order ID. Preserve the returned order identifier for subsequent status queries.
+Production Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+## 1. Read Market Trading Limits
+
+First query the Market and select the Token to trade from `outcomes[].token_id`:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/markets/<market_id>"
+```
+
+Then read the public order book:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/tokens/<token_id>/order_book?depth=20"
+```
+
+Before submitting an order, validate quantity and price against `min_order_size` and `tick_size` from the response.
+
+## 2. Submit an Order
+
+```bash cURL
+curl -X POST "https://api.dexbuilder.com/api/v4/prediction/orders" \
+  -H "Content-Type: application/json" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data '{
+    "token_id": "<token_id>",
+    "side": "BUY",
+    "price": "0.52",
+    "size": "10",
+    "total_cost": "5.20",
+    "order_type": "LIMIT",
+    "order_mode": "GTC",
+    "client_order_id": "client-order-001",
+    "post_only": false,
+    "sell_all": false,
+    "expire_time": 0
+  }'
+```
+
+<Note>
+The authentication Header above only indicates that the endpoint requires authentication. Use the official public authentication scheme for actual integration. Do not use internal gateway identity Headers as client authentication parameters.
+</Note>
+
+## Request Fields
+
+| Field | Description |
+| --- | --- |
+| `token_id` | Outcome Token to trade |
+| `side` | Order side, for example `BUY` / `SELL` |
+| `price` | Limit price, as a decimal string |
+| `size` | Order size, as a decimal string |
+| `total_cost` | Total order cost used by some order modes |
+| `order_type` | Order type defined by the trading service |
+| `order_mode` | Time-in-force / execution mode |
+| `client_order_id` | Optional client idempotency / tracking ID |
+| `post_only` | Whether the order should only provide liquidity as Maker |
+| `sell_all` | Whether to use the full available position when selling |
+| `expire_time` | Expiration time when applicable, Unix seconds |
+
+## Accepted Response
+
+```json
+{
+  "order_id": "order-123",
+  "client_order_id": "client-order-001",
+  "status": "ACCEPTED",
+  "created_at": 1782753357
+}
+```
+
+`ACCEPTED` only means the order request has been accepted by the system; it does not mean the order has been fully filled. Read the actual status through the order query endpoint.
+
+## Pre-Order Checks
+
+- The Market must have `accepting_orders: true`.
+- `token_id` should come from the Market's `outcomes` array.
+- `size` must satisfy `min_order_size`.
+- `price` must conform to `tick_size`.
+- Prices, quantities, and amounts should always be represented as strings to avoid floating-point precision issues.
+- Private requests must use the official authentication scheme.

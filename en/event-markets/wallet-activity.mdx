@@ -1,8 +1,76 @@
 ---
-title: "Wallet Activity"
-description: "Track assets, account-book entries, trades, and claims."
+title: "Account Activity"
+sidebarTitle: "Account Activity"
+description: "Query Prediction Markets positions, trades, and related activity for the currently authenticated account."
 ---
 
-Account APIs expose assets, account-book records, personal trades, fees, and claim state.
+The Prediction Markets API provides positions and trade records for the currently authenticated account. These are private endpoints and require authentication.
 
-Use these records to build the user's activity history and reconcile trading and settlement flows.
+Production Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+## List Positions
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/prediction/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+Common response fields include:
+
+| Field | Description |
+| --- | --- |
+| `position_id` | Position ID |
+| `event_id` | Event ID |
+| `token_id` | Outcome Token ID |
+| `outcome` | Corresponding outcome |
+| `size` | Total position size |
+| `available_size` | Available quantity |
+| `locked_size` | Locked quantity |
+| `avg_open_price` | Average entry price |
+| `position_value` | Current position value |
+| `settlement_status` | Settlement status |
+| `won` | Whether the position won after market resolution |
+| `updated_at` | Last update time |
+
+Use the returned `next_cursor` as `cursor` for the next page.
+
+## Get a Position
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/prediction/positions/<position_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+## List User Trades
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/prediction/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+User trade records typically include fields such as `trade_id`, `order_id`, `condition_id`, `token_id`, `price`, `size`, `side`, `role`, and `fee_rate`.
+
+## Query Scope
+
+The current endpoints primarily provide data for the authenticated account, including:
+
+- positions;
+- user trades;
+- orders;
+- account assets and account-book records;
+- settlement and claim records.
+
+<Note>
+Account endpoints query data for the currently authenticated user. They should not be interpreted as public on-chain query endpoints for arbitrary wallet addresses.
+</Note>
