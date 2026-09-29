@@ -85,6 +85,27 @@
                       "zh/event-markets/how-positions-work",
                       "zh/event-markets/fees"
                     ]
+                  },
+                  {
+                    "group": "行情与市场数据",
+                    "pages": [
+                      "zh/event-markets/market-data-overview",
+                      "zh/event-markets/discover-markets",
+                      "zh/event-markets/market-details",
+                      "zh/event-markets/market-prices-orderbooks",
+                      "zh/event-markets/analytics",
+                      "zh/event-markets/realtime-data",
+                      "zh/event-markets/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易与账户",
+                    "pages": [
+                      "zh/event-markets/place-orders",
+                      "zh/event-markets/manage-orders",
+                      "zh/event-markets/realtime-order-updates",
+                      "zh/event-markets/wallet-activity"
+                    ]
                   }
                 ]
               },
@@ -116,6 +137,27 @@
                       "zh/event-contracts/trading-overview",
                       "zh/event-contracts/how-positions-work",
                       "zh/event-contracts/fees"
+                    ]
+                  },
+                  {
+                    "group": "行情与市场数据",
+                    "pages": [
+                      "zh/event-contracts/market-data-overview",
+                      "zh/event-contracts/discover-markets",
+                      "zh/event-contracts/market-details",
+                      "zh/event-contracts/market-prices-orderbooks",
+                      "zh/event-contracts/analytics",
+                      "zh/event-contracts/realtime-data",
+                      "zh/event-contracts/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易与账户",
+                    "pages": [
+                      "zh/event-contracts/place-orders",
+                      "zh/event-contracts/manage-orders",
+                      "zh/event-contracts/realtime-order-updates",
+                      "zh/event-contracts/wallet-activity"
                     ]
                   }
                 ]
@@ -312,27 +354,6 @@
                           "zh/event-markets/websocket/private-channels",
                           "zh/event-markets/websocket/authentication"
                         ]
-                      },
-                      {
-                        "group": "行情与市场数据",
-                        "pages": [
-                          "zh/event-markets/market-data-overview",
-                          "zh/event-markets/discover-markets",
-                          "zh/event-markets/market-details",
-                          "zh/event-markets/market-prices-orderbooks",
-                          "zh/event-markets/analytics",
-                          "zh/event-markets/realtime-data",
-                          "zh/event-markets/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "交易与账户",
-                        "pages": [
-                          "zh/event-markets/place-orders",
-                          "zh/event-markets/manage-orders",
-                          "zh/event-markets/realtime-order-updates",
-                          "zh/event-markets/wallet-activity"
-                        ]
                       }
                     ]
                   }
@@ -391,27 +412,6 @@
                           "zh/event-contracts/websocket/public-channels",
                           "zh/event-contracts/websocket/private-channels",
                           "zh/event-contracts/websocket/authentication"
-                        ]
-                      },
-                      {
-                        "group": "行情与市场数据",
-                        "pages": [
-                          "zh/event-contracts/market-data-overview",
-                          "zh/event-contracts/discover-markets",
-                          "zh/event-contracts/market-details",
-                          "zh/event-contracts/market-prices-orderbooks",
-                          "zh/event-contracts/analytics",
-                          "zh/event-contracts/realtime-data",
-                          "zh/event-contracts/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "交易与账户",
-                        "pages": [
-                          "zh/event-contracts/place-orders",
-                          "zh/event-contracts/manage-orders",
-                          "zh/event-contracts/realtime-order-updates",
-                          "zh/event-contracts/wallet-activity"
                         ]
                       }
                     ]
@@ -498,6 +498,27 @@
                       "en/event-markets/how-positions-work",
                       "en/event-markets/fees"
                     ]
+                  },
+                  {
+                    "group": "Market Data",
+                    "pages": [
+                      "en/event-markets/market-data-overview",
+                      "en/event-markets/discover-markets",
+                      "en/event-markets/market-details",
+                      "en/event-markets/market-prices-orderbooks",
+                      "en/event-markets/analytics",
+                      "en/event-markets/realtime-data",
+                      "en/event-markets/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "Trading & Accounts",
+                    "pages": [
+                      "en/event-markets/place-orders",
+                      "en/event-markets/manage-orders",
+                      "en/event-markets/realtime-order-updates",
+                      "en/event-markets/wallet-activity"
+                    ]
                   }
                 ]
               },
@@ -529,6 +550,27 @@
                       "en/event-contracts/trading-overview",
                       "en/event-contracts/how-positions-work",
                       "en/event-contracts/fees"
+                    ]
+                  },
+                  {
+                    "group": "Market Data",
+                    "pages": [
+                      "en/event-contracts/market-data-overview",
+                      "en/event-contracts/discover-markets",
+                      "en/event-contracts/market-details",
+                      "en/event-contracts/market-prices-orderbooks",
+                      "en/event-contracts/analytics",
+                      "en/event-contracts/realtime-data",
+                      "en/event-contracts/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "Trading & Accounts",
+                    "pages": [
+                      "en/event-contracts/place-orders",
+                      "en/event-contracts/manage-orders",
+                      "en/event-contracts/realtime-order-updates",
+                      "en/event-contracts/wallet-activity"
                     ]
                   }
                 ]
@@ -725,27 +767,6 @@
                           "en/event-markets/websocket/private-channels",
                           "en/event-markets/websocket/authentication"
                         ]
-                      },
-                      {
-                        "group": "Market Data",
-                        "pages": [
-                          "en/event-markets/market-data-overview",
-                          "en/event-markets/discover-markets",
-                          "en/event-markets/market-details",
-                          "en/event-markets/market-prices-orderbooks",
-                          "en/event-markets/analytics",
-                          "en/event-markets/realtime-data",
-                          "en/event-markets/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "Trading & Accounts",
-                        "pages": [
-                          "en/event-markets/place-orders",
-                          "en/event-markets/manage-orders",
-                          "en/event-markets/realtime-order-updates",
-                          "en/event-markets/wallet-activity"
-                        ]
                       }
                     ]
                   }
@@ -804,27 +825,6 @@
                           "en/event-contracts/websocket/public-channels",
                           "en/event-contracts/websocket/private-channels",
                           "en/event-contracts/websocket/authentication"
-                        ]
-                      },
-                      {
-                        "group": "Market Data",
-                        "pages": [
-                          "en/event-contracts/market-data-overview",
-                          "en/event-contracts/discover-markets",
-                          "en/event-contracts/market-details",
-                          "en/event-contracts/market-prices-orderbooks",
-                          "en/event-contracts/analytics",
-                          "en/event-contracts/realtime-data",
-                          "en/event-contracts/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "Trading & Accounts",
-                        "pages": [
-                          "en/event-contracts/place-orders",
-                          "en/event-contracts/manage-orders",
-                          "en/event-contracts/realtime-order-updates",
-                          "en/event-contracts/wallet-activity"
                         ]
                       }
                     ]
@@ -911,6 +911,27 @@
                       "zh-TW/event-markets/how-positions-work",
                       "zh-TW/event-markets/fees"
                     ]
+                  },
+                  {
+                    "group": "行情與市場資料",
+                    "pages": [
+                      "zh-TW/event-markets/market-data-overview",
+                      "zh-TW/event-markets/discover-markets",
+                      "zh-TW/event-markets/market-details",
+                      "zh-TW/event-markets/market-prices-orderbooks",
+                      "zh-TW/event-markets/analytics",
+                      "zh-TW/event-markets/realtime-data",
+                      "zh-TW/event-markets/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易與帳戶",
+                    "pages": [
+                      "zh-TW/event-markets/place-orders",
+                      "zh-TW/event-markets/manage-orders",
+                      "zh-TW/event-markets/realtime-order-updates",
+                      "zh-TW/event-markets/wallet-activity"
+                    ]
                   }
                 ]
               },
@@ -942,6 +963,27 @@
                       "zh-TW/event-contracts/trading-overview",
                       "zh-TW/event-contracts/how-positions-work",
                       "zh-TW/event-contracts/fees"
+                    ]
+                  },
+                  {
+                    "group": "行情與市場資料",
+                    "pages": [
+                      "zh-TW/event-contracts/market-data-overview",
+                      "zh-TW/event-contracts/discover-markets",
+                      "zh-TW/event-contracts/market-details",
+                      "zh-TW/event-contracts/market-prices-orderbooks",
+                      "zh-TW/event-contracts/analytics",
+                      "zh-TW/event-contracts/realtime-data",
+                      "zh-TW/event-contracts/chainlink-twap"
+                    ]
+                  },
+                  {
+                    "group": "交易與帳戶",
+                    "pages": [
+                      "zh-TW/event-contracts/place-orders",
+                      "zh-TW/event-contracts/manage-orders",
+                      "zh-TW/event-contracts/realtime-order-updates",
+                      "zh-TW/event-contracts/wallet-activity"
                     ]
                   }
                 ]
@@ -1138,27 +1180,6 @@
                           "zh-TW/event-markets/websocket/private-channels",
                           "zh-TW/event-markets/websocket/authentication"
                         ]
-                      },
-                      {
-                        "group": "行情與市場資料",
-                        "pages": [
-                          "zh-TW/event-markets/market-data-overview",
-                          "zh-TW/event-markets/discover-markets",
-                          "zh-TW/event-markets/market-details",
-                          "zh-TW/event-markets/market-prices-orderbooks",
-                          "zh-TW/event-markets/analytics",
-                          "zh-TW/event-markets/realtime-data",
-                          "zh-TW/event-markets/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "交易與帳戶",
-                        "pages": [
-                          "zh-TW/event-markets/place-orders",
-                          "zh-TW/event-markets/manage-orders",
-                          "zh-TW/event-markets/realtime-order-updates",
-                          "zh-TW/event-markets/wallet-activity"
-                        ]
                       }
                     ]
                   }
@@ -1217,27 +1238,6 @@
                           "zh-TW/event-contracts/websocket/public-channels",
                           "zh-TW/event-contracts/websocket/private-channels",
                           "zh-TW/event-contracts/websocket/authentication"
-                        ]
-                      },
-                      {
-                        "group": "行情與市場資料",
-                        "pages": [
-                          "zh-TW/event-contracts/market-data-overview",
-                          "zh-TW/event-contracts/discover-markets",
-                          "zh-TW/event-contracts/market-details",
-                          "zh-TW/event-contracts/market-prices-orderbooks",
-                          "zh-TW/event-contracts/analytics",
-                          "zh-TW/event-contracts/realtime-data",
-                          "zh-TW/event-contracts/chainlink-twap"
-                        ]
-                      },
-                      {
-                        "group": "交易與帳戶",
-                        "pages": [
-                          "zh-TW/event-contracts/place-orders",
-                          "zh-TW/event-contracts/manage-orders",
-                          "zh-TW/event-contracts/realtime-order-updates",
-                          "zh-TW/event-contracts/wallet-activity"
                         ]
                       }
                     ]
