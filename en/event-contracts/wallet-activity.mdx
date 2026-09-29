@@ -1,8 +1,51 @@
 ---
-title: "Wallet Activity"
-description: "Track assets, account-book entries, trades, and claims."
+title: "Account Activity"
+sidebarTitle: "Account Activity"
+description: "Query Event Contracts positions, trades, and related activity for the currently authenticated account."
 ---
 
-Account APIs expose assets, account-book records, personal trades, fees, and claim state.
+The Event Contracts API provides positions and trade records for the currently authenticated account. These are private endpoints and require authentication.
 
-Use these records to build the user's activity history and reconcile trading and settlement flows.
+Production Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+## List Positions
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "event_id=<event_id>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "settlement_status=OPEN" \
+  --data-urlencode "limit=20"
+```
+
+Common response fields include `position_id`, `event_id`, `token_id`, `outcome`, `size`, `available_size`, `locked_size`, `avg_open_price`, `position_value`, `settlement_status`, `won`, and `updated_at`.
+
+## List Settled Positions
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/positions/settled" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+This endpoint returns settled Event Contracts positions.
+
+## List User Trades
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/usertrades" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "token_id=<token_id>" \
+  --data-urlencode "limit=20"
+```
+
+User trade records typically include `trade_id`, `order_id`, `condition_id`, `token_id`, `price`, `size`, `side`, `role`, and `fee_rate`.
+
+<Note>
+Account endpoints query data for the currently authenticated user. They should not be interpreted as public on-chain query endpoints for arbitrary wallet addresses.
+</Note>

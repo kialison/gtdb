@@ -1,8 +1,133 @@
 ---
-title: "Prices & Order Books"
-description: "Use price, ticker, order-book, and price-history data."
+title: "Prices & Order Book Data"
+sidebarTitle: "Prices & Order Book"
+description: "Query public order books, Token prices, Ticker data, batch prices, and price history through the Event Contracts API."
 ---
 
-Use the price endpoint for the latest token price, ticker for market summary data, and order book for bid/ask depth.
+Each Market Outcome is represented by a Token. First obtain `outcomes[].token_id` through Discover Markets or Market Details, then use the Token ID to query price and liquidity data.
 
-Historical price and candlestick endpoints can be used for charts and analytics.
+All endpoints on this page are public market-data endpoints and do not require authentication. Production Base URL:
+
+```text
+https://api.dexbuilder.com
+```
+
+## Order Book
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/order_book?depth=20"
+```
+
+`depth` is optional, defaults to 20, and supports a range of 1–100.
+
+```json Example
+{
+  "token_id": "token-yes",
+  "condition_id": "0xabc...",
+  "timestamp": 1782753357257,
+  "hash": "a1b2c3d4",
+  "bids": [
+    { "price": "0.48", "size": "100.00" }
+  ],
+  "asks": [
+    { "price": "0.52", "size": "80.00" }
+  ],
+  "last_trade_price": "0.50",
+  "min_order_size": "5",
+  "tick_size": "0.01",
+  "neg_risk": false
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `token_id` | Outcome Token ID |
+| `condition_id` | Market Condition ID |
+| `bids`, `asks` | Bid and ask depth; each level contains decimal-string `price` and `size` values |
+| `timestamp` | Snapshot time, Unix milliseconds |
+| `hash` | Order-book snapshot hash |
+| `last_trade_price` | Latest trade price |
+| `min_order_size`, `tick_size`, `neg_risk` | Trading limits and market mode |
+
+The current API does not provide a batch Order Book endpoint. If you need order books for multiple Tokens, request them separately.
+
+## Latest Token Price
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price"
+```
+
+```json
+{
+  "token_id": "token-yes",
+  "price": "0.50",
+  "side": "BUY",
+  "timestamp": 1782753357257
+}
+```
+
+If no usable trade record is available, `price` may be an empty string.
+
+## Token Ticker
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/ticker"
+```
+
+```json
+{
+  "token_id": "token-yes",
+  "last_price": "0.50",
+  "best_bid": "0.48",
+  "best_ask": "0.52",
+  "timestamp": 1782753357257
+}
+```
+
+If the data source cannot provide a reliable value, the corresponding field may be `null`.
+
+## Batch Token Prices
+
+Query comma-separated Token IDs. A single request supports up to 100 distinct Tokens:
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/prices?token_ids=token-yes,token-no"
+```
+
+```json
+{
+  "items": [
+    { "token_id": "token-yes", "price": "0.50", "timestamp": 1782753357257 },
+    { "token_id": "token-no", "price": "0.50", "timestamp": 1782753357257 }
+  ]
+}
+```
+
+Tokens that do not exist or are not currently visible are ignored. Returned items preserve the order of valid Tokens in the request.
+
+## Price History
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/tokens/<token_id>/price_history?interval=1h&from=1782666000000&to=1782752400000"
+```
+
+| Parameter | Description |
+| --- | --- |
+| `interval` | `5m`, `15m`, `1h`, `4h`, `1d` |
+| `from` | Start time, Unix milliseconds |
+| `to` | End time, Unix milliseconds |
+
+The maximum time range for one query is 14 days.
+
+```json
+{
+  "history": [
+    { "t": 1782666000, "p": 0.485 },
+    { "t": 1782669600, "p": 0.500 }
+  ]
+}
+```
+
+## Current API Capabilities
+
+Use the Order Book, Price, Ticker, Batch Price, and Price History endpoints documented on this page. Proprietary endpoints from third-party CLOB systems that are not included in the DexBuilder Event Contracts API contract are not part of the current formal capability scope.

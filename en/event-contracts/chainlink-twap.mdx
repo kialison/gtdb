@@ -1,8 +1,179 @@
 ---
-title: "Chainlink TWAP"
-description: "Reference-price and TWAP concepts used by supported markets."
+title: "Chainlink TWAP Prices"
+sidebarTitle: "Chainlink TWAP"
+description: "Retrieve 30-second and 60-second time-weighted average prices through Event Contracts RTDS or Chainlink Data Streams."
 ---
 
-Some markets can reference external oracle or TWAP data as part of their market definition or settlement logic.
+TWAP (Time-Weighted Average Price) represents an asset's time-weighted average price over a specified lookback window. This page covers 30-second and 60-second TWAPs calculated by Chainlink.
 
-Applications should present the configured source and rules from the market metadata rather than infer settlement logic independently.
+## Using RTDS
+
+For production, RTDS is the preferred way to consume Chainlink TWAPs. RTDS forwards TWAP updates calculated on Chainlink mainnet and does not require Chainlink credentials.
+
+Symbols use lowercase slash-separated format, for example `btc/usd`. If no symbol filter is provided, the client can receive all available pairs under that Topic.
+
+```text API
+wss://ws-live-data.polymarket.com
+```
+
+<Note>
+RTDS uses an application-level heartbeat. Send a text-frame `PING` every 5 seconds to keep the connection alive.
+</Note>
+
+Subscribe to 30-second and 60-second windows:
+
+```json
+{
+  "action": "subscribe",
+  "subscriptions": [
+    {
+      "topic": "crypto_prices_twap_thirty",
+      "type": "update",
+      "filters": "{\"symbol\":\"btc/usd\"}"
+    },
+    {
+      "topic": "crypto_prices_twap_sixty",
+      "type": "update",
+      "filters": "{\"symbol\":\"btc/usd\"}"
+    }
+  ]
+}
+```
+
+| Lookback Window | RTDS Topic |
+| --- | --- |
+| 30 seconds | `crypto_prices_twap_thirty` |
+| 60 seconds | `crypto_prices_twap_sixty` |
+
+`filters` uses a compact JSON string such as `{"symbol":"btc/usd"}`. If multiple symbols are required for the same window, you can omit `filters` and filter client-side using `payload.symbol`.
+
+```json
+{
+  "topic": "crypto_prices_twap_thirty",
+  "type": "update",
+  "timestamp": 1785178800123,
+  "payload": {
+    "symbol": "btc/usd",
+    "value": 65000.5,
+    "full_accuracy_value": "65000500000000000000000",
+    "timestamp": 1785178800009,
+    "window_s": 30
+  }
+}
+```
+
+`full_accuracy_value` is the exact E18 fixed-point value and should be divided by `10^18` using an integer or Decimal implementation. `value` is more suitable for display and is not recommended for high-precision business calculations.
+
+Use `payload.timestamp` as the Chainlink observation time; the outer `timestamp` is when the data was submitted to RTDS. After a connection interruption, reconnect and resubscribe.
+
+### Choosing a Window
+
+Each subscription selects either the 30-second or 60-second window. Subscribe to both if you need both windows.
+
+### Stream Behavior
+
+After subscribing, updates begin with the next event. No Snapshot, History, or post-disconnect Replay is provided.
+
+## Using Chainlink Data Streams Directly
+
+If you need direct access to Chainlink mainnet data, the latest Report, or the original signed Report, use Chainlink Data Streams.
+
+Find the `TWAP: 30s` or `TWAP: 60s` Feed for the desired asset in the [Chainlink Data Streams catalog](https://docs.chain.link/data-streams/crypto-streams), then copy its Feed ID.
+
+<Warning>
+Chainlink Client ID, Secret, and related credentials must remain in a trusted backend. Do not expose them in browser, H5, or mobile-client code.
+</Warning>
+
+### Install the SDK
+
+Node.js 20+, TypeScript 5.3+:
+
+```bash
+npm install --save-exact @chainlink/data-streams-sdk@1.2.1
+```
+
+Create the client:
+
+```typescript
+import {
+  createClient,
+  decodeReport,
+  type Report,
+} from "@chainlink/data-streams-sdk";
+
+const client = createClient({
+  apiKey: process.env.CHAINLINK_CLIENT_ID!,
+  userSecret: process.env.CHAINLINK_CLIENT_SECRET!,
+  endpoint: "https://api.dataengine.chain.link",
+  wsEndpoint: "wss://ws.dataengine.chain.link",
+  haMode: false,
+});
+```
+
+The SDK signs requests for authentication. The server clock should remain synchronized with the Chainlink service.
+
+### Feed ID and Window Mapping
+
+Reports do not directly include the business Symbol or window name. Integrations should maintain a Feed ID → Symbol / Window mapping and must not infer the window from update frequency.
+
+```typescript
+const feeds = new Map([
+  [process.env.CHAINLINK_TWAP_30S_FEED_ID!.toLowerCase(), { symbol: "btc/usd", windowSeconds: 30 }],
+  [process.env.CHAINLINK_TWAP_60S_FEED_ID!.toLowerCase(), { symbol: "btc/usd", windowSeconds: 60 }],
+]);
+```
+
+### Get the Latest Report
+
+```typescript
+const latestReports = await Promise.all(
+  [...feeds.keys()].map((feedID) => client.getLatestReport(feedID)),
+);
+```
+
+### Subscribe to Real-Time Updates
+
+```typescript
+const stream = client.createStream([...feeds.keys()]);
+
+stream.on("report", (report) => {
+  console.log(report);
+});
+
+stream.on("disconnected", () => {
+  console.warn("Chainlink stream disconnected");
+});
+
+stream.on("reconnecting", ({ attempt, delayMs }) => {
+  console.warn(`Reconnecting: attempt ${attempt} in ${delayMs}ms`);
+});
+
+stream.on("error", (error) => {
+  console.error("Chainlink stream error:", error);
+});
+
+await stream.connect();
+```
+
+The SDK handles authentication and reconnection automatically. The application should still monitor `error`, `disconnected`, and `reconnecting` states.
+
+## Reading a Chainlink Report
+
+TWAP Feeds use Chainlink Report Schema V2. `decodeReport()` parses the price fields in a report.
+
+| Field | Purpose |
+| --- | --- |
+| `report.feedID` | Map to the asset and 30s / 60s window |
+| `decoded.price` | Exact E18 price; store as `bigint` or Decimal String |
+| `report.validFromTimestamp` | Earliest valid time for the Report |
+| `report.observationsTimestamp` | Chainlink observation time |
+| `decoded.expiresAt` | Report expiration time |
+| `report.fullReport` | Original signed Report |
+
+`decodeReport()` parses fields but does not by itself perform DON signature verification. If the data is used for settlement or another high-trust workflow, follow Chainlink's official requirements for full verification.
+
+| REST URL | WebSocket URL |
+| --- | --- |
+| `https://api.dataengine.chain.link` | `wss://ws.dataengine.chain.link` |
+
+30 seconds and 60 seconds refer to TWAP lookback windows, not push frequency. Integrations should define their own data Freshness threshold and fallback strategy for interruptions.

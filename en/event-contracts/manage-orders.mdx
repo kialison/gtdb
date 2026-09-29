@@ -1,8 +1,98 @@
 ---
 title: "Manage Orders"
-description: "Query and cancel orders in Event Contracts."
+sidebarTitle: "Manage Orders"
+description: "Query and cancel private Event Contracts orders through the Event Contracts API."
 ---
 
-Use order-list and order-detail endpoints to retrieve current status. Eligible orders can be cancelled through the corresponding DELETE endpoint.
+Order queries and cancellations are private operations and require authentication. Production Base URL:
 
-Always confirm the returned state after cancellation because an order may have partially or fully executed before the cancellation was processed.
+```text
+https://api.dexbuilder.com
+```
+
+## List Orders
+
+```bash cURL
+curl -G "https://api.dexbuilder.com/api/v4/event_contracts/orders" \
+  -H "<authentication-header>: <authentication-value>" \
+  --data-urlencode "status=OPEN" \
+  --data-urlencode "condition_id=<condition_id>" \
+  --data-urlencode "limit=20"
+```
+
+Common filter parameters include `status`, `condition_id`, `event_id`, `order_id`, `client_order_id`, `from`, `to`, `sort_type`, `limit`, and `cursor`.
+
+`from` and `to` use Unix milliseconds. `sort_type` can sort by `created_at` or `updated_at`.
+
+Response:
+
+```json
+{
+  "items": [
+    {
+      "order_id": "order-123",
+      "client_order_id": "client-order-001",
+      "event_id": "event-123",
+      "condition_id": "0xabc...",
+      "token_id": "token-yes",
+      "outcome": "Yes",
+      "side": "BUY",
+      "price": "0.52",
+      "size": "10",
+      "size_matched": "4",
+      "size_left": "6",
+      "order_type": "LIMIT",
+      "order_mode": "GTC",
+      "status": "OPEN",
+      "created_at": 1782753357,
+      "updated_at": 1782753357
+    }
+  ],
+  "next_cursor": "eyJvZmZzZXQiOjIwfQ"
+}
+```
+
+Pass `next_cursor` unchanged as `cursor` for the next page.
+
+## Get an Order
+
+```bash cURL
+curl "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+The detail response includes the order identifiers, price, quantity, fill progress, and status from the list response and may also include an `error_code` returned by the order service.
+
+## Cancel an Order
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders/<order_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "order_id": "order-123",
+  "status": "ACCEPTED",
+  "cancel_status": "PENDING"
+}
+```
+
+## Cancel Orders by Condition
+
+```bash cURL
+curl -X DELETE "https://api.dexbuilder.com/api/v4/event_contracts/orders?condition_id=<condition_id>" \
+  -H "<authentication-header>: <authentication-value>"
+```
+
+```json
+{
+  "batch_id": "batch-123",
+  "status": "ACCEPTED",
+  "total_orders": 3
+}
+```
+
+<Note>
+Authentication Headers in this documentation are placeholders. Production integrations should use the final public authentication scheme. Identity fields injected by internal gateways are not external client request parameters.
+</Note>

@@ -1,8 +1,58 @@
 ---
 title: "Market Data Overview"
-description: "Market-data capabilities for Event Contracts."
+sidebarTitle: "Overview"
+description: "Understand the Event Contracts data model and how to retrieve the data your application needs starting from Events, Markets, and Outcomes."
 ---
 
-DexBuilder exposes events, markets, outcome tokens, prices, ticker data, order books, trades, price history, and candlesticks.
+Event Contracts data integration usually begins by identifying the Event, Market, or Outcome your application is interested in. This section explains how to discover markets, read market details, retrieve prices and order books, inspect analytics, and subscribe to real-time data.
 
-Use REST for snapshots and history. Use WebSocket for live changes.
+## Data Model
+
+In Event Contracts, an Event can contain one or more Markets. Each Market is a tradable question with outcomes such as YES / NO. Every Outcome has a corresponding Token ID.
+
+When an application needs to read the price or order book for an outcome, or place an order, it uses that Outcome's `token_id`.
+
+![Image](/images/image-6.png "Image")
+
+<Steps>
+  <Step title="Discover an Event">
+    Browse current Events, filter by category, or query a specific Event directly by slug / ID.
+  </Step>
+  <Step title="Select a Market">
+    View the Markets under the Event and choose the specific question your application needs to handle.
+  </Step>
+  <Step title="Select an Outcome">
+    Choose YES, NO, or another outcome and save its corresponding Token ID.
+  </Step>
+  <Step title="Read or Subscribe to Data">
+    Use the identifiers you obtained to query the REST API or subscribe to real-time updates through WebSocket.
+  </Step>
+</Steps>
+
+## Choose an Integration Flow
+
+<CardGroup cols={2}>
+  <Card title="Discover Markets" icon="compass" href="/en/event-contracts/discover-markets">
+    Find the Events and Markets your application is interested in.
+  </Card>
+
+  <Card title="Market Details" icon="circle-info" href="/en/event-contracts/market-details">
+    View outcomes, status, trading limits, fees, and other Market properties.
+  </Card>
+
+  <Card title="Prices & Order Books" icon="chart-line" href="/en/event-contracts/market-prices-orderbooks">
+    Retrieve current prices, liquidity, and historical price data.
+  </Card>
+
+  <Card title="Analytics" icon="chart-bar" href="/en/event-contracts/analytics">
+    View trades, open interest, holders, and Event trading volume.
+  </Card>
+
+  <Card title="Real-Time Data" icon="bolt" href="/en/event-contracts/realtime-data">
+    Keep market state synchronized through real-time data streams.
+  </Card>
+
+  <Card title="Chainlink TWAP" icon="link" href="/en/event-contracts/chainlink-twap">
+    Retrieve 30-second and 60-second time-weighted average prices.
+  </Card>
+</CardGroup>
